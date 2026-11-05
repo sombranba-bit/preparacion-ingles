@@ -9,3 +9,23 @@ header{background:var(--hdr);border-bottom:2px solid var(--line);box-shadow:none
 .lvl{border-radius:999px;box-shadow:0 3px 0 var(--line)}
 .bnav{background:rgba(255,253,248,.96);border-top:2px solid var(--line)}
 .bnav button.on{background:#e0f6f0;color:var(--ok)}
+
+/* Tipografía D4: Fredoka para títulos y botones, Nunito para el texto */
+:root{--font:Nunito,system-ui,sans-serif;--font-h:Fredoka,Nunito,sans-serif}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink,var(--text));-webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-family:Fredoka,Nunito,sans-serif}
+.lvl,.btn,.section-btn strong{font-weight:700}
+
+/* Inicio: acciones como filas de la maqueta (icono de color a la izquierda) */
+#sectionGrid{display:grid;grid-template-columns:1fr;gap:10px}
+#sectionGrid .section-btn{display:grid;grid-template-columns:46px 1fr;gap:4px 12px;align-items:center;padding:12px 14px;border-radius:18px;border:2px solid var(--line);box-shadow:0 4px 0 var(--line);background:var(--card,var(--surface))}
+#sectionGrid .section-btn .ico{grid-row:1/3;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--sec-soft)}
+#sectionGrid .section-btn strong{font-size:16px}
+#sectionGrid .section-btn span{font-size:12px;color:var(--muted);font-weight:800}
+
+/* Ejercicio: opciones como tarjetas con borde de tinta */
+.options button,.option{border-radius:18px;border:2px solid var(--line);box-shadow:0 5px 0 var(--line);min-height:58px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px}
+.options button[aria-pressed="true"],.option[aria-pressed="true"]{border-color:#2b7fd1;background:#e8f3ff;box-shadow:0 5px 0 #b9d8f7}
+
+/* Barra inferior con etiquetas de la maqueta */
+.bnav button{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:11.5px}
