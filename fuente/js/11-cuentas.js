@@ -91,6 +91,10 @@ export function salirCuenta() {
   return ctaAccion(async () => {
     const fb = await ctaCargar();
     await fb.authMod.signOut(fb.auth);
+    // sin cuenta se vuelve a ser invitado (solo A1) y se muestra la portada
+    try { window.localStorage.setItem("modo-invitado", "1"); } catch (e) {}
+    ctaE().user = null;
+    document.querySelector("[data-inicio]")?.click();
   });
 }
 
