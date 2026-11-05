@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-XbWmfJNSRtUVnk5OJTgkAsXYT7uTLD0WchbYivNjHSI=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-cCcyJTf7YIEZj0yiaaqHjrGAGoSvtsau1pIf9OIbbno=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -9214,10 +9214,16 @@ async function nubeCrear(nombre) {
   return "Grupo creado. Código de invitación: " + c + ". Compártelo con tus amigos.";
 }
 
+// Si Firestore no responde en 15 s, se avisa en vez de dejar el botón esperando sin fin
+function nubeConTiempo(p) {
+  return Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error("Firestore no responde. Revisa la conexión y que las reglas estén publicadas.")), 15000))]);
+}
+
 async function nubeAccion(fn) {
   if (nubeE.accion) return;
-  nubeE.accion = true; nubeE.msg = "";
-  try { nubeE.msg = await fn(); } catch (e) { nubeE.msg = nubeError(e); }
+  nubeE.accion = true; nubeE.msg = "Espera un momento…";
+  nubeRender();
+  try { nubeE.msg = await nubeConTiempo(fn()); } catch (e) { nubeE.msg = nubeError(e); }
   finally { nubeE.accion = false; nubeRender(); }
 }
 
@@ -9249,6 +9255,7 @@ async function nubeRender() {
   } catch (e) { liga = '<p class="muted">' + escHtml(nubeError(e)) + "</p>"; }
   const sinPerfil = activeProfile() ? "" : '<p class="muted">Crea un perfil para aparecer en la liga y en los grupos.</p>';
   box.innerHTML = `
+    <p class="etiq" id="nubeMsg" role="status" style="margin:0 0 10px;min-height:20px">${escHtml(nubeE.msg)}</p>
     <h3 class="xs-tit">Liga global <span class="muted small">· esta semana</span></h3>${liga}
     ${grupos ? `<div style="margin-top:14px">${grupos}</div>` : ""}
     <div class="fila"><label class="etiq" for="nubeCodigo">Unirse a un grupo con código</label>
@@ -9257,8 +9264,7 @@ async function nubeRender() {
     <div class="fila"><label class="etiq" for="nubeNombreGrupo">Crear un grupo de amigos</label>
       <input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off">
       <button class="btn secondary" id="nubeCrear" type="button">Crear grupo</button></div>
-    ${sinPerfil}
-    <p class="muted" id="nubeMsg" role="status">${escHtml(nubeE.msg)}</p>`;
+    ${sinPerfil}`;
   document.getElementById("nubeUnirse").onclick = () => nubeAccion(() => nubeUnirse(document.getElementById("nubeCodigo").value));
   document.getElementById("nubeCrear").onclick = () => nubeAccion(() => nubeCrear(document.getElementById("nubeNombreGrupo").value));
 }

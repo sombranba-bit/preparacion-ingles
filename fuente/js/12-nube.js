@@ -141,10 +141,16 @@ async function nubeCrear(nombre) {
   return "Grupo creado. Código de invitación: " + c + ". Compártelo con tus amigos.";
 }
 
+// Si Firestore no responde en 15 s, se avisa en vez de dejar el botón esperando sin fin
+function nubeConTiempo(p) {
+  return Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error("Firestore no responde. Revisa la conexión y que las reglas estén publicadas.")), 15000))]);
+}
+
 async function nubeAccion(fn) {
   if (nubeE.accion) return;
-  nubeE.accion = true; nubeE.msg = "";
-  try { nubeE.msg = await fn(); } catch (e) { nubeE.msg = nubeError(e); }
+  nubeE.accion = true; nubeE.msg = "Espera un momento…";
+  nubeRender();
+  try { nubeE.msg = await nubeConTiempo(fn()); } catch (e) { nubeE.msg = nubeError(e); }
   finally { nubeE.accion = false; nubeRender(); }
 }
 
@@ -176,6 +182,7 @@ async function nubeRender() {
   } catch (e) { liga = '<p class="muted">' + escHtml(nubeError(e)) + "</p>"; }
   const sinPerfil = activeProfile() ? "" : '<p class="muted">Crea un perfil para aparecer en la liga y en los grupos.</p>';
   box.innerHTML = `
+    <p class="etiq" id="nubeMsg" role="status" style="margin:0 0 10px;min-height:20px">${escHtml(nubeE.msg)}</p>
     <h3 class="xs-tit">Liga global <span class="muted small">· esta semana</span></h3>${liga}
     ${grupos ? `<div style="margin-top:14px">${grupos}</div>` : ""}
     <div class="fila"><label class="etiq" for="nubeCodigo">Unirse a un grupo con código</label>
@@ -184,8 +191,7 @@ async function nubeRender() {
     <div class="fila"><label class="etiq" for="nubeNombreGrupo">Crear un grupo de amigos</label>
       <input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off">
       <button class="btn secondary" id="nubeCrear" type="button">Crear grupo</button></div>
-    ${sinPerfil}
-    <p class="muted" id="nubeMsg" role="status">${escHtml(nubeE.msg)}</p>`;
+    ${sinPerfil}`;
   document.getElementById("nubeUnirse").onclick = () => nubeAccion(() => nubeUnirse(document.getElementById("nubeCodigo").value));
   document.getElementById("nubeCrear").onclick = () => nubeAccion(() => nubeCrear(document.getElementById("nubeNombreGrupo").value));
 }
