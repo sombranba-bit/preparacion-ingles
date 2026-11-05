@@ -812,6 +812,8 @@ body.lp-open{display:block !important;grid-template-columns:none !important;grid
 @media (max-width:820px){#landing .lp-hero{grid-template-columns:1fr;padding-top:40px;gap:36px}#landing .lp-features{grid-template-columns:1fr}}
 @media (max-width:420px){#landing .lp-wrap{padding:0 16px}#landing .lp-lead{font-size:var(--fs-md)}#landing .lp-btn{width:100%;text-align:center}#landing .lp-cta .lp-link{padding:6px 0}}
 @media (pointer:coarse){#landing .lp-btn,#landing .lp-link,#landing .lp-theme,#landing .lp-nav{min-height:44px}}
+/* Los puntos del carrusel son marcas, no botones grandes: se quedan finos y el área de toque va aparte */
+@media (pointer:coarse){#landing .lp-dot{min-height:0;height:8px;position:relative}#landing .lp-dot::after{content:"";position:absolute;inset:-18px -8px}}
 @media (prefers-reduced-motion: reduce){#landing *,#landing *::before,#landing *::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
 </style>
 <style>
