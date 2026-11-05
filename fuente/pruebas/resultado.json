@@ -1,0 +1,61 @@
+{
+ "vistas": {
+  "320-light": {
+   "carga_ms": 192,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "320-dark": {
+   "carga_ms": 170,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "390-light": {
+   "carga_ms": 164,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "390-dark": {
+   "carga_ms": 159,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "768-light": {
+   "carga_ms": 163,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "768-dark": {
+   "carga_ms": 151,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "1280-light": {
+   "carga_ms": 188,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  },
+  "1280-dark": {
+   "carga_ms": 169,
+   "nodos_dom": 1139,
+   "heap_mb": 10,
+   "desborde_landing": 0,
+   "tabs": {}
+  }
+ },
+ "errores": []
+}
