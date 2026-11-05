@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LM6z0+BpqM9AS5H9SitFVgTGTdoFm2H0hSOvClARYqo=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LYm10xUe4gZHCpivLJDsAxDeoRAdTDnKQvDVaTSu7bI=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1035,6 +1035,62 @@ header{display:none}
 .d4-ico svg{width:30px;height:30px}
 /* Camino: círculos con los colores de la paleta crema menta */
 .d4-fila .d4-n{background:#0b5f4f;box-shadow:0 3px 0 #073f35;color:#fffdf8}
+.d4-dia i svg{width:12px;height:12px}
+
+/* Vista previa antes de practicar */
+.previa{margin:0 0 16px}
+.previa-ej{background:var(--surface2,var(--surface));border:2px solid var(--line);border-radius:16px;padding:12px}
+.previa-op{margin:8px 0 0;padding-left:18px}
+
+/* Liga (Trofeos): cabecera, podio, lista con barras */
+.lp-hero{background:var(--accent);color:#fffdf8;border-radius:24px;padding:20px 20px 18px;box-shadow:0 6px 0 #073f35;display:grid;gap:4px}
+.lp-hero .etiq{color:#cfe9e1;font-size:13px;font-weight:700}
+.lp-num{display:flex;align-items:baseline;gap:8px}
+.lp-num b{font-family:Fredoka,Nunito,sans-serif;font-size:52px;line-height:1}
+.lp-num span{font-weight:700;font-size:15px}
+.lp-sub{margin:4px 0 0;font-weight:700;font-size:15px}
+.lp-dias{font-size:13px;opacity:.85;font-weight:700}
+.lp-aviso{margin-top:12px;background:var(--card,var(--surface));border:2px solid var(--line);border-radius:20px;padding:16px}
+.lp-aviso b{font-family:Fredoka,Nunito,sans-serif;font-size:17px}
+.lp-seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:16px 0 10px;background:var(--surface2,var(--surface));border-radius:999px;padding:4px;border:2px solid var(--line)}
+.lp-seg button{min-height:40px;border:0;border-radius:999px;background:transparent;font:inherit;font-weight:700;color:var(--muted);cursor:pointer}
+.lp-seg button[aria-selected="true"]{background:var(--accent);color:#fffdf8}
+.lp-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px}
+.lp-chip{flex:none;border:2px solid var(--line);background:var(--card,var(--surface));border-radius:16px;padding:8px 12px;font:inherit;font-weight:700;text-align:left;cursor:pointer;color:var(--text)}
+.lp-chip small{display:block;font-size:11px;color:var(--muted);font-weight:700}
+.lp-chip.on{border-color:var(--accent);box-shadow:0 3px 0 var(--accent)}
+.lp-podio{display:grid;grid-template-columns:1fr 1.2fr 1fr;align-items:end;gap:8px;margin:14px 0 10px}
+.lp-pod{display:grid;justify-items:center;gap:3px;text-align:center;min-width:0}
+.lp-av{width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fffdf8;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:22px}
+.lp-pod-1 .lp-av{width:64px;height:64px;font-size:26px}
+.lp-pod b{font-size:14px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp-pod small{font-size:12px;color:var(--muted);font-weight:700}
+.lp-peana{width:100%;border-radius:14px 14px 6px 6px;background:var(--surface2,var(--surface));border:2px solid var(--line);font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;display:grid;place-items:center;margin-top:4px}
+.lp-pod-1 .lp-peana{height:76px;background:var(--accent);color:#fffdf8;border-color:var(--accent)}
+.lp-pod-2 .lp-peana{height:56px}
+.lp-pod-3 .lp-peana{height:40px}
+.lp-pod.yo b{text-decoration:underline}
+.lp-lista{display:grid;gap:8px}
+.lp-fila{display:grid;grid-template-columns:26px 36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--card,var(--surface));border:2px solid var(--line)}
+.lp-fila.yo{border-color:var(--accent)}
+.lp-pos{font-weight:700;color:var(--muted);text-align:center}
+.lp-fila .lp-av.sm{width:36px;height:36px;font-size:16px}
+.lp-mid{display:grid;gap:6px;min-width:0}
+.lp-nom{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp-nom small{color:var(--accent);margin-left:4px}
+.lp-barra{height:8px;border-radius:999px;background:var(--surface2,var(--surface));overflow:hidden;display:block}
+.lp-barra i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.lp-xp{font-family:Fredoka,Nunito,sans-serif;font-size:15px;text-align:right}
+.lp-vacio{color:var(--muted);text-align:center;padding:14px 4px;margin:0}
+.lp-msg{font-weight:700;color:var(--accent);margin:10px 0 0;min-height:18px}
+.lp-grupos-form{margin-top:16px;background:var(--card,var(--surface));border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.lp-grupos-form summary,.liga-sin-cuenta summary{font-weight:700;cursor:pointer;padding:6px 0}
+.lp-form{display:grid;gap:8px;padding:8px 0 4px}
+.lp-form label{font-weight:700;font-size:14px}
+.lp-fila-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.lp-fila-in input{font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--card,var(--surface));color:inherit;width:100%;box-sizing:border-box}
+.liga-sin-cuenta{margin-top:16px}
+#nubeBox .lp-hero,#nubeBox .lp-aviso{margin-bottom:0}
 </style>
 <style>
 /* Personajes, fondos, efectos y marcos: estilos de la maqueta D4 (colores fijos de la maqueta). */
@@ -1245,7 +1301,7 @@ header{display:none}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-semilla" viewBox="0 0 24 24"><path d="M12 21v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6z" fill="#dcf7ef" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 14c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2.5 5.5-6.5 5.5z" fill="#ffb22e" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol><symbol id="i-llama" viewBox="0 0 24 24"><path d="M12 3c1 3.5 6 5.5 6 11a6 6 0 0 1-12 0c0-3 1.5-5 3-6.5 0 2.2 1 3.5 2.4 4C10.7 9.5 11 6.5 12 3z" fill="#ffb22e" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 14.5c.6 1.5 2.4 2.2 2.4 4.2a2.4 2.4 0 0 1-4.8 0c0-1.2.6-1.8 1.2-2.4.2.8.5 1.2 1 1.4-.1-1 0-1.8.2-3.2z" fill="#f0587a"/></symbol><symbol id="i-diana" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="#ffe4ea" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.5" fill="#f0587a"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3" fill="#e8f3ff" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 15l2 2 4-4" fill="none" stroke="#18a58a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-simulacro" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="3" fill="#dcf7ef" stroke="currentColor" stroke-width="1.8"/><rect x="9" y="2.5" width="6" height="3.5" rx="1.2" fill="#ffb22e" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 11l1.6 1.6L14 9" fill="none" stroke="#18a58a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 16h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol><symbol id="i-montana" viewBox="0 0 24 24"><path d="M3 19l6.5-10 4 6 2.5-3.5L21 19z" fill="#dcf7ef" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9.5V4l4 1.5L12 7" fill="#f0587a" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-repaso" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 20v-4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-semilla" viewBox="0 0 24 24"><path d="M12 21v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6z" fill="#dcf7ef" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 14c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2.5 5.5-6.5 5.5z" fill="#ffb22e" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol><symbol id="i-llama" viewBox="0 0 24 24"><path d="M12 3c1 3.5 6 5.5 6 11a6 6 0 0 1-12 0c0-3 1.5-5 3-6.5 0 2.2 1 3.5 2.4 4C10.7 9.5 11 6.5 12 3z" fill="#ffb22e" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 14.5c.6 1.5 2.4 2.2 2.4 4.2a2.4 2.4 0 0 1-4.8 0c0-1.2.6-1.8 1.2-2.4.2.8.5 1.2 1 1.4-.1-1 0-1.8.2-3.2z" fill="#f0587a"/></symbol><symbol id="i-diana" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="#ffe4ea" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.5" fill="#f0587a"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3" fill="#e8f3ff" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 15l2 2 4-4" fill="none" stroke="#18a58a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-simulacro" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="3" fill="#dcf7ef" stroke="currentColor" stroke-width="1.8"/><rect x="9" y="2.5" width="6" height="3.5" rx="1.2" fill="#ffb22e" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 11l1.6 1.6L14 9" fill="none" stroke="#18a58a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 16h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol><symbol id="i-montana" viewBox="0 0 24 24"><path d="M3 19l6.5-10 4 6 2.5-3.5L21 19z" fill="#dcf7ef" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9.5V4l4 1.5L12 7" fill="#f0587a" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol><symbol id="i-cronometro" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10v3.6l2.4 1.6M9.5 2.8h5M12 2.8v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-repaso" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 20v-4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-moneda" viewBox="0 0 24 24"><circle cx="12" cy="13.6" r="9" fill="#d98a0c"/><circle cx="12" cy="12.2" r="9" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.8"/><circle cx="12" cy="12.2" r="5.9" fill="none" stroke="#d98a0c" stroke-width="1.2" opacity=".85"/><path d="M12 8.6l.9 2.5 2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9z" fill="#fff8ec"/><path d="M6.2 9.5a6.5 6.5 0 0 1 3-2.6" fill="none" stroke="#fff8ec" stroke-width="1.4" stroke-linecap="round" opacity=".75"/></symbol>
 <symbol id="i-candado" viewBox="0 0 24 24"><path d="M8 11V8.2a4 4 0 0 1 8 0V11" fill="none" stroke="#2a1d14" stroke-width="2.2" stroke-linecap="round"/><rect x="5" y="12" width="14" height="10" rx="3.2" fill="#d98a0c"/><rect x="5" y="10.5" width="14" height="10" rx="3.2" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.8"/><circle cx="12" cy="14.6" r="1.7" fill="#2a1d14"/><rect x="11.2" y="15.4" width="1.6" height="2.8" rx=".7" fill="#2a1d14"/><path d="M7.6 13v2.8" stroke="#fff8ec" stroke-width="1.2" stroke-linecap="round" opacity=".75"/></symbol>
 <symbol id="i-destello" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#ffd166" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
@@ -1377,6 +1433,7 @@ header{display:none}
       </select>
     </div>
 
+    <div id="previa" class="card previa" hidden></div>
     <div id="repasoBox"></div>
     <h2 class="section-title">Ejercicios</h2>
     <div class="section-grid" id="sectionGrid"><button class="section-btn" style="--sec-color: #7048e8; --sec-soft: #f1ecff;"><div class="ico" style="color:#7048e8"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11"></path><path d="M3.5 7l1.5 1.5 2.5-2.5M3.5 17l1.5 1.5 2.5-2.5"></path></svg></div><strong>Gramática</strong><span>Elige la forma correcta · 103 ejercicios</span></button><button class="section-btn" style="--sec-color: #1c7ed6; --sec-soft: #e7f2ff;"><div class="ico" style="color:#1c7ed6"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5.5C5 4.5 8 4.5 12 6.5c4-2 7-2 9-1v13c-2-1-5-1-9 1-4-2-7-2-9-1z"></path><path d="M12 6.5v13"></path></svg></div><strong>Lectura</strong><span>Comprensión de textos · 131 ejercicios</span></button><button class="section-btn" style="--sec-color: #0ca678; --sec-soft: #e3f9f2;"><div class="ico" style="color:#0ca678"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"></path><rect x="3" y="14" width="4" height="6" rx="1.5"></rect><rect x="17" y="14" width="4" height="6" rx="1.5"></rect></svg></div><strong>Escucha</strong><span>Audio en la propia app · 134 ejercicios</span></button><button class="section-btn" style="--sec-color: #f76707; --sec-soft: #fff1e6;"><div class="ico" style="color:#f76707"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"></path></svg></div><strong>Reformulación</strong><span>Reescribe sin cambiar el sentido · 175 ejercicios</span></button><button class="section-btn" style="--sec-color: #0ca6a6; --sec-soft: #e0f7f7;" disabled=""><div class="ico" style="color:#0ca6a6"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><text x="12" y="17" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor" stroke="none" font-family="Segoe UI,Arial,sans-serif">Aa</text></svg></div><strong>Uso del inglés</strong><span>Transformación y formación de palabras · 0 ejercicios</span></button><button class="section-btn" style="--sec-color: #c2410c; --sec-soft: #fff0e8;" disabled=""><div class="ico" style="color:#c2410c"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg></div><strong>Escritura</strong><span>Redacción con criterios de examen · 0 ejercicios</span></button><button class="section-btn" style="--sec-color: #be185d; --sec-soft: #fde8f2;" disabled=""><div class="ico" style="color:#be185d"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></div><strong>Expresión oral</strong><span>Preparación y monólogo con tiempo · 0 ejercicios</span></button></div>
@@ -1534,19 +1591,21 @@ header{display:none}
   <!-- PESTAÑA: RANKING -->
   <section id="p-ranking" class="panel hidden">
     <div class="m-slot"></div>
-    <h2 class="section-title">Liga semanal</h2>
     <div id="rankInfo"></div>
-    <div id="nubeBox" class="card" hidden></div>
-    <div class="card">
-      <div id="xpSemana" class="xs-box"></div>
-      <div id="ligaBox"></div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn secondary" id="ligaShare" type="button">Descargar mi semana</button>
-        <input type="file" id="ligaFile" accept=".json,application/json" class="pl-file">
-        <label class="btn secondary pl-pick" for="ligaFile">Añadir la semana de un amigo…</label>
+    <div id="nubeBox"></div>
+    <details class="liga-sin-cuenta">
+      <summary>Liga con archivos (sin cuenta)</summary>
+      <div class="card">
+        <div id="xpSemana" class="xs-box"></div>
+        <div id="ligaBox"></div>
+        <div class="actions" style="margin-top:14px">
+          <button class="btn secondary" id="ligaShare" type="button">Descargar mi semana</button>
+          <input type="file" id="ligaFile" accept=".json,application/json" class="pl-file">
+          <label class="btn secondary pl-pick" for="ligaFile">Añadir la semana de un amigo…</label>
+        </div>
+        <p class="muted" id="ligaStatus" role="status">Cada uno descarga su archivo y se lo pasa a los demás. La liga se reinicia cada lunes.</p>
       </div>
-      <p class="muted" id="ligaStatus" role="status">Cada uno descarga su archivo y se lo pasa a los demás. La liga se reinicia cada lunes.</p>
-    </div>
+    </details>
     <h2 class="section-title">Mi ranking personal</h2>
     <div class="card">
       <div class="mode" style="margin-bottom:14px"><div><strong>Filtrar por nivel</strong><div class="muted" style="font-size:var(--fs-sm)">Tus mejores resultados, de más a menos.</div></div>
@@ -1950,10 +2009,10 @@ const CAT=[
   {id:'#d4c6ff',k:'color',nombre:'Fondo lila',desc:'Color de fondo',precio:200},
   {id:'#bfe4ff',k:'color',nombre:'Fondo cielo',desc:'Color de fondo',precio:200},
   {id:'grad',k:'color',nombre:'Fondo degradado',desc:'Se mueve con colores suaves',precio:300,animado:true},
-  {id:'confeti',k:'efecto',nombre:'Confeti al acertar',desc:'Cae confeti en cada acierto',precio:250,icono:'🎉'},
-  {id:'aura',k:'efecto',nombre:'Aura',desc:'Un halo que late alrededor',precio:300,icono:'💫',animado:true},
-  {id:'destellos',k:'efecto',nombre:'Destellos',desc:'Chispas que parpadean',precio:350,icono:'✨',animado:true},
-  {id:'vivo',k:'efecto',nombre:'Personaje vivo',desc:'Se mueve y da un salto al acertar',precio:400,icono:'🌀',animado:true},
+  {id:'confeti',k:'efecto',nombre:'Confeti al acertar',desc:'Cae confeti en cada acierto',precio:250},
+  {id:'aura',k:'efecto',nombre:'Aura',desc:'Un halo que late alrededor',precio:300,animado:true},
+  {id:'destellos',k:'efecto',nombre:'Destellos',desc:'Chispas que parpadean',precio:350,animado:true},
+  {id:'vivo',k:'efecto',nombre:'Personaje vivo',desc:'Se mueve y da un salto al acertar',precio:400,animado:true},
   {id:'sencillo',k:'marco',nombre:'Marco sencillo',desc:'Borde liso',precio:0},
   {id:'hojas',k:'marco',nombre:'Hojas',desc:'Hojas que caen despacio',precio:0,animado:true},
   {id:'marco',k:'marco',nombre:'Marco dorado',desc:'Borde dorado fijo',precio:350},
@@ -2742,7 +2801,7 @@ function renderGame() {
   const semana = ["L", "M", "X", "J", "V", "S", "D"].map((letra, i) => {
     const n = idxHoy - i;                                       // días atrás (negativo = día futuro)
     const hecho = n >= 0 && xpBetween(n, n) > 0;
-    return `<span class="d4-dia${hecho ? " hecho" : ""}${n === 0 ? " hoy" : ""}"><i aria-hidden="true">${hecho ? "✓" : ""}</i>${letra}</span>`;
+    return `<span class="d4-dia${hecho ? " hecho" : ""}${n === 0 ? " hoy" : ""}"><i aria-hidden="true">${hecho ? '<svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg>' : ""}</i>${letra}</span>`;
   }).join("");
   el.innerHTML = `
     <div class="d4-cab">
@@ -3195,7 +3254,7 @@ function renderHome() {
   });
   const lista = Object.entries(partes);
   cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 1).map(([p, q], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b></span><span class="d4-chip">${Math.round(q.hechos / q.n * 100)}%</span></button>`).join("")}</div>` : "";
-  cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => startPart(b.dataset.part));
+  cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => previaParte(b.dataset.part));
   const cn = document.querySelector(".st-coin .st-num");
   if (cn) { const c = rewards().coins; if (lastCoins !== null && c > lastCoins && !matchMedia("(prefers-reduced-motion: reduce)").matches) tweenNum(cn, lastCoins, c); lastCoins = c; }
   const lv = LEVELS[currentLevel];
@@ -3215,7 +3274,7 @@ function renderHome() {
     b.style.setProperty("--sec-soft", s.soft);
     b.innerHTML = `<div class="ico" style="color:${s.color}">${secIcon(key)}</div><strong>${s.name}</strong><span>${s.desc} · ${count} ejercicio${count===1?"":"s"}</span>`;
     b.disabled = count === 0;
-    b.onclick = () => startSection(key);
+    b.onclick = () => previaSeccion(key);
     grid.appendChild(b);
   });
 
@@ -3242,7 +3301,7 @@ function renderHome() {
     b.style.setProperty("--sec-soft", `color-mix(in srgb, ${pc} 16%, var(--surface))`);
     const k = p.indexOf("(");
     b.innerHTML = `<div class="ico" style="color:${pc}">${partIcon(p)}</div><strong>${k > 0 ? p.slice(0, k) : p.replace(/^Complementario · /, "")}</strong><span>${k > 0 ? p.slice(k) : ""} · ${n} ejercicio${n === 1 ? "" : "s"}</span>`;
-    b.onclick = () => startPart(p);
+    b.onclick = () => previaParte(p);
     pg.appendChild(b);
   });
   if (!Object.keys(parts).length) pg.innerHTML = '<p class="muted">Este nivel no tiene partes separadas.</p>';
@@ -3308,6 +3367,40 @@ $("secSel").onchange = e => { secPerQ = parseInt(e.target.value, 10); };
 /* ============================================================
    EJERCICIO
    ============================================================ */
+// Qué es cada tipo de práctica, en lenguaje sencillo (se muestra antes de empezar)
+const PREVIA_TEXTO = {
+  grammar: "Frases con un hueco o con una forma incorrecta. Eliges la opción correcta y, si fallas, ves la regla.",
+  reading: "Un texto corto y preguntas sobre lo que dice. Practicas entender sin traducir palabra por palabra.",
+  listening: "Escuchas un audio de la app y respondes. Entrena el oído para entender a velocidad real.",
+  rephrase: "Reescribes una frase con otras palabras manteniendo el sentido. Vale cualquier respuesta correcta.",
+  usage: "Transformas o formas palabras (prefijos, sufijos, tiempos) para completar frases.",
+  writing: "Redactas un texto corto con criterios de examen: ideas, organización y lenguaje.",
+  speaking: "Preparas un monólogo con tiempo limitado, como en la parte oral del examen."
+};
+function previaMostrar(o) {
+  const box = $("previa"), n = o.items.length, tipos = {};
+  o.items.forEach(i => { tipos[i.type] = (tipos[i.type] || 0) + 1; });
+  const lista = Object.entries(tipos).map(([k, c]) => `${SECTIONS[k] ? SECTIONS[k].name : k} (${c})`).join(" · ");
+  const ej = o.items.find(i => typeof i.q === "string" && i.q.length < 160 && !i.audio);
+  box.innerHTML = `<p class="etiq" style="margin:0">Nivel ${escHtml(currentLevel)} · ${n} ejercicio${n === 1 ? "" : "s"}</p>
+    <h2 class="section-title" style="margin:6px 0">${escHtml(o.titulo)}</h2>
+    <p style="margin:0 0 6px">${escHtml(o.texto)}</p>
+    <p class="muted" style="margin:0 0 12px;font-size:var(--fs-sm)">Incluye: ${escHtml(lista)}</p>
+    ${ej ? `<div class="previa-ej"><span class="etiq">Ejemplo</span><p style="margin:4px 0 0">${escHtml(ej.q)}</p>${ej.options ? `<ul class="previa-op">${ej.options.map(x => `<li>${escHtml(x)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+    <div class="actions" style="margin-top:14px"><button class="btn secondary" id="previaVolver" type="button">Volver</button><button class="btn" id="previaEmpezar" type="button">Empezar</button></div>`;
+  box.hidden = false; box.scrollIntoView({ block: "start" });
+  $("previaVolver").onclick = () => { box.hidden = true; };
+  $("previaEmpezar").onclick = () => { box.hidden = true; o.onStart(); };
+}
+function previaSeccion(key) {
+  const items = ITEMS.filter(i => i.level === currentLevel && i.type === key);
+  previaMostrar({ titulo: SECTIONS[key].name, texto: PREVIA_TEXTO[key] || SECTIONS[key].desc, items, onStart: () => startSection(key) });
+}
+function previaParte(p) {
+  const items = ITEMS.filter(i => i.level === currentLevel && i.part === p);
+  if (!items.length) return;
+  previaMostrar({ titulo: p.replace(/\s*\(.*$/, ""), texto: "Ejercicios de esta parte del nivel, en orden aleatorio. Cada respuesta se corrige al momento.", items, onStart: () => startPart(p) });
+}
 function startSection(type) {
   currentSection = type;
   runQueue(shuffle(ITEMS.filter(i => i.level === currentLevel && i.type === type)));
@@ -3361,7 +3454,7 @@ function stopTimer() { if (timerId) { clearInterval(timerId); timerId = null; } 
 function updateTimer() {
   const m = Math.floor(timeLeft / 60), s = String(timeLeft % 60).padStart(2, "0");
   const el = $("timer");
-  el.textContent = `⏱ ${m}:${s}`;
+  el.innerHTML = `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cronometro"/></svg> ${m}:${s}`;
   el.classList.toggle("low", timeLeft <= 30);
 }
 
@@ -3459,7 +3552,7 @@ function selectOption(i, btn) {
 
 
 // Practicar (barra inferior) empieza una sesión corta; la lista de tipos, partes y niveles se abre desde Inicio
-setPracticarAccion(() => { if (ITEMS.filter(i => i.level === currentLevel).length >= 5) startCorta(); else showTab("ejercicios"); });
+setPracticarAccion(() => showTab("ejercicios"));   // la barra abre la lista con la explicación de cada práctica
 
 /* ---------- Formatos nuevos: ordenar, emparejar, completar huecos ---------- */
 let fmt = null;
@@ -9115,7 +9208,7 @@ const ctaFbApp = () => ctaCargar();
 
 // Claves de este navegador que no se suben a la cuenta: ajustes del dispositivo y copias locales
 const NUBE_NO_SUBIR = /^(modo-invitado|lpTheme|ui-|copia-auto|copia-antes-de-sincronizar|firebase:)/;
-const nubeE = { uid: null, listo: false, ultimo: "", grupos: [], msg: "", ocupado: false, accion: false, fs: null };
+const nubeE = { uid: null, listo: false, ultimo: "", grupos: [], msg: "", ocupado: false, accion: false, fs: null, vista: "global", grupoVer: null };
 
 // Todo el progreso de este navegador (todos los perfiles), en orden fijo para poder compararlo
 function nubeInstantanea() {
@@ -9280,45 +9373,69 @@ async function nubeAccion(fn) {
   finally { nubeE.accion = false; nubeRender(); }
 }
 
-async function nubeGrupoHtml(f, c, semana) {
-  const { m, db } = f;
-  const g = await m.getDoc(m.doc(db, "grupos", c));
-  const nombre = g.exists() ? g.data().nombre : "Grupo";
-  const snap = await m.getDocs(m.query(m.collection(db, "grupos", c, "xp"), m.where("semana", "==", semana)));
-  const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
-  const cuerpo = filas.length ? filas.map((r, i) => `<div class="liga-row${r.uid === nubeE.uid ? " liga-me" : ""}"><span class="pos">${i + 1}º</span><span>${escHtml(r.nombre)}${r.uid === nubeE.uid ? " (tú)" : ""}</span><strong>${r.xp} XP</strong></div>`).join("")
-    : '<p class="muted">Nadie del grupo ha publicado esta semana todavía.</p>';
-  return `<h3 class="xs-tit">${escHtml(nombre)} <span class="muted small">· código ${escHtml(c)}</span></h3>${cuerpo}`;
+/* ---------- Liga: pantalla ---------- */
+function ligaFechas() {
+  const ini = new Date(weekStartKey() + "T12:00"), fin = new Date(ini); fin.setDate(fin.getDate() + 6);
+  const prox = new Date(ini); prox.setDate(prox.getDate() + 7); prox.setHours(0, 0, 0, 0);
+  const f = d => d.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+  return { rango: f(ini) + " – " + f(fin), dias: Math.max(1, Math.ceil((prox - new Date()) / 86400000)) };
+}
+const ligaInicial = nombre => escHtml(String(nombre || "?").trim().charAt(0).toUpperCase());
+function ligaPodioHtml(filas, uid) {
+  const sitio = i => filas[i] ? `<div class="lp-pod lp-pod-${i + 1}${filas[i].uid === uid ? " yo" : ""}"><span class="lp-av">${ligaInicial(filas[i].nombre)}</span><b>${escHtml(filas[i].nombre)}</b><small>${filas[i].xp} XP</small><span class="lp-peana">${i + 1}</span></div>` : "";
+  return [1, 0, 2].map(sitio).join("");
+}
+function ligaListaHtml(filas, uid, vacio) {
+  if (!filas.length) return `<p class="lp-vacio">${escHtml(vacio)}</p>`;
+  const max = Math.max(1, ...filas.map(r => r.xp));
+  return filas.slice(3).map((r, i) => `<div class="lp-fila${r.uid === uid ? " yo" : ""}"><span class="lp-pos">${i + 4}</span><span class="lp-av sm">${ligaInicial(r.nombre)}</span><span class="lp-mid"><span class="lp-nom">${escHtml(r.nombre)}${r.uid === uid ? " <small>tú</small>" : ""}</span><span class="lp-barra"><i style="width:${Math.round(r.xp / max * 100)}%"></i></span></span><b class="lp-xp">${r.xp}</b></div>`).join("");
 }
 
 async function nubeRender() {
   const box = document.getElementById("nubeBox"); if (!box) return;
-  const u = ctaUsuario();
-  if (!u) { box.hidden = true; box.innerHTML = ""; return; }
   box.hidden = false;
-  box.innerHTML = '<p class="muted" role="status">Cargando tu liga…</p>';
-  let liga = "", grupos = "";
+  const u = ctaUsuario(), fechas = ligaFechas(), miXp = Math.round(weekXp());
+  const cabecera = (sub) => `<div class="lp-hero"><span class="etiq">Semana del ${fechas.rango}</span><div class="lp-num"><b>${miXp}</b><span>XP esta semana</span></div><p class="lp-sub">${sub}</p><span class="lp-dias">Se reinicia en ${fechas.dias} ${fechas.dias === 1 ? "día" : "días"}</span></div>`;
+  if (!u) {
+    box.innerHTML = cabecera("Aún no estás en la liga global") + '<div class="lp-aviso"><b>Juega con todo el mundo</b><p class="muted" style="margin:6px 0 0">Inicia sesión para entrar en la liga global y crear grupos con tus amigos.</p></div>';
+    return;
+  }
+  box.innerHTML = '<p class="muted" role="status">Cargando la liga…</p>';
+  let filas = [], grupos = [], grupoFilas = [], err = "";
   try {
     const f = await nubeFs(), m = f.m, db = f.db, semana = weekStartKey();
     const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.limit(200)));
-    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
-    liga = filas.length ? filas.map((r, i) => `<div class="liga-row${r.uid === nubeE.uid ? " liga-me" : ""}"><span class="pos">${i + 1}º</span><span>${escHtml(r.nombre)}${r.uid === nubeE.uid ? " (tú)" : ""}</span><strong>${r.xp} XP</strong></div>`).join("")
-      : '<p class="muted">Nadie ha publicado esta semana todavía.</p>';
-    for (const c of nubeE.grupos) grupos += await nubeGrupoHtml(f, c, semana);
-  } catch (e) { liga = '<p class="muted">' + escHtml(nubeError(e)) + "</p>"; }
-  const sinPerfil = activeProfile() ? "" : '<p class="muted">Crea un perfil para aparecer en la liga y en los grupos.</p>';
-  box.innerHTML = `
-    <p class="etiq" id="nubeMsg" role="status" style="margin:0 0 10px;min-height:20px">${escHtml(nubeE.msg)}</p>
-    <h3 class="xs-tit">Liga global <span class="muted small">· esta semana</span></h3>${liga}
-    ${grupos ? `<div style="margin-top:14px">${grupos}</div>` : ""}
-    <div class="fila"><label class="etiq" for="nubeCodigo">Unirse a un grupo con código</label>
-      <input id="nubeCodigo" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false">
-      <button class="btn secondary" id="nubeUnirse" type="button">Unirme</button></div>
-    <div class="fila"><label class="etiq" for="nubeNombreGrupo">Crear un grupo de amigos</label>
-      <input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off">
-      <button class="btn secondary" id="nubeCrear" type="button">Crear grupo</button></div>
-    ${sinPerfil}`;
-  // Se lee el texto antes de empezar la acción: la caja se vuelve a dibujar al empezar
+    filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
+    if (nubeE.grupos.length) {
+      grupos = await Promise.all(nubeE.grupos.map(async c => { const g = await m.getDoc(m.doc(db, "grupos", c)); return { c, nombre: g.exists() ? g.data().nombre : "Grupo" }; }));
+      if (!nubeE.grupoVer || !nubeE.grupos.includes(nubeE.grupoVer)) nubeE.grupoVer = nubeE.grupos[0];
+      if (nubeE.vista === "grupos") {
+        const gs = await m.getDocs(m.query(m.collection(db, "grupos", nubeE.grupoVer, "xp"), m.where("semana", "==", semana)));
+        grupoFilas = gs.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
+      }
+    }
+  } catch (e) { err = nubeError(e); }
+  const yo = filas.find(r => r.uid === nubeE.uid), pos = yo ? filas.indexOf(yo) + 1 : 0;
+  const esGrupos = nubeE.vista === "grupos", lista = esGrupos ? grupoFilas : filas;
+  const sub = pos ? `Vas ${pos}º de ${filas.length} en la liga global` : "Aún no estás en la liga global";
+  const tabs = `<div class="lp-seg" role="tablist"><button type="button" role="tab" data-v="global" aria-selected="${!esGrupos}">Global</button><button type="button" role="tab" data-v="grupos" aria-selected="${esGrupos}">Mis grupos${nubeE.grupos.length ? " (" + nubeE.grupos.length + ")" : ""}</button></div>`;
+  const chips = esGrupos && grupos.length ? `<div class="lp-chips">${grupos.map(g => `<button type="button" class="lp-chip${g.c === nubeE.grupoVer ? " on" : ""}" data-g="${escHtml(g.c)}">${escHtml(g.nombre)}<small>${escHtml(g.c)}</small></button>`).join("")}</div>` : "";
+  const vacio = esGrupos ? (nubeE.grupos.length ? "Nadie del grupo ha publicado esta semana todavía." : "Todavía no estás en ningún grupo. Crea uno o únete con un código.") : "Nadie ha publicado esta semana todavía.";
+  const sinPerfil = activeProfile() ? "" : '<p class="muted" style="margin:0">Crea un perfil para aparecer en la liga y en los grupos.</p>';
+  box.innerHTML = cabecera(sub) + tabs + chips
+    + (err ? `<p class="lp-msg">${escHtml(err)}</p>` : "")
+    + `<div class="lp-podio">${ligaPodioHtml(lista, nubeE.uid)}</div><div class="lp-lista">${ligaListaHtml(lista, nubeE.uid, vacio)}</div>`
+    + `<details class="lp-grupos-form"${nubeE.grupos.length ? "" : " open"}><summary>Unirse o crear un grupo</summary>
+        <div class="lp-form">
+          <label for="nubeCodigo">Código de invitación</label>
+          <div class="lp-fila-in"><input id="nubeCodigo" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="ABC123"><button class="btn secondary" id="nubeUnirse" type="button">Unirme</button></div>
+          <label for="nubeNombreGrupo">Crear un grupo</label>
+          <div class="lp-fila-in"><input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off"><button class="btn secondary" id="nubeCrear" type="button">Crear</button></div>
+          ${sinPerfil}
+        </div></details>`
+    + `<p class="lp-msg" id="nubeMsg" role="status">${escHtml(nubeE.msg)}</p>`;
+  box.querySelectorAll(".lp-seg button").forEach(b => b.onclick = () => { nubeE.vista = b.dataset.v; nubeRender(); });
+  box.querySelectorAll(".lp-chip").forEach(b => b.onclick = () => { nubeE.grupoVer = b.dataset.g; nubeRender(); });
   document.getElementById("nubeUnirse").onclick = () => { const v = document.getElementById("nubeCodigo").value; nubeAccion(() => nubeUnirse(v)); };
   document.getElementById("nubeCrear").onclick = () => { const v = document.getElementById("nubeNombreGrupo").value; nubeAccion(() => nubeCrear(v)); };
 }

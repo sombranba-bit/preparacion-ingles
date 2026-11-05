@@ -220,7 +220,7 @@ export function renderHome() {
   });
   const lista = Object.entries(partes);
   cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 1).map(([p, q], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b></span><span class="d4-chip">${Math.round(q.hechos / q.n * 100)}%</span></button>`).join("")}</div>` : "";
-  cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => startPart(b.dataset.part));
+  cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => previaParte(b.dataset.part));
   const cn = document.querySelector(".st-coin .st-num");
   if (cn) { const c = rewards().coins; if (lastCoins !== null && c > lastCoins && !matchMedia("(prefers-reduced-motion: reduce)").matches) tweenNum(cn, lastCoins, c); lastCoins = c; }
   const lv = LEVELS[currentLevel];
@@ -240,7 +240,7 @@ export function renderHome() {
     b.style.setProperty("--sec-soft", s.soft);
     b.innerHTML = `<div class="ico" style="color:${s.color}">${secIcon(key)}</div><strong>${s.name}</strong><span>${s.desc} · ${count} ejercicio${count===1?"":"s"}</span>`;
     b.disabled = count === 0;
-    b.onclick = () => startSection(key);
+    b.onclick = () => previaSeccion(key);
     grid.appendChild(b);
   });
 
@@ -267,7 +267,7 @@ export function renderHome() {
     b.style.setProperty("--sec-soft", `color-mix(in srgb, ${pc} 16%, var(--surface))`);
     const k = p.indexOf("(");
     b.innerHTML = `<div class="ico" style="color:${pc}">${partIcon(p)}</div><strong>${k > 0 ? p.slice(0, k) : p.replace(/^Complementario · /, "")}</strong><span>${k > 0 ? p.slice(k) : ""} · ${n} ejercicio${n === 1 ? "" : "s"}</span>`;
-    b.onclick = () => startPart(p);
+    b.onclick = () => previaParte(p);
     pg.appendChild(b);
   });
   if (!Object.keys(parts).length) pg.innerHTML = '<p class="muted">Este nivel no tiene partes separadas.</p>';
@@ -333,6 +333,40 @@ $("secSel").onchange = e => { secPerQ = parseInt(e.target.value, 10); };
 /* ============================================================
    EJERCICIO
    ============================================================ */
+// Qué es cada tipo de práctica, en lenguaje sencillo (se muestra antes de empezar)
+const PREVIA_TEXTO = {
+  grammar: "Frases con un hueco o con una forma incorrecta. Eliges la opción correcta y, si fallas, ves la regla.",
+  reading: "Un texto corto y preguntas sobre lo que dice. Practicas entender sin traducir palabra por palabra.",
+  listening: "Escuchas un audio de la app y respondes. Entrena el oído para entender a velocidad real.",
+  rephrase: "Reescribes una frase con otras palabras manteniendo el sentido. Vale cualquier respuesta correcta.",
+  usage: "Transformas o formas palabras (prefijos, sufijos, tiempos) para completar frases.",
+  writing: "Redactas un texto corto con criterios de examen: ideas, organización y lenguaje.",
+  speaking: "Preparas un monólogo con tiempo limitado, como en la parte oral del examen."
+};
+function previaMostrar(o) {
+  const box = $("previa"), n = o.items.length, tipos = {};
+  o.items.forEach(i => { tipos[i.type] = (tipos[i.type] || 0) + 1; });
+  const lista = Object.entries(tipos).map(([k, c]) => `${SECTIONS[k] ? SECTIONS[k].name : k} (${c})`).join(" · ");
+  const ej = o.items.find(i => typeof i.q === "string" && i.q.length < 160 && !i.audio);
+  box.innerHTML = `<p class="etiq" style="margin:0">Nivel ${escHtml(currentLevel)} · ${n} ejercicio${n === 1 ? "" : "s"}</p>
+    <h2 class="section-title" style="margin:6px 0">${escHtml(o.titulo)}</h2>
+    <p style="margin:0 0 6px">${escHtml(o.texto)}</p>
+    <p class="muted" style="margin:0 0 12px;font-size:var(--fs-sm)">Incluye: ${escHtml(lista)}</p>
+    ${ej ? `<div class="previa-ej"><span class="etiq">Ejemplo</span><p style="margin:4px 0 0">${escHtml(ej.q)}</p>${ej.options ? `<ul class="previa-op">${ej.options.map(x => `<li>${escHtml(x)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+    <div class="actions" style="margin-top:14px"><button class="btn secondary" id="previaVolver" type="button">Volver</button><button class="btn" id="previaEmpezar" type="button">Empezar</button></div>`;
+  box.hidden = false; box.scrollIntoView({ block: "start" });
+  $("previaVolver").onclick = () => { box.hidden = true; };
+  $("previaEmpezar").onclick = () => { box.hidden = true; o.onStart(); };
+}
+function previaSeccion(key) {
+  const items = ITEMS.filter(i => i.level === currentLevel && i.type === key);
+  previaMostrar({ titulo: SECTIONS[key].name, texto: PREVIA_TEXTO[key] || SECTIONS[key].desc, items, onStart: () => startSection(key) });
+}
+function previaParte(p) {
+  const items = ITEMS.filter(i => i.level === currentLevel && i.part === p);
+  if (!items.length) return;
+  previaMostrar({ titulo: p.replace(/\s*\(.*$/, ""), texto: "Ejercicios de esta parte del nivel, en orden aleatorio. Cada respuesta se corrige al momento.", items, onStart: () => startPart(p) });
+}
 function startSection(type) {
   currentSection = type;
   runQueue(shuffle(ITEMS.filter(i => i.level === currentLevel && i.type === type)));
@@ -386,7 +420,7 @@ export function stopTimer() { if (timerId) { clearInterval(timerId); timerId = n
 function updateTimer() {
   const m = Math.floor(timeLeft / 60), s = String(timeLeft % 60).padStart(2, "0");
   const el = $("timer");
-  el.textContent = `⏱ ${m}:${s}`;
+  el.innerHTML = `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cronometro"/></svg> ${m}:${s}`;
   el.classList.toggle("low", timeLeft <= 30);
 }
 
@@ -484,4 +518,4 @@ function selectOption(i, btn) {
 
 
 // Practicar (barra inferior) empieza una sesión corta; la lista de tipos, partes y niveles se abre desde Inicio
-setPracticarAccion(() => { if (ITEMS.filter(i => i.level === currentLevel).length >= 5) startCorta(); else showTab("ejercicios"); });
+setPracticarAccion(() => showTab("ejercicios"));   // la barra abre la lista con la explicación de cada práctica

@@ -7,7 +7,7 @@ import { ctaFbApp, ctaImportarUrl, ctaUsuario } from "./11-cuentas.js";
 
 // Claves de este navegador que no se suben a la cuenta: ajustes del dispositivo y copias locales
 const NUBE_NO_SUBIR = /^(modo-invitado|lpTheme|ui-|copia-auto|copia-antes-de-sincronizar|firebase:)/;
-const nubeE = { uid: null, listo: false, ultimo: "", grupos: [], msg: "", ocupado: false, accion: false, fs: null };
+const nubeE = { uid: null, listo: false, ultimo: "", grupos: [], msg: "", ocupado: false, accion: false, fs: null, vista: "global", grupoVer: null };
 
 // Todo el progreso de este navegador (todos los perfiles), en orden fijo para poder compararlo
 function nubeInstantanea() {
@@ -172,45 +172,69 @@ async function nubeAccion(fn) {
   finally { nubeE.accion = false; nubeRender(); }
 }
 
-async function nubeGrupoHtml(f, c, semana) {
-  const { m, db } = f;
-  const g = await m.getDoc(m.doc(db, "grupos", c));
-  const nombre = g.exists() ? g.data().nombre : "Grupo";
-  const snap = await m.getDocs(m.query(m.collection(db, "grupos", c, "xp"), m.where("semana", "==", semana)));
-  const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
-  const cuerpo = filas.length ? filas.map((r, i) => `<div class="liga-row${r.uid === nubeE.uid ? " liga-me" : ""}"><span class="pos">${i + 1}º</span><span>${escHtml(r.nombre)}${r.uid === nubeE.uid ? " (tú)" : ""}</span><strong>${r.xp} XP</strong></div>`).join("")
-    : '<p class="muted">Nadie del grupo ha publicado esta semana todavía.</p>';
-  return `<h3 class="xs-tit">${escHtml(nombre)} <span class="muted small">· código ${escHtml(c)}</span></h3>${cuerpo}`;
+/* ---------- Liga: pantalla ---------- */
+function ligaFechas() {
+  const ini = new Date(weekStartKey() + "T12:00"), fin = new Date(ini); fin.setDate(fin.getDate() + 6);
+  const prox = new Date(ini); prox.setDate(prox.getDate() + 7); prox.setHours(0, 0, 0, 0);
+  const f = d => d.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+  return { rango: f(ini) + " – " + f(fin), dias: Math.max(1, Math.ceil((prox - new Date()) / 86400000)) };
+}
+const ligaInicial = nombre => escHtml(String(nombre || "?").trim().charAt(0).toUpperCase());
+function ligaPodioHtml(filas, uid) {
+  const sitio = i => filas[i] ? `<div class="lp-pod lp-pod-${i + 1}${filas[i].uid === uid ? " yo" : ""}"><span class="lp-av">${ligaInicial(filas[i].nombre)}</span><b>${escHtml(filas[i].nombre)}</b><small>${filas[i].xp} XP</small><span class="lp-peana">${i + 1}</span></div>` : "";
+  return [1, 0, 2].map(sitio).join("");
+}
+function ligaListaHtml(filas, uid, vacio) {
+  if (!filas.length) return `<p class="lp-vacio">${escHtml(vacio)}</p>`;
+  const max = Math.max(1, ...filas.map(r => r.xp));
+  return filas.slice(3).map((r, i) => `<div class="lp-fila${r.uid === uid ? " yo" : ""}"><span class="lp-pos">${i + 4}</span><span class="lp-av sm">${ligaInicial(r.nombre)}</span><span class="lp-mid"><span class="lp-nom">${escHtml(r.nombre)}${r.uid === uid ? " <small>tú</small>" : ""}</span><span class="lp-barra"><i style="width:${Math.round(r.xp / max * 100)}%"></i></span></span><b class="lp-xp">${r.xp}</b></div>`).join("");
 }
 
 async function nubeRender() {
   const box = document.getElementById("nubeBox"); if (!box) return;
-  const u = ctaUsuario();
-  if (!u) { box.hidden = true; box.innerHTML = ""; return; }
   box.hidden = false;
-  box.innerHTML = '<p class="muted" role="status">Cargando tu liga…</p>';
-  let liga = "", grupos = "";
+  const u = ctaUsuario(), fechas = ligaFechas(), miXp = Math.round(weekXp());
+  const cabecera = (sub) => `<div class="lp-hero"><span class="etiq">Semana del ${fechas.rango}</span><div class="lp-num"><b>${miXp}</b><span>XP esta semana</span></div><p class="lp-sub">${sub}</p><span class="lp-dias">Se reinicia en ${fechas.dias} ${fechas.dias === 1 ? "día" : "días"}</span></div>`;
+  if (!u) {
+    box.innerHTML = cabecera("Aún no estás en la liga global") + '<div class="lp-aviso"><b>Juega con todo el mundo</b><p class="muted" style="margin:6px 0 0">Inicia sesión para entrar en la liga global y crear grupos con tus amigos.</p></div>';
+    return;
+  }
+  box.innerHTML = '<p class="muted" role="status">Cargando la liga…</p>';
+  let filas = [], grupos = [], grupoFilas = [], err = "";
   try {
     const f = await nubeFs(), m = f.m, db = f.db, semana = weekStartKey();
     const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.limit(200)));
-    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
-    liga = filas.length ? filas.map((r, i) => `<div class="liga-row${r.uid === nubeE.uid ? " liga-me" : ""}"><span class="pos">${i + 1}º</span><span>${escHtml(r.nombre)}${r.uid === nubeE.uid ? " (tú)" : ""}</span><strong>${r.xp} XP</strong></div>`).join("")
-      : '<p class="muted">Nadie ha publicado esta semana todavía.</p>';
-    for (const c of nubeE.grupos) grupos += await nubeGrupoHtml(f, c, semana);
-  } catch (e) { liga = '<p class="muted">' + escHtml(nubeError(e)) + "</p>"; }
-  const sinPerfil = activeProfile() ? "" : '<p class="muted">Crea un perfil para aparecer en la liga y en los grupos.</p>';
-  box.innerHTML = `
-    <p class="etiq" id="nubeMsg" role="status" style="margin:0 0 10px;min-height:20px">${escHtml(nubeE.msg)}</p>
-    <h3 class="xs-tit">Liga global <span class="muted small">· esta semana</span></h3>${liga}
-    ${grupos ? `<div style="margin-top:14px">${grupos}</div>` : ""}
-    <div class="fila"><label class="etiq" for="nubeCodigo">Unirse a un grupo con código</label>
-      <input id="nubeCodigo" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false">
-      <button class="btn secondary" id="nubeUnirse" type="button">Unirme</button></div>
-    <div class="fila"><label class="etiq" for="nubeNombreGrupo">Crear un grupo de amigos</label>
-      <input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off">
-      <button class="btn secondary" id="nubeCrear" type="button">Crear grupo</button></div>
-    ${sinPerfil}`;
-  // Se lee el texto antes de empezar la acción: la caja se vuelve a dibujar al empezar
+    filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
+    if (nubeE.grupos.length) {
+      grupos = await Promise.all(nubeE.grupos.map(async c => { const g = await m.getDoc(m.doc(db, "grupos", c)); return { c, nombre: g.exists() ? g.data().nombre : "Grupo" }; }));
+      if (!nubeE.grupoVer || !nubeE.grupos.includes(nubeE.grupoVer)) nubeE.grupoVer = nubeE.grupos[0];
+      if (nubeE.vista === "grupos") {
+        const gs = await m.getDocs(m.query(m.collection(db, "grupos", nubeE.grupoVer, "xp"), m.where("semana", "==", semana)));
+        grupoFilas = gs.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
+      }
+    }
+  } catch (e) { err = nubeError(e); }
+  const yo = filas.find(r => r.uid === nubeE.uid), pos = yo ? filas.indexOf(yo) + 1 : 0;
+  const esGrupos = nubeE.vista === "grupos", lista = esGrupos ? grupoFilas : filas;
+  const sub = pos ? `Vas ${pos}º de ${filas.length} en la liga global` : "Aún no estás en la liga global";
+  const tabs = `<div class="lp-seg" role="tablist"><button type="button" role="tab" data-v="global" aria-selected="${!esGrupos}">Global</button><button type="button" role="tab" data-v="grupos" aria-selected="${esGrupos}">Mis grupos${nubeE.grupos.length ? " (" + nubeE.grupos.length + ")" : ""}</button></div>`;
+  const chips = esGrupos && grupos.length ? `<div class="lp-chips">${grupos.map(g => `<button type="button" class="lp-chip${g.c === nubeE.grupoVer ? " on" : ""}" data-g="${escHtml(g.c)}">${escHtml(g.nombre)}<small>${escHtml(g.c)}</small></button>`).join("")}</div>` : "";
+  const vacio = esGrupos ? (nubeE.grupos.length ? "Nadie del grupo ha publicado esta semana todavía." : "Todavía no estás en ningún grupo. Crea uno o únete con un código.") : "Nadie ha publicado esta semana todavía.";
+  const sinPerfil = activeProfile() ? "" : '<p class="muted" style="margin:0">Crea un perfil para aparecer en la liga y en los grupos.</p>';
+  box.innerHTML = cabecera(sub) + tabs + chips
+    + (err ? `<p class="lp-msg">${escHtml(err)}</p>` : "")
+    + `<div class="lp-podio">${ligaPodioHtml(lista, nubeE.uid)}</div><div class="lp-lista">${ligaListaHtml(lista, nubeE.uid, vacio)}</div>`
+    + `<details class="lp-grupos-form"${nubeE.grupos.length ? "" : " open"}><summary>Unirse o crear un grupo</summary>
+        <div class="lp-form">
+          <label for="nubeCodigo">Código de invitación</label>
+          <div class="lp-fila-in"><input id="nubeCodigo" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="ABC123"><button class="btn secondary" id="nubeUnirse" type="button">Unirme</button></div>
+          <label for="nubeNombreGrupo">Crear un grupo</label>
+          <div class="lp-fila-in"><input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off"><button class="btn secondary" id="nubeCrear" type="button">Crear</button></div>
+          ${sinPerfil}
+        </div></details>`
+    + `<p class="lp-msg" id="nubeMsg" role="status">${escHtml(nubeE.msg)}</p>`;
+  box.querySelectorAll(".lp-seg button").forEach(b => b.onclick = () => { nubeE.vista = b.dataset.v; nubeRender(); });
+  box.querySelectorAll(".lp-chip").forEach(b => b.onclick = () => { nubeE.grupoVer = b.dataset.g; nubeRender(); });
   document.getElementById("nubeUnirse").onclick = () => { const v = document.getElementById("nubeCodigo").value; nubeAccion(() => nubeUnirse(v)); };
   document.getElementById("nubeCrear").onclick = () => { const v = document.getElementById("nubeNombreGrupo").value; nubeAccion(() => nubeCrear(v)); };
 }

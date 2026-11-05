@@ -9,9 +9,10 @@ const HTML = process.env.HTML || process.argv[2] || '../../diseno-B-cockpit.html
   for (const dev of ['iPhone 13', 'Pixel 7']) {
     const ctx = await b.newContext({ ...devices[dev] });
     const p = await ctx.newPage(); const errores = []; p.on('pageerror', e => errores.push(e.message));
+    // Sin perfiles la app abre directamente el formulario de creación (entrada sin pasar por la portada)
+    await p.addInitScript(() => { try { sessionStorage.setItem('entro', '1'); } catch (e) {} });
     await p.goto('file://' + require('path').resolve(HTML)); await p.waitForTimeout(900);
-    await p.evaluate(() => document.querySelector('a[data-empezar]')?.click()); await p.waitForTimeout(400);
-    await p.evaluate(() => document.getElementById('pNew')?.click()); await p.waitForTimeout(300);
+    await p.evaluate(() => { document.getElementById('landing')?.classList.add('lp-off'); document.body.classList.remove('lp-open'); }); await p.waitForTimeout(300);
     await p.evaluate(() => { const el = document.getElementById('profiles'); const h = Math.round(innerHeight * 0.55); el.style.top = '0px'; el.style.height = h + 'px'; const i = document.getElementById('pName'); i.value = 'Prueba'; i.focus(); });
     await p.waitForTimeout(300);
     const r = await p.evaluate(() => {

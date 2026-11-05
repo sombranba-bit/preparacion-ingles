@@ -203,7 +203,7 @@ export function renderGame() {
   const semana = ["L", "M", "X", "J", "V", "S", "D"].map((letra, i) => {
     const n = idxHoy - i;                                       // días atrás (negativo = día futuro)
     const hecho = n >= 0 && xpBetween(n, n) > 0;
-    return `<span class="d4-dia${hecho ? " hecho" : ""}${n === 0 ? " hoy" : ""}"><i aria-hidden="true">${hecho ? "✓" : ""}</i>${letra}</span>`;
+    return `<span class="d4-dia${hecho ? " hecho" : ""}${n === 0 ? " hoy" : ""}"><i aria-hidden="true">${hecho ? '<svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg>' : ""}</i>${letra}</span>`;
   }).join("");
   el.innerHTML = `
     <div class="d4-cab">

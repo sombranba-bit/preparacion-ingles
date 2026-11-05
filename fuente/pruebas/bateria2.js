@@ -24,11 +24,12 @@ const safe = async (n, fn) => { try { return await fn(); } catch (e) { ok(n, fal
       await p.waitForTimeout(120);
     }
     ok(`[${label}] recorrer pestañas sin error`, errs.length===0, errs.join(' | '));
-    await safe('ir a Ejercicios', () => p.evaluate(() => [...document.querySelectorAll('#bnav button')].find(x => x.textContent.trim().startsWith('Practicar'))?.click())); await p.waitForTimeout(300);
+    await safe('ir a Ejercicios', () => p.evaluate(() => document.getElementById('cambiarNivel')?.click())); await p.waitForTimeout(300);
     await safe('subpestaña Ejercicios', () => p.evaluate(() => [...document.querySelectorAll('#subtabs .subtab')].find(x => /Ejercicios/.test(x.textContent))?.click()));
     await p.waitForTimeout(200);
     await safe('nivel B1', () => p.evaluate(() => [...document.querySelectorAll('button.lvl')].find(x => /B1/.test(x.textContent))?.click()));
     await safe('sección', () => p.evaluate(() => { const c=document.querySelector('#sectionGrid button, #sectionGrid a'); c&&c.click(); }));
+    await safe('empezar desde la vista previa', () => p.evaluate(() => document.getElementById('previaEmpezar')?.click()));
     await p.waitForSelector('#options .option, #options .fmt-btn, #options input, #options textarea', { timeout: 3000 }).catch(()=>{});
     const nOpt = await p.$$eval('#options .option, #options .fmt-btn, #options input, #options textarea', e=>e.length);
     ok(`[${label}] opciones visibles: ${nOpt}`, nOpt>0);
