@@ -137,6 +137,8 @@ function tiendaEquipar(k, siempre = false) {
 export function renderLogrosPanel() {
   const box = $("logrosBox");
   if (box) box.innerHTML = logrosHtml();
+  const sub = $("logrosSub"), cnt = box?.querySelector(".ach-count");
+  if (sub && cnt) sub.textContent = `Conseguidos ${cnt.textContent}. Toca uno para ver cómo se gana.`;
 }
 
 /* ---------- Pestaña Perfil: avatar, monedas, cambiar o editar perfil ---------- */

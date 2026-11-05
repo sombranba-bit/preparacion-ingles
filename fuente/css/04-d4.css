@@ -1,18 +1,18 @@
 /* Capa D4 (crema y tinta): aplica el lenguaje visual de la maqueta a las clases existentes */
 :root[data-pal="crema"][data-mode="light"]{--radius:22px;--r-md:18px;--r-lg:18px;--r-xl:22px;--grad:var(--accent)}
-body{background-color:#fff8ec;background-image:linear-gradient(to right,rgba(43,127,209,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(43,127,209,.07) 1px,transparent 1px);background-size:24px 24px}
+body{background-color:var(--bg);background-image:linear-gradient(to right,rgba(43,127,209,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(43,127,209,.07) 1px,transparent 1px);background-size:24px 24px}
 header{background:var(--hdr);border-bottom:2px solid var(--line);box-shadow:none;padding:12px 16px}
 .card,.section-btn,.game-hero,.stats>*{border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
 .btn{min-height:52px;border-radius:18px;box-shadow:0 6px 0 var(--accent-lip,#0a4d41);font-weight:800}
 .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #0a4d41}
 .btn.secondary{box-shadow:0 5px 0 var(--line)}
 .lvl{border-radius:999px;box-shadow:0 3px 0 var(--line)}
-.bnav{background:rgba(255,253,248,.96);border-top:2px solid var(--line)}
-.bnav button.on{background:#e0f6f0;color:var(--ok)}
+.bnav{background:color-mix(in srgb,var(--surface) 96%,transparent);border-top:2px solid var(--line)}
+.bnav button.on{background:color-mix(in srgb,var(--ok) 16%,var(--surface));color:var(--ok)}
 
 /* Tipografía D4: Fredoka para títulos y botones, Nunito para el texto */
 :root{--font:Nunito,system-ui,sans-serif;--font-h:Fredoka,Nunito,sans-serif}
-body{font-family:Nunito,system-ui,sans-serif;color:var(--ink,var(--text));-webkit-font-smoothing:antialiased}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
 h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-family:Fredoka,Nunito,sans-serif}
 .lvl,.btn,.section-btn strong{font-weight:700}
 
@@ -36,34 +36,76 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .d4-av{width:56px;height:56px;border-radius:18px;border:2px solid var(--ink,#2a1d14);background:#ffd9a0;display:grid;place-items:center;flex:none;overflow:hidden;box-shadow:inset 0 -3px 0 rgba(42,29,20,.12)}
 .d4-av svg,.d4-av img{width:48px;height:48px}
 .d4-kicker{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:13px;color:var(--muted)}
-.d4-saludo{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:26px;line-height:1.1;color:var(--ink,var(--text))}
+.d4-saludo{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:26px;line-height:1.1;color:var(--text)}
 .d4-pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .d4-pill{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:4px 11px;border-radius:999px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-family:Fredoka,Nunito,sans-serif;font-size:14px}
 .d4-pill b{font-weight:700}
 .d4-hero{display:grid;gap:10px;justify-items:start;padding:18px}
-.d4-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:#f3e6d2;font-weight:800;font-size:13px;color:var(--ink,var(--text))}
-.d4-chip.ok{background:#dcf7ef;color:var(--ok,#0b7a62)}
+.d4-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:color-mix(in srgb,var(--accent2,#d98a0c) 14%,var(--surface2,var(--surface)));font-weight:800;font-size:13px;color:var(--text)}
+.d4-chip.ok{background:color-mix(in srgb,var(--ok,#0b7a62) 18%,var(--surface));color:var(--ok,#0b7a62)}
 .d4-h{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:30px;line-height:1.1;margin:2px 0 0}
 .d4-sub{font-weight:700;font-size:15px;line-height:1.35;color:var(--muted)}
-.d4-bar{width:100%;height:12px;border-radius:7px;background:#f0e2cf;margin:4px 0 6px;box-shadow:none}
+.d4-bar{width:100%;height:12px;border-radius:7px;background:color-mix(in srgb,var(--text) 8%,var(--surface));margin:4px 0 6px;box-shadow:none}
 .d4-bar .xp-fill{background:linear-gradient(90deg,#18a58a,#4fd6b4);border-radius:7px}
-.d4-lip{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;background:#18a58a;color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:19px;border:0;box-shadow:0 6px 0 #0d7a64;cursor:pointer}
-.d4-lip:active{transform:translateY(5px);box-shadow:0 1px 0 #0d7a64}
+.d4-lip{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;background:#0f7f6c;color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:19px;border:0;box-shadow:0 6px 0 #0a5c4d;cursor:pointer}
+.d4-lip:active{transform:translateY(5px);box-shadow:0 1px 0 #0a5c4d}
 .d4-tip{font-size:13px;color:var(--muted);font-weight:700}
 .d4-semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0 6px}
 .d4-dia{display:grid;justify-items:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-size:13px;font-weight:600;color:var(--muted)}
-.d4-dia i{width:30px;height:30px;border-radius:50%;background:#f0e2cf;display:grid;place-items:center;font-style:normal;font-size:14px}
-.d4-dia.hecho i{background:#ffb22e;box-shadow:0 2px 0 #d98a0c;color:#2a1d14}
+.d4-dia i{width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--text) 8%,var(--surface));display:grid;place-items:center;font-style:normal;font-size:14px}
+.d4-dia.hecho i{background:#ffb22e;box-shadow:0 2px 0 #d98a0c;color:var(--text)}
 .d4-dia.hoy i{background:var(--card,#fffdf8);border:3px solid #18a58a}
-.d4-dia.hoy{color:var(--ink,var(--text))}
+.d4-dia.hoy{color:var(--text)}
 .d4-seccion{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px;margin:20px 0 10px}
 .d4-filas{display:grid;gap:10px}
 .d4-fila{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 4px 0 var(--line);text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit}
 .d4-fila:disabled{opacity:.6;cursor:default}
 .d4-fila b{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:16px;display:block}
 .d4-fila small{font-size:12px;color:var(--muted);font-weight:800}
-.d4-ico{width:46px;height:46px;border-radius:14px;background:#e8f3ff;display:grid;place-items:center;font-size:22px}
-.d4-n{width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:0 3px 0 #d98a0c;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;color:#2a1d14}
+.d4-ico{width:46px;height:46px;border-radius:14px;background:color-mix(in srgb,#2b7fd1 16%,var(--surface));display:grid;place-items:center;font-size:22px}
+.d4-n{color:#2a1d14;width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:0 3px 0 #d98a0c;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;color:var(--text)}
 .d4-rango{margin-top:14px;display:grid;gap:8px}
 .d4-rango .gp-head{display:flex;justify-content:space-between;gap:8px;font-size:14px}
-.d4-h,.d4-saludo{color:#2a1d14}
+.d4-h,.d4-saludo{color:var(--text)}
+
+/* ===== Sellos y perfil D4 ===== */
+.d4-title{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:34px;line-height:1.1;margin:6px 0 4px;color:var(--text)}
+.ach-panel{background:none;border:0;box-shadow:none;padding:0}
+.ach-panel .ach-head{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
+.ach-panel .ach-head h3{font-family:Fredoka,Nunito,sans-serif;font-size:18px}
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;list-style:none;padding:0;margin:0}
+.ach-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 10px;border-radius:24px;background:var(--surface);border:3px solid var(--line);box-shadow:0 5px 0 var(--line);transform:none}
+.ach-item.ok{background:color-mix(in srgb,#ffd166 20%,var(--surface));border-color:#ffd166;box-shadow:0 5px 0 #e7ac2a}
+.ach-item.ok:nth-child(odd){transform:rotate(-2deg)}
+.ach-item.ok:nth-child(even){transform:rotate(2deg)}
+.ach-item:not(.ok){opacity:.6}
+.ach-txt{display:grid;gap:2px}
+.ach-txt b,.ach-txt strong{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:15px;line-height:1.15}
+.ach-state{font-size:12px;color:var(--muted);font-weight:800}
+.ach-item.ok .ach-state{color:var(--ok,#0b7a62)}
+.ach-streak{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px}
+.ach-streak-lbl{font-family:Fredoka,Nunito,sans-serif;font-weight:600;color:var(--muted);margin-right:4px}
+#p-perfil .perfil-card{text-align:center;display:grid;justify-items:center;gap:12px;padding:22px}
+#p-perfil .perfil-av{width:132px;height:132px;border-radius:38px;border:3px solid #2a1d14;background:#ffd9a0;display:grid;place-items:center;box-shadow:0 7px 0 #2a1d14}
+#p-perfil .perfil-nombre{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:28px;margin:4px 0 0;color:var(--text)}
+#p-perfil .perfil-card .btn{min-height:52px;border-radius:18px}
+
+/* ===== Ejercicio D4 ===== */
+#exercise .question{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:28px;line-height:1.2;margin:14px 0 16px;color:var(--text)}
+#exercise .counter{font-family:Fredoka,Nunito,sans-serif;font-weight:600}
+#exercise .progress{height:16px;border-radius:8px;background:#f0e2cf;box-shadow:none}
+#exercise .progress>div{background:linear-gradient(90deg,#18a58a,#4fd6b4);border-radius:8px}
+#exercise #checkBtn{background:#0f7f6c;color:#fff;box-shadow:0 6px 0 #0a5c4d;min-height:56px;border-radius:18px;font-family:Fredoka,Nunito,sans-serif;font-size:19px}
+#exercise #nextBtn{background:#ffb22e;color:#2a1d14;box-shadow:0 6px 0 #d98a0c;min-height:56px;border-radius:18px;font-family:Fredoka,Nunito,sans-serif;font-size:19px}
+#exercise .feedback{border-radius:20px;padding:16px;border:2px solid var(--line);background:var(--card,#fffdf8)}
+#exercise .feedback.ok{background:color-mix(in srgb,#18a58a 18%,var(--surface));border-color:#18a58a}
+#exercise .feedback.bad{background:color-mix(in srgb,#e5484d 16%,var(--surface));border-color:#e5484d}
+#exercise .feedback h3{font-family:Fredoka,Nunito,sans-serif;font-size:22px}
+
+/* ===== Tienda D4 ===== */
+.t-saldo,.t-saldo *{color:var(--text);font-family:Fredoka,Nunito,sans-serif}
+.section-title{font-family:Fredoka,Nunito,sans-serif;text-transform:none;letter-spacing:0;font-size:19px;font-weight:600;color:var(--text)}
+.btn-mini{background:#18a58a;color:#fff;box-shadow:0 4px 0 #0d7a64;font-family:Fredoka,Nunito,sans-serif;border-radius:16px;font-size:16px}
+.btn-mini.tuyo{background:#f3e6d2;color:#7a6656;box-shadow:none}
+
+.d4-fila .d4-n{color:#2a1d14}
