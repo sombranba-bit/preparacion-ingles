@@ -18,6 +18,14 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['datos', 'actualizado', 'grupos'])
         && (!('datos' in request.resource.data) || (request.resource.data.datos is string && request.resource.data.datos.size() < 900000))
         && (!('grupos' in request.resource.data) || request.resource.data.grupos is list);
+
+      // Copias de seguridad: se crean y se leen, nunca se modifican ni se borran desde la app
+      match /copias/{semana} {
+        allow read: if firmado() && request.auth.uid == uid;
+        allow create: if firmado() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['datos', 'creada', 'semana'])
+          && request.resource.data.datos is string && request.resource.data.datos.size() < 900000;
+      }
     }
 
     // Liga semanal global: todas las personas registradas la ven; cada una escribe solo su fila

@@ -159,6 +159,7 @@ export function profilesInit() {
   $("pcCancel").onclick = () => profileOpenList();
   $("pcOk").onclick = profileDoDelete;
   $("pBorrarTodo").onclick = () => document.dispatchEvent(new Event("borrar-datos"));
+  $("pCopias").onclick = () => document.dispatchEvent(new Event("copias-ver"));
   $("pCancel").onclick = () => profileOpenList();
   $("pClose").onclick = () => profileShow(false);
   $("pCreate").onclick = profileCreate;

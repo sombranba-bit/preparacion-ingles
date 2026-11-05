@@ -7,7 +7,7 @@ import { ctaFbApp, ctaImportarUrl, ctaUsuario } from "./11-cuentas.js";
 
 // Claves de este navegador que no se suben a la cuenta: ajustes del dispositivo y copias locales
 const NUBE_NO_SUBIR = /^(modo-invitado|lpTheme|ui-|copia-auto|copia-antes-de-sincronizar|firebase:)/;
-const nubeE = { uid: null, listo: false, ultimo: "", grupos: [], msg: "", ocupado: false, accion: false, fs: null, vista: "global", grupoVer: null };
+const nubeE = { uid: null, listo: false, ultimo: "", grupos: [], msg: "", ocupado: false, accion: false, fs: null, vista: "global", grupoVer: null, copiaSemana: "" };
 
 // Todo el progreso de este navegador (todos los perfiles), en orden fijo para poder compararlo
 function nubeInstantanea() {
@@ -62,6 +62,7 @@ async function nubeSubir() {
     const f = await nubeFs(), m = f.m;
     await m.setDoc(m.doc(f.db, "usuarios", nubeE.uid), { datos: txt, actualizado: m.serverTimestamp() }, { merge: true });
     nubeE.ultimo = txt;
+    await nubeCopiaSemanal(f, txt);
     await nubePublicar(f);
   } catch (e) { nubeE.msg = "No se pudo guardar en la nube: " + nubeError(e); nubeRender(); }
   finally { nubeE.ocupado = false; }
@@ -174,6 +175,48 @@ async function nubeAccion(fn) {
   try { nubeE.msg = await nubeConTiempo(fn()); } catch (e) { nubeE.msg = nubeError(e); }
   finally { nubeE.accion = false; nubeRender(); }
 }
+
+/* ---------- Copias: una al semana, aparte de la copia actual (no se sobrescriben) ---------- */
+async function nubeCopiaSemanal(f, txt) {
+  const m = f.m, semana = weekStartKey();
+  if (nubeE.copiaSemana === semana) return;
+  const ref = m.doc(f.db, "usuarios", nubeE.uid, "copias", semana);
+  if (!(await m.getDoc(ref)).exists()) await m.setDoc(ref, { datos: txt, creada: m.serverTimestamp(), semana });
+  nubeE.copiaSemana = semana;
+}
+async function nubeCopiaAhora(motivo) {
+  const f = await nubeFs(), m = f.m;
+  const id = motivo + "-" + Date.now();
+  await m.setDoc(m.doc(f.db, "usuarios", nubeE.uid, "copias", id), { datos: JSON.stringify(nubeInstantanea()), creada: m.serverTimestamp(), semana: id });
+}
+async function nubeCopias() {
+  const box = document.getElementById("nubeCopias"); if (!box) return;
+  box.hidden = false;
+  if (!nubeE.uid) { box.innerHTML = '<p class="muted" style="margin:10px 0 0">Inicia sesión para ver las copias de tu cuenta.</p>'; return; }
+  box.innerHTML = '<p class="muted" style="margin:10px 0 0">Cargando copias…</p>';
+  try {
+    const f = await nubeFs(), m = f.m;
+    const snap = await m.getDocs(m.collection(f.db, "usuarios", nubeE.uid, "copias"));
+    const lista = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.creada?.seconds || 0) - (a.creada?.seconds || 0));
+    box.innerHTML = '<h3 class="xs-tit" style="margin:12px 0 6px">Copias en la nube</h3>' + (lista.length
+      ? lista.map(c => `<div class="lp-fila"><span></span><span></span><span class="lp-mid"><span class="lp-nom">${escHtml(c.semana)}</span><span class="muted" style="font-size:12px">${c.creada ? new Date(c.creada.seconds * 1000).toLocaleString("es-ES") : ""}</span></span><button class="btn secondary" type="button" data-copia="${escHtml(c.id)}">Restaurar</button></div>`).join("")
+      : '<p class="muted">Todavía no hay copias. Se crea una cada semana al jugar.</p>');
+    box.querySelectorAll("[data-copia]").forEach(b => b.onclick = () => nubeRestaurar(lista.find(c => c.id === b.dataset.copia)));
+  } catch (e) { box.innerHTML = '<p class="muted">' + escHtml(nubeError(e)) + "</p>"; }
+}
+async function nubeRestaurar(c) {
+  if (!c || !confirm("¿Restaurar la copia de " + c.semana + "? Sustituye el progreso actual de este navegador y de tu cuenta. Antes se guarda una copia del estado actual.")) return;
+  try {
+    await nubeCopiaAhora("antes-de-restaurar");
+    const f = await nubeFs(), m = f.m;
+    await m.setDoc(m.doc(f.db, "usuarios", nubeE.uid), { datos: c.datos, actualizado: m.serverTimestamp() }, { merge: true });
+    RAW_LS.setItem("copia-antes-de-sincronizar", JSON.stringify(nubeInstantanea()));
+    nubeAplicar(JSON.parse(c.datos));
+    nubeE.ultimo = c.datos;
+  } catch (e) { alert("No se pudo restaurar: " + nubeError(e)); return; }
+  location.reload();
+}
+document.addEventListener("copias-ver", () => { nubeCopias(); });
 
 /* ---------- Liga: pantalla ---------- */
 function ligaFechas() {
