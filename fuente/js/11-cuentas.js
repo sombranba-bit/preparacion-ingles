@@ -31,7 +31,12 @@ async function ctaCargarSdk() {
   const app = appMod.initializeApp(CTA_CONFIG, "ready4exam");
   const auth = authMod.getAuth(app);
   ctaE().fb = { auth, authMod, provider: new authMod.GoogleAuthProvider(), app };
-  authMod.onAuthStateChanged(auth, u => { ctaE().user = u; ctaE().msg = ""; renderCuenta(); document.dispatchEvent(new Event("cuenta-cambio")); });
+  authMod.onAuthStateChanged(auth, u => {
+    ctaE().user = u; ctaE().msg = ""; renderCuenta(); document.dispatchEvent(new Event("cuenta-cambio"));
+    // sesión ya iniciada al abrir la página: entrar directo a la app, sin quedarse en la portada
+    let entro = false; try { entro = !!sessionStorage.getItem("entro"); } catch (e) {}
+    if (u && !entro) ctaTrasEntrar();
+  });
   return ctaE().fb;
 }
 
