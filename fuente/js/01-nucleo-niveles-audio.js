@@ -428,8 +428,9 @@ export function renderLevels() {
     if (bloqueado) b.classList.add("bloqueado");
     b.onclick = () => {
       if (bloqueado) {   // invitado: pedir cuenta para A2 y superiores
-        document.querySelector('#bnav button[data-area="perfil"]')?.click();
-        setTimeout(() => { const n = document.getElementById("nivelNota"); if (n) n.textContent = "Para practicar " + lv + " crea una cuenta o entra con la tuya. Con el modo invitado solo está disponible A1."; }, 150);
+        const portada = document.getElementById("lpElige");   // la portada ofrece crear cuenta o entrar
+        if (portada) portada.hidden = false;
+        document.querySelector("[data-inicio]")?.click();
         return;
       }
       currentLevel = lv; renderLevels(); renderHome();

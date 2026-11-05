@@ -1,4 +1,5 @@
 import { RAW_LS } from "../01-nucleo-niveles-audio.js";
+import { renderCuenta } from "../11-cuentas.js";
 import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js";
 // Portada: aparece siempre al abrir. "Empezar" entra con el perfil guardado o lleva a crear el avatar.
 (function () {
@@ -25,11 +26,9 @@ import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js
     const m = b.dataset.cuenta;
     if (m === "invitado") { try { RAW_LS.setItem("modo-invitado", "1"); } catch (e) {} entrarApp(); return; }
     try { RAW_LS.removeItem("modo-invitado"); } catch (e) {}
-    // crear o entrar: vamos al apartado Cuenta de Perfil con el correo listo para escribir
-    entrarApp();
-    const perfil = document.querySelector('#bnav button[data-area="perfil"]');
-    if (perfil) perfil.click();
-    setTimeout(() => { const c = document.getElementById("cuentaBox"); if (c) c.scrollIntoView({ block: "start" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }, 300);
+    // crear o entrar: el formulario aparece aquí mismo, en la portada
+    const caja = document.getElementById("cuentaBox");
+    if (caja) { caja.hidden = false; renderCuenta(); caja.scrollIntoView({ block: "center" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }
   }));
   document.querySelectorAll("[data-inicio]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); abrir(); }));
   document.addEventListener("click", e => { if (e.target.closest("#homeBtn")) abrir(); });  // botón de la app (se crea dinámicamente)

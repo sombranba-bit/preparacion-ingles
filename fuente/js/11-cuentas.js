@@ -1,7 +1,7 @@
 // Cuentas: inicio de sesión con Google o correo (Firebase Auth). El SDK se carga solo al pulsar "Entrar".
 // Sin sesión, la app sigue funcionando igual, guardando en este navegador.
 import { $ } from "./01-nucleo-niveles-audio.js";
-import { escHtml } from "./03-perfiles.js";
+import { escHtml, getProfiles, profileOpenForm } from "./03-perfiles.js";
 
 const CTA_VERSION = "11.0.2";
 const CTA_BASE = "https://cdn.jsdelivr.net/npm/firebase@" + CTA_VERSION;
@@ -47,10 +47,18 @@ function ctaTraducir(e) {
   return t[c] || "No se pudo iniciar sesión. Inténtalo otra vez.";
 }
 
+// Tras entrar o registrarse por primera vez: cerrar la portada y pedir crear el perfil si no hay ninguno.
+function ctaTrasEntrar() {
+  const port = document.getElementById("landing");
+  if (port) { port.classList.add("lp-off"); document.body.classList.remove("lp-open"); }
+  try { sessionStorage.setItem("entro", "1"); } catch (e) {}
+  if (getProfiles().length === 0) profileOpenForm(true);
+}
+
 async function ctaAccion(fn) {
   if (ctaE().busy) return;
   ctaE().busy = true; ctaE().msg = "Conectando…"; renderCuenta();
-  try { await fn(); }
+  try { await fn(); if (ctaE().user) ctaTrasEntrar(); }
   catch (e) { ctaE().msg = ctaTraducir(e); }
   finally { ctaE().busy = false; renderCuenta(); }
 }
@@ -58,7 +66,8 @@ async function ctaAccion(fn) {
 export function entrarGoogle() {
   return ctaAccion(async () => {
     const fb = await ctaCargar();
-    await fb.authMod.signInWithPopup(fb.auth, fb.provider);
+    const r = await fb.authMod.signInWithPopup(fb.auth, fb.provider);
+    ctaE().user = r.user;
   });
 }
 
@@ -68,8 +77,8 @@ export function entrarCorreo(crear) {
   if (!email) { ctaE().msg = "Escribe tu correo."; renderCuenta(); return; }
   return ctaAccion(async () => {
     const fb = await ctaCargar();
-    if (crear) await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass);
-    else await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
+    const r = crear ? await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass) : await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
+    ctaE().user = r.user;
   });
 }
 
@@ -82,7 +91,7 @@ export function salirCuenta() {
 
 export function renderCuenta() {
   const box = $("cuentaBox");
-  if (!box) return;
+  if (!box) return;   // el formulario vive en la portada (pantalla de inicio)
   if (ctaE().user) {
     box.innerHTML = `<span class="etiq">Cuenta</span>
       <p class="d4-sub" style="margin:6px 0 12px">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>. Tu progreso se guardará en esta cuenta.</p>

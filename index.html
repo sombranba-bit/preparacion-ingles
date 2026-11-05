@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-tfZgfr3vm6M1xLb2Q+hUWHjdLbnIHGs+9fvHqRFZvN0=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-hesTfFrK43kzUlAVOQjtJMrsHNyK7LSV2nSLdOKhTjQ=' https://cdn.jsdelivr.net/npm/firebase@11.0.2/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-MN/n1oxd+/PHFLTT+JbfsOgNbsWDZ35QoX3o5Gw9xUY=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-ZB6h5jdcVXS94bdspb4vlnjIAlHzJWXYNa3Sly+KXPQ=' https://cdn.jsdelivr.net/npm/firebase@11.0.2/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1184,6 +1184,9 @@ header{display:none}
 .lp-elige .lp-btn{width:100%;text-align:center;border:0;cursor:pointer;font:inherit}
 .lp-elige button.lp-link{background:none;border:0;padding:6px 0;font:inherit;font-weight:700;color:#0a5c4d;cursor:pointer;text-align:left}
 .lp-elige button.lp-link:focus-visible,.lp-elige .lp-btn:focus-visible{outline:3px solid #0a5c4d;outline-offset:3px}
+
+.lp-cuenta{display:grid;gap:8px;width:100%;margin-top:6px;padding:14px;border-radius:18px;background:#fffdf8;border:2px solid #ecd9c0}
+.lp-cuenta[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -1214,6 +1217,7 @@ header{display:none}
         <button class="lp-btn" type="button" data-cuenta="crear">Crear cuenta</button>
         <button class="lp-link" type="button" data-cuenta="entrar">Ya tengo cuenta</button>
         <button class="lp-link" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
+        <div class="lp-cuenta" id="cuentaBox" hidden></div>
       </div>
     </div>
     <div class="lp-art lp-car" role="region" aria-roledescription="carrusel" aria-label="Ejemplos de ejercicios">
@@ -1563,8 +1567,6 @@ header{display:none}
       <span class="etiq">Color de fondo</span>
       <div class="bol-fila" id="cols"></div>
     </div>
-
-    <div class="bloque card ajuste" id="cuentaBox" style="margin-top:18px"></div>
 
     <div class="bloque card ajuste" style="margin-top:18px">
       <span class="etiq">Idioma de las explicaciones</span>
@@ -2445,8 +2447,9 @@ function renderLevels() {
     if (bloqueado) b.classList.add("bloqueado");
     b.onclick = () => {
       if (bloqueado) {   // invitado: pedir cuenta para A2 y superiores
-        document.querySelector('#bnav button[data-area="perfil"]')?.click();
-        setTimeout(() => { const n = document.getElementById("nivelNota"); if (n) n.textContent = "Para practicar " + lv + " crea una cuenta o entra con la tuya. Con el modo invitado solo está disponible A1."; }, 150);
+        const portada = document.getElementById("lpElige");   // la portada ofrece crear cuenta o entrar
+        if (portada) portada.hidden = false;
+        document.querySelector("[data-inicio]")?.click();
         return;
       }
       currentLevel = lv; renderLevels(); renderHome();
@@ -8860,7 +8863,8 @@ function renderPerfilPanel() {
       cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
     });
   }
-  renderCuenta();
+  const sesion = window.ctaEstado && window.ctaEstado.user;
+  if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
   idiomas.forEach(([id, key, def]) => {
     const seg = $(id);
@@ -8928,10 +8932,18 @@ function ctaTraducir(e) {
   return t[c] || "No se pudo iniciar sesión. Inténtalo otra vez.";
 }
 
+// Tras entrar o registrarse por primera vez: cerrar la portada y pedir crear el perfil si no hay ninguno.
+function ctaTrasEntrar() {
+  const port = document.getElementById("landing");
+  if (port) { port.classList.add("lp-off"); document.body.classList.remove("lp-open"); }
+  try { sessionStorage.setItem("entro", "1"); } catch (e) {}
+  if (getProfiles().length === 0) profileOpenForm(true);
+}
+
 async function ctaAccion(fn) {
   if (ctaE().busy) return;
   ctaE().busy = true; ctaE().msg = "Conectando…"; renderCuenta();
-  try { await fn(); }
+  try { await fn(); if (ctaE().user) ctaTrasEntrar(); }
   catch (e) { ctaE().msg = ctaTraducir(e); }
   finally { ctaE().busy = false; renderCuenta(); }
 }
@@ -8939,7 +8951,8 @@ async function ctaAccion(fn) {
 function entrarGoogle() {
   return ctaAccion(async () => {
     const fb = await ctaCargar();
-    await fb.authMod.signInWithPopup(fb.auth, fb.provider);
+    const r = await fb.authMod.signInWithPopup(fb.auth, fb.provider);
+    ctaE().user = r.user;
   });
 }
 
@@ -8949,8 +8962,8 @@ function entrarCorreo(crear) {
   if (!email) { ctaE().msg = "Escribe tu correo."; renderCuenta(); return; }
   return ctaAccion(async () => {
     const fb = await ctaCargar();
-    if (crear) await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass);
-    else await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
+    const r = crear ? await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass) : await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
+    ctaE().user = r.user;
   });
 }
 
@@ -8963,7 +8976,7 @@ function salirCuenta() {
 
 function renderCuenta() {
   const box = $("cuentaBox");
-  if (!box) return;
+  if (!box) return;   // el formulario vive en la portada (pantalla de inicio)
   if (ctaE().user) {
     box.innerHTML = `<span class="etiq">Cuenta</span>
       <p class="d4-sub" style="margin:6px 0 12px">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>. Tu progreso se guardará en esta cuenta.</p>
@@ -9148,11 +9161,9 @@ try { cuentaInicializar(); } catch(e){}
     const m = b.dataset.cuenta;
     if (m === "invitado") { try { RAW_LS.setItem("modo-invitado", "1"); } catch (e) {} entrarApp(); return; }
     try { RAW_LS.removeItem("modo-invitado"); } catch (e) {}
-    // crear o entrar: vamos al apartado Cuenta de Perfil con el correo listo para escribir
-    entrarApp();
-    const perfil = document.querySelector('#bnav button[data-area="perfil"]');
-    if (perfil) perfil.click();
-    setTimeout(() => { const c = document.getElementById("cuentaBox"); if (c) c.scrollIntoView({ block: "start" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }, 300);
+    // crear o entrar: el formulario aparece aquí mismo, en la portada
+    const caja = document.getElementById("cuentaBox");
+    if (caja) { caja.hidden = false; renderCuenta(); caja.scrollIntoView({ block: "center" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }
   }));
   document.querySelectorAll("[data-inicio]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); abrir(); }));
   document.addEventListener("click", e => { if (e.target.closest("#homeBtn")) abrir(); });  // botón de la app (se crea dinámicamente)

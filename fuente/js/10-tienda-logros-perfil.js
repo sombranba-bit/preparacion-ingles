@@ -6,7 +6,7 @@ import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
 import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx } from "./00-personajes-d4.js";
 import { infoSellosHtml, lsGet, lsSet } from "./02-progreso-xp-racha-mascota.js";
-import { renderCuenta, cuentaInicializar } from "./11-cuentas.js";
+import { salirCuenta } from "./11-cuentas.js";
 
 const COIN = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg>`;
 const LOCK = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-candado"/></svg>`;
@@ -192,7 +192,8 @@ export function renderPerfilPanel() {
       cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
     });
   }
-  renderCuenta();
+  const sesion = window.ctaEstado && window.ctaEstado.user;
+  if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
   idiomas.forEach(([id, key, def]) => {
     const seg = $(id);
