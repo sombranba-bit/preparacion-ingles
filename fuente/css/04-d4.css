@@ -130,3 +130,7 @@ header{display:none}
 .d4-niveles{margin:4px 0 14px;flex-wrap:wrap}
 .d4-cambio{background:none;border:0;color:var(--accent,#0f7f6c);font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:0}
 .section-btn::before,.section-btn::after{display:none}
+
+/* Ejercicio: salir como botón redondo con × (el texto queda para lectores de pantalla) */
+#exercise #backBtn{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;font-size:0;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);display:inline-grid;place-items:center}
+#exercise #backBtn::before{content:"✕";font-size:18px;font-weight:800;color:var(--text)}
