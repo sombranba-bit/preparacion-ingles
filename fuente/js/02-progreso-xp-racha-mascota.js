@@ -169,6 +169,9 @@ export function infoSellosHtml() {
       <p class="muted small" id="clockTxt">${cardClockTxt()}</p>
       <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
       <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
+      <p class="muted small gp-foot">${weekTxt}</p>
+      <p class="muted small">Escudos: ${(s.freezeLeft ? 1 : 0) + rewards().shields} · Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
+      <p class="muted small">${TIPS[Math.floor(Date.now() / 86400000) % TIPS.length]}</p>
     </div>`;
 }
 export function renderGame() {
@@ -205,7 +208,7 @@ export function renderGame() {
   el.innerHTML = `
     <div class="d4-cab">
       <div class="d4-quien"><div class="d4-av" id="mSlotHome"></div>
-        <div><p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
+        <div><p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p><p class="d4-sub">${LEVELS[currentLevel].desc}</p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
       <div class="d4-pills">
         <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
       </div>
@@ -214,6 +217,7 @@ export function renderGame() {
       <span class="d4-chip ok">Hoy · ${today} de ${DAILY_GOAL} XP</span>
       <h2 class="d4-h">Practicar ahora</h2>
       <p class="d4-sub gh-main">${heroMain}</p>
+      <p class="d4-sub">${heroTip}</p>
       <div class="xp-track d4-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${DAILY_GOAL}" aria-valuenow="${today}" aria-label="Objetivo diario de XP"><div class="xp-fill" style="width:${goalPct}%"></div></div>
       <button class="d4-lip" id="empezarBtn" type="button">Empezar</button>
     </div>
