@@ -1207,6 +1207,14 @@ header{display:none}
 #landing #lpElige .lp-x:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 @keyframes lp-subir{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){#landing #lpElige{animation:none}}
+
+/* Portada: funciones en lista clara, pie con el mismo criterio */
+#landing .lp-sec{font-size:var(--fs-xl);font-weight:700;margin:0 0 12px;color:var(--ink)}
+#landing .lp-features{display:grid;gap:12px;margin:28px 0 8px}
+#landing .lp-feat{display:grid;grid-template-columns:44px 1fr;gap:2px 14px;align-items:start;padding:18px}
+#landing .lp-feat .lp-ico{grid-row:span 2}
+#landing .lp-feat p{margin:0}
+#landing .lp-foot{margin-top:24px}
 </style>
 </head>
 <body>
@@ -1295,7 +1303,8 @@ header{display:none}
       </div>
     </div>
   </section>
-  <section id="funciones" class="lp-features" aria-label="Funciones">
+  <section id="funciones" class="lp-features" aria-labelledby="lpQueIncluye">
+    <h2 class="lp-sec" id="lpQueIncluye">Qué incluye</h2>
     <div class="lp-feat"><div class="lp-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg></div>
       <div class="lp-h3">Exámenes oficiales</div>
       <p>Ejercicios con la estructura de Cambridge, EOI y TOEFL: transformación de palabras, texto con huecos, redacción y expresión oral.</p></div>
@@ -1304,10 +1313,10 @@ header{display:none}
       <p>Escucha y repite frases, con reconocimiento de voz en los navegadores compatibles para comprobar tu pronunciación.</p></div>
     <div class="lp-feat"><div class="lp-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></svg></div>
       <div class="lp-h3">Repaso y progreso</div>
-      <p>Tus fallos vuelven a 1, 3, 7 y 14 días. Suma XP, mantén la racha y compara tu semana con tus amigos.</p></div>
+      <p>Tus fallos vuelven a 1, 3, 7 y 14 días. Suma XP, mantén la racha y compara tu semana en la liga.</p></div>
   </section>
 </div>
-<div class="lp-foot"><div class="lp-wrap">Tu progreso se guarda en este dispositivo. Sin cuentas.</div></div>
+<div class="lp-foot"><div class="lp-wrap">Tu progreso se guarda en este dispositivo, o en tu cuenta si entras con una.</div></div>
 </div>
 
 <header>
