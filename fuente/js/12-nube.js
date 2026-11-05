@@ -192,6 +192,7 @@ async function nubeRender() {
       <input id="nubeNombreGrupo" maxlength="30" placeholder="Nombre del grupo" autocomplete="off">
       <button class="btn secondary" id="nubeCrear" type="button">Crear grupo</button></div>
     ${sinPerfil}`;
-  document.getElementById("nubeUnirse").onclick = () => nubeAccion(() => nubeUnirse(document.getElementById("nubeCodigo").value));
-  document.getElementById("nubeCrear").onclick = () => nubeAccion(() => nubeCrear(document.getElementById("nubeNombreGrupo").value));
+  // Se lee el texto antes de empezar la acción: la caja se vuelve a dibujar al empezar
+  document.getElementById("nubeUnirse").onclick = () => { const v = document.getElementById("nubeCodigo").value; nubeAccion(() => nubeUnirse(v)); };
+  document.getElementById("nubeCrear").onclick = () => { const v = document.getElementById("nubeNombreGrupo").value; nubeAccion(() => nubeCrear(v)); };
 }
