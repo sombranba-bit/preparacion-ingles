@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1/embZ74ikyAQ7ysFAPMDdCSyn/Bo7jZezj6yWq0L1I=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-WdqFxCVk7s3Dd2YCClQ8PwxDVFUyXQJ/45lew+Gy9zA=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jk2xx9oFcKhhMWwpqdM3l3X96DGcMGk2i1MpiPEiDZM=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-WdqFxCVk7s3Dd2YCClQ8PwxDVFUyXQJ/45lew+Gy9zA=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -8846,6 +8846,9 @@ function renderLogrosPanel() {
   const ri = $("rankInfo"); if (ri) ri.innerHTML = infoSellosHtml();
 }
 
+// Al entrar o salir de la cuenta, Perfil se vuelve a pintar (para mostrar o quitar "Cerrar sesión").
+document.addEventListener("cuenta-cambio", () => renderPerfilPanel());
+
 /* ---------- Perfil: personaje, color, nivel y tienda ---------- */
 function renderPerfilPanel() {
   const box = $("perfilCab");
@@ -8924,7 +8927,7 @@ async function ctaCargarSdk() {
   const app = appMod.initializeApp(CTA_CONFIG, "ready4exam");
   const auth = authMod.getAuth(app);
   ctaE().fb = { auth, authMod, provider: new authMod.GoogleAuthProvider() };
-  authMod.onAuthStateChanged(auth, u => { ctaE().user = u; ctaE().msg = ""; renderCuenta(); });
+  authMod.onAuthStateChanged(auth, u => { ctaE().user = u; ctaE().msg = ""; renderCuenta(); document.dispatchEvent(new Event("cuenta-cambio")); });
   return ctaE().fb;
 }
 

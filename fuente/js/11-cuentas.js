@@ -31,7 +31,7 @@ async function ctaCargarSdk() {
   const app = appMod.initializeApp(CTA_CONFIG, "ready4exam");
   const auth = authMod.getAuth(app);
   ctaE().fb = { auth, authMod, provider: new authMod.GoogleAuthProvider() };
-  authMod.onAuthStateChanged(auth, u => { ctaE().user = u; ctaE().msg = ""; renderCuenta(); });
+  authMod.onAuthStateChanged(auth, u => { ctaE().user = u; ctaE().msg = ""; renderCuenta(); document.dispatchEvent(new Event("cuenta-cambio")); });
   return ctaE().fb;
 }
 

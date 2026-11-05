@@ -167,6 +167,9 @@ export function renderLogrosPanel() {
   const ri = $("rankInfo"); if (ri) ri.innerHTML = infoSellosHtml();
 }
 
+// Al entrar o salir de la cuenta, Perfil se vuelve a pintar (para mostrar o quitar "Cerrar sesión").
+document.addEventListener("cuenta-cambio", () => renderPerfilPanel());
+
 /* ---------- Perfil: personaje, color, nivel y tienda ---------- */
 export function renderPerfilPanel() {
   const box = $("perfilCab");
