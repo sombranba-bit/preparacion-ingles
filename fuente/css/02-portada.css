@@ -13,6 +13,7 @@ body.lp-open{display:block !important;grid-template-columns:none !important;grid
 #landing .lp-top{position:relative;z-index:10}
 #landing .lp-top .lp-wrap{display:flex;align-items:center;gap:12px;padding-top:18px}
 #landing .lp-top .brand-mark{width:30px;height:30px}
+#landing .lp-marca{font:800 18px/1 var(--font);letter-spacing:-.02em;color:var(--ink);margin-right:auto;align-self:center}
 #landing .lp-theme{margin-left:auto;border:1px solid var(--rule);background:var(--card);color:var(--ink);font:inherit;font-size:var(--fs-sm);font-weight:600;padding:7px 12px;border-radius:var(--r-md);cursor:pointer;transition:border-color .2s ease,transform .15s ease}
 #landing .lp-theme:active{transform:scale(.97)}
 @media (hover:hover) and (pointer:fine){#landing .lp-theme:hover{border-color:var(--acc)}}
