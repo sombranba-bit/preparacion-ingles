@@ -1,5 +1,5 @@
 import { RAW_LS } from "../01-nucleo-niveles-audio.js";
-import { renderCuenta } from "../11-cuentas.js";
+import { renderCuenta, ctaSetModo } from "../11-cuentas.js";
 import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js";
 // Portada: aparece siempre al abrir. "Empezar" entra con el perfil guardado o lleva a crear el avatar.
 (function () {
@@ -28,7 +28,7 @@ import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js
     try { RAW_LS.removeItem("modo-invitado"); } catch (e) {}
     // crear o entrar: el formulario aparece aquí mismo, en la portada
     const caja = document.getElementById("cuentaBox");
-    if (caja) { caja.hidden = false; renderCuenta(); caja.scrollIntoView({ block: "center" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }
+    if (caja) { caja.hidden = false; ctaSetModo(m); renderCuenta(); caja.scrollIntoView({ block: "center" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }
   }));
   document.querySelectorAll("[data-inicio]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); abrir(); }));
   document.addEventListener("click", e => { if (e.target.closest("#homeBtn")) abrir(); });  // botón de la app (se crea dinámicamente)

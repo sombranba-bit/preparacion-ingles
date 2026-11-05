@@ -89,34 +89,38 @@ export function salirCuenta() {
   });
 }
 
+const CTA_GOOGLE = '<svg class="cta-ico" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>';
+const CTA_MAIL = '<svg class="cta-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3" fill="#0a5c4d"/><path d="M3.5 7.5l8.5 6 8.5-6" stroke="#fffdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+export function ctaSetModo(m) { ctaE().modo = m === "crear" ? "crear" : "entrar"; }
+
 export function renderCuenta() {
   const box = $("cuentaBox");
   if (!box) return;   // el formulario vive en la portada (pantalla de inicio)
+  const crear = ctaE().modo === "crear";
   if (ctaE().user) {
-    box.innerHTML = `<span class="etiq">Cuenta</span>
-      <p class="d4-sub" style="margin:6px 0 12px">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>. Tu progreso se guardará en esta cuenta.</p>
-      <button class="btn secondary" type="button" id="ctaSalir">Cerrar sesión</button>
-      <p class="etiq" role="status" style="margin-top:10px">${escHtml(ctaE().msg || "")}</p>`;
-    $("ctaSalir").onclick = salirCuenta;
+    box.innerHTML = `<p class="d4-sub" style="margin:0">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>.</p>`;
     return;
   }
-  box.innerHTML = `<span class="etiq">Cuenta</span>
-    <p class="d4-sub" style="margin:6px 0 12px">Entra para guardar tu progreso en tu cuenta y usarlo desde cualquier dispositivo. Sin cuenta, todo se queda en este navegador.</p>
-    <button class="btn secondary" type="button" id="ctaGoogle" style="width:100%">Entrar con Google</button>
-    <div style="margin-top:12px;display:grid;gap:8px">
+  const msg = `<p class="etiq" role="status" style="margin:0">${escHtml(ctaE().msg || "")}</p>`;
+  box.innerHTML = `<span class="etiq">${crear ? "Crear cuenta" : "Iniciar sesión"}</span>
+    <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>
+    <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
+    <div id="ctaFormCorreo" hidden style="display:grid;gap:8px">
       <label class="etiq" for="ctaEmail">Correo</label>
       <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
       <label class="etiq" for="ctaPass">Contraseña</label>
-      <input id="ctaPass" type="password" autocomplete="current-password" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" type="button" id="ctaEntrar">Entrar</button>
-        <button class="btn secondary" type="button" id="ctaCrear">Crear cuenta</button>
-      </div>
+      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
+      <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
     </div>
-    <p class="etiq" role="status" style="margin-top:10px">${escHtml(ctaE().msg || "")}</p>`;
+    ${msg}`;
   $("ctaGoogle").onclick = entrarGoogle;
-  $("ctaEntrar").onclick = () => entrarCorreo(false);
-  $("ctaCrear").onclick = () => entrarCorreo(true);
+  $("ctaCorreoAbrir").onclick = () => {
+    const f = $("ctaFormCorreo"), abierto = !f.hidden;
+    f.hidden = abierto; $("ctaCorreoAbrir").setAttribute("aria-expanded", String(!abierto));
+    if (!abierto) $("ctaEmail").focus();
+  };
+  $("ctaEnviar").onclick = () => entrarCorreo(crear);
 }
 
 // Al abrir la app comprobamos si ya había sesión, sin cargar nada si no la hay.

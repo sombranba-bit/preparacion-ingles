@@ -170,3 +170,11 @@
 
 .lp-cuenta{display:grid;gap:8px;width:100%;margin-top:6px;padding:14px;border-radius:18px;background:#fffdf8;border:2px solid #ecd9c0}
 .lp-cuenta[hidden]{display:none}
+
+/* Opciones de cuenta: Google y correo */
+.cta-opcion{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:10px 16px;border-radius:16px;background:#fffdf8;border:2px solid #ecd9c0;box-shadow:0 4px 0 #ecd9c0;font-family:Fredoka;font-weight:600;font-size:16px;color:#2a1d14;cursor:pointer;text-align:left}
+.cta-opcion:active{transform:scale(.98)}
+.cta-opcion:focus-visible{outline:3px solid #0a5c4d;outline-offset:3px}
+.cta-ico{width:24px;height:24px;flex:none}
+#ctaFormCorreo[hidden]{display:none}
+#ctaEnviar{background:#0a5c4d;color:#fff;box-shadow:0 4px 0 #063d33;border:0;min-height:48px;font-family:Fredoka;font-weight:600;font-size:16px;border-radius:16px;cursor:pointer}
