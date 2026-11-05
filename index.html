@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-uOTKIalLl+U3l1aqJpCSmqkaDqhgHALR3dQ3JC/oNt8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU=' https://cdn.jsdelivr.net/npm/firebase@11.0.2/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-tfZgfr3vm6M1xLb2Q+hUWHjdLbnIHGs+9fvHqRFZvN0=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-hesTfFrK43kzUlAVOQjtJMrsHNyK7LSV2nSLdOKhTjQ=' https://cdn.jsdelivr.net/npm/firebase@11.0.2/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1176,6 +1176,14 @@ header{display:none}
 .sello.off .ring{filter:grayscale(1)}
 .sello .ring .ic{width:38px;height:38px}
 .msg{margin-top:14px;min-height:24px;font-weight:700;color:#7a6656}
+
+/* Portada: elegir cómo empezar */
+.lp-elige{display:grid;gap:10px;margin-top:14px;justify-items:start}
+.lp-elige[hidden]{display:none}
+.lp-elige .lp-lead{margin:0;color:inherit}
+.lp-elige .lp-btn{width:100%;text-align:center;border:0;cursor:pointer;font:inherit}
+.lp-elige button.lp-link{background:none;border:0;padding:6px 0;font:inherit;font-weight:700;color:#0a5c4d;cursor:pointer;text-align:left}
+.lp-elige button.lp-link:focus-visible,.lp-elige .lp-btn:focus-visible{outline:3px solid #0a5c4d;outline-offset:3px}
 </style>
 </head>
 <body>
@@ -1196,10 +1204,16 @@ header{display:none}
     <div>
       <span class="lp-pill">Cambridge · EOI · TOEFL</span>
       <div class="lp-h1">Prepara tu examen de inglés <em>a tu ritmo</em>.</div>
-      <p class="lp-lead">Más de 3.400 ejercicios de A1 a C2, con la estructura de cada examen y repaso de tus fallos. Sin cuentas: empiezas en cuanto abres la página.</p>
+      <p class="lp-lead">Más de 3.400 ejercicios de A1 a C2, con la estructura de cada examen y repaso de tus fallos. Crea una cuenta para guardar tu progreso, o empieza gratis con el nivel A1.</p>
       <div class="lp-cta">
         <a class="lp-btn" href="#" data-empezar>Empezar a practicar</a>
         <a class="lp-link" href="#funciones">¿Qué incluye?</a>
+      </div>
+      <div class="lp-elige" id="lpElige" hidden>
+        <p class="lp-lead">¿Cómo quieres empezar?</p>
+        <button class="lp-btn" type="button" data-cuenta="crear">Crear cuenta</button>
+        <button class="lp-link" type="button" data-cuenta="entrar">Ya tengo cuenta</button>
+        <button class="lp-link" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
       </div>
     </div>
     <div class="lp-art lp-car" role="region" aria-roledescription="carrusel" aria-label="Ejemplos de ejercicios">
@@ -2406,7 +2420,15 @@ function inkFor(hex) {
   return (1.05 / (L + 0.05)) >= ((L + 0.05) / (dark + 0.05)) ? "#ffffff" : "#0b0a1f";
 }
 const NOTA_NIVEL = { A1: "Clasificación A1. Prepara exámenes de nivel inicial. Puedes cambiarla cuando quieras.", A2: "Clasificación A2. Prepara exámenes de nivel elemental. Puedes cambiarla cuando quieras.", B1: "Clasificación B1 (por ejemplo PET o EOI). Puedes cambiarla cuando quieras.", B2: "Clasificación B2 (por ejemplo FCE o EOI). Puedes cambiarla cuando quieras.", C1: "Clasificación C1 (por ejemplo CAE o EOI). Puedes cambiarla cuando quieras.", C2: "Clasificación C2 (por ejemplo CPE o EOI). Puedes cambiarla cuando quieras." };
+// Invitado: solo A1. Quien ha entrado con cuenta (window.ctaEstado.user) o no ha elegido modo, tiene todo.
+function esInvitado() {
+  let inv = false;
+  try { inv = RAW_LS.getItem("modo-invitado") === "1"; } catch (e) {}
+  return inv && !(window.ctaEstado && window.ctaEstado.user);
+}
+
 function renderLevels() {
+  if (esInvitado() && currentLevel !== "A1") currentLevel = "A1";
   document.documentElement.style.setProperty("--lvl-color", lc(LEVELS[currentLevel]));
   const lvc = levelColor(currentLevel);
   document.documentElement.style.setProperty("--grad", `linear-gradient(135deg, ${lvc}, color-mix(in srgb, ${lvc} 55%, #ffffff))`);
@@ -2419,7 +2441,16 @@ function renderLevels() {
     b.type = "button";
     b.textContent = lv;
     b.setAttribute("aria-pressed", currentLevel === lv ? "true" : "false");
-    b.onclick = () => { currentLevel = lv; renderLevels(); renderHome(); };
+    const bloqueado = esInvitado() && lv !== "A1";
+    if (bloqueado) b.classList.add("bloqueado");
+    b.onclick = () => {
+      if (bloqueado) {   // invitado: pedir cuenta para A2 y superiores
+        document.querySelector('#bnav button[data-area="perfil"]')?.click();
+        setTimeout(() => { const n = document.getElementById("nivelNota"); if (n) n.textContent = "Para practicar " + lv + " crea una cuenta o entra con la tuya. Con el modo invitado solo está disponible A1."; }, 150);
+        return;
+      }
+      currentLevel = lv; renderLevels(); renderHome();
+    };
     box.appendChild(b);
   });
   const nota = $("nivelNota"); if (nota) nota.textContent = NOTA_NIVEL[currentLevel] || "";
@@ -9101,12 +9132,27 @@ try { cuentaInicializar(); } catch(e){}
   let entro = false;
   try { entro = sessionStorage.getItem("entro") === "1"; } catch (e) {}
   if (entro) cerrar(); else document.body.classList.add("lp-open");
-  document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
-    e.preventDefault();
+  const entrarApp = () => {
     cerrar();
     if (RAW_LS.getItem("perfil-activo")) return;               // ya hay perfil: entra directamente
     if (getProfiles().length === 0) profileOpenForm(true);      // primera vez: crear avatar
     else profileOpenList();                                     // hay perfiles: elegir cuál
+  };
+  // "Empezar" pregunta cómo seguir: crear cuenta, entrar o seguir como invitado (solo A1)
+  document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    const el = document.getElementById("lpElige");
+    if (el) el.hidden = !el.hidden; else entrarApp();
+  }));
+  document.querySelectorAll("[data-cuenta]").forEach(b => b.addEventListener("click", () => {
+    const m = b.dataset.cuenta;
+    if (m === "invitado") { try { RAW_LS.setItem("modo-invitado", "1"); } catch (e) {} entrarApp(); return; }
+    try { RAW_LS.removeItem("modo-invitado"); } catch (e) {}
+    // crear o entrar: vamos al apartado Cuenta de Perfil con el correo listo para escribir
+    entrarApp();
+    const perfil = document.querySelector('#bnav button[data-area="perfil"]');
+    if (perfil) perfil.click();
+    setTimeout(() => { const c = document.getElementById("cuentaBox"); if (c) c.scrollIntoView({ block: "start" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }, 300);
   }));
   document.querySelectorAll("[data-inicio]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); abrir(); }));
   document.addEventListener("click", e => { if (e.target.closest("#homeBtn")) abrir(); });  // botón de la app (se crea dinámicamente)

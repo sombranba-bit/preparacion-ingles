@@ -9,12 +9,27 @@ import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js
   let entro = false;
   try { entro = sessionStorage.getItem("entro") === "1"; } catch (e) {}
   if (entro) cerrar(); else document.body.classList.add("lp-open");
-  document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
-    e.preventDefault();
+  const entrarApp = () => {
     cerrar();
     if (RAW_LS.getItem("perfil-activo")) return;               // ya hay perfil: entra directamente
     if (getProfiles().length === 0) profileOpenForm(true);      // primera vez: crear avatar
     else profileOpenList();                                     // hay perfiles: elegir cuál
+  };
+  // "Empezar" pregunta cómo seguir: crear cuenta, entrar o seguir como invitado (solo A1)
+  document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    const el = document.getElementById("lpElige");
+    if (el) el.hidden = !el.hidden; else entrarApp();
+  }));
+  document.querySelectorAll("[data-cuenta]").forEach(b => b.addEventListener("click", () => {
+    const m = b.dataset.cuenta;
+    if (m === "invitado") { try { RAW_LS.setItem("modo-invitado", "1"); } catch (e) {} entrarApp(); return; }
+    try { RAW_LS.removeItem("modo-invitado"); } catch (e) {}
+    // crear o entrar: vamos al apartado Cuenta de Perfil con el correo listo para escribir
+    entrarApp();
+    const perfil = document.querySelector('#bnav button[data-area="perfil"]');
+    if (perfil) perfil.click();
+    setTimeout(() => { const c = document.getElementById("cuentaBox"); if (c) c.scrollIntoView({ block: "start" }); const em = document.getElementById("ctaEmail"); if (em) em.focus(); }, 300);
   }));
   document.querySelectorAll("[data-inicio]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); abrir(); }));
   document.addEventListener("click", e => { if (e.target.closest("#homeBtn")) abrir(); });  // botón de la app (se crea dinámicamente)

@@ -403,7 +403,15 @@ function inkFor(hex) {
   return (1.05 / (L + 0.05)) >= ((L + 0.05) / (dark + 0.05)) ? "#ffffff" : "#0b0a1f";
 }
 const NOTA_NIVEL = { A1: "Clasificación A1. Prepara exámenes de nivel inicial. Puedes cambiarla cuando quieras.", A2: "Clasificación A2. Prepara exámenes de nivel elemental. Puedes cambiarla cuando quieras.", B1: "Clasificación B1 (por ejemplo PET o EOI). Puedes cambiarla cuando quieras.", B2: "Clasificación B2 (por ejemplo FCE o EOI). Puedes cambiarla cuando quieras.", C1: "Clasificación C1 (por ejemplo CAE o EOI). Puedes cambiarla cuando quieras.", C2: "Clasificación C2 (por ejemplo CPE o EOI). Puedes cambiarla cuando quieras." };
+// Invitado: solo A1. Quien ha entrado con cuenta (window.ctaEstado.user) o no ha elegido modo, tiene todo.
+export function esInvitado() {
+  let inv = false;
+  try { inv = RAW_LS.getItem("modo-invitado") === "1"; } catch (e) {}
+  return inv && !(window.ctaEstado && window.ctaEstado.user);
+}
+
 export function renderLevels() {
+  if (esInvitado() && currentLevel !== "A1") currentLevel = "A1";
   document.documentElement.style.setProperty("--lvl-color", lc(LEVELS[currentLevel]));
   const lvc = levelColor(currentLevel);
   document.documentElement.style.setProperty("--grad", `linear-gradient(135deg, ${lvc}, color-mix(in srgb, ${lvc} 55%, #ffffff))`);
@@ -416,7 +424,16 @@ export function renderLevels() {
     b.type = "button";
     b.textContent = lv;
     b.setAttribute("aria-pressed", currentLevel === lv ? "true" : "false");
-    b.onclick = () => { currentLevel = lv; renderLevels(); renderHome(); };
+    const bloqueado = esInvitado() && lv !== "A1";
+    if (bloqueado) b.classList.add("bloqueado");
+    b.onclick = () => {
+      if (bloqueado) {   // invitado: pedir cuenta para A2 y superiores
+        document.querySelector('#bnav button[data-area="perfil"]')?.click();
+        setTimeout(() => { const n = document.getElementById("nivelNota"); if (n) n.textContent = "Para practicar " + lv + " crea una cuenta o entra con la tuya. Con el modo invitado solo está disponible A1."; }, 150);
+        return;
+      }
+      currentLevel = lv; renderLevels(); renderHome();
+    };
     box.appendChild(b);
   });
   const nota = $("nivelNota"); if (nota) nota.textContent = NOTA_NIVEL[currentLevel] || "";
