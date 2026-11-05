@@ -31,8 +31,8 @@ export function loadHist() {
   try { return JSON.parse(appStore.getItem("historial-ingles") || "[]"); } catch (e) { return []; }
 }
 const LIGA_KEY = "liga-amigos";
-function weekStartKey() { const d = new Date(), dow = (d.getDay() + 6) % 7; return dayKey(new Date(d.getFullYear(), d.getMonth(), d.getDate() - dow)); }
-function weekXp() { const d = lsGet(DAILY_KEY, {}), dow = (new Date().getDay() + 6) % 7; let s = 0; for (let n = 0; n <= dow; n++) s += d[daysAgo(n)] || 0; return s; }
+export function weekStartKey() { const d = new Date(), dow = (d.getDay() + 6) % 7; return dayKey(new Date(d.getFullYear(), d.getMonth(), d.getDate() - dow)); }
+export function weekXp() { const d = lsGet(DAILY_KEY, {}), dow = (new Date().getDay() + 6) % 7; let s = 0; for (let n = 0; n <= dow; n++) s += d[daysAgo(n)] || 0; return s; }
 function myName() { return (activeProfile() || {}).name || "Tú"; }
 function renderXpSemana() {
   const el = $("xpSemana"); if (!el) return;
@@ -82,6 +82,7 @@ $("ligaFile").onchange = async e => {
 };
 
 export function renderRanking() {
+  document.dispatchEvent(new Event("ranking-ver"));
   renderLiga();
   const f = $("rankLevel").value;
   const all = loadHist().filter(h => f === "todos" || h.lv === f);

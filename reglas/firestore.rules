@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function firmado() {
+      return request.auth != null;
+    }
+
+    // Un grupo es visible solo para quien ya es miembro
+    function miembro(c) {
+      return exists(/databases/$(database)/documents/grupos/$(c)/miembros/$(request.auth.uid));
+    }
+
+    // Progreso de cada persona: solo lo lee y lo escribe ella
+    match /usuarios/{uid} {
+      allow read: if firmado() && request.auth.uid == uid;
+      allow create, update: if firmado() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['datos', 'actualizado', 'grupos'])
+        && (!('datos' in request.resource.data) || (request.resource.data.datos is string && request.resource.data.datos.size() < 900000))
+        && (!('grupos' in request.resource.data) || request.resource.data.grupos is list);
+    }
+
+    // Liga semanal global: todas las personas registradas la ven; cada una escribe solo su fila
+    match /ligaSemanal/{id} {
+      allow read: if firmado();
+      allow create, update: if firmado() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid', 'nombre', 'semana', 'xp', 'actualizado'])
+        && request.resource.data.nombre is string && request.resource.data.nombre.size() >= 1 && request.resource.data.nombre.size() <= 40
+        && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp < 1000000
+        && id == request.resource.data.semana + '_' + request.auth.uid;
+    }
+
+    // Grupos de amigos: el código de invitación es el único modo de entrar
+    match /grupos/{c} {
+      allow read: if firmado();
+      allow create: if firmado() && request.resource.data.creador == request.auth.uid
+        && request.resource.data.keys().hasOnly(['nombre', 'creador', 'creado'])
+        && request.resource.data.nombre is string && request.resource.data.nombre.size() >= 1 && request.resource.data.nombre.size() <= 30;
+
+      match /miembros/{uid} {
+        allow read: if firmado() && miembro(c);
+        allow create: if firmado() && request.auth.uid == uid && request.resource.data.uid == uid
+          && exists(/databases/$(database)/documents/grupos/$(c))
+          && request.resource.data.keys().hasOnly(['uid', 'nombre', 'unido'])
+          && request.resource.data.nombre is string && request.resource.data.nombre.size() <= 40;
+      }
+
+      // Puntos semanales de cada miembro: solo los ven los miembros del grupo
+      match /xp/{uid} {
+        allow read: if firmado() && miembro(c);
+        allow create, update: if firmado() && request.auth.uid == uid && request.resource.data.uid == uid && miembro(c)
+          && request.resource.data.keys().hasOnly(['uid', 'nombre', 'semana', 'xp', 'actualizado'])
+          && request.resource.data.nombre is string && request.resource.data.nombre.size() <= 40
+          && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp < 1000000;
+      }
+    }
+
+    // Todo lo demás: denegado
+  }
+}

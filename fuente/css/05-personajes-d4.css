@@ -198,3 +198,8 @@
 #landing .lp-feat .lp-ico{grid-row:span 2}
 #landing .lp-feat p{margin:0}
 #landing .lp-foot{margin-top:24px}
+
+/* Cuenta en la nube: liga global y grupos */
+#nubeBox .fila{display:grid;gap:8px;margin-top:14px}
+#nubeBox input{font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--rule);background:var(--card);color:inherit;width:100%;box-sizing:border-box}
+#nubeBox .etiq{display:block}

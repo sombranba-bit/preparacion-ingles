@@ -30,7 +30,7 @@ async function ctaCargarSdk() {
   const [appMod, authMod] = await Promise.all([appPromesa, authPromesa]);
   const app = appMod.initializeApp(CTA_CONFIG, "ready4exam");
   const auth = authMod.getAuth(app);
-  ctaE().fb = { auth, authMod, provider: new authMod.GoogleAuthProvider() };
+  ctaE().fb = { auth, authMod, provider: new authMod.GoogleAuthProvider(), app };
   authMod.onAuthStateChanged(auth, u => { ctaE().user = u; ctaE().msg = ""; renderCuenta(); document.dispatchEvent(new Event("cuenta-cambio")); });
   return ctaE().fb;
 }
@@ -141,3 +141,8 @@ export function cuentaInicializar() {
   if (hayCuenta) ctaCargar().catch(() => {});
   renderCuenta();
 }
+
+// Acceso para la nube (12-nube.js): usuario actual, SDK de Firestore y la app de Firebase
+export const ctaUsuario = () => ctaE().user;
+export const ctaImportarUrl = ruta => ctaImportar(CTA_BASE + ruta);
+export const ctaFbApp = () => ctaCargar();
