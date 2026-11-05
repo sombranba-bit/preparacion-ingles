@@ -32,7 +32,7 @@ const safe = async (n, fn) => { try { return await fn(); } catch (e) { ok(n, fal
     const nOpt = await p.$$eval('#options .option, #options .fmt-btn, #options input, #options textarea', e=>e.length);
     ok(`[${label}] opciones visibles: ${nOpt}`, nOpt>0);
     if (nOpt) {
-      await safe('elegir opción', () => p.evaluate(() => document.querySelector('#options .option').click()));
+      await safe('elegir opción', () => p.evaluate(() => (document.querySelector('#options .option') || document.querySelector('#options .fmt-btn') || document.querySelector('#options input, #options textarea') || {click(){}}).click()));
       await safe('comprobar', () => p.evaluate(() => { const b=document.getElementById('checkBtn'); if(b&&!b.disabled) b.click(); }));
       await p.waitForTimeout(300);
       await safe('siguiente', () => p.evaluate(() => { const b=document.getElementById('nextBtn'); if(b&&!b.disabled) b.click(); }));

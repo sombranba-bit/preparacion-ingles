@@ -120,3 +120,7 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .d4-av-op{min-height:98px;border-radius:20px;border:2px solid var(--line);background:var(--surface);box-shadow:0 4px 0 var(--line);display:grid;place-items:center;align-content:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:14px;color:var(--text);cursor:pointer}
 .d4-av-op[aria-pressed="true"]{border-color:var(--text);box-shadow:0 4px 0 var(--text)}
 .d4-av-op:active{transform:translateY(2px)}
+
+/* Cabecera: solo los niveles; el título y el modo de color pasan a sus pantallas */
+header .brand,#themeBar{display:none}
+#p-perfil #themeBar{display:grid;margin:12px 0 0}

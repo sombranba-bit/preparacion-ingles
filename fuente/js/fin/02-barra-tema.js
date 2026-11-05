@@ -39,5 +39,5 @@ import { ajustesGet, ajustesSet, renderHome } from "../04-recompensas-logros-cop
   }
   paint();
   bar.open = innerWidth > 820;
-  document.querySelector('header').appendChild(bar);
+  document.getElementById('p-perfil').appendChild(bar);
 })();
