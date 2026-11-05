@@ -138,8 +138,6 @@ export function renderLogrosPanel() {
   const box = $("logrosBox");
   if (box) box.innerHTML = logrosHtml();
   const info = $("logrosInfo"); if (info) info.innerHTML = infoSellosHtml();
-  const sub = $("logrosSub"), cnt = box?.querySelector(".ach-count");
-  if (sub && cnt) sub.textContent = `Conseguidos ${cnt.textContent}. Toca uno para ver cómo se gana.`;
 }
 
 /* ---------- Pestaña Perfil: avatar, monedas, cambiar o editar perfil ---------- */
@@ -151,10 +149,8 @@ export function renderPerfilPanel() {
   box.innerHTML = `<div class="perfil-av">${avatarSvg(p.avatar, 120)}</div>
     <h2 class="perfil-nombre">${p.name}</h2>
     <p class="muted">${r.name} · ${rewards().coins} monedas</p>
-    <div class="actions"><button class="btn secondary" type="button" id="perfilCambiar">Cambiar de perfil</button>
-    <button class="btn secondary" type="button" id="perfilEditar">Editar perfil</button></div>`;
-  $("perfilCambiar").onclick = () => profileOpenList();
-  $("perfilEditar").onclick = () => { profileOpenList(); const e = $("pEdit"); if (e && !e.classList.contains("hidden")) e.click(); };
+    `;
+  box.querySelector(".perfil-av").onclick = () => profileOpenList();
   activarMarcos(box);
   const av = p.avatar || {};
   box.insertAdjacentHTML("beforeend", `<div class="d4-avatares" role="group" aria-label="Elegir animal">${P_ANIMALS.filter(([k]) => k !== "persona").map(([k, n]) => `<button type="button" class="d4-av-op" data-animal="${k}" aria-pressed="${av.animal === k}">${avatarSvg({ ...av, animal: k, acc: [] }, 56, true)}<span>${n}</span></button>`).join("")}</div>`);

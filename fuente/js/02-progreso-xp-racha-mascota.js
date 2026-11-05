@@ -169,9 +169,6 @@ export function infoSellosHtml() {
       <p class="muted small" id="clockTxt">${cardClockTxt()}</p>
       <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
       <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
-      <p class="muted small gp-foot">${weekTxt}</p>
-      <p class="muted small">Escudos: ${(s.freezeLeft ? 1 : 0) + rewards().shields} · Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
-      <p class="muted small">${TIPS[Math.floor(Date.now() / 86400000) % TIPS.length]}</p>
     </div>`;
 }
 export function renderGame() {

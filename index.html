@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-vdwVqmMXa7t0uyhpYo61ENBdob8m5xrDdFVUc3nkPng=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/2h9f6GttaeJzHkJ/ZvdpG4wDbMtM7e6BUwqNnvfHqA=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1335,7 +1335,6 @@ header{display:none}
   <section id="p-logros" class="panel hidden">
     <div class="m-slot"></div>
     <h2 class="d4-title">Sellos</h2>
-    <p class="d4-sub" id="logrosSub"></p>
     <div id="logrosInfo"></div>
     <div id="logrosBox"></div>
   </section>
@@ -1371,6 +1370,7 @@ header{display:none}
   <section id="exercise" class="hidden">
     <div class="m-slot"></div>
     <div class="ex-top">
+      <button class="btn secondary" id="backBtn" type="button" aria-label="Salir">Salir</button>
       <span class="pill" id="pillLevel"></span>
       <span class="sec" id="secName"></span>
       <span class="timer hidden" id="timer"></span>
@@ -1410,7 +1410,6 @@ header{display:none}
         <button class="btn" id="checkBtn">Comprobar</button>
         <button class="btn hidden" id="nextBtn">Siguiente →</button>
         <button class="btn secondary hidden" id="prevBtn">← Anterior</button>
-        <button class="btn secondary" id="backBtn">Salir</button>
       </div>
     </div>
   </section>
@@ -2200,9 +2199,6 @@ function infoSellosHtml() {
       <p class="muted small" id="clockTxt">${cardClockTxt()}</p>
       <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
       <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
-      <p class="muted small gp-foot">${weekTxt}</p>
-      <p class="muted small">Escudos: ${(s.freezeLeft ? 1 : 0) + rewards().shields} · Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
-      <p class="muted small">${TIPS[Math.floor(Date.now() / 86400000) % TIPS.length]}</p>
     </div>`;
 }
 function renderGame() {
@@ -2853,7 +2849,7 @@ function renderHome() {
     q.n++; if (itemHecho(i)) q.hechos++;
   });
   const lista = Object.entries(partes);
-  cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 8).map(([p, q], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b><small>${q.hechos} de ${q.n} ejercicios</small></span><span class="d4-chip">${Math.round(q.hechos / q.n * 100)}%</span></button>`).join("")}</div>` : "";
+  cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 8).map(([p, q], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b></span><span class="d4-chip">${Math.round(q.hechos / q.n * 100)}%</span></button>`).join("")}</div>` : "";
   cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => startPart(b.dataset.part));
   const cn = document.querySelector(".st-coin .st-num");
   if (cn) { const c = rewards().coins; if (lastCoins !== null && c > lastCoins && !matchMedia("(prefers-reduced-motion: reduce)").matches) tweenNum(cn, lastCoins, c); lastCoins = c; }
@@ -8539,8 +8535,6 @@ function renderLogrosPanel() {
   const box = $("logrosBox");
   if (box) box.innerHTML = logrosHtml();
   const info = $("logrosInfo"); if (info) info.innerHTML = infoSellosHtml();
-  const sub = $("logrosSub"), cnt = box?.querySelector(".ach-count");
-  if (sub && cnt) sub.textContent = `Conseguidos ${cnt.textContent}. Toca uno para ver cómo se gana.`;
 }
 
 /* ---------- Pestaña Perfil: avatar, monedas, cambiar o editar perfil ---------- */
@@ -8552,10 +8546,8 @@ function renderPerfilPanel() {
   box.innerHTML = `<div class="perfil-av">${avatarSvg(p.avatar, 120)}</div>
     <h2 class="perfil-nombre">${p.name}</h2>
     <p class="muted">${r.name} · ${rewards().coins} monedas</p>
-    <div class="actions"><button class="btn secondary" type="button" id="perfilCambiar">Cambiar de perfil</button>
-    <button class="btn secondary" type="button" id="perfilEditar">Editar perfil</button></div>`;
-  $("perfilCambiar").onclick = () => profileOpenList();
-  $("perfilEditar").onclick = () => { profileOpenList(); const e = $("pEdit"); if (e && !e.classList.contains("hidden")) e.click(); };
+    `;
+  box.querySelector(".perfil-av").onclick = () => profileOpenList();
   activarMarcos(box);
   const av = p.avatar || {};
   box.insertAdjacentHTML("beforeend", `<div class="d4-avatares" role="group" aria-label="Elegir animal">${P_ANIMALS.filter(([k]) => k !== "persona").map(([k, n]) => `<button type="button" class="d4-av-op" data-animal="${k}" aria-pressed="${av.animal === k}">${avatarSvg({ ...av, animal: k, acc: [] }, 56, true)}<span>${n}</span></button>`).join("")}</div>`);
