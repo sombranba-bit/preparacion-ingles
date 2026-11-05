@@ -3,7 +3,7 @@
 import { $, ico } from "./01-nucleo-niveles-audio.js";
 import { rewards, saveRewards, spendCoins, accOwned, logrosHtml, ACC_PRECIO } from "./04-recompensas-logros-copia-auto.js";
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
-import { getProfiles, saveProfiles, activeProfile, avatarSvg, P_ACCS, accList, profileOpenList, profileSetMode } from "./03-perfiles.js";
+import { getProfiles, saveProfiles, activeProfile, avatarSvg, P_ACCS, P_ANIMALS, accList, profileOpenList, profileSetMode } from "./03-perfiles.js";
 import { xpTotal, rankInfo } from "./02-progreso-xp-racha-mascota.js";
 
 /* ---------- Catálogo de marcos y efectos (precios de la maqueta D4) ---------- */
@@ -155,6 +155,15 @@ export function renderPerfilPanel() {
   $("perfilCambiar").onclick = () => profileOpenList();
   $("perfilEditar").onclick = () => { profileOpenList(); const e = $("pEdit"); if (e && !e.classList.contains("hidden")) e.click(); };
   activarMarcos(box);
+  const av = p.avatar || {};
+  box.insertAdjacentHTML("beforeend", `<div class="d4-avatares" role="group" aria-label="Elegir animal">${P_ANIMALS.filter(([k]) => k !== "persona").map(([k, n]) => `<button type="button" class="d4-av-op" data-animal="${k}" aria-pressed="${av.animal === k}">${avatarSvg({ ...av, animal: k, acc: [] }, 56, true)}<span>${n}</span></button>`).join("")}</div>`);
+  box.querySelectorAll("[data-animal]").forEach(b => b.onclick = () => {
+    const list = getProfiles(), me = list.find(x => x.id === p.id);
+    if (!me) return;
+    me.avatar = { ...(me.avatar || {}), animal: b.dataset.animal };
+    delete me.avatar.raza;
+    saveProfiles(list); renderPerfilPanel();
+  });
 }
 
 /* ---------- Partículas de los marcos (mismo motor que la maqueta D4) ---------- */

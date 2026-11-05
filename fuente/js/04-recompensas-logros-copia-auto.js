@@ -33,6 +33,7 @@ import {
   mascotMount,
   rankInfo,
   renderGame,
+  itemHecho,
   srsDue,
   streakInfo,
   xpTotal,
@@ -215,9 +216,12 @@ export function renderHome() {
   if (nRep) $("repasoRowBtn").onclick = startReview;
   $("simRowBtn").onclick = () => { examMode = true; renderHome(); showTab("ejercicios"); };
   const partes = {};
-  ITEMS.filter(i => i.level === currentLevel && i.part).forEach(i => { partes[i.part] = (partes[i.part] || 0) + 1; });
+  ITEMS.filter(i => i.level === currentLevel && i.part).forEach(i => {
+    const q = partes[i.part] || (partes[i.part] = { n: 0, hechos: 0 });
+    q.n++; if (itemHecho(i)) q.hechos++;
+  });
   const lista = Object.entries(partes);
-  cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 8).map(([p, n], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b><small>${n} ejercicio${n === 1 ? "" : "s"}</small></span><span class="d4-chip">›</span></button>`).join("")}</div>` : "";
+  cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 8).map(([p, q], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b><small>${q.hechos} de ${q.n} ejercicios</small></span><span class="d4-chip">${Math.round(q.hechos / q.n * 100)}%</span></button>`).join("")}</div>` : "";
   cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => startPart(b.dataset.part));
   const cn = document.querySelector(".st-coin .st-num");
   if (cn) { const c = rewards().coins; if (lastCoins !== null && c > lastCoins && !matchMedia("(prefers-reduced-motion: reduce)").matches) tweenNum(cn, lastCoins, c); lastCoins = c; }

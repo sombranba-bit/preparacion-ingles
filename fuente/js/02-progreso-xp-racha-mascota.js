@@ -31,6 +31,7 @@ export function addXp(key, pts) {
   d[t] = (d[t] || 0) + pts;
   lsSet(DAILY_KEY, d);
 }
+export function itemHecho(it) { return (it.level + "|" + it.q) in lsGet(XP_KEY, {}); }   // acertado al menos una vez
 export function xpTotal() { return Object.values(lsGet(XP_KEY, {})).reduce((a, b) => a + b, 0); }
 function xpBetween(fromDays, toDays) {   // XP de los días entre hace fromDays y hace toDays (incluidos)
   const d = lsGet(DAILY_KEY, {}); let sum = 0;

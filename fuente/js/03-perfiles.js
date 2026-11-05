@@ -3,7 +3,7 @@ import { $, PROFILE_RAW_KEYS, RAW_LS, ico, mixHex } from "./01-nucleo-niveles-au
 import { ACC_PRECIO, accComprar, accOwned } from "./04-recompensas-logros-copia-auto.js";
 
 /* ---------- Perfiles: pantalla de bienvenida, selección y creación ---------- */
-const P_ANIMALS = [["leon", "León"], ["zorro", "Zorro"], ["oso", "Oso"], ["conejo", "Conejo"], ["pinguino", "Pingüino"], ["persona", "Persona"], ["zombi", "Zombi"], ["robot", "Robot"], ["bruja", "Bruja"], ["fantasma", "Fantasma"]];
+export const P_ANIMALS = [["leon", "León"], ["zorro", "Zorro"], ["oso", "Oso"], ["conejo", "Conejo"], ["pinguino", "Pingüino"], ["persona", "Persona"], ["zombi", "Zombi"], ["robot", "Robot"], ["bruja", "Bruja"], ["fantasma", "Fantasma"]];
 const RACES = {
   leon: [["clasico", "Clásico"], ["blanco", "Blanco"], ["negro", "Negro"]],
   zorro: [["rojo", "Rojo"], ["artico", "Ártico"], ["fenec", "Fénec"]],

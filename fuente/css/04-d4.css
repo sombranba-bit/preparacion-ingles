@@ -116,3 +116,7 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
   body:has(#home:not(.hidden)) #themeBar{display:none}
   body:has(#home:not(.hidden)) header{padding:8px 12px}
 }
+.d4-avatares{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:6px}
+.d4-av-op{min-height:98px;border-radius:20px;border:2px solid var(--line);background:var(--surface);box-shadow:0 4px 0 var(--line);display:grid;place-items:center;align-content:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:14px;color:var(--text);cursor:pointer}
+.d4-av-op[aria-pressed="true"]{border-color:var(--text);box-shadow:0 4px 0 var(--text)}
+.d4-av-op:active{transform:translateY(2px)}
