@@ -18,7 +18,12 @@ const ctaE = () => window.ctaEstado || (window.ctaEstado = { fb: null, user: nul
 
 function ctaImportar(url) { return import(/* ya cargado por la CSP */ url); }
 
-async function ctaCargar() {
+function ctaCargar() {
+  if (!ctaE().fbP) ctaE().fbP = ctaCargarSdk().catch(e => { ctaE().fbP = null; throw e; });   // una sola carga aunque se llame varias veces
+  return ctaE().fbP;
+}
+
+async function ctaCargarSdk() {
   if (ctaE().fb) return ctaE().fb;
   const appPromesa = ctaImportar(CTA_BASE + "/app/+esm");
   const authPromesa = ctaImportar(CTA_BASE + "/auth/+esm");
@@ -102,7 +107,8 @@ export function renderCuenta() {
     box.innerHTML = `<p class="d4-sub" style="margin:0">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>.</p>`;
     return;
   }
-  const msg = `<p class="etiq" role="status" style="margin:0">${escHtml(ctaE().msg || "")}</p>`;
+  const msg = `<p class="etiq" role="status" style="margin:0;min-height:20px">${escHtml(ctaE().msg || "")}</p>`;
+  ctaCargar().catch(() => {});   // precarga el SDK: así la ventana de Google se abre al pulsar, sin bloqueo del navegador
   box.innerHTML = `<span class="etiq">${crear ? "Crear cuenta" : "Iniciar sesión"}</span>
     <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>
     <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
@@ -113,7 +119,8 @@ export function renderCuenta() {
       <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
       <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
     </div>
-    ${msg}`;
+    `;
+  box.insertAdjacentHTML("afterbegin", msg);
   $("ctaGoogle").onclick = entrarGoogle;
   $("ctaCorreoAbrir").onclick = () => {
     const f = $("ctaFormCorreo"), abierto = !f.hidden;
