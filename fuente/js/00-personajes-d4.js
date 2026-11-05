@@ -166,6 +166,7 @@ export function fxParticulas(el,tipo,clave){
   };
   let last=0;
   const tick=now=>{
+    if(!el.isConnected) return;   // el avatar ya no está en pantalla: deja de animar
     const k=last?Math.min((now-last)/16.67,3):1; last=now;   // movimiento por tiempo real: igual en 60 y 120 Hz
     x.clearRect(0,0,CW,CH);
     for(const q of pts){

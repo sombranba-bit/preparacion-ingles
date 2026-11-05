@@ -108,6 +108,15 @@ document.addEventListener("click", e => {
   const nuevo = document.querySelector(".ach-more");
   if (nuevo) nuevo.focus();
 });
+// Los seis sellos de la pantalla Sellos (maqueta D4): cada uno es un logro real de la app.
+const SELLOS_D4 = [["primer-ejercicio", "semilla"], ["racha-7", "llama"], ["escudo", "check"], ["rango", "montana"], ["racha-30", "calendario"], ["compra", "confeti"]];
+export function sellosDatos() {
+  const got = rewards().logros || [];
+  return SELLOS_D4.map(([id, icono]) => {
+    const l = LOGROS.find(x => x.id === id), ok = got.includes(id) || logroOk(l);
+    return { id, icono, nombre: l.name, desc: l.desc, ok, pr: ok ? null : logroProg(l) };
+  });
+}
 export function logrosHtml() {
   const got = rewards().logros || [];
   const ganados = LOGROS.filter(l => got.includes(l.id) || logroOk(l)).length;

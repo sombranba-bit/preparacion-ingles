@@ -1,11 +1,11 @@
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
 // Las monedas son las de la app (rewards); lo comprado queda en rewards().owned y el equipo en el perfil activo.
 import { $, currentLevel } from "./01-nucleo-niveles-audio.js";
-import { rewards, saveRewards, spendCoins, logrosHtml } from "./04-recompensas-logros-copia-auto.js";
+import { rewards, saveRewards, spendCoins, sellosDatos } from "./04-recompensas-logros-copia-auto.js";
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
-import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList } from "./03-perfiles.js";
+import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
 import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx } from "./00-personajes-d4.js";
-import { infoSellosHtml } from "./02-progreso-xp-racha-mascota.js";
+import { infoSellosHtml, lsGet, lsSet } from "./02-progreso-xp-racha-mascota.js";
 
 const COIN = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg>`;
 const LOCK = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-candado"/></svg>`;
@@ -134,11 +134,36 @@ export function celebrarAcierto() {
   if (f.includes("vivo")) { const h = document.querySelector("#mascotBtn .av"); if (h) { h.classList.remove("salta"); void h.offsetWidth; h.classList.add("salta"); } }
 }
 
+/* ---------- Efectos de avatar (marcos con partículas, destellos): se activan al aparecer en pantalla ---------- */
+function activarFxAvatar(nodo) {
+  const lista = [];
+  if (nodo.matches && nodo.matches(".av[data-fxp]")) lista.push(nodo);
+  if (nodo.querySelectorAll) lista.push(...nodo.querySelectorAll(".av[data-fxp]"));
+  lista.forEach(el => {
+    if (el.dataset.fx || !el.clientWidth) return;   // oculto: se activa cuando se muestre
+    el.dataset.fx = "1";
+    el.dataset.fxp.split(" ").filter(Boolean).forEach((t, i) => fxParticulas(el, t, "_raf" + t + i));
+  });
+}
+new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => n.nodeType === 1 && activarFxAvatar(n)))).observe(document.body, { childList: true, subtree: true });
+activarFxAvatar(document.body);
+
 /* ---------- Sellos ---------- */
+const PALABRAS = ["Ninguno", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis"];
 export function renderLogrosPanel() {
-  const box = $("logrosBox");
-  if (box) box.innerHTML = logrosHtml();
-  const info = $("logrosInfo"); if (info) info.innerHTML = infoSellosHtml();
+  const box = $("sellos");
+  if (!box) return;
+  const datos = sellosDatos(), ganados = datos.filter(d => d.ok).length;
+  box.innerHTML = datos.map(d => {
+    const estado = d.ok ? "Conseguido" : d.pr ? `${d.pr[0]} de ${d.pr[1]}` : "";
+    const txt = d.ok ? `${d.nombre}: conseguido. ${d.desc}.` : `${d.nombre}: ${estado}. ${d.desc}.`;
+    return `<button class="sello ${d.ok ? "got" : "off"}" data-txt="${escHtml(txt)}"><span class="ring"><svg class="ic" aria-hidden="true"><use href="#i-${d.icono}"/></svg></span><b>${d.nombre}</b><small>${estado || "Conseguido"}</small></button>`;
+  }).join("");
+  const cuantos = ganados === 0 ? "Ninguno conseguido" : ganados === 1 ? "Uno conseguido" : `${PALABRAS[ganados]} conseguidos`;
+  $("sellosSub").textContent = `${cuantos} de ${PALABRAS[datos.length].toLowerCase()}. Toca uno para ver cómo se gana.`;
+  $("msg").textContent = "";
+  $$("#sellos .sello").forEach(b => b.onclick = () => { $("msg").textContent = b.dataset.txt; });
+  const ri = $("rankInfo"); if (ri) ri.innerHTML = infoSellosHtml();
 }
 
 /* ---------- Perfil: personaje, color, nivel y tienda ---------- */
@@ -166,6 +191,16 @@ export function renderPerfilPanel() {
       cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
     });
   }
+  const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
+  idiomas.forEach(([id, key, def]) => {
+    const seg = $(id);
+    if (!seg) return;
+    const actual = lsGet(key, def);
+    seg.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed", String(b.dataset.v === actual));
+      b.onclick = () => { lsSet(key, b.dataset.v); seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); };
+    });
+  });
   const cols = $("cols");
   if (cols) {
     const lista = ["#ffd9a8"].concat(CAT.filter(c => c.k === "color").map(c => c.id));

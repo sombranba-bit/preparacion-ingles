@@ -145,3 +145,17 @@
 .btn-mini:active{box-shadow:0 1px 0 #063d33}
 :root[data-mode="light"] .d4-chip.ok{color:#0a5c4d}
 :root[data-mode="light"] .bnav button.on{color:#0a5c4d}
+
+/* Sellos (maqueta D4) */
+.sello{aspect-ratio:1.05;border-radius:24px;background:#fffdf8;border:3px solid #ecd9c0;display:grid;place-items:center;align-content:center;gap:4px;text-align:center;padding:10px;box-shadow:0 5px 0 #ecd9c0;transition:transform .15s cubic-bezier(.23,1,.32,1);font:inherit;color:inherit;cursor:pointer}
+.sello:active{transform:scale(.97)}
+.sello .ring{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:#f1e7d8;border:3px dashed #d7c6ac}
+.sello b{font-family:Fredoka;font-weight:600;font-size:15px;line-height:1.1}
+.sello small{font-size:12px;color:#7a6656;font-weight:800}
+.sello.got{border-color:#ffd166;background:#fff8e3;box-shadow:0 5px 0 #e7ac2a;transform:rotate(-2deg)}
+.sello.got:nth-child(2n){transform:rotate(2deg)}
+.sello.got .ring{background:#ffb22e;border:3px solid #d98a0a;box-shadow:0 0 0 6px rgba(255,178,46,.2)}
+.sello.off{opacity:.6}
+.sello.off .ring{filter:grayscale(1)}
+.sello .ring .ic{width:38px;height:38px}
+.msg{margin-top:14px;min-height:24px;font-weight:700;color:#7a6656}
