@@ -304,7 +304,7 @@ export function renderTabs() {
     sub.querySelectorAll(".subtab").forEach(b => b.onclick = () => showTab(b.dataset.k));
   }
 }
-function showTab(k) {
+export function showTab(k) {
   activeTab = k;
   mascotPark();
   ["exercise","result"].forEach(s => $(s).classList.add("hidden"));

@@ -29,3 +29,41 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 
 /* Barra inferior con etiquetas de la maqueta */
 .bnav button{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:11.5px}
+
+/* ===== Inicio D4: cabecera, pastilla de práctica, semana, filas y camino ===== */
+.d4-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 14px}
+.d4-quien{display:flex;align-items:center;gap:12px;min-width:0}
+.d4-av{width:56px;height:56px;border-radius:18px;border:2px solid var(--ink,#2a1d14);background:#ffd9a0;display:grid;place-items:center;flex:none;overflow:hidden;box-shadow:inset 0 -3px 0 rgba(42,29,20,.12)}
+.d4-av svg,.d4-av img{width:48px;height:48px}
+.d4-kicker{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:13px;color:var(--muted)}
+.d4-saludo{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:26px;line-height:1.1;color:var(--ink,var(--text))}
+.d4-pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.d4-pill{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:4px 11px;border-radius:999px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-family:Fredoka,Nunito,sans-serif;font-size:14px}
+.d4-pill b{font-weight:700}
+.d4-hero{display:grid;gap:10px;justify-items:start;padding:18px}
+.d4-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:#f3e6d2;font-weight:800;font-size:13px;color:var(--ink,var(--text))}
+.d4-chip.ok{background:#dcf7ef;color:var(--ok,#0b7a62)}
+.d4-h{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:30px;line-height:1.1;margin:2px 0 0}
+.d4-sub{font-weight:700;font-size:15px;line-height:1.35;color:var(--muted)}
+.d4-bar{width:100%;height:12px;border-radius:7px;background:#f0e2cf;margin:4px 0 6px;box-shadow:none}
+.d4-bar .xp-fill{background:linear-gradient(90deg,#18a58a,#4fd6b4);border-radius:7px}
+.d4-lip{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;background:#18a58a;color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:19px;border:0;box-shadow:0 6px 0 #0d7a64;cursor:pointer}
+.d4-lip:active{transform:translateY(5px);box-shadow:0 1px 0 #0d7a64}
+.d4-tip{font-size:13px;color:var(--muted);font-weight:700}
+.d4-semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0 6px}
+.d4-dia{display:grid;justify-items:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-size:13px;font-weight:600;color:var(--muted)}
+.d4-dia i{width:30px;height:30px;border-radius:50%;background:#f0e2cf;display:grid;place-items:center;font-style:normal;font-size:14px}
+.d4-dia.hecho i{background:#ffb22e;box-shadow:0 2px 0 #d98a0c;color:#2a1d14}
+.d4-dia.hoy i{background:var(--card,#fffdf8);border:3px solid #18a58a}
+.d4-dia.hoy{color:var(--ink,var(--text))}
+.d4-seccion{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px;margin:20px 0 10px}
+.d4-filas{display:grid;gap:10px}
+.d4-fila{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 4px 0 var(--line);text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit}
+.d4-fila:disabled{opacity:.6;cursor:default}
+.d4-fila b{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:16px;display:block}
+.d4-fila small{font-size:12px;color:var(--muted);font-weight:800}
+.d4-ico{width:46px;height:46px;border-radius:14px;background:#e8f3ff;display:grid;place-items:center;font-size:22px}
+.d4-n{width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:0 3px 0 #d98a0c;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;color:#2a1d14}
+.d4-rango{margin-top:14px;display:grid;gap:8px}
+.d4-rango .gp-head{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.d4-h,.d4-saludo{color:#2a1d14}

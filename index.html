@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-fogn1QcebBKJe0YDByyqqKPsuf2f56Ai0OHl6wiulDU=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-6csxyyaCe840SisuQNSxAlvUjRtrU1ayNCoBMpqpCeo=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HqXki99roHHXdI6iaN5+7q0ONfPwGzhSnKufkBt7Z2U=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-6csxyyaCe840SisuQNSxAlvUjRtrU1ayNCoBMpqpCeo=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -905,6 +905,44 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 
 /* Barra inferior con etiquetas de la maqueta */
 .bnav button{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:11.5px}
+
+/* ===== Inicio D4: cabecera, pastilla de práctica, semana, filas y camino ===== */
+.d4-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 14px}
+.d4-quien{display:flex;align-items:center;gap:12px;min-width:0}
+.d4-av{width:56px;height:56px;border-radius:18px;border:2px solid var(--ink,#2a1d14);background:#ffd9a0;display:grid;place-items:center;flex:none;overflow:hidden;box-shadow:inset 0 -3px 0 rgba(42,29,20,.12)}
+.d4-av svg,.d4-av img{width:48px;height:48px}
+.d4-kicker{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:13px;color:var(--muted)}
+.d4-saludo{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:26px;line-height:1.1;color:var(--ink,var(--text))}
+.d4-pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.d4-pill{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:4px 11px;border-radius:999px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-family:Fredoka,Nunito,sans-serif;font-size:14px}
+.d4-pill b{font-weight:700}
+.d4-hero{display:grid;gap:10px;justify-items:start;padding:18px}
+.d4-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:#f3e6d2;font-weight:800;font-size:13px;color:var(--ink,var(--text))}
+.d4-chip.ok{background:#dcf7ef;color:var(--ok,#0b7a62)}
+.d4-h{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:30px;line-height:1.1;margin:2px 0 0}
+.d4-sub{font-weight:700;font-size:15px;line-height:1.35;color:var(--muted)}
+.d4-bar{width:100%;height:12px;border-radius:7px;background:#f0e2cf;margin:4px 0 6px;box-shadow:none}
+.d4-bar .xp-fill{background:linear-gradient(90deg,#18a58a,#4fd6b4);border-radius:7px}
+.d4-lip{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;background:#18a58a;color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:19px;border:0;box-shadow:0 6px 0 #0d7a64;cursor:pointer}
+.d4-lip:active{transform:translateY(5px);box-shadow:0 1px 0 #0d7a64}
+.d4-tip{font-size:13px;color:var(--muted);font-weight:700}
+.d4-semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0 6px}
+.d4-dia{display:grid;justify-items:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-size:13px;font-weight:600;color:var(--muted)}
+.d4-dia i{width:30px;height:30px;border-radius:50%;background:#f0e2cf;display:grid;place-items:center;font-style:normal;font-size:14px}
+.d4-dia.hecho i{background:#ffb22e;box-shadow:0 2px 0 #d98a0c;color:#2a1d14}
+.d4-dia.hoy i{background:var(--card,#fffdf8);border:3px solid #18a58a}
+.d4-dia.hoy{color:var(--ink,var(--text))}
+.d4-seccion{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px;margin:20px 0 10px}
+.d4-filas{display:grid;gap:10px}
+.d4-fila{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 4px 0 var(--line);text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit}
+.d4-fila:disabled{opacity:.6;cursor:default}
+.d4-fila b{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:16px;display:block}
+.d4-fila small{font-size:12px;color:var(--muted);font-weight:800}
+.d4-ico{width:46px;height:46px;border-radius:14px;background:#e8f3ff;display:grid;place-items:center;font-size:22px}
+.d4-n{width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:0 3px 0 #d98a0c;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;color:#2a1d14}
+.d4-rango{margin-top:14px;display:grid;gap:8px}
+.d4-rango .gp-head{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.d4-h,.d4-saludo{color:#2a1d14}
 </style>
 </head>
 <body>
@@ -2099,39 +2137,41 @@ function renderGame() {
   const TIPS = ["Lee la explicación de cada fallo antes de seguir.", "Diez minutos al día rinden más que dos horas el fin de semana.", "Repite en voz alta lo que escuchas: entrena pronunciación y comprensión a la vez.", "Revisa los errores de ayer antes de empezar algo nuevo.", "Escuchar sin mirar el texto es el mejor examen para tu oído."];
   const heroTip = TIPS[Math.floor(Date.now() / 86400000) % TIPS.length];
   mascotPark();
+  const hoy = new Date(), idxHoy = (hoy.getDay() + 6) % 7;   // semana de lunes a domingo
+  const semana = ["L", "M", "X", "J", "V", "S", "D"].map((letra, i) => {
+    const n = idxHoy - i;                                       // días atrás (negativo = día futuro)
+    const hecho = n >= 0 && xpBetween(n, n) > 0;
+    return `<span class="d4-dia${hecho ? " hecho" : ""}${n === 0 ? " hoy" : ""}"><i aria-hidden="true">${hecho ? "✓" : ""}</i>${letra}</span>`;
+  }).join("");
   el.innerHTML = `
-    <div class="card-top">
-      <h2 class="section-title card-clock" id="cardClock"><span id="clockTxt">${cardClockTxt()}</span><span class="card-lvl"> · Nivel ${currentLevel}</span></h2>
-      <div class="sw-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="btn secondary sw-btn" id="homeBtn" type="button">Volver al inicio</button><button class="btn secondary sw-btn" id="switchBtn" type="button">Cambiar perfil</button></div>
-    </div>
-    <div class="game-hero">
-      <div class="m-slot" id="mSlotHome"></div>
-      <div class="game-hero-txt">
-        <p class="gh-lvl">${LEVELS[currentLevel].desc}</p>
-        <p class="gh-main">${heroMain}</p>
-        <p class="gh-sub">${heroTip}</p>
-        <p class="gh-shield muted small">Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
+    <div class="d4-cab">
+      <div class="d4-quien"><div class="d4-av" id="mSlotHome"></div>
+        <div><p class="d4-kicker"><span id="clockTxt">${cardClockTxt()}</span> · Nivel ${currentLevel}</p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
+      <div class="d4-pills">
+        <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
+        <span class="d4-pill st-shield" data-k="shield">${ico("shield", 16)}<b class="st-num">${(s.freezeLeft ? 1 : 0) + rewards().shields}</b></span>
+        <span class="d4-pill st-coin" data-k="coin">${ico("coin", 16)}<b class="st-num">${rewards().coins}</b></span>
       </div>
     </div>
-    <div class="stats">
-      <div class="stat st-streak" data-k="streak"><span class="st-ico" aria-hidden="true">${ico("flame", 22)}</span><span class="st-num">${s.days}</span><span class="st-lbl">${s.days === 1 ? "día de racha" : "días de racha"}</span></div>
-      <div class="stat st-shield" data-k="shield"><span class="st-ico" aria-hidden="true">${ico("shield", 22)}</span><span class="st-num">${(s.freezeLeft ? 1 : 0) + rewards().shields}</span><span class="st-lbl">escudos</span></div>
-      <div class="stat st-coin" data-k="coin"><span class="st-ico" aria-hidden="true">${ico("coin", 22)}</span><span class="st-num">${rewards().coins}</span><span class="st-lbl">monedas</span></div>
+    <div class="d4-hero card">
+      <span class="d4-chip ok">Hoy · ${today} de ${DAILY_GOAL} XP</span>
+      <h2 class="d4-h">Practicar ahora</h2>
+      <p class="d4-sub gh-main">${heroMain}</p>
+      <div class="xp-track d4-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${DAILY_GOAL}" aria-valuenow="${today}" aria-label="Objetivo diario de XP"><div class="xp-fill" style="width:${goalPct}%"></div></div>
+      <button class="d4-lip" id="empezarBtn" type="button">Empezar</button>
+      <p class="d4-tip gh-sub">${heroTip}</p>
     </div>
-    <div class="game-progress">
-      <div class="gp-block">
-        <div class="gp-head"><span>Objetivo de hoy</span><strong>${today} / ${DAILY_GOAL} XP</strong></div>
-        <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="${DAILY_GOAL}" aria-valuenow="${today}" aria-label="Objetivo diario de XP"><div class="xp-fill" style="width:${goalPct}%"></div></div>
-      </div>
-      <div class="gp-block">
-        <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
-        <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
-      </div>
+    <div class="d4-semana" aria-label="Esta semana">${semana}</div>
+    <div class="d4-rango card">
+      <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
+      <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
+      <p class="muted small gp-foot">${weekTxt}</p>
+      <p class="muted small gh-shield">Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
+      <p class="muted small">${LEVELS[currentLevel].desc}</p>
     </div>
-    <div class="gp-foot-row">
-      <span class="muted small gp-foot">${weekTxt}</span>
-    </div>
-    `;
+    <div id="d4Acciones"></div>
+    <div id="d4Camino"></div>
+  `;
   mascotMount();
   mascotGreet();
 }
@@ -2716,6 +2756,18 @@ function renderHome() {
   }
   $("mascot")?.classList.remove("hidden");
   renderGame();
+  $("empezarBtn").onclick = startCorta;
+  const nRep = srsDue(currentLevel).length, ac = $("d4Acciones"), cm = $("d4Camino");
+  ac.innerHTML = `<h3 class="d4-seccion">Repaso y simulacro</h3><div class="d4-filas">
+    <button class="d4-fila" id="repasoRowBtn" type="button"${nRep ? "" : " disabled"}><span class="d4-ico" aria-hidden="true">🔁</span><span><b>Repasar fallos</b><small>${nRep ? nRep + " preguntas que se te resistieron" : "Sin fallos pendientes"}</small></span><span class="d4-chip">${nRep}</span></button>
+    <button class="d4-fila" id="simRowBtn" type="button"><span class="d4-ico" aria-hidden="true">📝</span><span><b>Simulacro EOI</b><small>Cronómetro por pregunta, sin correcciones</small></span><span class="d4-chip">${examMode ? "Activo" : "Nuevo"}</span></button></div>`;
+  if (nRep) $("repasoRowBtn").onclick = startReview;
+  $("simRowBtn").onclick = () => { examMode = true; renderHome(); showTab("ejercicios"); };
+  const partes = {};
+  ITEMS.filter(i => i.level === currentLevel && i.part).forEach(i => { partes[i.part] = (partes[i.part] || 0) + 1; });
+  const lista = Object.entries(partes);
+  cm.innerHTML = lista.length ? `<h3 class="d4-seccion">Tu camino</h3><div class="d4-filas">${lista.slice(0, 8).map(([p, n], i) => `<button class="d4-fila" type="button" data-part="${escHtml(p)}"><span class="d4-n" aria-hidden="true">${i + 1}</span><span><b>${escHtml(p.replace(/\s*\(.*$/, ""))}</b><small>${n} ejercicio${n === 1 ? "" : "s"}</small></span><span class="d4-chip">›</span></button>`).join("")}</div>` : "";
+  cm.querySelectorAll("[data-part]").forEach(b => b.onclick = () => startPart(b.dataset.part));
   const cn = document.querySelector(".st-coin .st-num");
   if (cn) { const c = rewards().coins; if (lastCoins !== null && c > lastCoins && !matchMedia("(prefers-reduced-motion: reduce)").matches) tweenNum(cn, lastCoins, c); lastCoins = c; }
   const lv = LEVELS[currentLevel];
