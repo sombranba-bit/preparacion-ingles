@@ -207,10 +207,14 @@ export function renderGame() {
   }).join("");
   el.innerHTML = `
     <div class="d4-cab">
-      <div class="d4-quien"><div class="d4-av" id="mSlotHome"></div>
-        <div><p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p><p class="d4-sub">${LEVELS[currentLevel].desc}</p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
-      <div class="d4-pills">
+      <div class="d4-top">
+        <p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p>
         <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
+      </div>
+      <div class="d4-quien">
+        <div class="d4-av" id="mSlotHome"></div>
+        <h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2>
+        <p class="d4-sub">${LEVELS[currentLevel].desc}</p>
       </div>
     </div>
     <div class="d4-hero card">

@@ -12,6 +12,7 @@ export function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles
 export function saveProfiles(list) { RAW_LS.setItem("perfiles-ingles", JSON.stringify(list)); }
 export function activeProfile() { const id = RAW_LS.getItem("perfil-activo"); return getProfiles().find(p => p.id === id) || null; }
 let pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [] };
+let pCreando = false;   // al crear un perfil se puede elegir cualquier personaje; colores, marcos y efectos siguen con su precio
 function profileReload(id) { RAW_LS.setItem("perfil-activo", id); location.reload(); }
 function profileDelete(p) {
   pDelId = p.id;
@@ -107,14 +108,15 @@ function chips(el, items, value, onPick, render) {
   });
 }
 function pRenderForm() {
-  chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (poseido(v)) pDraft.animal = v; },
-    it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
+  chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (pCreando || poseido(v)) pDraft.animal = v; },
+    it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${pCreando || poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   chips($("pColors"), P_COLORES, pDraft.color, v => { if (poseido(v)) pDraft.color = v; },
     it => `<span class="prof-sw" style="background:${it[0] === "grad" ? GRAD : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   $("pPreview").innerHTML = avatarSvg(pDraft, 120);
 }
 export function profileOpenForm(first, p) {
   pEditId = p ? p.id : null;
+  pCreando = !p;
   profileSetMode(null);
   $("profConfirm").classList.add("hidden");
   pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...(p ? p.avatar : {}) };
@@ -156,6 +158,7 @@ export function profilesInit() {
   $("pModeCancel").onclick = () => profileSetMode(null);
   $("pcCancel").onclick = () => profileOpenList();
   $("pcOk").onclick = profileDoDelete;
+  $("pBorrarTodo").onclick = () => document.dispatchEvent(new Event("borrar-datos"));
   $("pCancel").onclick = () => profileOpenList();
   $("pClose").onclick = () => profileShow(false);
   $("pCreate").onclick = profileCreate;
@@ -178,7 +181,8 @@ export function profilesInit() {
   if (window.visualViewport) { window.visualViewport.addEventListener("resize", ajustarTecladoDiferido); window.visualViewport.addEventListener("scroll", ajustarTecladoDiferido); }
   document.addEventListener("click", e => { if (e.target.closest("#switchBtn")) profileOpenList(); });
   if (RAW_LS.getItem("perfil-activo") === "invitado") profileShow(false);
-  else if (getProfiles().length === 0 || !activeProfile()) profileOpenList();
+  else if (getProfiles().length === 0) profileOpenForm(true);   // sin perfiles: directo a crear el primero
+  else if (!activeProfile()) profileOpenList();
   else profileShow(false);
 }
 

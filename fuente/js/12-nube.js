@@ -103,6 +103,24 @@ setInterval(() => { nubeSubir(); }, 20000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") nubeSubir(); });
 document.addEventListener("ranking-ver", () => { nubeRender(); });
 
+// Borrar todos los datos de este navegador (y la copia de la cuenta, si la hay). Se mantienen los ajustes de pantalla.
+document.addEventListener("borrar-datos", () => { nubeBorrarTodo(); });
+async function nubeBorrarTodo() {
+  if (!confirm("¿Borrar todos los datos? Se eliminan todos los perfiles, progreso, logros, monedas y ajustes de este navegador" + (nubeE.uid ? " y la copia de tu cuenta" : "") + ". No se puede deshacer.")) return;
+  try {
+    if (nubeE.uid) {
+      const f = await nubeFs(), m = f.m;
+      await m.setDoc(m.doc(f.db, "usuarios", nubeE.uid), { datos: "{}", actualizado: m.serverTimestamp() }, { merge: true });
+      nubeE.ultimo = "{}";
+    }
+  } catch (e) { alert("No se pudo borrar la copia de la cuenta: " + nubeError(e) + ". No se ha borrado nada."); return; }
+  for (let i = RAW_LS.length - 1; i >= 0; i--) {
+    const k = RAW_LS.key(i);
+    if (!NUBE_NO_SUBIR.test(k) || k.startsWith("copia-antes-de-sincronizar")) RAW_LS.removeItem(k);
+  }
+  location.reload();
+}
+
 /* ---------- Liga y grupos ---------- */
 function nubeCodigo() {
   const letras = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";   // 32 caracteres: sin 0/O/1/I

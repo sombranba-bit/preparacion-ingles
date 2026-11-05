@@ -137,3 +137,22 @@ header{display:none}
 
 /* Tienda: banda de ofertas del día, como en la maqueta */
 .oferta-cab{background:#fff1d6;border-radius:18px;padding:12px 14px;margin-top:14px;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:15px;color:#8a5a00;display:flex;justify-content:space-between;gap:10px}
+
+/* Cabecera de inicio: el avatar (con su marco) es el protagonista, centrado */
+.d4-cab{display:grid;gap:12px;justify-items:stretch;margin:4px 0 16px}
+.d4-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.d4-top .d4-kicker{margin:0}
+.d4-quien{display:grid;justify-items:center;text-align:center;gap:4px}
+.d4-av{width:148px;height:148px;border-radius:50%;border:0;background:none;box-shadow:none;overflow:visible;display:grid;place-items:center;margin:4px 0 6px}
+.d4-av svg,.d4-av img{width:140px;height:140px}
+.d4-saludo{font-size:30px;margin:0}
+.d4-quien .d4-sub{margin:0;max-width:30ch}
+#mSlotHome .mascot{justify-content:center;width:auto}
+#mSlotHome .mascot-btn{width:140px;height:140px;padding:0;background:none;border:0}
+#mSlotHome .mascot-btn .lion,#mSlotHome .mascot-btn .av{width:140px;height:140px}
+#mSlotHome .mascot-btn .av svg{width:100%;height:100%}
+#mSlotHome .lion .av{width:140px!important;height:140px!important}
+#mSlotHome .lion .av>svg{width:140px!important;height:140px!important}
+.d4-cab,.d4-quien,.d4-top{width:100%;box-sizing:border-box}
+.d4-cab>.d4-quien,.d4-cab>.d4-top{justify-self:stretch!important;width:auto!important}
+.d4-cab{grid-template-columns:minmax(0,1fr)}

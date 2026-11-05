@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-hYuL5F+YCaD4KgQIGViSoyHuKj3eqWsxMNcJDr5veTE=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-49jb4S5b79jfR4e9puDoFc7Yih17K6/vAHJp1QXDXr4=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1013,6 +1013,25 @@ header{display:none}
 
 /* Tienda: banda de ofertas del día, como en la maqueta */
 .oferta-cab{background:#fff1d6;border-radius:18px;padding:12px 14px;margin-top:14px;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:15px;color:#8a5a00;display:flex;justify-content:space-between;gap:10px}
+
+/* Cabecera de inicio: el avatar (con su marco) es el protagonista, centrado */
+.d4-cab{display:grid;gap:12px;justify-items:stretch;margin:4px 0 16px}
+.d4-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.d4-top .d4-kicker{margin:0}
+.d4-quien{display:grid;justify-items:center;text-align:center;gap:4px}
+.d4-av{width:148px;height:148px;border-radius:50%;border:0;background:none;box-shadow:none;overflow:visible;display:grid;place-items:center;margin:4px 0 6px}
+.d4-av svg,.d4-av img{width:140px;height:140px}
+.d4-saludo{font-size:30px;margin:0}
+.d4-quien .d4-sub{margin:0;max-width:30ch}
+#mSlotHome .mascot{justify-content:center;width:auto}
+#mSlotHome .mascot-btn{width:140px;height:140px;padding:0;background:none;border:0}
+#mSlotHome .mascot-btn .lion,#mSlotHome .mascot-btn .av{width:140px;height:140px}
+#mSlotHome .mascot-btn .av svg{width:100%;height:100%}
+#mSlotHome .lion .av{width:140px!important;height:140px!important}
+#mSlotHome .lion .av>svg{width:140px!important;height:140px!important}
+.d4-cab,.d4-quien,.d4-top{width:100%;box-sizing:border-box}
+.d4-cab>.d4-quien,.d4-cab>.d4-top{justify-self:stretch!important;width:auto!important}
+.d4-cab{grid-template-columns:minmax(0,1fr)}
 </style>
 <style>
 /* Personajes, fondos, efectos y marcos: estilos de la maqueta D4 (colores fijos de la maqueta). */
@@ -2724,10 +2743,14 @@ function renderGame() {
   }).join("");
   el.innerHTML = `
     <div class="d4-cab">
-      <div class="d4-quien"><div class="d4-av" id="mSlotHome"></div>
-        <div><p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p><p class="d4-sub">${LEVELS[currentLevel].desc}</p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
-      <div class="d4-pills">
+      <div class="d4-top">
+        <p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p>
         <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
+      </div>
+      <div class="d4-quien">
+        <div class="d4-av" id="mSlotHome"></div>
+        <h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2>
+        <p class="d4-sub">${LEVELS[currentLevel].desc}</p>
       </div>
     </div>
     <div class="d4-hero card">
@@ -2824,6 +2847,7 @@ function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles-ingles
 function saveProfiles(list) { RAW_LS.setItem("perfiles-ingles", JSON.stringify(list)); }
 function activeProfile() { const id = RAW_LS.getItem("perfil-activo"); return getProfiles().find(p => p.id === id) || null; }
 let pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [] };
+let pCreando = false;   // al crear un perfil se puede elegir cualquier personaje; colores, marcos y efectos siguen con su precio
 function profileReload(id) { RAW_LS.setItem("perfil-activo", id); location.reload(); }
 function profileDelete(p) {
   pDelId = p.id;
@@ -2919,14 +2943,15 @@ function chips(el, items, value, onPick, render) {
   });
 }
 function pRenderForm() {
-  chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (poseido(v)) pDraft.animal = v; },
-    it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
+  chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (pCreando || poseido(v)) pDraft.animal = v; },
+    it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${pCreando || poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   chips($("pColors"), P_COLORES, pDraft.color, v => { if (poseido(v)) pDraft.color = v; },
     it => `<span class="prof-sw" style="background:${it[0] === "grad" ? GRAD : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   $("pPreview").innerHTML = avatarSvg(pDraft, 120);
 }
 function profileOpenForm(first, p) {
   pEditId = p ? p.id : null;
+  pCreando = !p;
   profileSetMode(null);
   $("profConfirm").classList.add("hidden");
   pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...(p ? p.avatar : {}) };
@@ -2968,6 +2993,7 @@ function profilesInit() {
   $("pModeCancel").onclick = () => profileSetMode(null);
   $("pcCancel").onclick = () => profileOpenList();
   $("pcOk").onclick = profileDoDelete;
+  $("pBorrarTodo").onclick = () => document.dispatchEvent(new Event("borrar-datos"));
   $("pCancel").onclick = () => profileOpenList();
   $("pClose").onclick = () => profileShow(false);
   $("pCreate").onclick = profileCreate;
@@ -2990,7 +3016,8 @@ function profilesInit() {
   if (window.visualViewport) { window.visualViewport.addEventListener("resize", ajustarTecladoDiferido); window.visualViewport.addEventListener("scroll", ajustarTecladoDiferido); }
   document.addEventListener("click", e => { if (e.target.closest("#switchBtn")) profileOpenList(); });
   if (RAW_LS.getItem("perfil-activo") === "invitado") profileShow(false);
-  else if (getProfiles().length === 0 || !activeProfile()) profileOpenList();
+  else if (getProfiles().length === 0) profileOpenForm(true);   // sin perfiles: directo a crear el primero
+  else if (!activeProfile()) profileOpenList();
   else profileShow(false);
 }
 
@@ -9181,6 +9208,24 @@ setInterval(() => { nubeSubir(); }, 20000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") nubeSubir(); });
 document.addEventListener("ranking-ver", () => { nubeRender(); });
 
+// Borrar todos los datos de este navegador (y la copia de la cuenta, si la hay). Se mantienen los ajustes de pantalla.
+document.addEventListener("borrar-datos", () => { nubeBorrarTodo(); });
+async function nubeBorrarTodo() {
+  if (!confirm("¿Borrar todos los datos? Se eliminan todos los perfiles, progreso, logros, monedas y ajustes de este navegador" + (nubeE.uid ? " y la copia de tu cuenta" : "") + ". No se puede deshacer.")) return;
+  try {
+    if (nubeE.uid) {
+      const f = await nubeFs(), m = f.m;
+      await m.setDoc(m.doc(f.db, "usuarios", nubeE.uid), { datos: "{}", actualizado: m.serverTimestamp() }, { merge: true });
+      nubeE.ultimo = "{}";
+    }
+  } catch (e) { alert("No se pudo borrar la copia de la cuenta: " + nubeError(e) + ". No se ha borrado nada."); return; }
+  for (let i = RAW_LS.length - 1; i >= 0; i--) {
+    const k = RAW_LS.key(i);
+    if (!NUBE_NO_SUBIR.test(k) || k.startsWith("copia-antes-de-sincronizar")) RAW_LS.removeItem(k);
+  }
+  location.reload();
+}
+
 /* ---------- Liga y grupos ---------- */
 function nubeCodigo() {
   const letras = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";   // 32 caracteres: sin 0/O/1/I
@@ -9319,6 +9364,9 @@ async function nubeRender() {
           <button class="btn secondary" id="pExport" type="button">Exportar progreso</button>
           <button class="btn secondary" id="pAutoDl" type="button">Copia automática</button>
           <button class="btn secondary" id="pImport" type="button">Importar progreso</button>
+        </div>
+        <div class="prof-row">
+          <button class="btn secondary" id="pBorrarTodo" type="button" style="color:#b3261e">Borrar todos los datos</button>
         </div>
       </div>
       <input type="file" id="pImportFile" accept="application/json" hidden>
