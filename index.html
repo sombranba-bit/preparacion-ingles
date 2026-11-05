@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-k4qbVjFEBOgrzfxltiwhnLh11woUJb4RariB0h/wBO8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-WdqFxCVk7s3Dd2YCClQ8PwxDVFUyXQJ/45lew+Gy9zA=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-k4qbVjFEBOgrzfxltiwhnLh11woUJb4RariB0h/wBO8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1195,6 +1195,18 @@ header{display:none}
 .cta-ico{width:24px;height:24px;flex:none}
 #ctaFormCorreo[hidden]{display:none}
 #ctaEnviar{background:#0a5c4d;color:#fff;box-shadow:0 4px 0 #063d33;border:0;min-height:48px;font-family:Fredoka;font-weight:600;font-size:16px;border-radius:16px;cursor:pointer}
+
+/* Portada rediseñada: cifras, hoja de cuenta y entrada sutil */
+#landing .lp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 4px}
+#landing .lp-stats div{background:var(--card);border:1px solid var(--rule);border-radius:var(--r-lg);padding:10px 6px;text-align:center}
+#landing .lp-stats b{display:block;font-size:var(--fs-lg);color:var(--acc);line-height:1.1}
+#landing .lp-stats span{display:block;font-size:var(--fs-sm);color:var(--muted);margin-top:2px}
+#landing #lpElige{position:fixed;left:0;right:0;bottom:0;z-index:60;max-height:82vh;overflow:auto;display:grid;gap:10px;margin:0;padding:22px 18px calc(18px + env(safe-area-inset-bottom));background:var(--card);border-radius:22px 22px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.18);animation:lp-subir .35s ease both}
+#landing #lpElige[hidden]{display:none}
+#landing #lpElige .lp-x{position:absolute;top:10px;right:14px;width:36px;height:36px;border-radius:50%;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
+#landing #lpElige .lp-x:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+@keyframes lp-subir{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){#landing #lpElige{animation:none}}
 </style>
 </head>
 <body>
@@ -1207,25 +1219,30 @@ header{display:none}
 <symbol id="i-confeti" viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="2.5" rx=".6" fill="#f0587a" transform="rotate(-30 6 14)"/><circle cx="17" cy="6" r="1.8" fill="#4aa8ff"/><rect x="13" y="5" width="3.5" height="2" rx=".6" fill="#ffb22e" transform="rotate(25 14 6)"/><circle cx="19" cy="14" r="1.5" fill="#a57bff"/><path d="M9 6l1.2 2.2L12.5 9" fill="none" stroke="#18a58a" stroke-width="1.6" stroke-linecap="round"/><rect x="9" y="15" width="3.5" height="2" rx=".6" fill="#18a58a" transform="rotate(-15 10 16)"/></symbol>
 </defs></svg>
 <div id="landing" class="lp-root">
+<div class="lp-elige" id="lpElige" role="dialog" aria-label="Cómo empezar" hidden>
+  <button class="lp-x" type="button" data-cerrar-elige aria-label="Cerrar">×</button>
+  <p class="lp-lead" style="margin:0">¿Cómo quieres empezar?</p>
+  <button class="lp-btn" type="button" data-cuenta="crear">Crear cuenta</button>
+  <button class="lp-link" type="button" data-cuenta="entrar">Ya tengo cuenta</button>
+  <button class="lp-link" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
+  <div class="lp-cuenta" id="cuentaBox" hidden></div>
+</div>
 <div class="lp-top"><div class="lp-wrap">
     <button class="lp-theme" id="lpTheme" type="button">Modo claro</button>
 </div></div>
 <div class="lp-wrap">
   <section class="lp-hero">
     <div>
-      <span class="lp-pill">Cambridge · EOI · TOEFL</span>
       <div class="lp-h1">Prepara tu examen de inglés <em>a tu ritmo</em>.</div>
       <p class="lp-lead">Más de 3.400 ejercicios de A1 a C2, con la estructura de cada examen y repaso de tus fallos. Crea una cuenta para guardar tu progreso, o empieza gratis con el nivel A1.</p>
+      <div class="lp-stats" aria-label="La app en cifras">
+        <div><b>3.400</b><span>ejercicios</span></div>
+        <div><b>A1–C2</b><span>niveles</span></div>
+        <div><b>3</b><span>Cambridge · EOI · TOEFL</span></div>
+      </div>
       <div class="lp-cta">
         <a class="lp-btn" href="#" data-empezar>Empezar a practicar</a>
         <a class="lp-link" href="#funciones">¿Qué incluye?</a>
-      </div>
-      <div class="lp-elige" id="lpElige" hidden>
-        <p class="lp-lead">¿Cómo quieres empezar?</p>
-        <button class="lp-btn" type="button" data-cuenta="crear">Crear cuenta</button>
-        <button class="lp-link" type="button" data-cuenta="entrar">Ya tengo cuenta</button>
-        <button class="lp-link" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
-        <div class="lp-cuenta" id="cuentaBox" hidden></div>
       </div>
     </div>
     <div class="lp-art lp-car" role="region" aria-roledescription="carrusel" aria-label="Ejemplos de ejercicios">
@@ -9181,8 +9198,9 @@ try { cuentaInicializar(); } catch(e){}
   document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     const el = document.getElementById("lpElige");
-    if (el) el.hidden = !el.hidden; else entrarApp();
+    if (el) el.hidden = false; else entrarApp();
   }));
+  document.querySelectorAll("[data-cerrar-elige]").forEach(b => b.addEventListener("click", () => { const el = document.getElementById("lpElige"); if (el) el.hidden = true; }));
   document.querySelectorAll("[data-cuenta]").forEach(b => b.addEventListener("click", () => {
     const m = b.dataset.cuenta;
     if (m === "invitado") { try { RAW_LS.setItem("modo-invitado", "1"); } catch (e) {} entrarApp(); return; }

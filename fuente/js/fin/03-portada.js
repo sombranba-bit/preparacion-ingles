@@ -20,8 +20,9 @@ import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js
   document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     const el = document.getElementById("lpElige");
-    if (el) el.hidden = !el.hidden; else entrarApp();
+    if (el) el.hidden = false; else entrarApp();
   }));
+  document.querySelectorAll("[data-cerrar-elige]").forEach(b => b.addEventListener("click", () => { const el = document.getElementById("lpElige"); if (el) el.hidden = true; }));
   document.querySelectorAll("[data-cuenta]").forEach(b => b.addEventListener("click", () => {
     const m = b.dataset.cuenta;
     if (m === "invitado") { try { RAW_LS.setItem("modo-invitado", "1"); } catch (e) {} entrarApp(); return; }
