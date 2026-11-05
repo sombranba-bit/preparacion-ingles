@@ -157,3 +157,5 @@ header{display:none}
 .d4-cab>.d4-quien,.d4-cab>.d4-top{justify-self:stretch!important;width:auto!important}
 .d4-cab{grid-template-columns:minmax(0,1fr)}
 .d4-ico svg{width:30px;height:30px}
+/* Camino: círculos con los colores de la paleta crema menta */
+.d4-fila .d4-n{background:#0b5f4f;box-shadow:0 3px 0 #073f35;color:#fffdf8}
