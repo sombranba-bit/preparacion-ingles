@@ -209,8 +209,8 @@ export function renderHome() {
   $("empezarBtn").onclick = startCorta;
   const nRep = srsDue(currentLevel).length, ac = $("d4Acciones"), cm = $("d4Camino");
   ac.innerHTML = `<h3 class="d4-seccion">Repaso y simulacro</h3><div class="d4-filas">
-    <button class="d4-fila" id="repasoRowBtn" type="button"${nRep ? "" : " disabled"}><span class="d4-ico" aria-hidden="true">🔁</span><span><b>Repasar fallos</b><small>${nRep ? nRep + " preguntas que se te resistieron" : "Sin fallos pendientes"}</small></span><span class="d4-chip">${nRep}</span></button>
-    <button class="d4-fila" id="simRowBtn" type="button"><span class="d4-ico" aria-hidden="true">📝</span><span><b>Simulacro EOI</b><small>Cronómetro por pregunta, sin correcciones</small></span><span class="d4-chip">${examMode ? "Activo" : "Nuevo"}</span></button></div>`;
+    <button class="d4-fila" id="repasoRowBtn" type="button"${nRep ? "" : " disabled"}><span class="d4-ico" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-repaso"/></svg></span><span><b>Repasar fallos</b><small>${nRep ? nRep + " preguntas que se te resistieron" : "Sin fallos pendientes"}</small></span><span class="d4-chip">${nRep}</span></button>
+    <button class="d4-fila" id="simRowBtn" type="button"><span class="d4-ico" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-simulacro"/></svg></span><span><b>Simulacro EOI</b><small>Cronómetro por pregunta, sin correcciones</small></span><span class="d4-chip">${examMode ? "Activo" : "Nuevo"}</span></button></div>`;
   if (nRep) $("repasoRowBtn").onclick = startReview;
   $("simRowBtn").onclick = () => { examMode = true; renderHome(); showTab("ejercicios"); };
   const partes = {};

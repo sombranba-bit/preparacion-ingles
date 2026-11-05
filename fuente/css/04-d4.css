@@ -156,3 +156,4 @@ header{display:none}
 .d4-cab,.d4-quien,.d4-top{width:100%;box-sizing:border-box}
 .d4-cab>.d4-quien,.d4-cab>.d4-top{justify-self:stretch!important;width:auto!important}
 .d4-cab{grid-template-columns:minmax(0,1fr)}
+.d4-ico svg{width:30px;height:30px}
