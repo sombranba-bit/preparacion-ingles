@@ -87,7 +87,7 @@ function filaTienda(it) {
   else boton = `<button class="btn-mini" type="button" data-t-comprar="${it.k}">Comprar</button>`;
   return `<div class="t-item${posee ? " tiene" : ""}">${p.oferta ? '<span class="cartel">Oferta</span>' : ""}
     <span class="t-ico">${prev}</span>
-    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
+    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${p.oferta ? `<span class="chip of">Oferta −${Math.round((1 - p.final / p.base) * 100)}%</span>` : ""}${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
     <span class="t-der">${precioHtml}${boton}</span></div>`;
 }
 export function renderTienda() {

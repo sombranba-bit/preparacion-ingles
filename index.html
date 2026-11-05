@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-012fp86YL55KvyY++olc0CqW5w+JVGUlmaIIpAqkqmg=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-vdwVqmMXa7t0uyhpYo61ENBdob8m5xrDdFVUc3nkPng=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1870,6 +1870,8 @@ const AREAS = [
 let activeTab = "practica";
 // Área a la que pertenece una pestaña interna
 const areaDe = k => AREAS.find(a => a.k === k || (a.subs && a.subs.some(s => s[0] === k))) || AREAS[0];
+let practicarAccion = null;
+function setPracticarAccion(f) { practicarAccion = f; }
 function renderTabs() {
   const box = $("bnav");
   if (!box) return;
@@ -1877,6 +1879,7 @@ function renderTabs() {
   box.innerHTML = AREAS.map(a => `<button type="button" data-area="${a.k}" class="${a === area ? "on" : ""}" aria-current="${a === area ? "page" : "false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a.ico}</svg>${a.label}</button>`).join("");
   box.querySelectorAll("button").forEach(b => b.onclick = () => {
     const a = AREAS.find(x => x.k === b.dataset.area);
+    if (a.k === "ejercicios" && practicarAccion) return practicarAccion();   // Practicar abre el ejercicio, como en la maqueta
     showTab(a.subs ? a.subs[0][0] : a.k);
   });
   const sub = $("subtabs");
@@ -2975,6 +2978,7 @@ function startReview() {
 function startCorta() {
   const pool = ITEMS.filter(i => i.level === currentLevel);
   if (pool.length < 5) return;
+  window.scrollTo(0, 0);
   currentSection = "corta";
   runQueue(shuffleArr(pool).slice(0, 5));
 }
@@ -3108,6 +3112,9 @@ function selectOption(i, btn) {
   btn.classList.add("selected");
 }
 
+
+// Practicar (barra inferior) empieza una sesión corta; la lista de tipos, partes y niveles se abre desde Inicio
+setPracticarAccion(() => { if (ITEMS.filter(i => i.level === currentLevel).length >= 5) startCorta(); else showTab("ejercicios"); });
 
 /* ---------- Formatos nuevos: ordenar, emparejar, completar huecos ---------- */
 let fmt = null;
@@ -8477,7 +8484,7 @@ function filaTienda(it) {
   else boton = `<button class="btn-mini" type="button" data-t-comprar="${it.k}">Comprar</button>`;
   return `<div class="t-item${posee ? " tiene" : ""}">${p.oferta ? '<span class="cartel">Oferta</span>' : ""}
     <span class="t-ico">${prev}</span>
-    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
+    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${p.oferta ? `<span class="chip of">Oferta −${Math.round((1 - p.final / p.base) * 100)}%</span>` : ""}${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
     <span class="t-der">${precioHtml}${boton}</span></div>`;
 }
 function renderTienda() {

@@ -1,4 +1,5 @@
 import {
+  setPracticarAccion,
   showTab,
   $,
   BADGE,
@@ -351,6 +352,7 @@ function startReview() {
 function startCorta() {
   const pool = ITEMS.filter(i => i.level === currentLevel);
   if (pool.length < 5) return;
+  window.scrollTo(0, 0);
   currentSection = "corta";
   runQueue(shuffleArr(pool).slice(0, 5));
 }
@@ -484,3 +486,6 @@ function selectOption(i, btn) {
   btn.classList.add("selected");
 }
 
+
+// Practicar (barra inferior) empieza una sesión corta; la lista de tipos, partes y niveles se abre desde Inicio
+setPracticarAccion(() => { if (ITEMS.filter(i => i.level === currentLevel).length >= 5) startCorta(); else showTab("ejercicios"); });

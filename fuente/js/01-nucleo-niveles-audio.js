@@ -287,6 +287,8 @@ const AREAS = [
 let activeTab = "practica";
 // Área a la que pertenece una pestaña interna
 const areaDe = k => AREAS.find(a => a.k === k || (a.subs && a.subs.some(s => s[0] === k))) || AREAS[0];
+let practicarAccion = null;
+export function setPracticarAccion(f) { practicarAccion = f; }
 export function renderTabs() {
   const box = $("bnav");
   if (!box) return;
@@ -294,6 +296,7 @@ export function renderTabs() {
   box.innerHTML = AREAS.map(a => `<button type="button" data-area="${a.k}" class="${a === area ? "on" : ""}" aria-current="${a === area ? "page" : "false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a.ico}</svg>${a.label}</button>`).join("");
   box.querySelectorAll("button").forEach(b => b.onclick = () => {
     const a = AREAS.find(x => x.k === b.dataset.area);
+    if (a.k === "ejercicios" && practicarAccion) return practicarAccion();   // Practicar abre el ejercicio, como en la maqueta
     showTab(a.subs ? a.subs[0][0] : a.k);
   });
   const sub = $("subtabs");
