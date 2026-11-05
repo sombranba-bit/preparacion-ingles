@@ -189,7 +189,7 @@ export function renderGame() {
   el.innerHTML = `
     <div class="d4-cab">
       <div class="d4-quien"><div class="d4-av" id="mSlotHome"></div>
-        <div><p class="d4-kicker"><span id="clockTxt">${cardClockTxt()}</span> · Nivel ${currentLevel}</p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
+        <div><p class="d4-kicker"><span id="clockTxt">${cardClockTxt()}</span> · Nivel ${currentLevel} · <button type="button" class="d4-cambio" id="cambiarNivel">Cambiar</button></p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
       <div class="d4-pills">
         <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
         <span class="d4-pill st-shield" data-k="shield">${ico("shield", 16)}<b class="st-num">${(s.freezeLeft ? 1 : 0) + rewards().shields}</b></span>

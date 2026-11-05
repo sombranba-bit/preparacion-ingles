@@ -209,6 +209,7 @@ export function renderHome() {
   $("mascot")?.classList.remove("hidden");
   renderGame();
   $("empezarBtn").onclick = startCorta;
+  $("cambiarNivel").onclick = () => showTab("ejercicios");
   const nRep = srsDue(currentLevel).length, ac = $("d4Acciones"), cm = $("d4Camino");
   ac.innerHTML = `<h3 class="d4-seccion">Repaso y simulacro</h3><div class="d4-filas">
     <button class="d4-fila" id="repasoRowBtn" type="button"${nRep ? "" : " disabled"}><span class="d4-ico" aria-hidden="true">🔁</span><span><b>Repasar fallos</b><small>${nRep ? nRep + " preguntas que se te resistieron" : "Sin fallos pendientes"}</small></span><span class="d4-chip">${nRep}</span></button>
