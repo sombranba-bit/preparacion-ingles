@@ -85,9 +85,9 @@ function filaTienda(it) {
   if (posee) boton = `<button class="btn-mini" type="button" data-t-equipar="${it.k}">${puesto ? "Quitar" : "Ponerme"}</button>`;
   else if (rewards().coins < p.final) boton = `<button class="btn-mini tuyo" type="button" disabled>Te faltan ${p.final - rewards().coins}</button>`;
   else boton = `<button class="btn-mini" type="button" data-t-comprar="${it.k}">Comprar</button>`;
-  return `<div class="t-item${posee ? " tiene" : ""}">${p.oferta ? '<span class="cartel">Oferta</span>' : ""}
+  return `<div class="t-item${posee ? " tiene" : ""}">${p.oferta ? '<span class="cartel">OFERTA</span>' : ""}
     <span class="t-ico">${prev}</span>
-    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${p.oferta ? `<span class="chip of">Oferta −${Math.round((1 - p.final / p.base) * 100)}%</span>` : ""}${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
+    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${p.oferta ? `<span class="chip of">Oferta −30%</span>` : ""}${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
     <span class="t-der">${precioHtml}${boton}</span></div>`;
 }
 export function renderTienda() {
@@ -95,7 +95,7 @@ export function renderTienda() {
   if (!box) return;
   const ofertas = ofertasHoy().map(k => todosLosItems().find(x => x.k === k));
   $("tienda-saldo").innerHTML = `${ico("coin", 18)} <b>${rewards().coins}</b> monedas`;
-  $("tienda-fin").textContent = "Ofertas hasta medianoche";
+  $("tienda-fin").textContent = "Hasta medianoche";
   $("tienda-fin-semana").textContent = fdeSemana() ? "Fin de semana: −10 % en todo" : "";
   box.innerHTML = ofertas.map(filaTienda).join("");
   $("tienda-marcos").innerHTML = T_MARCOS.map(filaTienda).join("");

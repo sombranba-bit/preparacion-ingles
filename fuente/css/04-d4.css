@@ -134,3 +134,6 @@ header{display:none}
 /* Ejercicio: salir como botón redondo con × (el texto queda para lectores de pantalla) */
 #exercise #backBtn{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;font-size:0;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);display:inline-grid;place-items:center}
 #exercise #backBtn::before{content:"✕";font-size:18px;font-weight:800;color:var(--text)}
+
+/* Tienda: banda de ofertas del día, como en la maqueta */
+.oferta-cab{background:#fff1d6;border-radius:18px;padding:12px 14px;margin-top:14px;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:15px;color:#8a5a00;display:flex;justify-content:space-between;gap:10px}
