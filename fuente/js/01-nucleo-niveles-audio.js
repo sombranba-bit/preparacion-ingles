@@ -402,6 +402,7 @@ function inkFor(hex) {
   const L = lum(hex), dark = lum("#0b0a1f");
   return (1.05 / (L + 0.05)) >= ((L + 0.05) / (dark + 0.05)) ? "#ffffff" : "#0b0a1f";
 }
+const NOTA_NIVEL = { A1: "Clasificación A1. Prepara exámenes de nivel inicial. Puedes cambiarla cuando quieras.", A2: "Clasificación A2. Prepara exámenes de nivel elemental. Puedes cambiarla cuando quieras.", B1: "Clasificación B1 (por ejemplo PET o EOI). Puedes cambiarla cuando quieras.", B2: "Clasificación B2 (por ejemplo FCE o EOI). Puedes cambiarla cuando quieras.", C1: "Clasificación C1 (por ejemplo CAE o EOI). Puedes cambiarla cuando quieras.", C2: "Clasificación C2 (por ejemplo CPE o EOI). Puedes cambiarla cuando quieras." };
 export function renderLevels() {
   document.documentElement.style.setProperty("--lvl-color", lc(LEVELS[currentLevel]));
   const lvc = levelColor(currentLevel);
@@ -412,19 +413,14 @@ export function renderLevels() {
   box.innerHTML = "";
   Object.keys(LEVELS).forEach(lv => {
     const b = document.createElement("button");
-    b.className = "lvl";
+    b.type = "button";
     b.textContent = lv;
-    b.style.setProperty("--own", lc(LEVELS[lv]));
-    const c = levelColor(lv);
-    const sel = currentLevel === lv;
-    b.style.color = sel ? inkFor(c) : c;
-    b.style.background = sel ? c : "var(--surface)";
-    b.style.borderColor = sel ? "#fff" : "transparent";
-    b.style.boxShadow = sel ? "0 0 0 2px #fff" : "0 2px 6px rgba(0,0,0,.2)";
-    b.setAttribute("aria-pressed", sel ? "true" : "false");
+    b.setAttribute("aria-pressed", currentLevel === lv ? "true" : "false");
     b.onclick = () => { currentLevel = lv; renderLevels(); renderHome(); };
     box.appendChild(b);
   });
+  const nota = $("nivelNota"); if (nota) nota.textContent = NOTA_NIVEL[currentLevel] || "";
+  const np = $("nivelPerfil"); if (np) np.textContent = "Examen " + currentLevel + " · objetivo oficial";
 }
 
 

@@ -39,7 +39,7 @@ import {
   streakInfo,
   xpTotal,
 } from "./02-progreso-xp-racha-mascota.js";
-import { P_ACCS, activeProfile, escHtml, pEditId } from "./03-perfiles.js";
+import { activeProfile, escHtml } from "./03-perfiles.js";
 import {
   celebrate,
   check,
@@ -92,7 +92,7 @@ const LOGROS = [
   { id: "racha-7", name: "Semana seguida", desc: "7 días de racha", ok: () => streakInfo().days >= 7, p: () => [streakInfo().days, 7] },
   { id: "racha-30", name: "Mes seguido", desc: "30 días de racha", ok: () => streakInfo().days >= 30, p: () => [streakInfo().days, 30] },
   { id: "rango", name: "Nuevo rango", desc: "Sube de rango por primera vez", ok: () => rankInfo(xpTotal()).name !== rankInfo(0).name, p: () => [xpTotal(), RANKS[1][0]] },
-  { id: "compra", name: "De compras", desc: "Desbloquea un accesorio", ok: () => (rewards().owned || []).length > 0, p: () => [rewards().coins || 0, ACC_PRECIO] }
+  { id: "compra", name: "De compras", desc: "Desbloquea un personaje, un color, un efecto o un marco", ok: () => (rewards().owned || []).length > 0, p: () => [rewards().coins || 0, 150] }
 ];
 function logroOk(l) { try { return !!l.ok(); } catch (e) { return false; } }
 function logroProg(l) { try { const [a, b] = l.p(); return [Math.max(0, Math.min(a, b)), b]; } catch (e) { return null; } }
@@ -133,18 +133,6 @@ export function checkLogros() {
   // Varios a la vez (p. ej. al estrenar la función) se muestran en una sola celebración
   const txt = nuevos.map(l => l.name).join(" · ");
   setTimeout(() => celebrate(nuevos.length === 1 ? "¡Logro: " + nuevos[0].name + "!" : `¡${nuevos.length} logros!`, nuevos.length === 1 ? nuevos[0].desc : txt, badgeSvg(nuevos[0].id, false, 72)), 3000);
-}
-export const ACC_PRECIO = 15;
-const ACC_GRATIS = ["ninguno", "gafas", "gorra"];
-export function accOwned(k) { return ACC_GRATIS.includes(k) || (rewards().owned || []).includes(k); }
-// Solo se compra al editar el perfil activo: sus monedas son las que se gastan
-export function accComprar(k) {
-  if (accOwned(k)) return true;
-  const p = activeProfile();
-  if (!(pEditId && p && p.id === pEditId) || !spendCoins(ACC_PRECIO)) return false;
-  const r = rewards(); r.owned = [...(r.owned || []), k]; saveRewards(r);
-  celebrate("¡Desbloqueado!", `${(P_ACCS.find(x => x[0] === k) || [k, k])[1]}: ya puedes ponértelo`, ico("gift", 56));
-  return true;
 }
 export function advRender() {
   const r = rewards(), res = results[index];

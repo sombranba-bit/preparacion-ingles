@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-9mAXuSI0Tsv0mH8w4ISLTigrMqWLNNM5oVBBCQeYlAA=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/kwgNvd4n3K9eqY1sghP4IYP7pePYFzexZ22TQJsjk0=' 'sha256-NhjgwV1qMhEKsYaB3tC4ej34pRAFPCtueY7XUaXkL9o=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-lZiM/+ediZdZ4MsCg6wPuk2EcxXInvNP5k5lHuYhgVU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -1014,8 +1014,165 @@ header{display:none}
 /* Tienda: banda de ofertas del día, como en la maqueta */
 .oferta-cab{background:#fff1d6;border-radius:18px;padding:12px 14px;margin-top:14px;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:15px;color:#8a5a00;display:flex;justify-content:space-between;gap:10px}
 </style>
+<style>
+/* Personajes, fondos, efectos y marcos: estilos de la maqueta D4 (colores fijos de la maqueta). */
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+.av{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;border:2px solid #2a1d14;flex:none;transition:background .3s;box-shadow:inset 0 -3px 0 rgba(42,29,20,.12)}
+.av svg{width:81%;height:81%;overflow:visible;display:block}
+.seccion{font-family:Fredoka;font-weight:600;font-size:17px;margin:20px 0 10px}
+.filas{display:grid;gap:10px}
+.fila{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:#fffdf8;border:2px solid #ecd9c0;box-shadow:0 4px 0 #ecd9c0;text-align:left;width:100%}
+.fila .n{width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:0 3px 0 #d98a0c;display:grid;place-items:center;font-family:Fredoka;font-weight:700;font-size:20px}
+.fila .ico{width:46px;height:46px;border-radius:14px;background:var(--sky-soft);display:grid;place-items:center;font-size:22px}
+.fila b{font-family:Fredoka;font-weight:600;font-size:16px;display:block}
+.fila small{font-size:12px;color:#7a6656;font-weight:800}
+.fila.bloq{opacity:.55}
+.fila.bloq .n{background:#e6d9c8;box-shadow:0 3px 0 #cdbfae}
+.sellos-mini{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.sellos-mini::-webkit-scrollbar{display:none}
+.cerrar{width:44px;height:44px;border-radius:50%;background:#fffdf8;border:2px solid #ecd9c0;display:grid;place-items:center;flex:none;box-shadow:0 3px 0 #ecd9c0}
+.sellos{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.perfil{display:grid;justify-items:center;gap:14px;text-align:center;margin-top:6px}
+.bloque{width:100%;text-align:left}
+.bloque .etiq{display:block;margin-bottom:8px}
+.avatares{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.avatares button{min-height:92px;border-radius:20px;border:2px solid #ecd9c0;background:#fffdf8;display:grid;place-items:center;align-content:center;gap:4px;box-shadow:0 4px 0 #ecd9c0;font-family:Fredoka;font-weight:600;font-size:13px}
+.avatares button .ico-av svg{width:56px;height:56px;transition:transform .35s cubic-bezier(.34,1.45,.64,1)}
+.avatares button{font-size:14px;min-height:98px;transition:transform .12s cubic-bezier(.23,1,.32,1),border-color .2s,box-shadow .2s}
+.avatares button[aria-pressed="true"] .ico-av svg{transform:translateY(-2px) scale(1.06)}
+.avatares button:active{transform:translateY(2px)}
+.avatares button[aria-pressed="true"]{border-color:#2a1d14;box-shadow:0 4px 0 #000}
+.bol-fila{display:flex;gap:10px;flex-wrap:wrap}
+.bol{width:46px;height:46px;border-radius:50%;border:3px solid #fffdf8;box-shadow:0 0 0 2px #ecd9c0}
+.bol[aria-pressed="true"]{box-shadow:0 0 0 3px #2a1d14}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#f3e6d2;border-radius:16px;padding:4px}
+.seg button{min-height:44px;border-radius:12px;font-family:Fredoka;font-weight:600;font-size:15px;color:#7a6656}
+.seg button[aria-pressed="true"]{background:#fffdf8;color:#2a1d14;box-shadow:0 2px 0 #ecd9c0}
+.ajuste{margin-top:12px}
+.ajuste>.etiq{display:block;margin-bottom:6px}
+.chip.of{background:#ffe9b8;color:#8a5a00}
+.oferta-cab{background:#fff1d6;border-radius:18px;padding:12px 14px;font-weight:800;font-size:13px;color:#8a5a00;display:flex;justify-content:space-between;gap:10px}
+.tienda-item{position:relative;display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px;border-radius:18px;background:#fffdf8;border:2px solid #ecd9c0;box-shadow:0 4px 0 #ecd9c0}
+.tienda-item .ico-t{width:56px;height:56px;border-radius:16px;background:#f3e6d2;display:grid;place-items:center;overflow:hidden}
+.tienda-item .ico-t svg{width:46px;height:46px}
+.tienda-item .cartel{position:absolute;top:-9px;right:-6px;background:#e5484d;color:#fff;font-family:Fredoka;font-weight:700;font-size:11px;padding:3px 8px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #b52d52}
+.btn-mini{min-height:40px;padding:0 14px;border-radius:14px;background:#18a58a;color:#fff;font-family:Fredoka;font-weight:700;font-size:14px;box-shadow:0 4px 0 #0d7a64;white-space:nowrap}
+.btn-mini:active{transform:translateY(3px);box-shadow:0 1px 0 #0d7a64}
+.btn-mini:disabled{background:#e6d9c8;color:#7a6656;box-shadow:0 4px 0 #cdbfae;cursor:default}
+.btn-mini.tuyo{background:#f3e6d2;color:#2a1d14;box-shadow:0 4px 0 #ecd9c0}
+.btn-mini.tuyo:disabled{background:#f3e6d2;color:#2a1d14}
+.fila2{display:flex;gap:10px}
+.confirma{position:absolute;left:14px;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));padding:18px;border-radius:22px;background:#fffdf8;border:2px solid #2a1d14;box-shadow:0 8px 0 #2a1d14;transform:translateY(160%);transition:transform .4s cubic-bezier(.34,1.45,.64,1);z-index:6}
+.confirma{opacity:0;visibility:hidden;pointer-events:none;transition:transform .4s cubic-bezier(.34,1.45,.64,1),opacity .25s,visibility .4s}
+.confirma.on{transform:none;opacity:1;visibility:visible;pointer-events:auto}
+.toast{position:absolute;top:calc(12px + env(safe-area-inset-top));left:16px;right:16px;padding:12px 14px;border-radius:14px;background:#2a1d14;color:#fff;font-weight:700;opacity:0;transform:translateY(-10px);transition:opacity .3s cubic-bezier(.23,1,.32,1),transform .3s cubic-bezier(.23,1,.32,1);pointer-events:none;z-index:9;text-align:center}
+.toast.on{opacity:1;transform:none}
+.bloqueado{opacity:.55}
+.avatares button .lock{font-size:12px;color:#7a6656;font-weight:800}
+.marco-oro{box-shadow:0 0 0 4px #ffb22e,0 7px 0 #2a1d14!important}
+@keyframes cae{to{transform:translate(var(--x),var(--y)) rotate(300deg);opacity:0}}
+.avatares button .ico-av{display:block;width:56px;height:56px}
+.avatares button .ico-av svg{width:56px;height:56px}
+.bol.bloqueado{opacity:.4}
+@media (prefers-reduced-motion:reduce){.confeti-p{display:none}}
+.chip.anim{background:#e3ddff;color:#4b3fb5}
+.sw-grad{display:block;width:40px;height:40px;border-radius:50%;background-size:300% 300%;animation:fg 6s linear infinite;box-shadow:0 0 0 1.5px #ecd9c0}
+.sw-c{display:block;width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 1.5px #ecd9c0}
+.pv{display:inline-block;font-size:28px;line-height:1}
+.pv-aura{animation:aura 2.4s ease-in-out infinite;border-radius:50%}
+.pv-destellos{animation:tw 1.6s ease-in-out infinite}
+.pv-vivo{animation:vivo 2.2s ease-in-out infinite}
+.pv-confeti{animation:tw 1.2s linear infinite}
+.pv-marco{display:block;width:40px;height:40px;border-radius:50%;background:#f1e7d8}
+.pv-oro{box-shadow:0 0 0 4px #ffb22e}
+.fondo-grad{background-size:300% 300%!important;animation:fg 6s linear infinite}
+.fx-aura{animation:aura 2.4s ease-in-out infinite}
+.fx-vivo svg{animation:vivo 2.2s ease-in-out infinite}
+.av{position:relative}
+.av.salta{animation:salta .6s cubic-bezier(.34,1.45,.64,1)}
+@keyframes aura{0%,100%{outline:2px solid rgba(255,178,46,.7);outline-offset:4px}50%{outline:2px solid rgba(255,178,46,0);outline-offset:14px}}
+@keyframes fg{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+@keyframes tw{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(25deg)}}
+@keyframes vivo{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-3px) rotate(-3deg)}75%{transform:translateY(-2px) rotate(3deg)}}
+@keyframes arco{0%{box-shadow:0 0 0 4px #ff6b6b,0 7px 0 #2a1d14}33%{box-shadow:0 0 0 4px #ffd166,0 7px 0 #2a1d14}66%{box-shadow:0 0 0 4px #5fd6ff,0 7px 0 #2a1d14}100%{box-shadow:0 0 0 4px #ff6b6b,0 7px 0 #2a1d14}}
+@keyframes salta{0%{transform:translateY(0)}35%{transform:translateY(-14px) scale(1.04)}70%{transform:translateY(0) scale(.98)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.fx-aura,.fx-vivo svg,.sp,.pv,.sw-grad,.fondo-grad,.marco-arco,.av.salta,.pv-arco{animation:none!important}}
+.av{isolation:isolate}
+.fxc{position:absolute;pointer-events:none;z-index:2}
+.fx-screen{position:fixed;left:0;top:0;pointer-events:none;z-index:50}
+.fx-aura{animation:none!important;outline:none!important}
+.fx-aura::before{content:"";position:absolute;inset:-22px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,170,60,.9),rgba(255,170,60,.35) 60%,rgba(255,170,60,0));filter:blur(4px);z-index:-1;animation:breath 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes breath{0%,100%{opacity:.5;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}
+.fx-vivo svg{animation:squash 2.6s cubic-bezier(.45,0,.55,1) infinite;transform-origin:50% 92%}
+@keyframes squash{0%,100%{transform:scale(1,1)}18%{transform:scale(1.04,.96)}38%{transform:translateY(-7px) scale(.97,1.05)}58%{transform:translateY(0) scale(1.03,.97)}76%{transform:scale(.99,1.01)}}
+.marco-oro{box-shadow:0 7px 0 #2a1d14!important}
+.marco-oro::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:3px solid #ffb22e;box-shadow:0 0 14px rgba(255,178,46,.45),inset 0 0 0 1px rgba(255,255,255,.7);pointer-events:none}
+.marco-arco{animation:none!important;box-shadow:0 7px 0 #2a1d14!important}
+.marco-arco::after{content:"";position:absolute;inset:-6px;border-radius:inherit;padding:3px;background:conic-gradient(from var(--ang),#ff6b6b,#ffd166,#c6f432,#5fd6ff,#a57bff,#ff6b6b);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:girar 3.6s linear infinite;pointer-events:none}
+@keyframes girar{to{--ang:360deg}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pv-arco{background:conic-gradient(from var(--ang),#ff6b6b,#ffd166,#c6f432,#5fd6ff,#a57bff,#ff6b6b);animation:girar 3.6s linear infinite;border-radius:50%}
+.pv-aura{animation:breath 2.8s ease-in-out infinite;border-radius:50%}
+@media (prefers-reduced-motion:reduce){.fx-aura::before,.fx-vivo svg,.marco-arco::after,.marco-oro::after,.pv-arco,.pv-aura,.fxc,.fx-screen{animation:none!important;display:none}}
+.fila .ico .ic{width:28px;height:28px}
+.fila .ico,.fila .n{display:grid;place-items:center}
+.niveles{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}
+.niveles button{min-height:46px;border-radius:14px;background:#fff8ec;border:2px solid #ecd9c0;font-family:Fredoka;font-weight:700;font-size:16px;color:#2a1d14;box-shadow:0 3px 0 #ecd9c0}
+.niveles button[aria-pressed="true"]{background:#2a1d14;color:#fff;border-color:#2a1d14;box-shadow:0 3px 0 #000}
+.fila .prog-m{font-family:Fredoka;font-weight:700;font-size:13px;color:#7a6656}
+.avatares .lock{display:flex;align-items:center;gap:4px;font-size:13px}
+.avatares .lock .ic{width:14px;height:14px}
+.marco-simple::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:2.5px solid #2a1d14;pointer-events:none}
+.marco-part::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:3px solid var(--mc);box-shadow:0 0 12px var(--mc);opacity:.9;pointer-events:none}
+.pv-marco{display:block;position:relative;width:40px;height:40px;border-radius:50%;background:#f1e7d8;border:3px solid var(--mc);box-shadow:0 0 10px var(--mc)}
+.pv-marco.pv-arco{background:conic-gradient(#ff6b6b,#ffd166,#c6f432,#5fd6ff,#a57bff,#ff6b6b);border:none}
+@media (prefers-reduced-motion:reduce){.marco-part::after{box-shadow:none}}
+.tienda-item .ico-t .mi{width:50px;height:50px;overflow:visible}
+.mi-arcoiris,.mi-nieve,.mi-cosmico{animation:miSpin 12s linear infinite}
+.mi-llamas{animation:miFlick 1.2s ease-in-out infinite alternate}
+.mi-estrellas{animation:miTw 2.2s ease-in-out infinite alternate}
+.mi-burbujas{animation:miFloat 3s ease-in-out infinite alternate}
+@keyframes miSpin{to{transform:rotate(360deg)}}
+@keyframes miFlick{from{transform:scale(1)}to{transform:scale(1.05)}}
+@keyframes miTw{from{opacity:.65}to{opacity:1}}
+@keyframes miFloat{from{transform:translateY(1px)}to{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){.mi{animation:none!important}}
+
+
+/* Piezas de base que usan la tienda, el perfil y los diálogos de la maqueta */
+.ic{width:26px;height:26px;display:block;color:#2a1d14;flex:none;overflow:visible}
+.ic-c{width:16px;height:16px;display:inline-block;vertical-align:-3px}
+.gem{display:flex;align-items:center;gap:6px;background:#fffdf8;border:2px solid #ecd9c0;border-radius:999px;padding:5px 11px;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:14px;box-shadow:0 3px 0 #ecd9c0}
+.cab2{display:flex;align-items:center;gap:12px}
+.etiq{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:14px;color:#7a6656}
+.chip.of,.chip.anim{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;font-weight:800;font-size:12px}
+.bloque.card{background:#fffdf8;border:2px solid #ecd9c0;border-radius:22px;padding:16px;box-shadow:0 4px 0 #ecd9c0}
+.perfil{display:grid;justify-items:center;gap:14px;text-align:center;margin-top:6px}
+.perfil-av-wrap{display:inline-block}
+.perfil-av-wrap .av{cursor:pointer}
+.perfil .perfil-nombre,.perfil h1{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:30px}
+.confirma{position:fixed;left:14px;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:60}
+.toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:16px;right:16px;z-index:70}
+.tienda-item .precio{font-family:Fredoka,Nunito,sans-serif;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.tienda-item .precio s{opacity:.6}
+.perfil .chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:#f3e6d2;border:0;font-family:Nunito,system-ui,sans-serif;font-weight:800;font-size:14px;color:#2a1d14}
+/* Contraste AAA (7:1) con texto blanco o oscuro sobre los botones y etiquetas de la tienda */
+.btn-mini{background:#0a5c4d;box-shadow:0 4px 0 #063d33}
+.btn-mini:active{box-shadow:0 1px 0 #063d33}
+:root[data-mode="light"] .d4-chip.ok{color:#0a5c4d}
+:root[data-mode="light"] .bnav button.on{color:#0a5c4d}
+</style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-moneda" viewBox="0 0 24 24"><circle cx="12" cy="13.6" r="9" fill="#d98a0c"/><circle cx="12" cy="12.2" r="9" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.8"/><circle cx="12" cy="12.2" r="5.9" fill="none" stroke="#d98a0c" stroke-width="1.2" opacity=".85"/><path d="M12 8.6l.9 2.5 2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9z" fill="#fff8ec"/><path d="M6.2 9.5a6.5 6.5 0 0 1 3-2.6" fill="none" stroke="#fff8ec" stroke-width="1.4" stroke-linecap="round" opacity=".75"/></symbol>
+<symbol id="i-candado" viewBox="0 0 24 24"><path d="M8 11V8.2a4 4 0 0 1 8 0V11" fill="none" stroke="#2a1d14" stroke-width="2.2" stroke-linecap="round"/><rect x="5" y="12" width="14" height="10" rx="3.2" fill="#d98a0c"/><rect x="5" y="10.5" width="14" height="10" rx="3.2" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.8"/><circle cx="12" cy="14.6" r="1.7" fill="#2a1d14"/><rect x="11.2" y="15.4" width="1.6" height="2.8" rx=".7" fill="#2a1d14"/><path d="M7.6 13v2.8" stroke="#fff8ec" stroke-width="1.2" stroke-linecap="round" opacity=".75"/></symbol>
+<symbol id="i-destello" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#ffd166" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+<symbol id="i-aura" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffd9a8" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="9" fill="none" stroke="#ffb22e" stroke-width="1.8" stroke-dasharray="3 3"/></symbol>
+<symbol id="i-vivo" viewBox="0 0 24 24"><path d="M5 15c2.5-4 5.5-4 7 0s4.5 4 7 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M5 9c2.5-4 5.5-4 7 0s4.5 4 7 0" fill="none" stroke="#18a58a" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-confeti" viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="2.5" rx=".6" fill="#f0587a" transform="rotate(-30 6 14)"/><circle cx="17" cy="6" r="1.8" fill="#4aa8ff"/><rect x="13" y="5" width="3.5" height="2" rx=".6" fill="#ffb22e" transform="rotate(25 14 6)"/><circle cx="19" cy="14" r="1.5" fill="#a57bff"/><path d="M9 6l1.2 2.2L12.5 9" fill="none" stroke="#18a58a" stroke-width="1.6" stroke-linecap="round"/><rect x="9" y="15" width="3.5" height="2" rx=".6" fill="#18a58a" transform="rotate(-15 10 16)"/></symbol>
+</defs></svg>
 <div id="landing" class="lp-root">
 <div class="lp-top"><div class="lp-wrap">
     <button class="lp-theme" id="lpTheme" type="button">Modo claro</button>
@@ -1344,31 +1501,38 @@ header{display:none}
   <!-- TIENDA: ofertas diarias, marcos, efectos y accesorios -->
   <section id="p-tienda" class="panel hidden">
     <div class="m-slot"></div>
-    <h2 class="d4-title">Tienda</h2>
-    <div class="card t-cab">
-      <div id="tienda-saldo" class="t-saldo"></div>
-    </div>
-    <div class="oferta-cab"><span>Ofertas de hoy</span><span id="tienda-fin"></span></div>
-    <p class="muted t-fin"><span id="tienda-fin-semana"></span></p>
-    <h2 class="section-title">Ofertas de hoy</h2>
-    <div class="t-lista" id="tienda-ofertas"></div>
-    <h2 class="section-title">Marcos animados</h2>
-    <p class="muted t-nota">Los marcos sencillo y hojas son gratis. Los demás se compran con monedas y se quedan en tu perfil.</p>
-    <div class="t-lista" id="tienda-marcos"></div>
-    <h2 class="section-title">Efectos</h2>
-    <div class="t-lista" id="tienda-efectos"></div>
-    <h2 class="section-title">Accesorios</h2>
-    <div class="t-lista" id="tienda-accesorios"></div>
-    <p class="muted" id="tienda-msg" role="status" aria-live="polite"></p>
+    <div class="cab2"><h2 class="d4-title" style="flex:1">Tienda</h2><span class="gem"><svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg> <b class="mon">0</b></span></div>
+    <div class="oferta-cab" style="margin-top:14px"><span id="ofTxt">Ofertas de hoy</span><span id="ofFin"></span></div>
+    <h3 class="seccion">Ofertas de hoy</h3>
+    <div class="filas" id="ofertas"></div>
+    <h3 class="seccion">Personajes</h3>
+    <div class="filas" id="t-avatar"></div>
+    <h3 class="seccion">Fondos</h3>
+    <div class="filas" id="t-color"></div>
+    <h3 class="seccion">Efectos</h3>
+    <div class="filas" id="t-efecto"></div>
+    <h3 class="seccion">Marcos</h3>
+    <div class="filas" id="t-marco"></div>
+    <p class="etiq" style="margin-top:18px;font-size:13px">Los precios cambian cada día. Las ofertas aparecen con su señal y se ven hasta medianoche. Lo que compras es solo aspecto: todas las lecciones son gratis.</p>
   </section>
 
   <!-- PERFIL: avatar, monedas y perfiles (importar y copia de seguridad están en su sub-pestaña) -->
   <section id="p-perfil" class="panel hidden">
     <div class="m-slot"></div>
-    <h2 class="d4-title">Mi perfil</h2>
-    <div class="card perfil-card" id="perfilCab"></div>
-    <p class="d4-kicker">Nivel del examen</p>
-    <div class="chips d4-niveles" id="levels" role="group" aria-label="Nivel"></div>
+    <div class="perfil" id="perfilCab"></div>
+    <div class="bloque card" style="margin-top:20px">
+      <span class="etiq">Clasificación del examen que preparas</span>
+      <div class="niveles" id="levels" role="group" aria-label="Clasificación del examen"></div>
+      <p class="etiq" style="margin-top:10px;font-size:13px;line-height:1.35" id="nivelNota"></p>
+    </div>
+    <div class="bloque" style="margin-top:20px">
+      <span class="etiq">Personaje</span>
+      <div class="avatares" id="avatares"></div>
+    </div>
+    <div class="bloque" style="margin-top:18px">
+      <span class="etiq">Color de fondo</span>
+      <div class="bol-fila" id="cols"></div>
+    </div>
   </section>
 
   <!-- EJERCICIO -->
@@ -1593,6 +1757,222 @@ const EXTRA_ITEMS = (function () {
   return out;
 })();
 
+// Personajes de la maqueta D4: dibujos, catálogo, precios y efectos. Los colores son fijos (como en la maqueta).
+const spikes=(cx,cy,n,rIn,rOut)=>{let d='';for(let i=0;i<n;i++){const a=i*2*Math.PI/n,b1=a-Math.PI/n*.6,b2=a+Math.PI/n*.6,p=(r,t)=>`${(cx+r*Math.cos(t)).toFixed(1)} ${(cy+r*Math.sin(t)).toFixed(1)}`;d+=`M${p(rIn,b1)}L${p(rOut,a)}L${p(rIn,b2)}Z`;}return d;};
+const SH='<ellipse cx="50" cy="93" rx="24" ry="4" fill="#2a1d14" opacity=".12"/>';
+const AV={
+  ardilla:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="ga" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#f0ae6c"/><stop offset="1" stop-color="#a95a2a"/></radialGradient></defs>${SH}
+    <path d="M68 74C92 72 100 48 88 30C86 42 80 52 70 56Z" fill="#c4743a" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <ellipse cx="30" cy="30" rx="10" ry="13" fill="#a95a2a" stroke="#2a1d14" stroke-width="1.6" transform="rotate(-18 30 30)"/>
+    <ellipse cx="70" cy="30" rx="10" ry="13" fill="#a95a2a" stroke="#2a1d14" stroke-width="1.6" transform="rotate(18 70 30)"/>
+    <ellipse cx="30" cy="31" rx="5" ry="7" fill="#f7b7b0" transform="rotate(-18 30 31)"/><ellipse cx="70" cy="31" rx="5" ry="7" fill="#f7b7b0" transform="rotate(18 70 31)"/>
+    <circle cx="50" cy="56" r="31" fill="url(#ga)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="50" cy="68" rx="17" ry="13" fill="#fff1dc"/>
+    <ellipse cx="38" cy="50" rx="6.5" ry="7" fill="#2a1d14"/><ellipse cx="62" cy="50" rx="6.5" ry="7" fill="#2a1d14"/>
+    <circle cx="40" cy="47.5" r="2.4" fill="#fff"/><circle cx="64" cy="47.5" r="2.4" fill="#fff"/>
+    <path d="M45 62Q50 58 55 62Q50 66 45 62Z" fill="#e0587a"/>
+    <path d="M50 66Q48 72 43 70M50 66Q52 72 57 70" stroke="#2a1d14" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <circle cx="28" cy="62" r="4.5" fill="#f0587a" opacity=".35"/><circle cx="72" cy="62" r="4.5" fill="#f0587a" opacity=".35"/></svg>`,
+  zorro:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffab62"/><stop offset="1" stop-color="#d9531f"/></linearGradient></defs>${SH}
+    <path d="M18 50L20 10L46 32Z" fill="#d9531f" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M82 50L80 10L54 32Z" fill="#d9531f" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M24 42L25 22L38 32Z" fill="#2a1d14"/><path d="M76 42L75 22L62 32Z" fill="#2a1d14"/>
+    <path d="M12 48Q50 16 88 48Q86 84 50 90Q14 84 12 48Z" fill="url(#gf)" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M18 60Q30 56 50 82Q32 86 22 74Z M82 60Q70 56 50 82Q68 86 78 74Z" fill="#fff4e4"/>
+    <path d="M28 50Q36 43 44 50Q36 55 28 50Z" fill="#2a1d14"/><path d="M72 50Q64 43 56 50Q64 55 72 50Z" fill="#2a1d14"/>
+    <circle cx="36" cy="49.5" r="1.4" fill="#fff"/><circle cx="64" cy="49.5" r="1.4" fill="#fff"/>
+    <ellipse cx="50" cy="76" rx="5" ry="3.6" fill="#2a1d14"/>
+    <path d="M50 80Q47 84 44 82M50 80Q53 84 56 82" stroke="#2a1d14" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`,
+  erizo:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="ge" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#fbe2c2"/><stop offset="1" stop-color="#d9a06a"/></radialGradient></defs>${SH}
+    <path d="${spikes(50,56,14,28,45)}" fill="#7a5238" stroke="#2a1d14" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="50" cy="58" r="28" fill="url(#ge)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="40" cy="55" rx="4.6" ry="5.2" fill="#2a1d14"/><ellipse cx="60" cy="55" rx="4.6" ry="5.2" fill="#2a1d14"/>
+    <circle cx="41.5" cy="53.5" r="1.6" fill="#fff"/><circle cx="61.5" cy="53.5" r="1.6" fill="#fff"/>
+    <path d="M33 48L30 45M38 47.5L37 44.5M62 47.5L63 44.5M67 48L70 45" stroke="#2a1d14" stroke-width="1.6" stroke-linecap="round"/>
+    <ellipse cx="50" cy="66" rx="4.4" ry="3.2" fill="#e0587a"/>
+    <path d="M44 72Q50 77 56 72" stroke="#2a1d14" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <circle cx="31" cy="66" r="4.2" fill="#f0587a" opacity=".35"/><circle cx="69" cy="66" r="4.2" fill="#f0587a" opacity=".35"/></svg>`,
+  gato:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="gg" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#c9cdd8"/><stop offset="1" stop-color="#7d8496"/></radialGradient></defs>${SH}
+    <path d="M20 48L18 12L44 30Z" fill="#7d8496" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M80 48L82 12L56 30Z" fill="#7d8496" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M24 40L24 22L36 31Z" fill="#f7b7b0"/><path d="M76 40L76 22L64 31Z" fill="#f7b7b0"/>
+    <ellipse cx="50" cy="56" rx="32" ry="29" fill="url(#gg)" stroke="#2a1d14" stroke-width="1.6"/>
+    <path d="M50 30V38M42 31L44 38M58 31L56 38" stroke="#4a5060" stroke-width="2.2" stroke-linecap="round"/>
+    <ellipse cx="36" cy="52" rx="5.5" ry="6.5" fill="#9ee27a" stroke="#2a1d14" stroke-width="1"/><ellipse cx="64" cy="52" rx="5.5" ry="6.5" fill="#9ee27a" stroke="#2a1d14" stroke-width="1"/>
+    <ellipse cx="36" cy="52" rx="1.6" ry="4.5" fill="#2a1d14"/><ellipse cx="64" cy="52" rx="1.6" ry="4.5" fill="#2a1d14"/>
+    <circle cx="38" cy="49.5" r="1.6" fill="#fff"/><circle cx="66" cy="49.5" r="1.6" fill="#fff"/>
+    <path d="M46 64H54L50 68Z" fill="#e0587a" stroke="#2a1d14" stroke-width="1" stroke-linejoin="round"/>
+    <path d="M50 68Q48 72 44 71M50 68Q52 72 56 71" stroke="#2a1d14" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M22 62L8 59M22 67L9 69M78 62L92 59M78 67L91 69" stroke="#2a1d14" stroke-width="1.3" stroke-linecap="round"/>
+    <circle cx="28" cy="64" r="4" fill="#f0587a" opacity=".3"/><circle cx="72" cy="64" r="4" fill="#f0587a" opacity=".3"/></svg>`,
+  pinguino:`<svg viewBox="0 0 100 100" aria-hidden="true">${SH}
+    <ellipse cx="50" cy="56" rx="31" ry="34" fill="#2a2f3d" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="50" cy="63" rx="20" ry="25" fill="#fff8ef"/>
+    <ellipse cx="50" cy="40" rx="18" ry="14" fill="#fff8ef" opacity="0"/>
+    <circle cx="41" cy="44" r="7" fill="#fff" stroke="#2a1d14" stroke-width="1.2"/><circle cx="59" cy="44" r="7" fill="#fff" stroke="#2a1d14" stroke-width="1.2"/>
+    <circle cx="42.5" cy="45" r="3.6" fill="#2a1d14"/><circle cx="60.5" cy="45" r="3.6" fill="#2a1d14"/>
+    <circle cx="43.5" cy="43.6" r="1.1" fill="#fff"/><circle cx="61.5" cy="43.6" r="1.1" fill="#fff"/>
+    <path d="M44 53L50 60L56 53Z" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.2" stroke-linejoin="round"/>
+    <circle cx="32" cy="54" r="3.6" fill="#f0587a" opacity=".4"/><circle cx="68" cy="54" r="3.6" fill="#f0587a" opacity=".4"/>
+    <path d="M30 88L24 93L38 92ZM70 88L76 93L62 92Z" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.2" stroke-linejoin="round"/></svg>`,
+  bruno:`<svg viewBox="0 0 100 100" aria-hidden="true">${SH}<circle cx="26" cy="32" r="12" fill="#8a5a3c" stroke="#2a1d14" stroke-width="1.6"/><circle cx="74" cy="32" r="12" fill="#8a5a3c" stroke="#2a1d14" stroke-width="1.6"/><circle cx="26" cy="32" r="5.5" fill="#d9a07a"/><circle cx="74" cy="32" r="5.5" fill="#d9a07a"/><circle cx="50" cy="56" r="32" fill="#a86f47" stroke="#2a1d14" stroke-width="1.6"/><ellipse cx="50" cy="68" rx="15" ry="11" fill="#e8c9a6"/><circle cx="38" cy="50" r="4.6" fill="#2a1d14"/><circle cx="62" cy="50" r="4.6" fill="#2a1d14"/><circle cx="39.5" cy="48.5" r="1.5" fill="#fff"/><circle cx="63.5" cy="48.5" r="1.5" fill="#fff"/><ellipse cx="50" cy="63" rx="5" ry="3.6" fill="#2a1d14"/><path d="M50 67Q47 72 43 70M50 67Q53 72 57 70" stroke="#2a1d14" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="28" cy="62" r="4" fill="#f0587a" opacity=".35"/><circle cx="72" cy="62" r="4" fill="#f0587a" opacity=".35"/></svg>`,
+  kiwi:`<svg viewBox="0 0 100 100" aria-hidden="true">${SH}<path d="M24 46Q12 58 26 68Z" fill="#7bc96a" stroke="#2a1d14" stroke-width="1.4"/><path d="M76 46Q88 58 74 68Z" fill="#7bc96a" stroke="#2a1d14" stroke-width="1.4"/><path d="M40 28Q44 16 50 22Q56 16 60 28" stroke="#2a1d14" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="58" rx="30" ry="28" fill="#9ed97f" stroke="#2a1d14" stroke-width="1.6"/><circle cx="40" cy="50" r="6" fill="#fff" stroke="#2a1d14" stroke-width="1.2"/><circle cx="60" cy="50" r="6" fill="#fff" stroke="#2a1d14" stroke-width="1.2"/><circle cx="41.5" cy="50" r="3.2" fill="#2a1d14"/><circle cx="61.5" cy="50" r="3.2" fill="#2a1d14"/><path d="M46 58L54 58L50 65Z" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.2" stroke-linejoin="round"/><circle cx="32" cy="62" r="4" fill="#f0587a" opacity=".3"/><circle cx="68" cy="62" r="4" fill="#f0587a" opacity=".3"/><path d="M38 86L34 93M44 86L44 93M56 86L56 93M62 86L66 93" stroke="#ffb22e" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+  lola:`<svg viewBox="0 0 100 100" aria-hidden="true">${SH}<path d="M24 40L22 16L40 30Z" fill="#f7a8b8" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/><path d="M76 40L78 16L60 30Z" fill="#f7a8b8" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/><ellipse cx="50" cy="58" rx="32" ry="29" fill="#ffc2cf" stroke="#2a1d14" stroke-width="1.6"/><ellipse cx="50" cy="66" rx="12" ry="9" fill="#f7a8b8" stroke="#2a1d14" stroke-width="1.4"/><ellipse cx="46" cy="66" rx="1.6" ry="2.4" fill="#2a1d14"/><ellipse cx="54" cy="66" rx="1.6" ry="2.4" fill="#2a1d14"/><circle cx="38" cy="50" r="4.4" fill="#2a1d14"/><circle cx="62" cy="50" r="4.4" fill="#2a1d14"/><circle cx="39.5" cy="48.5" r="1.4" fill="#fff"/><circle cx="63.5" cy="48.5" r="1.4" fill="#fff"/><circle cx="28" cy="62" r="4.5" fill="#f0587a" opacity=".35"/><circle cx="72" cy="62" r="4.5" fill="#f0587a" opacity=".35"/><path d="M44 76Q50 80 56 76" stroke="#2a1d14" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+  conejo:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="gc" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6dccb"/></radialGradient></defs>${SH}
+    <ellipse cx="37" cy="24" rx="9" ry="22" fill="url(#gc)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="63" cy="24" rx="9" ry="22" fill="url(#gc)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="37" cy="26" rx="4" ry="14" fill="#f7b7b0"/><ellipse cx="63" cy="26" rx="4" ry="14" fill="#f7b7b0"/>
+    <ellipse cx="50" cy="60" rx="31" ry="28" fill="url(#gc)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="40" cy="56" rx="4.5" ry="5.5" fill="#2a1d14"/><ellipse cx="60" cy="56" rx="4.5" ry="5.5" fill="#2a1d14"/>
+    <circle cx="41.5" cy="54.5" r="1.5" fill="#fff"/><circle cx="61.5" cy="54.5" r="1.5" fill="#fff"/>
+    <path d="M46 66H54L50 70Z" fill="#e0587a" stroke="#2a1d14" stroke-width="1" stroke-linejoin="round"/>
+    <path d="M50 70V74M50 74Q46 79 42 76M50 74Q54 79 58 76" stroke="#2a1d14" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <rect x="47.5" y="74.5" width="5" height="5" rx="1" fill="#fff" stroke="#2a1d14" stroke-width=".9"/>
+    <circle cx="30" cy="66" r="4.5" fill="#f0587a" opacity=".3"/><circle cx="70" cy="66" r="4.5" fill="#f0587a" opacity=".3"/></svg>`
+};
+const CAT=[
+  {id:'gato',k:'avatar',nombre:'Mía',desc:'Gato gris',precio:300},
+  {id:'pinguino',k:'avatar',nombre:'Tito',desc:'Pingüino',precio:400},
+  {id:'conejo',k:'avatar',nombre:'Nube',desc:'Conejo',precio:500},
+  {id:'bruno',k:'avatar',nombre:'Bruno',desc:'Oso',precio:450},
+  {id:'kiwi',k:'avatar',nombre:'Kiwi',desc:'Pájaro',precio:450},
+  {id:'lola',k:'avatar',nombre:'Lola',desc:'Cerdito',precio:550},
+  {id:'#bff0e0',k:'color',nombre:'Fondo menta',desc:'Color de fondo',precio:150},
+  {id:'#d4c6ff',k:'color',nombre:'Fondo lila',desc:'Color de fondo',precio:200},
+  {id:'#bfe4ff',k:'color',nombre:'Fondo cielo',desc:'Color de fondo',precio:200},
+  {id:'grad',k:'color',nombre:'Fondo degradado',desc:'Se mueve con colores suaves',precio:300,animado:true},
+  {id:'confeti',k:'efecto',nombre:'Confeti al acertar',desc:'Cae confeti en cada acierto',precio:250,icono:'🎉'},
+  {id:'aura',k:'efecto',nombre:'Aura',desc:'Un halo que late alrededor',precio:300,icono:'💫',animado:true},
+  {id:'destellos',k:'efecto',nombre:'Destellos',desc:'Chispas que parpadean',precio:350,icono:'✨',animado:true},
+  {id:'vivo',k:'efecto',nombre:'Personaje vivo',desc:'Se mueve y da un salto al acertar',precio:400,icono:'🌀',animado:true},
+  {id:'sencillo',k:'marco',nombre:'Marco sencillo',desc:'Borde liso',precio:0},
+  {id:'hojas',k:'marco',nombre:'Hojas',desc:'Hojas que caen despacio',precio:0,animado:true},
+  {id:'marco',k:'marco',nombre:'Marco dorado',desc:'Borde dorado fijo',precio:350},
+  {id:'arcoiris',k:'marco',nombre:'Marco arcoíris',desc:'Anillo de colores que gira',precio:500,animado:true},
+  {id:'estrellas',k:'marco',nombre:'Estrellas',desc:'Estrellas que orbitan',precio:300,animado:true},
+  {id:'llamas',k:'marco',nombre:'Llamas',desc:'Brasas que suben',precio:400,animado:true},
+  {id:'nieve',k:'marco',nombre:'Nieve',desc:'Copos que caen',precio:350,animado:true},
+  {id:'burbujas',k:'marco',nombre:'Burbujas',desc:'Burbujas que suben',precio:300,animado:true},
+  {id:'cosmico',k:'marco',nombre:'Cósmico',desc:'Dos órbitas de luz',precio:500,animado:true},
+];
+const FREE_AV=[{id:'ardilla',nombre:'Pepa'},{id:'zorro',nombre:'Lucas'},{id:'erizo',nombre:'Erika'}];
+const GRAD='linear-gradient(120deg,#ffd9a8,#ff9ecf,#9ee7ff,#c9ffb0,#ffd9a8)';
+const MARCO_COL={sencillo:'#2a1d14',hojas:'#18a58a',marco:'#ffb22e',arcoiris:'#ffd166',estrellas:'#ffd166',llamas:'#ff7a3d',nieve:'#4aa8ff',burbujas:'#5fd6ff',cosmico:'#a57bff'};
+const PARTICULAS={hojas:1,estrellas:1,llamas:1,nieve:1,burbujas:1,cosmico:1};
+const OWNED_INICIAL=['ardilla','zorro','erizo','#ffd9a8','sencillo','hojas'];
+
+function marcoIcono(id){
+  const INK='#2a1d14';
+  const ringInk=(c,w)=>`<circle cx="28" cy="28" r="17" fill="none" stroke="${INK}" stroke-width="${w+3}"/><circle cx="28" cy="28" r="17" fill="none" stroke="${c}" stroke-width="${w}"/>`;
+  const pt=(a,r)=>[28+Math.cos(a*Math.PI/180)*r, 28+Math.sin(a*Math.PI/180)*r];
+  const sparkle=(x,y,r,c)=>`<path d="M${x} ${y-r}Q${x} ${y} ${x+r} ${y}Q${x} ${y} ${x} ${y+r}Q${x} ${y} ${x-r} ${y}Q${x} ${y} ${x} ${y-r}Z" fill="${c}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/>`;
+  const star=(x,y,r,c)=>{let d='';for(let i=0;i<10;i++){const rr=i%2?r*.5:r,t=-Math.PI/2+i*Math.PI/5;d+=(i?'L':'M')+(x+Math.cos(t)*rr).toFixed(2)+' '+(y+Math.sin(t)*rr).toFixed(2);}return `<path d="${d}Z" fill="${c}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`;};
+  const flame=(x,y,a,c,k)=>`<path transform="translate(${x} ${y}) rotate(${a}) scale(${k})" d="M0 0C6-4 5-11 0-17C-5-11-6-4 0 0Z" fill="${c}" stroke="${INK}" stroke-width="${(1.4/k).toFixed(2)}" stroke-linejoin="round"/>`;
+  const flake=(x,y)=>{let g='';for(let k=0;k<3;k++){const a=k*Math.PI/3;const x1=(x-Math.cos(a)*6).toFixed(2),y1=(y-Math.sin(a)*6).toFixed(2),x2=(x+Math.cos(a)*6).toFixed(2),y2=(y+Math.sin(a)*6).toFixed(2);g+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${INK}" stroke-width="4.2" stroke-linecap="round"/>`;}for(let k=0;k<3;k++){const a=k*Math.PI/3;const x1=(x-Math.cos(a)*6).toFixed(2),y1=(y-Math.sin(a)*6).toFixed(2),x2=(x+Math.cos(a)*6).toFixed(2),y2=(y+Math.sin(a)*6).toFixed(2);g+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#7cc4ff" stroke-width="1.8" stroke-linecap="round"/>`;}return g;};
+  const bub=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#e6f9ff" stroke="${INK}" stroke-width="1.5"/><circle cx="${(x-r*.35).toFixed(2)}" cy="${(y-r*.35).toFixed(2)}" r="${(r*.28).toFixed(2)}" fill="#fff"/>`;
+  let b='';
+  switch(id){
+    case 'sencillo': b=`<circle cx="28" cy="28" r="17" fill="none" stroke="${INK}" stroke-width="4.5"/>`; break;
+    case 'marco': b=ringInk('#ffb22e',6)+`<path d="M${pt(196,17).join(' ')} A17 17 0 0 1 ${pt(246,17).join(' ')}" fill="none" stroke="#fff3c4" stroke-width="1.8" stroke-linecap="round"/>`+sparkle(6,9,5,'#ffd166')+sparkle(50,9,3.6,'#fff1b8')+sparkle(50,48,4.6,'#ffd166'); break;
+    case 'arcoiris': b=`<circle cx="28" cy="28" r="17" fill="none" stroke="${INK}" stroke-width="9.5"/>`+['#ff6b6b','#ffd166','#c6f432','#5fd6ff','#a57bff','#ff6bd6'].map((c,i)=>`<circle cx="28" cy="28" r="17" fill="none" stroke="${c}" stroke-width="6.5" stroke-dasharray="17.8 89" transform="rotate(${i*60-90} 28 28)"/>`).join(''); break;
+    case 'estrellas': b=ringInk('#ffd166',3.5)+[-90,-18,54,126,198].map(a=>star(...pt(a,23),5.2,'#ffd166')).join(''); break;
+    case 'llamas': b=ringInk('#ff7a3d',4.5)+[0,45,90,135,180,225,270,315].map(a=>{const [x,y]=pt(a,14);return flame(x.toFixed(2),y.toFixed(2),a+90,'#ff7a3d',.85)+flame(x.toFixed(2),y.toFixed(2),a+90,'#ffd166',.42);}).join(''); break;
+    case 'nieve': b=ringInk('#6fbcff',3)+flake(12,12)+flake(44,12)+flake(12,44)+flake(44,44); break;
+    case 'burbujas': b=ringInk('#3fc6f0',3)+bub(9,11,6)+bub(47,8,3.8)+bub(48,47,6.5)+bub(9,47,3.8); break;
+    case 'cosmico': {
+      const a=-25*Math.PI/180, t=-1.1, px=26*Math.cos(t), py=9*Math.sin(t);
+      const ox=(px*Math.cos(a)-py*Math.sin(a)+28).toFixed(2), oy=(px*Math.sin(a)+py*Math.cos(a)+28).toFixed(2);
+      b=`<ellipse cx="28" cy="28" rx="26" ry="9" transform="rotate(-25 28 28)" fill="none" stroke="${INK}" stroke-width="4"/><ellipse cx="28" cy="28" rx="26" ry="9" transform="rotate(-25 28 28)" fill="none" stroke="#5fd6ff" stroke-width="1.8"/>`+ringInk('#8d62f5',3.5)+`<circle cx="${ox}" cy="${oy}" r="4" fill="#5fd6ff" stroke="${INK}" stroke-width="1.5"/>`; break;
+    }
+  }
+  return `<svg viewBox="0 0 56 56" class="mi mi-${id}" aria-hidden="true">${b}</svg>`;
+}
+function fxParticulas(el,tipo,clave){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const W=el.clientWidth||52, H=el.clientHeight||W, P=36, dpr=Math.min(devicePixelRatio||1,2);
+  const CW=W+P*2, CH=H+P*2, R=W/2, EDGE=P*.6;
+  const cfg={
+    estrellas:{n:7,forma:'star',col:['#ffd166','#fff1b8'],orb:1},
+    llamas:{n:12,forma:'drop',col:['#ff7a3d','#ffb22e','#ff4d4d'],sube:1},
+    nieve:{n:14,forma:'dot',col:['#ffffff','#cfe9ff'],cae:1},
+    burbujas:{n:8,forma:'ring',col:['#8fe3ff','#c9f3ff'],sube:1},
+    cosmico:{n:4,forma:'dot',col:['#a57bff','#5fd6ff'],orb:1},
+    hojas:{n:7,forma:'leaf',col:['#18a58a','#7bc96a'],cae:1}
+  }[tipo];
+  const c=document.createElement('canvas'); c.className='fxc';
+  c.width=CW*dpr; c.height=CH*dpr; c.style.width=CW+'px'; c.style.height=CH+'px';
+  c.style.left=(-P)+'px'; c.style.top=(-P)+'px';
+  el.appendChild(c);
+  const x=c.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0);
+  const nuevo=q=>{
+    q.col=cfg.col[Math.floor(Math.random()*cfg.col.length)]; q.life=0;
+    q.max=cfg.orb?Infinity:(120+Math.random()*60); q.s=2.6+Math.random()*2.2;
+    q.rot=Math.random()*6.28; q.vr=(Math.random()-.5)*.04; q.ph=Math.random()*6.28;
+    if(cfg.orb){ q.a=Math.random()*6.28; q.rad=R+8+Math.random()*P*.45; q.sp=(.008+Math.random()*.008)*(Math.random()<.5?-1:1); }
+    else if(cfg.sube){ q.x=CW/2+(Math.random()-.5)*W*.7; q.y=CH-P*.5; q.vx=(Math.random()-.5)*.25; q.vy=-(.35+Math.random()*.45); }
+    else { q.x=P+Math.random()*W; q.y=-P*.6; q.vx=0; q.vy=.25+Math.random()*.35; }
+    return q;
+  };
+  const pts=[]; for(let i=0;i<cfg.n;i++){ const q=nuevo({}); if(!cfg.orb) q.life=Math.random()*q.max; pts.push(q); }
+  const dibuja=(q,al)=>{
+    x.save(); x.globalAlpha=al; x.translate(q.x,q.y); x.rotate(q.rot); x.fillStyle=q.col; x.strokeStyle=q.col;
+    if(cfg.forma==='star'){ x.beginPath(); for(let i=0;i<8;i++){ const r=i%2?q.s*.34:q.s*1.25, t=i*Math.PI/4-Math.PI/2; x.lineTo(Math.cos(t)*r,Math.sin(t)*r); } x.closePath(); x.fill(); }
+    else if(cfg.forma==='drop'){ x.beginPath(); x.moveTo(0,-q.s*1.6); x.quadraticCurveTo(q.s*1.1,0,0,q.s*.9); x.quadraticCurveTo(-q.s*1.1,0,0,-q.s*1.6); x.fill(); }
+    else if(cfg.forma==='ring'){ x.lineWidth=1.2; x.beginPath(); x.arc(0,0,q.s*1.1,0,6.28); x.stroke(); }
+    else if(cfg.forma==='leaf'){ x.beginPath(); x.ellipse(0,0,q.s*1.3,q.s*.7,0,0,6.28); x.fill(); }
+    else { x.beginPath(); x.arc(0,0,q.s*.7,0,6.28); x.fill(); }
+    x.restore();
+  };
+  let last=0;
+  const tick=now=>{
+    const k=last?Math.min((now-last)/16.67,3):1; last=now;   // movimiento por tiempo real: igual en 60 y 120 Hz
+    x.clearRect(0,0,CW,CH);
+    for(const q of pts){
+      q.life+=k; q.rot+=q.vr*k;
+      let al;
+      if(cfg.orb){ q.a+=q.sp*k; q.x=CW/2+Math.cos(q.a)*q.rad; q.y=CH/2+Math.sin(q.a)*q.rad*.9; al=.6+.4*Math.sin(q.life*.06+q.rad); }
+      else {
+        q.x+=(q.vx+Math.sin(q.life*.05+q.ph)*.2)*k; q.y+=q.vy*k;
+        al=Math.sin(Math.PI*Math.min(q.life/q.max,1));
+        if(q.life>=q.max||q.y>CH+8||q.y<-P-8||q.x<-P||q.x>CW+P) nuevo(q);
+      }
+      // se desvanece antes de tocar el borde del lienzo: nada aparece ni se corta de golpe
+      const d=Math.min(q.x,CW-q.x,q.y,CH-q.y);
+      al*=Math.max(0,Math.min(1,d/EDGE));
+      if(al>0.01) dibuja(q,al);
+    }
+    el[clave]=requestAnimationFrame(tick);
+  };
+  el[clave]=requestAnimationFrame(tick);
+}
+function confetiFx(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const W=innerWidth, H=innerHeight, dpr=Math.min(devicePixelRatio||1,2);
+  const c=document.createElement('canvas'); c.className='fx-screen';
+  c.width=W*dpr; c.height=H*dpr; c.style.width=W+'px'; c.style.height=H+'px';
+  document.body.appendChild(c);
+  const x=c.getContext('2d'); x.scale(dpr,dpr);
+  const cols=['#ffb22e','#f0587a','#4aa8ff','#18a58a','#a57bff','#c6f432'];
+  const ox=W/2, oy=H*.42, ps=[];
+  for(let i=0;i<72;i++){
+    const a=-Math.PI/2+(Math.random()-.5)*Math.PI*.9, sp=6+Math.random()*7;
+    ps.push({x:ox,y:oy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,w:5+Math.random()*5,h:3+Math.random()*4,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:cols[i%cols.length],round:Math.random()<.3,life:0,max:110+Math.random()*40});
+  }
+  let t=0;
+  const step=()=>{
+    t++; x.clearRect(0,0,W,H); let vivos=0;
+    for(const p of ps){
+      if(p.life>p.max) continue; vivos++;
+      p.life++; p.vx*=.985; p.vy=p.vy*.985+.22; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr;
+      const al=Math.max(0,1-Math.pow(p.life/p.max,2));
+      x.save(); x.globalAlpha=al; x.translate(p.x,p.y); x.rotate(p.r); x.fillStyle=p.c;
+      if(p.round){ x.beginPath(); x.arc(0,0,p.w/2.4,0,Math.PI*2); x.fill(); } else x.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      x.restore();
+    }
+    if(vivos && t<400) requestAnimationFrame(step); else c.remove();
+  };
+  requestAnimationFrame(step);
+}
 
 /* ---------- Almacenamiento por perfil: cada perfil guarda sus datos con un prefijo propio ---------- */
 const RAW_LS = window.localStorage;
@@ -1993,6 +2373,7 @@ function inkFor(hex) {
   const L = lum(hex), dark = lum("#0b0a1f");
   return (1.05 / (L + 0.05)) >= ((L + 0.05) / (dark + 0.05)) ? "#ffffff" : "#0b0a1f";
 }
+const NOTA_NIVEL = { A1: "Clasificación A1. Prepara exámenes de nivel inicial. Puedes cambiarla cuando quieras.", A2: "Clasificación A2. Prepara exámenes de nivel elemental. Puedes cambiarla cuando quieras.", B1: "Clasificación B1 (por ejemplo PET o EOI). Puedes cambiarla cuando quieras.", B2: "Clasificación B2 (por ejemplo FCE o EOI). Puedes cambiarla cuando quieras.", C1: "Clasificación C1 (por ejemplo CAE o EOI). Puedes cambiarla cuando quieras.", C2: "Clasificación C2 (por ejemplo CPE o EOI). Puedes cambiarla cuando quieras." };
 function renderLevels() {
   document.documentElement.style.setProperty("--lvl-color", lc(LEVELS[currentLevel]));
   const lvc = levelColor(currentLevel);
@@ -2003,19 +2384,14 @@ function renderLevels() {
   box.innerHTML = "";
   Object.keys(LEVELS).forEach(lv => {
     const b = document.createElement("button");
-    b.className = "lvl";
+    b.type = "button";
     b.textContent = lv;
-    b.style.setProperty("--own", lc(LEVELS[lv]));
-    const c = levelColor(lv);
-    const sel = currentLevel === lv;
-    b.style.color = sel ? inkFor(c) : c;
-    b.style.background = sel ? c : "var(--surface)";
-    b.style.borderColor = sel ? "#fff" : "transparent";
-    b.style.boxShadow = sel ? "0 0 0 2px #fff" : "0 2px 6px rgba(0,0,0,.2)";
-    b.setAttribute("aria-pressed", sel ? "true" : "false");
+    b.setAttribute("aria-pressed", currentLevel === lv ? "true" : "false");
     b.onclick = () => { currentLevel = lv; renderLevels(); renderHome(); };
     box.appendChild(b);
   });
+  const nota = $("nivelNota"); if (nota) nota.textContent = NOTA_NIVEL[currentLevel] || "";
+  const np = $("nivelPerfil"); if (np) np.textContent = "Examen " + currentLevel + " · objetivo oficial";
 }
 
 
@@ -2333,63 +2709,15 @@ function mascotInit() {
 
 
 /* ---------- Perfiles: pantalla de bienvenida, selección y creación ---------- */
-const P_ANIMALS = [["leon", "León"], ["zorro", "Zorro"], ["oso", "Oso"], ["conejo", "Conejo"], ["pinguino", "Pingüino"], ["persona", "Persona"], ["zombi", "Zombi"], ["robot", "Robot"], ["bruja", "Bruja"], ["fantasma", "Fantasma"]];
-const RACES = {
-  leon: [["clasico", "Clásico"], ["blanco", "Blanco"], ["negro", "Negro"]],
-  zorro: [["rojo", "Rojo"], ["artico", "Ártico"], ["fenec", "Fénec"]],
-  oso: [["pardo", "Pardo"], ["polar", "Polar"], ["panda", "Panda"]],
-  conejo: [["blanco", "Blanco"], ["gris", "Gris"], ["marron", "Castaño"]],
-  pinguino: [["emperador", "Emperador"], ["rey", "Rey"], ["macarron", "Macarrón"]]
-};
-const P_SKINS = [["claro", "Claro"], ["medio", "Medio"], ["oscuro", "Oscuro"]];
-const P_HAIRS = [["corto", "Corto"], ["largo", "Largo"], ["rizado", "Rizado"], ["moño", "Moño"], ["calvo", "Calvo"]];
-const P_BEARDS = [["ninguna", "Sin barba"], ["bigote", "Bigote"], ["corta", "Corta"], ["larga", "Larga"]];
-const P_HAIRCOLORS = ["#2b1d0b", "#c97a1c", "#e8e8e8", "#d6336c"];
-const P_COLORS = ["#2f9e8f", "#4c6ef5", "#845ef7", "#d6457a", "#f08c00", "#40915f", "#ffffff", "none"];
-const P_ACCS = [["ninguno", "Ninguno"], ["gafas", "Gafas"], ["gafasSol", "Gafas de sol"], ["gorra", "Gorra"], ["sombrero", "Sombrero"], ["corona", "Corona"], ["diadema", "Diadema"], ["lazo", "Lazo"], ["pajarita", "Pajarita"], ["bufanda", "Bufanda"], ["pendientes", "Pendientes"], ["estrella", "Estrella"], ["auriculares", "Auriculares"]];
-function accList(v) { const arr = Array.isArray(v) ? v : (v ? [v] : []); return arr.filter(x => x && x !== "ninguno"); }
-let pDraft = { animal: "leon", color: "#1c7ed6", acc: [], skin: "medio", hair: "corto", beard: "ninguna", hairColor: "#2b1d0b" };
+// Personajes y colores son los de la maqueta D4 (los gratis y los que se compran en la tienda)
+const P_ANIMALS = [...FREE_AV.map(a => [a.id, a.nombre]), ...CAT.filter(c => c.k === "avatar").map(c => [c.id, c.nombre])];
+const P_COLORES = [["#ffd9a8", "Arena"], ...CAT.filter(c => c.k === "color").map(c => [c.id, c.nombre])];
+const poseido = id => OWNED_INICIAL.includes(id) || (rewards().owned || []).includes(id);
 const escHtml = t => String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles-ingles") || "[]"); } catch (e) { return []; } }
 function saveProfiles(list) { RAW_LS.setItem("perfiles-ingles", JSON.stringify(list)); }
 function activeProfile() { const id = RAW_LS.getItem("perfil-activo"); return getProfiles().find(p => p.id === id) || null; }
-
-// Avatar con su marco y efectos (si los tiene); el resto del dibujo no cambia
-function avatarSvg(av, size = 64, noBg = false) {
-  const base = avatarSvgBase(av, size, noBg);
-  if (!av || (!av.marco && !(av.efectos || []).length)) return base;
-  return marcoEnvoltorio(base, av, size);
-}
-/* Avatares v2: ilustración con contorno. Mismo trazo (2 u) y misma luz en todo; el fondo es el color del perfil, tintado.
-   Personas: busto + cabeza + pelo + cara. Animales: solo cabeza, con sus propias orejas, hocico y pelaje. */
-const AV_OUT = "#1d2330";
-function avatarSvgBase(av, size = 64, noBg = false) {
-  const a = Object.assign({ animal: "leon", color: "#1c7ed6", acc: "ninguno", skin: "medio", hair: "corto", beard: "ninguna", hairColor: "#3b2508" }, av || {});
-  const id = "av" + Math.random().toString(36).slice(2, 8);
-  if (a.color === "none") noBg = true;
-  const C = a.color === "none" ? "#4c6ef5" : a.color;
-  const T = mixHex(C, "#ffffff", 0.8), M = C, K = mixHex(C, "#000000", 0.28);
-  const SKIN = { claro: "#fbdcc2", medio: "#e3b088", oscuro: "#9a6440" }[a.skin] || "#e3b088";
-  const H = a.hairColor, RZ = a.raza || (RACES[a.animal] ? RACES[a.animal][0][0] : "");
-  const ol = `stroke='${AV_OUT}' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'`;
-  const ln = `stroke='${AV_OUT}' stroke-width='1.8' stroke-linecap='round' fill='none'`;
-  // Cara: ojos con brillo, cejas, mejillas suaves y sonrisa. "y" es la altura de los ojos.
-  const cara = (y, sonrisa = true, x1 = 26, x2 = 38) => {
-    const ojo = x => `<ellipse cx='${x}' cy='${y}' rx='1.9' ry='2.5' fill='${AV_OUT}'/><circle cx='${x + .7}' cy='${y - .9}' r='.7' fill='#ffffff'/>`;
-    return `<path d='M${x1 - 2.6} ${y - 4.6} q2.6 -1.8 5.2 0' ${ln} stroke-width='1.6'/><path d='M${x2 - 2.6} ${y - 4.6} q2.6 -1.8 5.2 0' ${ln} stroke-width='1.6'/>` +
-      ojo(x1) + ojo(x2) +
-      `<circle cx='${x1 - 4}' cy='${y + 4.6}' r='2.6' fill='#ff8787' opacity='.35'/><circle cx='${x2 + 4}' cy='${y + 4.6}' r='2.6' fill='#ff8787' opacity='.35'/>` +
-      (sonrisa ? `<path d='M28.6 ${y + 7.4} q3.4 2.8 6.8 0' ${ln}/>` : "");
-  };
-  const busto = `<path d='M8.5 67 C8.5 54 17 50 32 50 C47 50 55.5 54 55.5 67 Z' fill='${M}' ${ol}/>`;
-  const ctx = { RZ, ol, ln, cara, busto, M, H, SKIN };
-  const { back, head, front, torso } = partesAnimal(a, ctx);
-  const accDef = accesoSvg(ol);
-  const acc = accList(a.acc).map(k => accDef[k] || "").join("");
-  const fondo = noBg ? "" : `<circle cx='32' cy='32' r='31' fill='${T}'/><circle cx='32' cy='32' r='28.6' fill='none' stroke='${M}' stroke-opacity='.45' stroke-width='1.2'/>`;
-  return `<svg class='av-anim av-${a.animal}' viewBox='0 0 64 64' width='${size}' height='${size}' role='img' aria-label='Avatar'><defs><clipPath id='${id}'><circle cx='32' cy='32' r='31'/></clipPath></defs>${fondo}<g ${noBg ? "" : `clip-path='url(#${id})'`}><g class='av-back'>${back}</g>${torso || ""}<g class='av-head'>${head}${front}${acc}</g></g></svg>`;
-}
-
+let pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [] };
 function profileReload(id) { RAW_LS.setItem("perfil-activo", id); location.reload(); }
 function profileDelete(p) {
   pDelId = p.id;
@@ -2456,6 +2784,23 @@ function profileOpenList() {
   });
   profileShow(true);
 }
+// Personaje del perfil: dibujo, fondo, marco y efectos de la maqueta. Lo usan perfiles, tienda, perfil y mascota.
+function avatarSvg(av, size = 64) {
+  const a = av || {}, animal = AV[a.animal] ? a.animal : "ardilla";
+  const bg = a.color === "grad" || (a.color || "").startsWith("#") ? a.color : "#ffd9a8";
+  const m = a.marco || "", f = a.efectos || [];
+  let cl = "av";
+  if (f.includes("aura")) cl += " fx-aura";
+  if (f.includes("vivo")) cl += " fx-vivo";
+  if (m === "marco") cl += " marco-oro";
+  else if (m === "arcoiris") cl += " marco-arco";
+  else if (m === "sencillo") cl += " marco-simple";
+  else if (m) cl += " marco-part";
+  if (bg === "grad") cl += " fondo-grad";
+  const fxp = [PARTICULAS[m] ? m : "", f.includes("destellos") ? "estrellas" : ""].filter(Boolean).join(" ");
+  return `<span class="${cl}"${fxp ? ` data-fxp="${fxp}"` : ""} style="width:${size}px;height:${size}px;border-radius:${Math.round(size * 0.3)}px;background:${bg === "grad" ? GRAD : bg};--mc:${MARCO_COL[m] || "#2a1d14"}">${AV[animal]}</span>`;
+}
+
 function chips(el, items, value, onPick, render) {
   el.innerHTML = "";
   items.forEach(it => {
@@ -2467,45 +2812,18 @@ function chips(el, items, value, onPick, render) {
     el.appendChild(b);
   });
 }
-function chipsMulti(el, items, values, onToggle, render) {
-  el.innerHTML = "";
-  items.forEach(it => {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "prof-chip";
-    b.setAttribute("aria-pressed", String(it[0] === "ninguno" ? values.length === 0 : values.includes(it[0])));
-    b.innerHTML = render(it);
-    b.onclick = () => { onToggle(it[0]); pRenderForm(); };
-    el.appendChild(b);
-  });
-}
 function pRenderForm() {
-  chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { pDraft.animal = v; pDraft.raza = undefined; }, it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0], acc: [] }, 56, true)}</span>${it[1]}`);
-  const rz = RACES[pDraft.animal];
-  $("pRazaLbl").classList.toggle("hidden", !rz);
-  $("pRaza").classList.toggle("hidden", !rz);
-  if (rz) chips($("pRaza"), rz, pDraft.raza || rz[0][0], v => pDraft.raza = v, it => it[1]);
-  const persona = pDraft.animal === "persona";
-  $("pExtra").classList.toggle("hidden", !persona);
-  if (persona) {
-    chips($("pSkin"), P_SKINS, pDraft.skin, v => pDraft.skin = v, it => it[1]);
-    chips($("pHair"), P_HAIRS, pDraft.hair, v => pDraft.hair = v, it => it[1]);
-    chips($("pHairColor"), P_HAIRCOLORS.map(c => [c, c]), pDraft.hairColor, v => pDraft.hairColor = v, it => `<span class="prof-sw" style="background:${it[0]}"></span>`);
-    chips($("pBeard"), P_BEARDS, pDraft.beard, v => pDraft.beard = v, it => it[1]);
-  }
-  chips($("pColors"), P_COLORS.map(c => [c, c]), pDraft.color, v => pDraft.color = v, it => `<span class="prof-sw" style="background:${it[0] === "none" ? "repeating-linear-gradient(45deg,transparent 0 4px,#8e9bbd 4px 6px)" : it[0]};${it[0] === "none" ? "border:1px dashed #8e9bbd" : ""}"></span>`);
-  chipsMulti($("pAcc"), P_ACCS, accList(pDraft.acc), k => {
-    if (!accComprar(k)) return;
-    if (k === "ninguno") { pDraft.acc = []; return; }
-    const cur = accList(pDraft.acc);
-    pDraft.acc = cur.includes(k) ? cur.filter(x => x !== k) : [...cur, k];
-  }, it => it[1] + (accOwned(it[0]) ? "" : ` · ${ico("lock", 12)} ${ACC_PRECIO}`));
-  $("pPreview").innerHTML = avatarSvg({ animal: pDraft.animal, color: pDraft.color, acc: pDraft.acc }, 120);
+  chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (poseido(v)) pDraft.animal = v; },
+    it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
+  chips($("pColors"), P_COLORES, pDraft.color, v => { if (poseido(v)) pDraft.color = v; },
+    it => `<span class="prof-sw" style="background:${it[0] === "grad" ? GRAD : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
+  $("pPreview").innerHTML = avatarSvg(pDraft, 120);
 }
 function profileOpenForm(first, p) {
   pEditId = p ? p.id : null;
   profileSetMode(null);
   $("profConfirm").classList.add("hidden");
-  pDraft = { animal: "leon", color: "#1c7ed6", skin: "medio", hair: "corto", beard: "ninguna", hairColor: "#2b1d0b", ...(p ? p.avatar : {}), acc: accList(p ? p.avatar.acc : []) };
+  pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...(p ? p.avatar : {}) };
   $("profTitle").textContent = first ? "¡Bienvenido/a! ¿Cómo te llamas?" : p ? "Editar perfil" : "Nuevo perfil";
   $("pCreate").textContent = p ? "Guardar cambios" : "Crear perfil";
   $("profList").classList.add("hidden");
@@ -2572,121 +2890,7 @@ function profilesInit() {
 
 
 
-/* Partes del cuerpo según el animal (o la persona): fondo, cabeza, delante y torso. */
-function partesAnimal(a, ctx) {
-  const { RZ, ol, ln, cara, busto, M, H, SKIN } = ctx;
-  let back = "", head = "", front = "", torso = busto;
-  switch (a.animal) {
-    case "zorro": {
-      const R = { rojo: ["#e0692f", "#f08a4b", "#ffffff"], artico: ["#cdd5dd", "#f4f6f8", "#ffffff"], fenec: ["#e2b56a", "#f2d394", "#fff6e0"] }[RZ] || ["#e0692f", "#f08a4b", "#ffffff"];
-      torso = null;
-      back = `<path d='M13.5 34 L15 8 L31 22 Z' fill='${R[0]}' ${ol}/><path d='M50.5 34 L49 8 L33 22 Z' fill='${R[0]}' ${ol}/><path d='M17 27 L17.5 15.5 L24 21.5 Z' fill='${AV_OUT}' opacity='.25'/><path d='M47 27 L46.5 15.5 L40 21.5 Z' fill='${AV_OUT}' opacity='.25'/>`;
-      head = `<ellipse cx='32' cy='37' rx='17.5' ry='15.5' fill='${R[1]}' ${ol}/><path d='M14.5 41 C17 52 25 56 32 56 C39 56 47 52 49.5 41 C46 46 40 46.5 32 46.5 C24 46.5 18 46 14.5 41 Z' fill='${R[2]}' ${ol}/><ellipse cx='32' cy='44.5' rx='2.6' ry='2' fill='${AV_OUT}'/>` + cara(35, false);
-      break;
-    }
-    case "oso": {
-      const R = { pardo: ["#8f5b2e", "#a46d3d", "#e2bf98"], polar: ["#eef1f4", "#ffffff", "#dfe5eb"], panda: ["#20252c", "#ffffff", "#ffffff"] }[RZ] || ["#8f5b2e", "#a46d3d", "#e2bf98"];
-      torso = null;
-      back = `<circle cx='15.5' cy='21' r='6.8' fill='${R[0]}' ${ol}/><circle cx='48.5' cy='21' r='6.8' fill='${R[0]}' ${ol}/><circle cx='15.5' cy='21.4' r='3.2' fill='${R[2]}'/><circle cx='48.5' cy='21.4' r='3.2' fill='${R[2]}'/>`;
-      head = `<circle cx='32' cy='37' r='19' fill='${R[1]}' ${ol}/><ellipse cx='32' cy='45' rx='9.5' ry='7' fill='${R[2]}' ${ol}/><ellipse cx='32' cy='42' rx='3.4' ry='2.4' fill='${AV_OUT}'/>` +
-        (RZ === "panda" ? `<ellipse cx='24' cy='34' rx='5.6' ry='4.8' fill='${AV_OUT}'/><ellipse cx='40' cy='34' rx='5.6' ry='4.8' fill='${AV_OUT}'/><circle cx='24' cy='34' r='1.8' fill='#ffffff'/><circle cx='40' cy='34' r='1.8' fill='#ffffff'/>` : cara(34, false));
-      break;
-    }
-    case "conejo": {
-      const R = { blanco: ["#ffffff", "#ffffff"], gris: ["#b4bcc5", "#d6dce2"], marron: ["#b2683a", "#d18b5a"] }[RZ] || ["#ffffff", "#ffffff"];
-      torso = null;
-      back = `<ellipse cx='23.5' cy='15' rx='5.6' ry='14.5' fill='${R[0]}' ${ol}/><ellipse cx='40.5' cy='15' rx='5.6' ry='14.5' fill='${R[0]}' ${ol}/><ellipse cx='23.5' cy='16' rx='2.6' ry='9.5' fill='#ffb3c6'/><ellipse cx='40.5' cy='16' rx='2.6' ry='9.5' fill='#ffb3c6'/>`;
-      head = `<circle cx='32' cy='40' r='17.5' fill='${R[1]}' ${ol}/><path d='M29.2 43.6 h5.6 l-2.8 2.8 z' fill='#e0609a' ${ol} stroke-width='1.2'/>` + cara(38, false) + `<path d='M28.5 47.5 q1.75 1.7 3.5 0 q1.75 1.7 3.5 0' ${ln}/>`;
-      break;
-    }
-    case "leon": {
-      const R = { clasico: ["#c77a22", "#e3953a", "#f8cf7e"], blanco: ["#c3cad2", "#e4e9ee", "#fff9e8"], negro: ["#3a4048", "#50565f", "#8a929c"] }[RZ] || ["#c77a22", "#e3953a", "#f8cf7e"];
-      torso = null;
-      let melena = "";
-      for (let k = 0; k < 10; k++) { const an = k * Math.PI / 5; melena += `<circle cx='${(32 + 22.5 * Math.cos(an)).toFixed(2)}' cy='${(33 + 22.5 * Math.sin(an)).toFixed(2)}' r='7' fill='${R[0]}' ${ol}/>`; }
-      back = `${melena}<circle cx='32' cy='33' r='20' fill='${R[1]}' ${ol}/>`;
-      head = `<circle cx='32' cy='37' r='15.5' fill='${R[2]}' ${ol}/><path d='M29.2 42 h5.6 l-2.8 3 z' fill='#8a4b12' ${ol} stroke-width='1.2'/>` + cara(35, false) + `<path d='M28.5 46.5 q1.75 1.7 3.5 0 q1.75 1.7 3.5 0' ${ln}/>`;
-      break;
-    }
-    case "pinguino": {
-      torso = null;
-      const crest = { rey: `<ellipse cx='19' cy='26' rx='3.8' ry='5.2' fill='#f59f00' ${ol}/><ellipse cx='45' cy='26' rx='3.8' ry='5.2' fill='#f59f00' ${ol}/>`, macarron: `<path d='M24 13 Q28 1 38 6 Q32 8 30 15 Z' fill='#f59f00' ${ol}/>` }[RZ] || "";
-      back = `<ellipse cx='32' cy='37' rx='20' ry='24' fill='#1f2630' ${ol}/>` + crest;
-      head = `<ellipse cx='32' cy='44' rx='12.5' ry='15' fill='#f7f9fb' ${ol} stroke-width='1.2'/>` +
-        `<circle cx='25.8' cy='33' r='4' fill='#ffffff' ${ol} stroke-width='1.4'/><circle cx='38.2' cy='33' r='4' fill='#ffffff' ${ol} stroke-width='1.4'/><circle cx='26.6' cy='33.4' r='2' fill='${AV_OUT}'/><circle cx='39' cy='33.4' r='2' fill='${AV_OUT}'/>` +
-        `<path d='M28.3 39 L35.7 39 L32 45 Z' fill='#f59f00' ${ol} stroke-width='1.4'/>`;
-      front = `<ellipse cx='26.5' cy='61' rx='4.5' ry='2' fill='#f59f00' ${ol} stroke-width='1.2'/><ellipse cx='37.5' cy='61' rx='4.5' ry='2' fill='#f59f00' ${ol} stroke-width='1.2'/>`;
-      break;
-    }
-    case "zombi": {
-      const capZ = `<path d='M15.5 36 C14 19 22 15 32 15 C42 15 50 19 48.5 36 C47 28 43 24 36 25 C29 25 21 25 15.5 36 Z' fill='#3d3125' ${ol}/>`;
-      head = `<path d='M10.5 35 q0 -3 0 -3' fill='none'/><ellipse cx='15.5' cy='38' rx='3.2' ry='3.6' fill='#7fb05a' ${ol} stroke-width='1.4'/><ellipse cx='48.5' cy='38' rx='3.2' ry='3.6' fill='#7fb05a' ${ol} stroke-width='1.4'/>` +
-        `<ellipse cx='32' cy='37' rx='16' ry='16.5' fill='#9ccf72' ${ol}/>` +
-        `<path d='M22.5 33.5 L27 38 M27 33.5 L22.5 38 M37 33.5 L41.5 38 M41.5 33.5 L37 38' stroke='${AV_OUT}' stroke-width='1.7' stroke-linecap='round'/>` +
-        `<path d='M26.5 47 H37.5' stroke='${AV_OUT}' stroke-width='1.7' stroke-linecap='round'/><path d='M29 45 v4 M32 45 v4 M35 45 v4' stroke='${AV_OUT}' stroke-width='1.2'/>`;
-      front = capZ;
-      break;
-    }
-    case "robot": {
-      torso = `<path d='M12 67 L14 56 Q14 52 19 52 L45 52 Q50 52 50 56 L52 67 Z' fill='${M}' ${ol}/>`;
-      back = `<path d='M32 17 V8' stroke='${AV_OUT}' stroke-width='2'/><circle cx='32' cy='7' r='3.2' fill='#ff6b6b' ${ol} stroke-width='1.4'/><rect x='8.5' y='27' width='6' height='13' rx='2.4' fill='#b7c0c9' ${ol} stroke-width='1.6'/><rect x='49.5' y='27' width='6' height='13' rx='2.4' fill='#b7c0c9' ${ol} stroke-width='1.6'/>`;
-      head = `<rect x='14' y='17' width='36' height='34' rx='10' fill='#dfe5eb' ${ol}/><rect x='19' y='28' width='26' height='12' rx='6' fill='${AV_OUT}'/><circle cx='25' cy='34' r='3' fill='#4dabf7'/><circle cx='39' cy='34' r='3' fill='#4dabf7'/><circle cx='26' cy='33' r='.9' fill='#ffffff'/><circle cx='40' cy='33' r='.9' fill='#ffffff'/><rect x='27' y='43' width='10' height='2.8' rx='1.4' fill='#4dabf7'/>`;
-      break;
-    }
-    case "bruja": {
-      head = `<ellipse cx='32' cy='38' rx='15.5' ry='16' fill='#b5e0ae' ${ol}/>` + cara(37, true) + `<path d='M32 39.5 l3 4.5 h-3' ${ln} stroke-width='1.4'/>`;
-      front = `<ellipse cx='32' cy='22.5' rx='22' ry='4.6' fill='#2d2f48' ${ol}/><path d='M18.5 22.5 C20 14 25 6 33 2.5 C39 8 44.5 15 45.5 22.5 Z' fill='#43306e' ${ol}/><rect x='18.6' y='17.6' width='26.8' height='4.4' fill='#9d7cf5' ${ol} stroke-width='1.4'/>`;
-      torso = `<path d='M8.5 67 C8.5 54 17 50 32 50 C47 50 55.5 54 55.5 67 Z' fill='${M}' ${ol}/>`;
-      break;
-    }
-    case "fantasma": {
-      torso = null;
-      head = `<path d='M14 60 V32 C14 18.5 22 11 32 11 C42 11 50 18.5 50 32 V60 L44.5 54.5 L38.8 60 L32 54.5 L25.2 60 L19.5 54.5 Z' fill='#f7f9fb' ${ol}/>` +
-        `<ellipse cx='25' cy='33' rx='2.6' ry='3.3' fill='${AV_OUT}'/><ellipse cx='39' cy='33' rx='2.6' ry='3.3' fill='${AV_OUT}'/><circle cx='25.9' cy='31.8' r='.9' fill='#ffffff'/><circle cx='39.9' cy='31.8' r='.9' fill='#ffffff'/><ellipse cx='32' cy='44' rx='3.2' ry='3.8' fill='${AV_OUT}'/>`;
-      break;
-    }
-    case "persona": {
-      const capCorto = `<path d='M15.5 36 C14 19 22 15 32 15 C42 15 50 19 48.5 36 C47 28 43 23.5 36 23.5 C28 23.5 20 24 15.5 36 Z' fill='${H}' ${ol}/>`;
-      back = a.hair === "largo" ? `<path d='M13.5 36 C11.5 57 15.5 62 20 60 L44 60 C48.5 62 52.5 57 50.5 36 C50 21 42 13 32 13 C22 13 14 21 13.5 36 Z' fill='${H}' ${ol}/>` : "";
-      head = `<ellipse cx='16' cy='37' rx='3.4' ry='3.8' fill='${SKIN}' ${ol} stroke-width='1.6'/><ellipse cx='48' cy='37' rx='3.4' ry='3.8' fill='${SKIN}' ${ol} stroke-width='1.6'/>` +
-        `<ellipse cx='32' cy='36' rx='15.5' ry='16.5' fill='${SKIN}' ${ol}/>` + cara(37, true) +
-        `<path d='M30.6 41.5 q1.4 1.8 2.8 0' ${ln} stroke-width='1.3'/>`;
-      const hairs = {
-        corto: capCorto,
-        largo: capCorto,
-        rizado: `<circle cx='19' cy='24' r='5.8' fill='${H}' ${ol} stroke-width='1.6'/><circle cx='26' cy='17.5' r='6' fill='${H}' ${ol} stroke-width='1.6'/><circle cx='38' cy='17.5' r='6' fill='${H}' ${ol} stroke-width='1.6'/><circle cx='45' cy='24' r='5.8' fill='${H}' ${ol} stroke-width='1.6'/><circle cx='32' cy='17' r='6.8' fill='${H}' ${ol} stroke-width='1.6'/>`,
-        moño: capCorto + `<circle cx='32' cy='12.5' r='6' fill='${H}' ${ol}/>`,
-        calvo: ""
-      };
-      front = hairs[a.hair] ?? hairs.corto;
-      front += { ninguna: "", bigote: `<path d='M26.5 47.5 Q32 44.5 37.5 47.5 Q32 49 26.5 47.5 Z' fill='${H}' ${ol} stroke-width='1.4'/>`, corta: `<path d='M18.5 41 C19.5 53 27 56 32 56 C37 56 44.5 53 45.5 41 C42 46 38 47 32 47 C26 47 22 46 18.5 41 Z' fill='${H}' ${ol} stroke-width='1.6'/>`, larga: `<path d='M17.5 40 C18.5 58 26 62 32 62 C38 62 45.5 58 46.5 40 C42 46 38 47 32 47 C26 47 22 46 17.5 40 Z' fill='${H}' ${ol} stroke-width='1.6'/>` }[a.beard] ?? "";
-      break;
-    }
-    default: {
-      torso = busto;
-      break;
-    }
-  }
-  return { back, head, front, torso };
-}
-/* Accesorios: cada uno es un SVG que se coloca sobre el avatar. */
-function accesoSvg(ol) {
-  return {
-    sombrero: `<ellipse cx='32' cy='19.5' rx='23' ry='5' fill='#8a5a2b' ${ol}/><path d='M20.5 18.5 C20.5 6 25.5 2.5 32 2.5 C38.5 2.5 43.5 6 43.5 18.5 Z' fill='#a86c36' ${ol}/><rect x='20.6' y='13.4' width='22.8' height='3.6' fill='#ffd43b' ${ol} stroke-width='1.2'/>`,
-    gorra: `<path d='M16 27 C16 10 23.5 5 32 5 C40.5 5 48 10 48 27 Z' fill='#353b43' ${ol}/><path d='M13.5 27 Q32 31.5 50.5 27 L53 30.5 Q32 36 11 30.5 Z' fill='#1f242b' ${ol}/>`,
-    corona: `<path d='M17.5 19 L19.5 5.5 L26 13.5 L32 3.5 L38 13.5 L44.5 5.5 L46.5 19 Z' fill='#ffd43b' ${ol}/><circle cx='32' cy='3.5' r='1.9' fill='#e03131' ${ol} stroke-width='1.2'/>`,
-    diadema: `<path d='M13.5 28 Q32 5 50.5 28' stroke='${AV_OUT}' stroke-width='5' fill='none' stroke-linecap='round'/><path d='M13.5 28 Q32 5 50.5 28' stroke='#ffd43b' stroke-width='2.4' fill='none' stroke-linecap='round'/>`,
-    lazo: `<path d='M45 15 L35.5 9 L35.5 21 Z' fill='#f06595' ${ol} stroke-width='1.6'/><path d='M45 15 L54.5 9 L54.5 21 Z' fill='#f06595' ${ol} stroke-width='1.6'/><circle cx='45' cy='15' r='2.4' fill='#c2255c' ${ol} stroke-width='1.2'/>`,
-    bufanda: `<path d='M13.5 49.5 Q32 58 50.5 49.5 L50.5 56 Q32 64.5 13.5 56 Z' fill='#e8590c' ${ol}/><path d='M39.5 55 L46 54 L47.5 63 L41 64 Z' fill='#c2410c' ${ol} stroke-width='1.6'/>`,
-    pendientes: `<circle cx='15.5' cy='45' r='2.4' fill='#fcc419' ${ol} stroke-width='1.3'/><circle cx='48.5' cy='45' r='2.4' fill='#fcc419' ${ol} stroke-width='1.3'/>`,
-    estrella: `<path d='M47 43.5 L48.6 47 L52.3 47.4 L49.5 49.9 L50.3 53.6 L47 51.7 L43.7 53.6 L44.5 49.9 L41.7 47.4 L45.4 47 Z' fill='#ffd43b' ${ol} stroke-width='1.3'/>`,
-    gafas: `<circle cx='25.5' cy='35' r='5.6' fill='#ffffff' fill-opacity='.22' ${ol} stroke-width='1.8'/><circle cx='38.5' cy='35' r='5.6' fill='#ffffff' fill-opacity='.22' ${ol} stroke-width='1.8'/><path d='M31.1 34.8 Q32 33.4 32.9 34.8' ${ol} stroke-width='1.6' fill='none'/>`,
-    gafasSol: `<rect x='19.5' y='31' width='12' height='8.5' rx='3.2' fill='${AV_OUT}' ${ol} stroke-width='1.2'/><rect x='32.5' y='31' width='12' height='8.5' rx='3.2' fill='${AV_OUT}' ${ol} stroke-width='1.2'/><path d='M31.5 34.5 h1' stroke='${AV_OUT}' stroke-width='1.8'/><path d='M22 33 l3 -1' stroke='#ffffff' stroke-opacity='.6' stroke-width='1' stroke-linecap='round'/>`,
-    gafasSolo: "",
-    pajarita: `<path d='M22 52 L32 56 L22 60 Z M42 52 L32 56 L42 60 Z' fill='#e03131' ${ol} stroke-width='1.4'/><circle cx='32' cy='56' r='2.2' fill='#c92a2a' ${ol} stroke-width='1.2'/>`,
-    auriculares: `<path d='M12 35 Q12 11.5 32 11.5 Q52 11.5 52 35' stroke='${AV_OUT}' stroke-width='4.6' fill='none' stroke-linecap='round'/><path d='M12 35 Q12 11.5 32 11.5 Q52 11.5 52 35' stroke='#4c6ef5' stroke-width='2' fill='none' stroke-linecap='round'/><rect x='8.5' y='29.5' width='7.5' height='12' rx='3.4' fill='#4c6ef5' ${ol} stroke-width='1.6'/><rect x='48' y='29.5' width='7.5' height='12' rx='3.4' fill='#4c6ef5' ${ol} stroke-width='1.6'/>`
-  };
-}
+
 /* Estado de la sesión: lo escribe solo este módulo; los demás lo leen. */
 let currentSection = null;
 let queue = [], index = 0, results = [], answered = false, selectedOption = null;
@@ -2727,7 +2931,7 @@ const LOGROS = [
   { id: "racha-7", name: "Semana seguida", desc: "7 días de racha", ok: () => streakInfo().days >= 7, p: () => [streakInfo().days, 7] },
   { id: "racha-30", name: "Mes seguido", desc: "30 días de racha", ok: () => streakInfo().days >= 30, p: () => [streakInfo().days, 30] },
   { id: "rango", name: "Nuevo rango", desc: "Sube de rango por primera vez", ok: () => rankInfo(xpTotal()).name !== rankInfo(0).name, p: () => [xpTotal(), RANKS[1][0]] },
-  { id: "compra", name: "De compras", desc: "Desbloquea un accesorio", ok: () => (rewards().owned || []).length > 0, p: () => [rewards().coins || 0, ACC_PRECIO] }
+  { id: "compra", name: "De compras", desc: "Desbloquea un personaje, un color, un efecto o un marco", ok: () => (rewards().owned || []).length > 0, p: () => [rewards().coins || 0, 150] }
 ];
 function logroOk(l) { try { return !!l.ok(); } catch (e) { return false; } }
 function logroProg(l) { try { const [a, b] = l.p(); return [Math.max(0, Math.min(a, b)), b]; } catch (e) { return null; } }
@@ -2768,18 +2972,6 @@ function checkLogros() {
   // Varios a la vez (p. ej. al estrenar la función) se muestran en una sola celebración
   const txt = nuevos.map(l => l.name).join(" · ");
   setTimeout(() => celebrate(nuevos.length === 1 ? "¡Logro: " + nuevos[0].name + "!" : `¡${nuevos.length} logros!`, nuevos.length === 1 ? nuevos[0].desc : txt, badgeSvg(nuevos[0].id, false, 72)), 3000);
-}
-const ACC_PRECIO = 15;
-const ACC_GRATIS = ["ninguno", "gafas", "gorra"];
-function accOwned(k) { return ACC_GRATIS.includes(k) || (rewards().owned || []).includes(k); }
-// Solo se compra al editar el perfil activo: sus monedas son las que se gastan
-function accComprar(k) {
-  if (accOwned(k)) return true;
-  const p = activeProfile();
-  if (!(pEditId && p && p.id === pEditId) || !spendCoins(ACC_PRECIO)) return false;
-  const r = rewards(); r.owned = [...(r.owned || []), k]; saveRewards(r);
-  celebrate("¡Desbloqueado!", `${(P_ACCS.find(x => x[0] === k) || [k, k])[1]}: ya puedes ponértelo`, ico("gift", 56));
-  return true;
 }
 function advRender() {
   const r = rewards(), res = results[index];
@@ -3434,6 +3626,7 @@ function check() {
   if (!examMode && dAfter > dBefore && [7, 14, 30, 60, 100].includes(dAfter)) { celebrate(`¡${dAfter} días de racha!`, "Así se hace", ico("flame", 56)); }
   if (!examMode && !said && dAfter > dBefore && [7, 14, 30, 60, 100].includes(dAfter)) { mascotSay("", "happy", 6000, true); said = true; }
   if (!examMode && !said) r.correct ? mascotSay("", "happy", 4500, true) : mascotSay("", "think", 5500, true);
+  if (r.correct && !examMode) celebrarAcierto();
 
   if (!examMode) checkLogros();
   if (examMode) { next(); return; }   // modo examen: sin corrección
@@ -8408,224 +8601,177 @@ loadCustom();
 renderLevels();
 renderTabs();
 renderHome();
-// Tienda, Sellos y Perfil (pestañas nuevas). Usan el motor existente: monedas, accesorios, perfiles y logros.
-// Los marcos y efectos son accesorios nuevos del avatar: se guardan en el perfil activo y viajan con la copia de seguridad.
+// Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
+// Las monedas son las de la app (rewards); lo comprado queda en rewards().owned y el equipo en el perfil activo.
 
-/* ---------- Catálogo de marcos y efectos (precios de la maqueta D4) ---------- */
-const T_MARCOS = [
-  { k: "m-sencillo", nombre: "Marco sencillo", desc: "Borde liso", precio: 0 },
-  { k: "m-hojas", nombre: "Hojas", desc: "Hojas que caen despacio", precio: 0 },
-  { k: "m-dorado", nombre: "Marco dorado", desc: "Borde dorado fijo", precio: 350 },
-  { k: "m-arcoiris", nombre: "Marco arcoíris", desc: "Anillo de colores que gira", precio: 500 },
-  { k: "m-estrellas", nombre: "Estrellas", desc: "Estrellas que orbitan", precio: 300 },
-  { k: "m-llamas", nombre: "Llamas", desc: "Brasas que suben", precio: 400 },
-  { k: "m-nieve", nombre: "Nieve", desc: "Copos que caen", precio: 350 },
-  { k: "m-burbujas", nombre: "Burbujas", desc: "Burbujas que suben", precio: 300 },
-  { k: "m-cosmico", nombre: "Cósmico", desc: "Dos órbitas de luz", precio: 500 }
-];
-const T_EFECTOS = [
-  { k: "e-aura", nombre: "Aura", desc: "Halo cálido que respira", precio: 250 },
-  { k: "e-vivo", nombre: "Vivo", desc: "Rebote suave, como si respirara", precio: 200 }
-];
-const MARCO_COL = { sencillo: "#2a1d14", hojas: "#18a58a", dorado: "#ffb22e", arcoiris: "#ffd166", estrellas: "#ffd166", llamas: "#ff7a3d", nieve: "#4aa8ff", burbujas: "#5fd6ff", cosmico: "#a57bff" };
-const ACC_DESC = "Accesorio para tu avatar";
-const accPagados = () => P_ACCS.filter(x => x[0] !== "ninguno").map(([k, nombre]) => ({ k, nombre, desc: ACC_DESC, precio: ACC_PRECIO }));
-const todosLosItems = () => [...T_MARCOS, ...T_EFECTOS, ...accPagados()];
+const COIN = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg>`;
+const LOCK = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-candado"/></svg>`;
+const $$ = s => [...document.querySelectorAll(s)];
 const fdeSemana = () => { const x = new Date().getDay(); return x === 0 || x === 6; };
+const fin = () => { const f = new Date(); f.setHours(24, 0, 0, 0); return f.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }); };
+const MONEDAS = () => rewards().coins || 0;
 
-// Dos ofertas al día (30 %) entre lo que se puede comprar; cambian cada medianoche
+// Dos ofertas al día (−30 %) entre los artículos con precio; cambian cada medianoche
 function ofertasHoy() {
-  const pool = todosLosItems().filter(it => it.precio > 0), d = Math.floor(Date.now() / 864e5), n = pool.length;
-  return [pool[d % n].k, pool[(d + 5) % n].k];
+  const d = Math.floor(Date.now() / 864e5), P = CAT.filter(c => c.precio > 0), n = P.length;
+  return [P[d % n].id, P[(d + 5) % n].id];
 }
 function tiendaPrecio(it) {
-  const oferta = ofertasHoy().includes(it.k) && it.precio > 0;
-  let final = oferta ? Math.round(it.precio * 0.7) : it.precio;
-  if (fdeSemana() && final > 0) final = Math.round(final * 0.9);
-  return { base: it.precio, final, oferta };
+  let p = it.precio, of = ofertasHoy().includes(it.id);
+  if (of) p = Math.round(p * 0.7 / 5) * 5;
+  if (fdeSemana()) p = Math.round(p * 0.9 / 5) * 5;
+  return { final: p, base: it.precio, oferta: of };
 }
-function tiendaPoseido(it) {
-  if (it.precio === 0) return true;
-  if (it.k.startsWith("m-") || it.k.startsWith("e-")) return (rewards().owned || []).includes(it.k);
-  return accOwned(it.k);
-}
-function tiendaPuesto(it, av) {
-  if (it.k.startsWith("m-")) return av.marco === it.k;
-  if (it.k.startsWith("e-")) return (av.efectos || []).includes(it.k);
-  return accList(av.acc).includes(it.k);
-}
-const avActivo = () => { const p = activeProfile(); return p ? p.avatar : { animal: "leon", color: "#1c7ed6", acc: [] }; };
 
-/* ---------- Marcos: envoltorio del avatar y partículas ---------- */
-// Lo llama avatarSvg (03-perfiles): envuelve el avatar con su marco y sus efectos
-function marcoEnvoltorio(base, av, size) {
-  const m = av.marco || "", tipo = m.startsWith("m-") ? m.slice(2) : "";
-  const fx = (av.efectos || []).map(e => "fx-" + e.slice(2)).join(" ");
-  const col = MARCO_COL[tipo] || "#2a1d14";
-  return `<span class="fr ${tipo ? "fr-" + tipo : ""} ${fx}" data-tipo="${tipo}" style="--mc:${col};width:${size}px;height:${size}px">${base}</span>`;
+// Personaje y efectos del perfil activo (valores por defecto si el perfil es antiguo)
+function avatarActual() {
+  const p = activeProfile();
+  return { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...((p && p.avatar) || {}) };
 }
-const PARTICULAS = { hojas: 1, estrellas: 1, llamas: 1, nieve: 1, burbujas: 1, cosmico: 1 };
-// Se activa cada marco de partículas cuando aparece en pantalla (y deja de dibujar al salir del DOM)
-function activarMarcos(raiz) {
-  const nodos = raiz.matches && raiz.matches(".fr[data-tipo]") ? [raiz] : [];
-  (raiz.querySelectorAll ? raiz.querySelectorAll(".fr[data-tipo]") : []).forEach(n => nodos.push(n));
-  nodos.forEach(el => {
-    if (el.dataset.fx) return;
-    el.dataset.fx = "1";
-    if (PARTICULAS[el.dataset.tipo]) fxParticulas(el, el.dataset.tipo, "_rafF");
-  });
-}
-new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) activarMarcos(n); }))).observe(document.body, { childList: true, subtree: true });
-
-/* ---------- Pestaña Tienda ---------- */
-function filaTienda(it) {
-  const av = avActivo(), p = tiendaPrecio(it), posee = tiendaPoseido(it), puesto = tiendaPuesto(it, av);
-  const prev = it.k.startsWith("m-") ? avatarSvg({ ...av, marco: it.k, efectos: [] }, 52, true)
-    : it.k.startsWith("e-") ? avatarSvg({ ...av, efectos: [it.k] }, 52, true)
-    : avatarSvg({ ...av, acc: [it.k] }, 52, true);
-  const precioHtml = p.final === 0 ? `<span class="t-precio"><span>Gratis</span></span>`
-    : p.oferta ? `<span class="t-precio"><s>${p.base} ${ico("coin", 12)}</s><span>${p.final} ${ico("coin", 14)}</span></span>`
-    : `<span class="t-precio"><span>${p.final} ${ico("coin", 14)}</span></span>`;
-  let boton;
-  if (posee) boton = `<button class="btn-mini" type="button" data-t-equipar="${it.k}">${puesto ? "Quitar" : "Ponerme"}</button>`;
-  else if (rewards().coins < p.final) boton = `<button class="btn-mini tuyo" type="button" disabled>Te faltan ${p.final - rewards().coins}</button>`;
-  else boton = `<button class="btn-mini" type="button" data-t-comprar="${it.k}">Comprar</button>`;
-  return `<div class="t-item${posee ? " tiene" : ""}">${p.oferta ? '<span class="cartel">OFERTA</span>' : ""}
-    <span class="t-ico">${prev}</span>
-    <span class="t-txt"><b>${it.nombre}</b><small>${it.desc}</small>${p.oferta ? `<span class="chip of">Oferta −30%</span>` : ""}${it.k.startsWith("m-") && PARTICULAS[it.k.slice(2)] ? '<span class="chip anim">Animado</span>' : ""}</span>
-    <span class="t-der">${precioHtml}${boton}</span></div>`;
-}
-function renderTienda() {
-  const box = $("tienda-ofertas");
-  if (!box) return;
-  const ofertas = ofertasHoy().map(k => todosLosItems().find(x => x.k === k));
-  $("tienda-saldo").innerHTML = `${ico("coin", 18)} <b>${rewards().coins}</b> monedas`;
-  $("tienda-fin").textContent = "Hasta medianoche";
-  $("tienda-fin-semana").textContent = fdeSemana() ? "Fin de semana: −10 % en todo" : "";
-  box.innerHTML = ofertas.map(filaTienda).join("");
-  $("tienda-marcos").innerHTML = T_MARCOS.map(filaTienda).join("");
-  $("tienda-efectos").innerHTML = T_EFECTOS.map(filaTienda).join("");
-  $("tienda-accesorios").innerHTML = accPagados().map(filaTienda).join("");
-  $$t("#p-tienda [data-t-comprar]").forEach(b => b.onclick = () => tiendaComprar(b.dataset.tComprar));
-  $$t("#p-tienda [data-t-equipar]").forEach(b => b.onclick = () => tiendaEquipar(b.dataset.tEquipar));
-  activarMarcos($("p-tienda"));
-}
-const $$t = s => [...document.querySelectorAll(s)];
-function tiendaMsg(t) { const m = $("tienda-msg"); if (m) m.textContent = t; }
-function tiendaComprar(k) {
-  const it = todosLosItems().find(x => x.k === k);
-  if (!it) return;
-  const p = tiendaPrecio(it);
-  if (!tiendaPoseido(it)) {
-    if (!spendCoins(p.final)) { tiendaMsg(`Te faltan ${p.final - rewards().coins} monedas.`); return; }
-    const r = rewards(); r.owned = [...(r.owned || []), k]; saveRewards(r);
-    celebrate("¡Desbloqueado!", `${it.nombre}: ya puedes ponértelo`, ico("gift", 56));
-  }
-  tiendaEquipar(k, true);
-}
-// Pone o quita un marco, efecto o accesorio al perfil activo
-function tiendaEquipar(k, siempre = false) {
+function cambiarAvatar(fn) {
   const list = getProfiles(), act = activeProfile();
   const p = act && list.find(x => x.id === act.id);   // el mismo objeto que se guarda
-  if (!p) { tiendaMsg("Entra en un perfil para ponerte cosas."); return; }
-  const av = { ...p.avatar };
-  if (k.startsWith("m-")) av.marco = av.marco === k && !siempre ? null : k;
-  else if (k.startsWith("e-")) { const s = new Set(av.efectos || []); if (s.has(k) && !siempre) s.delete(k); else s.add(k); av.efectos = [...s]; }
-  else { const c = accList(av.acc); av.acc = c.includes(k) && !siempre ? c.filter(x => x !== k) : [...new Set([...c, k])]; }
-  p.avatar = av;
+  if (!p) { toast("Entra en un perfil para ponerte cosas."); return false; }
+  p.avatar = fn({ ...avatarActual() });
   saveProfiles(list);
-  renderTienda();
-  renderPerfilPanel();
+  aplicarAvatares();
+  return true;
+}
+// Repinta todo lo que muestra el personaje: mascota, perfil, tienda y lista de perfiles
+function aplicarAvatares() {
+  renderTienda(); renderPerfilPanel();
+  const m = $("mascotBtn"); if (m && m.querySelector(".av")) m.querySelector(".av").outerHTML = avatarSvg(avatarActual(), 56);
 }
 
-/* ---------- Pestaña Sellos (logros, racha) ---------- */
+function toast(t) {
+  const e = $("toast"); if (!e) return;
+  e.textContent = t; e.classList.add("on");
+  clearTimeout(toast.h); toast.h = setTimeout(() => e.classList.remove("on"), 2200);
+}
+
+/* ---------- Tienda ---------- */
+function icono(it) {
+  if (it.k === "avatar") return `<span style="display:block;width:48px;height:48px">${AV[it.id]}</span>`;
+  if (it.k === "color") return it.animado ? `<span class="sw-grad" style="background:${GRAD}"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
+  if (it.k === "marco") return `<span class="pv-marco${it.id === "arcoiris" ? " pv-arco" : ""}" ${["hojas", "estrellas", "llamas", "nieve", "burbujas", "cosmico"].includes(it.id) ? `data-p="${it.id}"` : ""} style="--mc:${({ sencillo: "#2a1d14", hojas: "#18a58a", marco: "#ffb22e", arcoiris: "#ffd166", estrellas: "#ffd166", llamas: "#ff7a3d", nieve: "#4aa8ff", burbujas: "#5fd6ff", cosmico: "#a57bff" })[it.id]}"></span>`;
+  return `<span class="pv pv-${it.id}"><svg class="ic" aria-hidden="true"><use href="#i-${it.id === "destellos" ? "destello" : it.id}"/></svg></span>`;
+}
+function estadoBtn(it, p) {
+  const av = avatarActual(), tiene = poseido(it.id);
+  if (tiene) {
+    if (it.k === "avatar") return av.animal === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
+    if (it.k === "color") return av.color === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
+    if (it.k === "marco") return av.marco === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
+    if (it.k === "efecto") return `<button class="btn-mini ${(av.efectos || []).includes(it.id) ? "tuyo" : ""}" data-toggle="${it.id}">${(av.efectos || []).includes(it.id) ? "Activo" : "Activar"}</button>`;
+  }
+  if (MONEDAS() < p.final) return `<button class="btn-mini tuyo" disabled>Te faltan ${p.final - MONEDAS()}</button>`;
+  return `<button class="btn-mini" data-comprar="${it.id}">Comprar</button>`;
+}
+function fila(it) {
+  const p = tiendaPrecio(it);
+  const badge = (p.oferta ? `<span class="chip of">Oferta −30%</span>` : "") + (it.animado ? ` <span class="chip anim">Animado</span>` : "");
+  const precioHtml = p.final === 0 ? `<span class="precio"><span>Gratis</span></span>`
+    : p.final === p.base ? `<span class="precio"><span>${p.final} ${COIN}</span></span>`
+    : `<span class="precio"><s>${p.base} ${COIN}</s><span>${p.final} ${COIN}</span></span>`;
+  return `<div class="tienda-item">${p.oferta ? '<span class="cartel">OFERTA</span>' : ""}
+    <span class="ico-t">${it.k === "marco" ? marcoIcono(it.id) : icono(it)}</span>
+    <span><b class="tn" style="display:block">${it.nombre}</b><small class="td" style="display:block">${it.desc}</small><span style="display:block;margin-top:6px">${badge}</span></span>
+    <span style="display:grid;justify-items:end;gap:6px">${precioHtml}${estadoBtn(it, p)}</span>
+  </div>`;
+}
+function renderTienda() {
+  const box = $("ofertas");
+  if (!box) return;
+  $$(".mon").forEach(e => e.textContent = MONEDAS());
+  $("ofFin").textContent = "Hasta las " + fin();
+  $("ofTxt").textContent = fdeSemana() ? "Fin de semana: −10% en todo" : "Ofertas de hoy";
+  box.innerHTML = ofertasHoy().map(id => fila(CAT.find(c => c.id === id))).join("");
+  $("t-avatar").innerHTML = CAT.filter(c => c.k === "avatar").map(fila).join("");
+  $("t-color").innerHTML = CAT.filter(c => c.k === "color").map(fila).join("");
+  $("t-efecto").innerHTML = CAT.filter(c => c.k === "efecto").map(fila).join("");
+  $("t-marco").innerHTML = CAT.filter(c => c.k === "marco").map(fila).join("");
+  $$("#p-tienda [data-comprar]").forEach(b => b.onclick = () => pedir(b.dataset.comprar));
+  $$("#p-tienda [data-equip]").forEach(b => b.onclick = () => equipar(b.dataset.equip));
+  $$("#p-tienda [data-toggle]").forEach(b => b.onclick = () => alternar(b.dataset.toggle));
+  $$("#tienda .pv-marco[data-p]").forEach(e => { if (!e.dataset.fx) { e.dataset.fx = "1"; fxParticulas(e, e.dataset.p, "_rafP"); } });
+}
+let pend = null;
+$("cNo") && ($("cNo").onclick = () => confirmarCompra(false));
+$("cSi") && ($("cSi").onclick = () => confirmarCompra(true));
+function pedir(id) {
+  const it = CAT.find(c => c.id === id), p = tiendaPrecio(it);
+  pend = { it, p };
+  $("cT").textContent = "¿Comprar " + it.nombre + "?";
+  $("cP").textContent = "Cuesta " + p.final + " monedas. Te quedarán " + (MONEDAS() - p.final) + ".";
+  $("confirma").classList.add("on");
+}
+function confirmarCompra(ok) {
+  $("confirma").classList.remove("on");
+  if (!ok || !pend) { pend = null; return; }
+  const { it, p } = pend; pend = null;
+  if (!spendCoins(p.final)) { toast("Te faltan monedas."); return; }
+  const r = rewards(); r.owned = [...(r.owned || []), it.id]; saveRewards(r);
+  toast("Comprado: " + it.nombre + ". Equípalo cuando quieras.");
+  renderTienda();
+}
+function equipar(id) {
+  const it = CAT.find(c => c.id === id);
+  if (it.k === "avatar") cambiarAvatar(av => ({ ...av, animal: id }));
+  else if (it.k === "color") cambiarAvatar(av => ({ ...av, color: id }));
+  else if (it.k === "marco") cambiarAvatar(av => ({ ...av, marco: id }));
+}
+function alternar(id) {
+  cambiarAvatar(av => { const s = new Set(av.efectos || []); if (s.has(id)) s.delete(id); else s.add(id); return { ...av, efectos: [...s] }; });
+}
+
+/* ---------- Efectos al acertar (los llama el corrector) ---------- */
+function celebrarAcierto() {
+  const av = avatarActual(), f = av.efectos || [];
+  if (f.includes("confeti")) confetiFx();
+  if (f.includes("vivo")) { const h = document.querySelector("#mascotBtn .av"); if (h) { h.classList.remove("salta"); void h.offsetWidth; h.classList.add("salta"); } }
+}
+
+/* ---------- Sellos ---------- */
 function renderLogrosPanel() {
   const box = $("logrosBox");
   if (box) box.innerHTML = logrosHtml();
   const info = $("logrosInfo"); if (info) info.innerHTML = infoSellosHtml();
 }
 
-/* ---------- Pestaña Perfil: avatar, monedas, cambiar o editar perfil ---------- */
+/* ---------- Perfil: personaje, color, nivel y tienda ---------- */
 function renderPerfilPanel() {
   const box = $("perfilCab");
   if (!box) return;
-  const p = activeProfile(), r = rankInfo(xpTotal());
-  if (!p) { box.innerHTML = `<p class="muted">Aún no hay ningún perfil. Crea uno para empezar.</p>`; return; }
-  box.innerHTML = `<div class="perfil-av">${avatarSvg(p.avatar, 120)}</div>
-    <h2 class="perfil-nombre">${p.name}</h2>
-    <p class="muted">${r.name} · ${rewards().coins} monedas</p>
-    `;
-  box.querySelector(".perfil-av").onclick = () => profileOpenList();
-  activarMarcos(box);
-  const av = p.avatar || {};
-  box.insertAdjacentHTML("beforeend", `<div class="d4-avatares" role="group" aria-label="Elegir animal">${P_ANIMALS.filter(([k]) => k !== "persona").map(([k, n]) => `<button type="button" class="d4-av-op" data-animal="${k}" aria-pressed="${av.animal === k}">${avatarSvg({ ...av, animal: k, acc: [] }, 56, true)}<span>${n}</span></button>`).join("")}</div>`);
-  box.querySelectorAll("[data-animal]").forEach(b => b.onclick = () => {
-    const list = getProfiles(), me = list.find(x => x.id === p.id);
-    if (!me) return;
-    me.avatar = { ...(me.avatar || {}), animal: b.dataset.animal };
-    delete me.avatar.raza;
-    saveProfiles(list); renderPerfilPanel();
-  });
-}
-
-/* ---------- Partículas de los marcos (mismo motor que la maqueta D4) ---------- */
-function fxParticulas(el,tipo,clave){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const W=el.clientWidth||52, H=el.clientHeight||W, P=36, dpr=Math.min(devicePixelRatio||1,2);
-  const CW=W+P*2, CH=H+P*2, R=W/2, EDGE=P*.6;
-  const cfg={
-    estrellas:{n:7,forma:'star',col:['#ffd166','#fff1b8'],orb:1},
-    llamas:{n:12,forma:'drop',col:['#ff7a3d','#ffb22e','#ff4d4d'],sube:1},
-    nieve:{n:14,forma:'dot',col:['#ffffff','#cfe9ff'],cae:1},
-    burbujas:{n:8,forma:'ring',col:['#8fe3ff','#c9f3ff'],sube:1},
-    cosmico:{n:4,forma:'dot',col:['#a57bff','#5fd6ff'],orb:1},
-    hojas:{n:7,forma:'leaf',col:['#18a58a','#7bc96a'],cae:1}
-  }[tipo];
-  const c=document.createElement('canvas'); c.className='fxc';
-  c.width=CW*dpr; c.height=CH*dpr; c.style.width=CW+'px'; c.style.height=CH+'px';
-  c.style.left=(-P)+'px'; c.style.top=(-P)+'px';
-  el.appendChild(c);
-  const x=c.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0);
-  const nuevo=q=>{
-    q.col=cfg.col[Math.floor(Math.random()*cfg.col.length)]; q.life=0;
-    q.max=cfg.orb?Infinity:(120+Math.random()*60); q.s=2.6+Math.random()*2.2;
-    q.rot=Math.random()*6.28; q.vr=(Math.random()-.5)*.04; q.ph=Math.random()*6.28;
-    if(cfg.orb){ q.a=Math.random()*6.28; q.rad=R+8+Math.random()*P*.45; q.sp=(.008+Math.random()*.008)*(Math.random()<.5?-1:1); }
-    else if(cfg.sube){ q.x=CW/2+(Math.random()-.5)*W*.7; q.y=CH-P*.5; q.vx=(Math.random()-.5)*.25; q.vy=-(.35+Math.random()*.45); }
-    else { q.x=P+Math.random()*W; q.y=-P*.6; q.vx=0; q.vy=.25+Math.random()*.35; }
-    return q;
-  };
-  const pts=[]; for(let i=0;i<cfg.n;i++){ const q=nuevo({}); if(!cfg.orb) q.life=Math.random()*q.max; pts.push(q); }
-  const dibuja=(q,al)=>{
-    x.save(); x.globalAlpha=al; x.translate(q.x,q.y); x.rotate(q.rot); x.fillStyle=q.col; x.strokeStyle=q.col;
-    if(cfg.forma==='star'){ x.beginPath(); for(let i=0;i<8;i++){ const r=i%2?q.s*.34:q.s*1.25, t=i*Math.PI/4-Math.PI/2; x.lineTo(Math.cos(t)*r,Math.sin(t)*r); } x.closePath(); x.fill(); }
-    else if(cfg.forma==='drop'){ x.beginPath(); x.moveTo(0,-q.s*1.6); x.quadraticCurveTo(q.s*1.1,0,0,q.s*.9); x.quadraticCurveTo(-q.s*1.1,0,0,-q.s*1.6); x.fill(); }
-    else if(cfg.forma==='ring'){ x.lineWidth=1.2; x.beginPath(); x.arc(0,0,q.s*1.1,0,6.28); x.stroke(); }
-    else if(cfg.forma==='leaf'){ x.beginPath(); x.ellipse(0,0,q.s*1.3,q.s*.7,0,0,6.28); x.fill(); }
-    else { x.beginPath(); x.arc(0,0,q.s*.7,0,6.28); x.fill(); }
-    x.restore();
-  };
-  let last=0;
-  const tick=now=>{
-    const k=last?Math.min((now-last)/16.67,3):1; last=now;   // movimiento por tiempo real: igual en 60 y 120 Hz
-    x.clearRect(0,0,CW,CH);
-    for(const q of pts){
-      q.life+=k; q.rot+=q.vr*k;
-      let al;
-      if(cfg.orb){ q.a+=q.sp*k; q.x=CW/2+Math.cos(q.a)*q.rad; q.y=CH/2+Math.sin(q.a)*q.rad*.9; al=.6+.4*Math.sin(q.life*.06+q.rad); }
-      else {
-        q.x+=(q.vx+Math.sin(q.life*.05+q.ph)*.2)*k; q.y+=q.vy*k;
-        al=Math.sin(Math.PI*Math.min(q.life/q.max,1));
-        if(q.life>=q.max||q.y>CH+8||q.y<-P-8||q.x<-P||q.x>CW+P) nuevo(q);
-      }
-      // se desvanece antes de tocar el borde del lienzo: nada aparece ni se corta de golpe
-      const d=Math.min(q.x,CW-q.x,q.y,CH-q.y);
-      al*=Math.max(0,Math.min(1,d/EDGE));
-      if(al>0.01) dibuja(q,al);
-    }
-    el[clave]=requestAnimationFrame(tick);
-  };
-  el[clave]=requestAnimationFrame(tick);
+  const p = activeProfile(), av = avatarActual();
+  const nombre = p ? p.name : "Invitado";
+  box.innerHTML = `<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
+    <h1 class="perfil-nombre">${nombre}</h1>
+    <p class="etiq" id="nivelPerfil"></p>
+    <button class="chip" type="button" data-ir-tienda style="min-height:40px">${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
+  box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();
+  box.querySelector(".perfil-av-wrap .av").onclick = () => profileOpenList();
+  $("nivelPerfil").textContent = "Examen " + currentLevel + " · objetivo oficial";
+  const personajes = $("avatares");
+  if (personajes) {
+    const todos = FREE_AV.map(a => ({ id: a.id, nombre: a.nombre, precio: 0 })).concat(CAT.filter(c => c.k === "avatar"));
+    personajes.innerHTML = todos.map(c => {
+      const lock = !poseido(c.id);
+      return `<button aria-pressed="${av.animal === c.id}" data-av="${c.id}" class="${lock ? "bloqueado" : ""}"><span class="ico-av">${AV[c.id]}</span>${c.nombre}${lock ? `<span class="lock">${c.precio} ${COIN}</span>` : ""}</button>`;
+    }).join("");
+    $$("#avatares [data-av]").forEach(b => b.onclick = () => {
+      if (!poseido(b.dataset.av)) { toast("Cómpralo en la tienda por " + CAT.find(c => c.id === b.dataset.av).precio + " monedas"); return; }
+      cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
+    });
+  }
+  const cols = $("cols");
+  if (cols) {
+    const lista = ["#ffd9a8"].concat(CAT.filter(c => c.k === "color").map(c => c.id));
+    cols.innerHTML = lista.map(c => `<button class="bol ${poseido(c) ? "" : "bloqueado"}" aria-pressed="${av.color === c}" style="background:${c === "grad" ? GRAD : c}" data-c="${c}" aria-label="Color"></button>`).join("");
+    $$("#cols [data-c]").forEach(b => b.onclick = () => {
+      if (!poseido(b.dataset.c)) { toast("Cómpralo en la tienda"); return; }
+      cambiarAvatar(a => ({ ...a, color: b.dataset.c }));
+    });
+  }
 }
 </script>
 <div class="profiles hidden" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfTitle">
@@ -8638,6 +8784,15 @@ function fxParticulas(el,tipo,clave){
     </div>
   </div>
 </div>
+<div class="confirma" id="confirma" role="dialog" aria-labelledby="cT">
+    <b id="cT" style="font-family:Fredoka;font-size:20px"></b>
+    <p id="cP" class="etiq" style="margin-top:6px;color:var(--ink)"></p>
+    <div class="fila2">
+      <button class="btn-mini tuyo" id="cNo" style="flex:1">Cancelar</button>
+      <button class="btn-mini" id="cSi" style="flex:1">Comprar</button>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="profiles hidden" id="profiles" role="dialog" aria-modal="true" aria-labelledby="profTitle">
   <div class="prof-box">
     <h2 id="profTitle"></h2>
@@ -8671,16 +8826,8 @@ function fxParticulas(el,tipo,clave){
     <div class="prof-form hidden" id="profForm">
       <label class="prof-label" for="pName">Nombre</label>
       <input class="answer" id="pName" maxlength="20" placeholder="Tu nombre" autocomplete="off" enterkeyhint="done">
-      <div class="prof-opt">Avatar</div><div class="prof-chips" id="pAnimals"></div>
-      <div class="prof-opt hidden" id="pRazaLbl">Raza</div><div class="prof-chips hidden" id="pRaza"></div>
-      <div class="prof-extra hidden" id="pExtra">
-        <div class="prof-opt">Piel</div><div class="prof-chips" id="pSkin"></div>
-        <div class="prof-opt">Pelo</div><div class="prof-chips" id="pHair"></div>
-        <div class="prof-opt">Color del pelo</div><div class="prof-chips" id="pHairColor"></div>
-        <div class="prof-opt">Barba</div><div class="prof-chips" id="pBeard"></div>
-      </div>
+      <div class="prof-opt">Personaje</div><div class="prof-chips" id="pAnimals"></div>
       <div class="prof-opt">Color de fondo</div><div class="prof-chips" id="pColors"></div>
-      <div class="prof-opt">Accesorio</div><div class="prof-chips" id="pAcc"></div>
       <div class="prof-preview" id="pPreview"></div>
       <div class="actions" style="justify-content:center">
         <button class="btn secondary" id="pCancel" type="button">Volver</button>

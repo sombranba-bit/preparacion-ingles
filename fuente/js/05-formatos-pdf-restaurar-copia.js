@@ -1,3 +1,4 @@
+import { celebrarAcierto } from "./10-tienda-logros-perfil.js";
 import {
   $,
   ITEMS,
@@ -372,6 +373,7 @@ export function check() {
   if (!examMode && dAfter > dBefore && [7, 14, 30, 60, 100].includes(dAfter)) { celebrate(`¡${dAfter} días de racha!`, "Así se hace", ico("flame", 56)); }
   if (!examMode && !said && dAfter > dBefore && [7, 14, 30, 60, 100].includes(dAfter)) { mascotSay("", "happy", 6000, true); said = true; }
   if (!examMode && !said) r.correct ? mascotSay("", "happy", 4500, true) : mascotSay("", "think", 5500, true);
+  if (r.correct && !examMode) celebrarAcierto();
 
   if (!examMode) checkLogros();
   if (examMode) { next(); return; }   // modo examen: sin corrección
