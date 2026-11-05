@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LYm10xUe4gZHCpivLJDsAxDeoRAdTDnKQvDVaTSu7bI=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BE0BPu13kGFQM3WeBt2kdQbvc0viyxMhpCwA50+eOxA=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -9256,6 +9256,8 @@ async function nubeSubir() {
   if (!nubeE.uid || !nubeE.listo || nubeE.ocupado) return;
   const txt = JSON.stringify(nubeInstantanea());
   if (txt === nubeE.ultimo) return;
+  // Protección: si de pronto no queda ningún perfil y la nube tenía datos, no se sube (evita pisar la copia por un fallo)
+  if (!txt.includes('"perfiles-ingles"') && nubeE.ultimo && nubeE.ultimo !== "{}") { nubeE.msg = "Copia no subida: no se encuentran tus perfiles en este navegador."; nubeRender(); return; }
   nubeE.ocupado = true;
   try {
     const f = await nubeFs(), m = f.m;
@@ -9302,6 +9304,7 @@ document.addEventListener("cuenta-cambio", () => {
 });
 setInterval(() => { nubeSubir(); }, 20000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") nubeSubir(); });
+window.addEventListener("pagehide", () => { nubeSubir(); });   // al cerrar o cambiar de app, lo último también se sube
 document.addEventListener("ranking-ver", () => { nubeRender(); });
 
 // Borrar todos los datos de este navegador (y la copia de la cuenta, si la hay). Se mantienen los ajustes de pantalla.

@@ -55,6 +55,8 @@ async function nubeSubir() {
   if (!nubeE.uid || !nubeE.listo || nubeE.ocupado) return;
   const txt = JSON.stringify(nubeInstantanea());
   if (txt === nubeE.ultimo) return;
+  // Protección: si de pronto no queda ningún perfil y la nube tenía datos, no se sube (evita pisar la copia por un fallo)
+  if (!txt.includes('"perfiles-ingles"') && nubeE.ultimo && nubeE.ultimo !== "{}") { nubeE.msg = "Copia no subida: no se encuentran tus perfiles en este navegador."; nubeRender(); return; }
   nubeE.ocupado = true;
   try {
     const f = await nubeFs(), m = f.m;
@@ -101,6 +103,7 @@ document.addEventListener("cuenta-cambio", () => {
 });
 setInterval(() => { nubeSubir(); }, 20000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") nubeSubir(); });
+window.addEventListener("pagehide", () => { nubeSubir(); });   // al cerrar o cambiar de app, lo último también se sube
 document.addEventListener("ranking-ver", () => { nubeRender(); });
 
 // Borrar todos los datos de este navegador (y la copia de la cuenta, si la hay). Se mantienen los ajustes de pantalla.
