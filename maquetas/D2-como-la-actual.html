@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Maqueta 2 · Como la actual</title>
+<style>
+/* Concepto: mismos colores, fuentes del sistema y radios que la app actual (diseno-B-cockpit),
+   con una jerarquía más clara: un botón principal de práctica y tarjetas sin adornos. */
+:root{
+  --bg:#0b1020; --surface:#151d31; --surface2:#1c2640; --line:#26314f;
+  --text:#e7ecf8; --muted:#8e9bbd; --accent:#5eead4; --accent-ink:#06201c;
+  --accent2:#818cf8; --warn:#fbbf24; --bad:#f87171; --radius:14px;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button:active{transform:scale(.98)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.app{max-width:430px;margin:0 auto;height:100dvh;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0 0 76px;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px;opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+.screen.on{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+
+h1{font-size:24px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:14px;margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.stack{display:grid;gap:12px;margin-top:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface2);color:var(--muted)}
+.chip.ac{background:rgba(94,234,212,.14);color:var(--accent)}
+.chip.wa{background:rgba(251,191,36,.14);color:var(--warn)}
+.bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:4px;transition:width .9s var(--ease) .15s}
+.screen.on .bar i{width:var(--w)}
+.bar.v i{background:var(--accent2)}
+.btn{width:100%;min-height:52px;border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:16px}
+.btn.sec{background:var(--surface2);color:var(--text);border:1px solid var(--line)}
+.btn:disabled{background:var(--surface2);color:var(--muted);cursor:default}
+.btn:disabled:active{transform:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px;text-align:center}
+.stats b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.stats small{font-size:11px;color:var(--muted)}
+.lbl{font-size:12px;color:var(--muted);text-transform:none;font-weight:600;letter-spacing:0}
+.unidad{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;text-align:left;width:100%}
+.num{width:40px;height:40px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;font-weight:700;color:var(--accent2)}
+.unidad.bloq{opacity:.5}
+
+/* Ejercicio */
+.top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.x{width:40px;height:40px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.prog{flex:1;height:10px;border-radius:5px;background:var(--surface2);overflow:hidden}
+.prog i{display:block;height:100%;width:33%;background:var(--accent);border-radius:5px}
+.frase{font-size:24px;line-height:1.3;font-weight:600;margin:12px 0 18px}
+.hueco{display:inline-block;min-width:88px;border-bottom:2px solid var(--accent);text-align:center;color:transparent}
+.hueco.fill{color:var(--accent)}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:0 14px;margin-top:10px;border-radius:var(--radius);background:var(--surface);border:1.5px solid var(--line);font-size:17px;text-align:left}
+.opt .k{width:28px;height:28px;border-radius:8px;background:var(--surface2);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted);flex:none}
+.opt[aria-pressed="true"]{border-color:var(--accent2)}
+.opt[aria-pressed="true"] .k{background:var(--accent2);color:#0b1020}
+.opt.ok{border-color:var(--accent);background:rgba(94,234,212,.08)}
+.opt.ok .k{background:var(--accent);color:var(--accent-ink)}
+.opt.no{border-color:var(--bad);background:rgba(248,113,113,.08)}
+.opt.no .k{background:var(--bad);color:#0b1020}
+.expl{margin-top:14px;padding:14px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line);font-size:15px;line-height:1.45;display:none}
+.expl.on{display:block}
+.expl b{display:block;margin-bottom:4px}
+.expl.ok b{color:var(--accent)} .expl.no b{color:var(--bad)}
+
+/* Perfil */
+.avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:grid;place-items:center;font-size:26px;font-weight:700;color:#0b1020}
+.sw{display:flex;gap:10px;margin-top:10px}
+.sw button{width:44px;height:44px;border-radius:50%;border:2px solid var(--surface)}
+.sw button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--text)}
+.switch{width:50px;height:30px;border-radius:15px;background:var(--surface2);border:1px solid var(--line);position:relative}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--muted);transition:transform .25s var(--ease)}
+.switch[aria-checked="true"]{background:var(--accent);border-color:var(--accent)}
+.switch[aria-checked="true"]::after{transform:translateX(20px);background:var(--accent-ink)}
+.tog{display:flex;justify-content:space-between;align-items:center;min-height:50px}
+
+/* Logros */
+.logro{display:flex;justify-content:space-between;align-items:center;text-align:left;width:100%}
+.logro small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.logro .ico{width:44px;height:44px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-size:20px;margin-right:12px;flex:none}
+.logro.got .ico{background:rgba(94,234,212,.16)}
+.msg{margin-top:14px;min-height:22px;color:var(--muted);font-size:14px}
+
+/* Barra inferior */
+.nav{position:absolute;left:0;right:0;bottom:0;height:calc(64px + env(safe-area-inset-bottom));padding:6px 8px calc(6px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:rgba(21,29,49,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.nav button{display:grid;place-items:center;align-content:center;gap:2px;font-size:12px;font-weight:600;color:var(--muted);border-radius:12px;transition:background .2s,color .2s}
+.nav button svg{width:22px;height:22px}
+.nav button.on{color:var(--accent);background:rgba(94,234,212,.12)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <section class="screen on" id="inicio" aria-label="Inicio">
+    <div class="row"><div><h1>Hola, Carlos</h1><p class="sub">Nivel B1 · EOI Zaragoza</p></div><span class="chip ac">3 días</span></div>
+    <div class="stack">
+      <div class="card">
+        <div class="row"><span class="lbl">Objetivo de hoy</span><b>12 / 30 XP</b></div>
+        <div class="bar"><i style="--w:40%"></i></div>
+        <button class="btn" style="margin-top:16px" data-go="ejer">Practicar ahora</button>
+      </div>
+      <div class="stats">
+        <div><b>3</b><small>Racha</small></div>
+        <div><b>12</b><small>Aciertos hoy</small></div>
+        <div><b>84%</b><small>Precisión</small></div>
+      </div>
+      <div class="card">
+        <div class="row" style="margin-bottom:12px"><b>Unidades</b><span class="lbl">Tu progreso</span></div>
+        <div class="stack" style="margin-top:0;gap:14px">
+          <button class="unidad" data-go="ejer"><span class="num">3</span><span><b>Tiempos del pasado</b><div class="bar v" style="margin-top:6px"><i style="--w:75%"></i></div></span><span class="chip ac">75%</span></button>
+          <button class="unidad" data-go="ejer"><span class="num">4</span><span><b>Gerundio e infinitivo</b><div class="bar v" style="margin-top:6px"><i style="--w:8%"></i></div></span><span class="chip wa">Empieza</span></button>
+          <div class="unidad bloq"><span class="num">5</span><span><b>Condicionales</b><span class="lbl" style="display:block">Se desbloquea al terminar la 4</span></span><span class="chip">Bloq.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="ejer" aria-label="Ejercicio">
+    <div class="top">
+      <button class="x" data-go="inicio" aria-label="Salir">✕</button>
+      <div class="prog" aria-hidden="true"><i></i></div>
+    </div>
+    <span class="chip">Gramática · Unidad 3</span>
+    <h2 class="frase">She suggested <span class="hueco" id="hueco">going</span> to the cinema.</h2>
+    <div id="opts">
+      <button class="opt" aria-pressed="false" data-ok="0"><span class="k">A</span>to go</button>
+      <button class="opt" aria-pressed="false" data-ok="1"><span class="k">B</span>going</button>
+      <button class="opt" aria-pressed="false" data-ok="0"><span class="k">C</span>go</button>
+    </div>
+    <div class="expl" id="expl" role="status" aria-live="polite"><b id="eT"></b><span id="eP"></span></div>
+    <div class="stack" style="margin-top:18px">
+      <button class="btn" id="comprobar" disabled>Comprobar</button>
+      <button class="btn sec" id="seguir" hidden>Siguiente</button>
+    </div>
+  </section>
+
+  <section class="screen" id="logros" aria-label="Logros">
+    <h1>Logros</h1>
+    <p class="sub">2 de 6 conseguidos</p>
+    <div class="stack" id="lista">
+      <button class="card logro got" data-txt="Primera lección: conseguido."><span style="display:flex;align-items:center"><span class="ico">🎓</span><span><b>Primera lección</b><small>Completar una lección</small></span></span><span class="chip ac">Conseguido</span></button>
+      <button class="card logro got" data-txt="Tres días seguidos: conseguido."><span style="display:flex;align-items:center"><span class="ico">🔥</span><span><b>Tres días</b><small>Practicar 3 días seguidos</small></span></span><span class="chip ac">Conseguido</span></button>
+      <button class="card logro" data-txt="Cinco sin fallar: 3 de 5."><span style="display:flex;align-items:center"><span class="ico">🎯</span><span><b>Cinco sin fallar</b><small>3 de 5</small></span></span><span class="chip">En curso</span></button>
+      <button class="card logro" data-txt="Siete días seguidos: 3 de 7."><span style="display:flex;align-items:center"><span class="ico">📅</span><span><b>Semana completa</b><small>3 de 7 días</small></span></span><span class="chip">En curso</span></button>
+    </div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="screen" id="perfil" aria-label="Perfil">
+    <h1>Perfil</h1>
+    <div class="stack">
+      <div class="card row" style="justify-content:flex-start"><div class="avatar" id="av">C</div><div style="margin-left:14px"><b style="font-size:18px">Carlos</b><p class="sub">Nivel B1 · objetivo EOI</p></div></div>
+      <div class="card">
+        <span class="lbl">Color de acento</span>
+        <div class="sw" id="sw">
+          <button aria-pressed="true" style="background:#5eead4" data-c="#5eead4" aria-label="Verde azulado"></button>
+          <button aria-pressed="false" style="background:#818cf8" data-c="#818cf8" aria-label="Violeta"></button>
+          <button aria-pressed="false" style="background:#fbbf24" data-c="#fbbf24" aria-label="Ámbar"></button>
+          <button aria-pressed="false" style="background:#f87171" data-c="#f87171" aria-label="Coral"></button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="tog"><span>Recordatorio diario</span><button class="switch" role="switch" aria-checked="true" aria-label="Recordatorio diario"></button></div>
+        <div class="tog"><span>Sonido al acertar</span><button class="switch" role="switch" aria-checked="false" aria-label="Sonido al acertar"></button></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Principal">
+    <button class="on" data-go="inicio" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9H3z"/></svg>Inicio</button>
+    <button data-go="ejer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>Ejercicios</button>
+    <button data-go="logros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/></svg>Logros</button>
+    <button data-go="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Perfil</button>
+  </nav>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function go(id){
+  $$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('.nav button').forEach(b=>{const on=b.dataset.go===id;b.classList.toggle('on',on);on?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current');});
+}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+
+let elegida=null;
+$$('.opt').forEach(o=>o.addEventListener('click',()=>{
+  if(!$('#seguir').hidden) return;
+  elegida=o; $$('.opt').forEach(x=>x.setAttribute('aria-pressed',String(x===o)));
+  $('#comprobar').disabled=false;
+}));
+$('#comprobar').addEventListener('click',()=>{
+  if(!elegida) return;
+  const ok=elegida.dataset.ok==='1';
+  elegida.classList.add(ok?'ok':'no');
+  $$('.opt').forEach(o=>{ if(o.dataset.ok==='1') o.classList.add('ok'); });
+  $('#hueco').classList.add('fill');
+  const e=$('#expl'); e.className='expl on '+(ok?'ok':'no');
+  $('#eT').textContent=ok?'¡Correcto!':'Incorrecto';
+  $('#eP').textContent=ok?'Después de suggest va el gerundio.':'Después de suggest va el gerundio: going.';
+  $('#comprobar').hidden=true; $('#seguir').hidden=false;
+});
+$('#seguir').addEventListener('click',()=>{
+  elegida=null; $$('.opt').forEach(o=>{o.setAttribute('aria-pressed','false');o.classList.remove('ok','no');});
+  $('#hueco').classList.remove('fill'); $('#expl').className='expl';
+  $('#comprobar').hidden=false; $('#comprobar').disabled=true; $('#seguir').hidden=true;
+});
+$$('.logro').forEach(b=>b.addEventListener('click',()=>{ $('#msg').textContent=b.dataset.txt; }));
+$$('#sw button').forEach(b=>b.addEventListener('click',()=>{
+  $$('#sw button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  document.documentElement.style.setProperty('--accent',b.dataset.c);
+  $('#av').style.background=b.dataset.c;
+}));
+$$('.switch').forEach(s=>s.addEventListener('click',()=>s.setAttribute('aria-checked',String(s.getAttribute('aria-checked')!=='true'))));
+</script>
+</body>
+</html>

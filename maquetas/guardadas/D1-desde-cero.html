@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e0f12">
+<title>Maqueta 1 · Desde cero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Concepto: panel de salidas de aeropuerto. Cada ejercicio es un vuelo: EMBARQUE si está
+   listo, RETRASADO si toca repasar, COMPLETADO cuando se aprueba. Sin mascota ni confeti:
+   el progreso se lee como un tablero. Color solo para estado. */
+:root{
+  --bg:#0e0f12; --panel:#17181d; --panel2:#202229; --line:#2b2e37;
+  --ink:#f4f1ea; --muted:#8b8f9c; --amber:#ffb800; --ok:#3ddc84; --bad:#ff5d4a;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:"Space Grotesk",system-ui,sans-serif;background:var(--bg);color:var(--ink);overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button:active{transform:scale(.98)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:10px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.app{max-width:430px;margin:0 auto;height:100dvh;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0 0 84px;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top)) 18px 24px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
+.screen.on{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+
+.cab{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+.cab small{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.cab h1{font-size:30px;font-weight:700;letter-spacing:-.02em}
+.reloj{font-size:14px;color:var(--amber)}
+
+/* Tablero */
+.tablero{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.fila-h,.vuelo{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center;padding:12px 14px}
+.fila-h{background:var(--panel2);font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.vuelo{border-top:1px solid var(--line);width:100%;text-align:left}
+.vuelo:first-of-type{border-top:0}
+.vuelo .h{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;color:var(--amber)}
+.vuelo .d{font-size:16px;font-weight:500}
+.vuelo .d span{display:block;font-size:12px;color:var(--muted);margin-top:2px;font-family:"IBM Plex Mono",monospace}
+.est{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;padding:5px 8px;border-radius:6px;letter-spacing:.04em}
+.est.emb{background:rgba(255,184,0,.14);color:var(--amber)}
+.est.ret{background:rgba(255,93,74,.14);color:var(--bad)}
+.est.ok{background:rgba(61,220,132,.14);color:var(--ok)}
+.est.cer{background:var(--panel2);color:var(--muted)}
+.vuelo.bloq{opacity:.45}
+
+.resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.res{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+.res b{display:block;font-size:24px;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.res small{font-size:11px;color:var(--muted)}
+.barra{height:6px;background:var(--panel2);border-radius:3px;margin-top:16px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:var(--amber);transition:width 1s var(--ease) .2s}
+.screen.on .barra i{width:var(--w)}
+
+.btn{width:100%;min-height:54px;margin-top:18px;border-radius:14px;background:var(--amber);color:#14110a;font-weight:700;font-size:16px;letter-spacing:.02em}
+.btn:disabled{background:var(--panel2);color:var(--muted);cursor:default}
+.btn:disabled:active{transform:none}
+
+/* Ejercicio */
+.cab2{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.x{width:44px;height:44px;border-radius:12px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;flex:none;font-size:18px}
+.paso{flex:1;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted)}
+.puerta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--amber);letter-spacing:.08em}
+.enun{font-size:26px;line-height:1.25;font-weight:500;margin:10px 0 22px}
+.hueco{display:inline-block;min-width:90px;border-bottom:2px solid var(--amber);text-align:center;color:transparent}
+.hueco.fill{color:var(--amber)}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin-top:10px;padding:0 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-size:17px;text-align:left;transition:border-color .15s,background .15s}
+.opt .k{font-family:"IBM Plex Mono",monospace;font-size:13px;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;background:var(--panel2);color:var(--muted);flex:none}
+.opt[aria-pressed="true"]{border-color:var(--amber)}
+.opt[aria-pressed="true"] .k{background:var(--amber);color:#14110a}
+.opt.ok{border-color:var(--ok);background:rgba(61,220,132,.08)}
+.opt.ok .k{background:var(--ok);color:#06150d}
+.opt.no{border-color:var(--bad);background:rgba(255,93,74,.08)}
+.opt.no .k{background:var(--bad);color:#fff}
+.nota{margin-top:16px;padding:14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-size:15px;line-height:1.45;display:none}
+.nota.on{display:block}
+.nota b{display:block;font-size:12px;letter-spacing:.08em;margin-bottom:4px}
+.nota.ok b{color:var(--ok)} .nota.no b{color:var(--bad)}
+
+/* Logros */
+.lista{display:grid;gap:10px;margin-top:14px}
+.logro{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-align:left}
+.logro .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--panel2);font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;color:var(--muted)}
+.logro.got .ic{background:rgba(255,184,0,.16);color:var(--amber)}
+.logro b{font-size:16px;font-weight:600}
+.logro small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.logro .st{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted)}
+.logro.got .st{color:var(--ok)}
+.msg{margin-top:14px;min-height:22px;font-size:14px;color:var(--muted)}
+
+/* Perfil */
+.perfil{display:grid;gap:14px;margin-top:6px}
+.tarjeta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.inicial{width:72px;height:72px;border-radius:16px;background:var(--amber);color:#14110a;display:grid;place-items:center;font-size:30px;font-weight:700}
+.sw{display:flex;gap:10px;margin-top:10px}
+.sw button{width:44px;height:44px;border-radius:12px;border:2px solid var(--bg)}
+.sw button[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}
+.tog{display:flex;justify-content:space-between;align-items:center;min-height:52px;font-size:16px}
+.switch{width:50px;height:30px;border-radius:15px;background:var(--panel2);border:1px solid var(--line);position:relative;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--muted);transition:transform .25s var(--ease),background .2s}
+.switch[aria-checked="true"]{background:var(--amber);border-color:var(--amber)}
+.switch[aria-checked="true"]::after{transform:translateX(20px);background:#14110a}
+
+/* Barra inferior */
+.nav{position:absolute;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom));padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:rgba(14,15,18,.96);border-top:1px solid var(--line)}
+.nav button{display:grid;place-items:center;align-content:center;gap:3px;font-size:12px;font-weight:500;color:var(--muted);border-radius:12px}
+.nav button svg{width:22px;height:22px}
+.nav button.on{color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <section class="screen on" id="inicio" aria-label="Salidas">
+    <div class="cab"><div><small class="mono">PANEL · NIVEL B1</small><h1>Salidas</h1></div><span class="reloj mono" id="reloj">18:02</span></div>
+    <div class="tablero" role="list">
+      <div class="fila-h"><span>Hora</span><span>Destino</span><span>Estado</span></div>
+      <button class="vuelo" role="listitem" data-go="ejer"><span class="h">18:10</span><span class="d">Gramática: pasado<span>Unidad 3 · 8 ejercicios</span></span><span class="est emb">EMBARQUE</span></button>
+      <button class="vuelo" role="listitem" data-go="ejer"><span class="h">18:40</span><span class="d">Condicionales<span>Unidad 4 · repasar fallos</span></span><span class="est ret">RETRASADO</span></button>
+      <div class="vuelo bloq" role="listitem"><span class="h">19:20</span><span class="d">Oraciones de relativo<span>Unidad 5 · se abre al terminar la 4</span></span><span class="est cer">CERRADO</span></div>
+      <div class="vuelo" role="listitem"><span class="h">17:05</span><span class="d">Vocabulario viajes<span>Unidad 2 · completado</span></span><span class="est ok">LLEGADO</span></div>
+    </div>
+    <div class="resumen">
+      <div class="res"><small>Racha</small><b>3</b></div>
+      <div class="res"><small>Aciertos hoy</small><b>12</b></div>
+      <div class="res"><small>Objetivo</small><b>40%</b></div>
+    </div>
+    <div class="barra" aria-hidden="true"><i style="--w:40%"></i></div>
+    <button class="btn" data-go="ejer">Embarcar el siguiente vuelo</button>
+  </section>
+
+  <section class="screen" id="ejer" aria-label="Ejercicio">
+    <div class="cab2">
+      <button class="x" data-go="inicio" aria-label="Volver al panel">✕</button>
+      <span class="paso" id="paso">EJERCICIO 1 / 3</span>
+    </div>
+    <div class="puerta">PUERTA 4 · GRAMÁTICA</div>
+    <h2 class="enun">She suggested <span class="hueco" id="hueco">going</span> to the cinema.</h2>
+    <div id="opts">
+      <button class="opt" aria-pressed="false" data-ok="0"><span class="k">A</span>to go</button>
+      <button class="opt" aria-pressed="false" data-ok="1"><span class="k">B</span>going</button>
+      <button class="opt" aria-pressed="false" data-ok="0"><span class="k">C</span>go</button>
+    </div>
+    <div class="nota" id="nota" role="status" aria-live="polite"><b id="nT"></b><span id="nP"></span></div>
+    <button class="btn" id="comprobar" disabled>Comprobar</button>
+    <button class="btn" id="seguir" hidden>Siguiente</button>
+  </section>
+
+  <section class="screen" id="logros" aria-label="Logros">
+    <h1 style="font-size:30px;font-weight:700;letter-spacing:-.02em">Logros</h1>
+    <p class="mono" style="color:var(--muted);font-size:12px;margin-top:4px">2 DE 6 CONSEGUIDOS</p>
+    <div class="lista" id="lista">
+      <button class="logro got" data-txt="Primera lección: conseguido."><span class="ic">01</span><span><b>Primer vuelo</b><small>Completar una lección</small></span><span class="st">LOGRADO</span></button>
+      <button class="logro got" data-txt="Tres días seguidos: conseguido."><span class="ic">03</span><span><b>Tres en racha</b><small>Practicar 3 días seguidos</small></span><span class="st">LOGRADO</span></button>
+      <button class="logro" data-txt="Cinco sin fallar: faltan 2."><span class="ic">05</span><span><b>Cinco limpios</b><small>5 respuestas seguidas bien · 3 de 5</small></span><span class="st">EN CURSO</span></button>
+      <button class="logro" data-txt="Siete días: faltan 4."><span class="ic">07</span><span><b>Semana completa</b><small>7 días seguidos</small></span><span class="st">EN CURSO</span></button>
+      <button class="logro" data-txt="Nivel B2: bloqueado hasta completar B1."><span class="ic">B2</span><span><b>Nivel B2</b><small>Completar todas las unidades de B1</small></span><span class="st">BLOQUEADO</span></button>
+    </div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="screen" id="perfil" aria-label="Perfil">
+    <h1 style="font-size:30px;font-weight:700;letter-spacing:-.02em">Perfil</h1>
+    <div class="perfil">
+      <div class="tarjeta" style="display:flex;gap:14px;align-items:center">
+        <div class="inicial" id="ini">C</div>
+        <div><b style="font-size:18px">Carlos</b><small style="display:block;color:var(--muted);font-size:13px">Nivel B1 · objetivo: EOI</small></div>
+      </div>
+      <div class="tarjeta">
+        <small class="mono" style="color:var(--muted);font-size:11px">COLOR DE ACENTO</small>
+        <div class="sw" id="sw">
+          <button aria-pressed="true" style="background:#ffb800" data-c="#ffb800" aria-label="Ámbar"></button>
+          <button aria-pressed="false" style="background:#3ddc84" data-c="#3ddc84" aria-label="Verde"></button>
+          <button aria-pressed="false" style="background:#7aa8ff" data-c="#7aa8ff" aria-label="Azul"></button>
+          <button aria-pressed="false" style="background:#ff8fb1" data-c="#ff8fb1" aria-label="Rosa"></button>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <div class="tog"><span>Recordatorio diario</span><button class="switch" role="switch" aria-checked="true" aria-label="Recordatorio diario"></button></div>
+        <div class="tog"><span>Sonido al acertar</span><button class="switch" role="switch" aria-checked="false" aria-label="Sonido al acertar"></button></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Principal">
+    <button class="on" data-go="inicio" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Salidas</button>
+    <button data-go="ejer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19l14-14M9 5h10v10"/></svg>Vuelo</button>
+    <button data-go="logros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.8 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>Logros</button>
+    <button data-go="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Perfil</button>
+  </nav>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function go(id){
+  $$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('.nav button').forEach(b=>{const on=b.dataset.go===id;b.classList.toggle('on',on);on?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current');});
+}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+$('#reloj').textContent=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+
+let elegida=null;
+$$('.opt').forEach(o=>o.addEventListener('click',()=>{
+  if(!$('#seguir').hidden) return;
+  elegida=o; $$('.opt').forEach(x=>x.setAttribute('aria-pressed',String(x===o)));
+  $('#comprobar').disabled=false;
+}));
+$('#comprobar').addEventListener('click',()=>{
+  if(!elegida) return;
+  const ok=elegida.dataset.ok==='1';
+  elegida.classList.add(ok?'ok':'no');
+  $$('.opt').forEach(o=>{ if(o.dataset.ok==='1') o.classList.add('ok'); });
+  $('#hueco').classList.add('fill');
+  const n=$('#nota'); n.className='nota on '+(ok?'ok':'no');
+  $('#nT').textContent=ok?'CORRECTO':'INCORRECTO';
+  $('#nP').textContent=ok?'Después de suggest va el gerundio.':'Después de suggest va el gerundio: going.';
+  $('#comprobar').hidden=true; $('#seguir').hidden=false;
+});
+$('#seguir').addEventListener('click',()=>{
+  elegida=null; $$('.opt').forEach(o=>{o.setAttribute('aria-pressed','false');o.classList.remove('ok','no');});
+  $('#hueco').classList.remove('fill'); $('#nota').className='nota';
+  $('#comprobar').hidden=false; $('#comprobar').disabled=true; $('#seguir').hidden=true;
+});
+$$('.logro').forEach(b=>b.addEventListener('click',()=>{ $('#msg').textContent=b.dataset.txt; }));
+$$('#sw button').forEach(b=>b.addEventListener('click',()=>{
+  $$('#sw button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  document.documentElement.style.setProperty('--amber',b.dataset.c);
+  $('#ini').style.background=b.dataset.c;
+}));
+$$('.switch').forEach(s=>s.addEventListener('click',()=>s.setAttribute('aria-checked',String(s.getAttribute('aria-checked')!=='true'))));
+</script>
+</body>
+</html>

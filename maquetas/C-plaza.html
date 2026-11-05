@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff4e4">
+<title>Maqueta C · Plaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+/* Concepto: una plaza de pueblo al atardecer. Crema cálido, tintas de color saturado,
+   botones con "labio" que se hunden al pulsar, y un compañero (la ardilla Pepa) que
+   reacciona. Ninguna marca ajena: forma y mecánica, no identidad. */
+:root{
+  --cream:#fff4e4; --card:#fffdf8; --ink:#2a1d14; --muted:#7a6656; --line:#ecd9c0;
+  --teal:#18a58a; --teal-lip:#0d7a64; --sun:#ffb22e; --sun-lip:#d98a0c;
+  --rose:#f0587a; --rose-lip:#c23a5c; --sky:#4aa8ff; --sky-lip:#2b7fd1; --lilac:#a57bff;
+  --ease:cubic-bezier(.23,1,.32,1); --ease-back:cubic-bezier(.34,1.45,.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--cream);overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:auto 0 0 0;height:180px;pointer-events:none;background:radial-gradient(120% 100% at 50% 100%,rgba(255,178,46,.22),transparent 70%)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button:active{transform:translateY(2px)}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:14px}
+h1,h2,.fr{font-family:Fredoka,Nunito,sans-serif}
+
+.app{max-width:430px;margin:0 auto;height:100dvh;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0 0 88px;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top)) 18px 26px;
+  opacity:0;transform:scale(.985);pointer-events:none;transition:opacity .3s var(--ease),transform .4s var(--ease)}
+.screen.on{opacity:1;transform:none;pointer-events:auto}
+.pop>*{opacity:0;transform:translateY(16px) scale(.97);transition:opacity .35s var(--ease),transform .5s var(--ease-back)}
+.screen.on .pop>*{opacity:1;transform:none}
+.screen.on .pop>*:nth-child(2){transition-delay:.06s}
+.screen.on .pop>*:nth-child(3){transition-delay:.12s}
+.screen.on .pop>*:nth-child(4){transition-delay:.18s}
+.screen.on .pop>*:nth-child(5){transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+
+/* Tarjetas con labio */
+.card{background:var(--card);border-radius:22px;border:2px solid var(--line);padding:16px;box-shadow:0 4px 0 var(--line)}
+.lip{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;border-radius:18px;border:0;background:var(--teal);color:#fff;font-family:Fredoka,sans-serif;font-weight:700;font-size:19px;box-shadow:0 6px 0 var(--teal-lip);transition:transform .1s var(--ease),box-shadow .1s var(--ease)}
+.lip:active{transform:translateY(5px);box-shadow:0 1px 0 var(--teal-lip)}
+.lip:disabled{background:#d8cdbf;box-shadow:0 6px 0 #bdb1a2;color:#fff;cursor:default}
+.lip:disabled:active{transform:none}
+.lip.sun{background:var(--sun);color:var(--ink);box-shadow:0 6px 0 var(--sun-lip)}
+.lip.sun:active{box-shadow:0 1px 0 var(--sun-lip)}
+.lip.ghost{background:var(--card);color:var(--ink);box-shadow:0 6px 0 var(--line);border:2px solid var(--line)}
+.lip.ghost:active{box-shadow:0 1px 0 var(--line)}
+
+/* Cabecera */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.gem{display:flex;align-items:center;gap:6px;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-family:Fredoka;font-weight:700;font-size:16px;box-shadow:0 3px 0 var(--line)}
+.gem svg{width:22px;height:22px}
+.gem b{font-variant-numeric:tabular-nums}
+.gem.bump{animation:bump .5s var(--ease-back)}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+
+/* Pepa, la ardilla */
+.pepa{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;margin-top:14px}
+.pepa .cara{width:84px;height:84px;border-radius:30px;background:#ffd9a8;border:2px solid var(--ink);display:grid;place-items:center;position:relative;animation:flota 3s ease-in-out infinite}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.pepa svg{width:70px;height:70px;overflow:visible}
+.pepa .ojos{transform-box:view-box;transform-origin:center;animation:parpadeo 4s infinite}
+@keyframes parpadeo{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.globo{background:var(--card);border:2px solid var(--line);border-radius:18px 18px 18px 4px;padding:12px 14px;font-weight:800;font-size:16px;line-height:1.3;position:relative;box-shadow:0 3px 0 var(--line)}
+
+/* Mapa de niveles: caminos con fichas */
+.mapa{position:relative;display:grid;justify-items:center;gap:22px;margin-top:20px;padding-bottom:8px}
+.nodo{width:74px;height:74px;border-radius:50%;border:0;display:grid;place-items:center;font-family:Fredoka;font-weight:700;font-size:24px;color:#fff;background:var(--teal);box-shadow:0 7px 0 var(--teal-lip);position:relative;transition:transform .12s var(--ease),box-shadow .12s}
+.nodo:active{transform:translateY(5px);box-shadow:0 2px 0 var(--teal-lip)}
+.nodo.hecho{background:var(--sun);box-shadow:0 7px 0 var(--sun-lip);color:var(--ink)}
+.nodo.hoy{animation:latido 1.6s var(--ease) infinite}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.nodo.bloq{background:#e6d9c8;box-shadow:0 7px 0 #cdbfae;color:#a09182;cursor:default}
+.nodo.bloq:active{transform:none;box-shadow:0 7px 0 #cdbfae}
+.nodo .est{position:absolute;top:-8px;right:-8px;width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--ink);display:grid;place-items:center;font-size:14px}
+.trazo{width:6px;height:28px;border-radius:3px;background:repeating-linear-gradient(var(--line) 0 6px,transparent 6px 12px)}
+.etiq{font-family:Fredoka;font-weight:600;font-size:14px;color:var(--muted)}
+
+/* Ejercicio */
+.cab{display:flex;align-items:center;gap:12px}
+.cerrar{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:grid;place-items:center;flex:none;box-shadow:0 3px 0 var(--line)}
+.progreso{flex:1;height:18px;border-radius:9px;background:#f0e2cf;overflow:hidden;box-shadow:inset 0 2px 0 rgba(0,0,0,.05)}
+.progreso i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),#4fd6b4);border-radius:9px;transition:width .6s var(--ease);position:relative}
+.progreso i::after{content:"";position:absolute;inset:3px 8px auto 8px;height:4px;border-radius:2px;background:rgba(255,255,255,.45)}
+.corazon{font-family:Fredoka;font-weight:700;color:var(--rose);display:flex;align-items:center;gap:4px;font-size:18px}
+.corazon svg{width:22px;height:22px}
+.corazon.roto{animation:sacudida .4s var(--ease)}
+@keyframes sacudida{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.pregunta{font-family:Fredoka;font-weight:600;font-size:30px;line-height:1.2;margin:22px 0 18px}
+.blanco{display:inline-block;min-width:100px;border-bottom:4px dotted var(--sky);color:var(--sky-lip);text-align:center;font-weight:700;transition:color .2s}
+.opc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{min-height:72px;border-radius:20px;border:2px solid var(--line);background:var(--card);box-shadow:0 5px 0 var(--line);font-family:Fredoka;font-weight:600;font-size:20px;display:grid;place-items:center;padding:10px;transition:transform .1s var(--ease),box-shadow .1s,background .2s,border-color .2s}
+.tile:active{transform:translateY(4px);box-shadow:0 1px 0 var(--line)}
+.tile[aria-pressed="true"]{border-color:var(--sky);background:#e8f3ff;box-shadow:0 5px 0 #b9d8f7}
+.tile.ok{border-color:var(--teal);background:#dcf7ef;box-shadow:0 5px 0 #9fdcc9;animation:salto .5s var(--ease-back)}
+.tile.no{border-color:var(--rose);background:#ffe4ea;box-shadow:0 5px 0 #f4b5c4;animation:sacudida .4s var(--ease)}
+@keyframes salto{0%{transform:scale(.9)}50%{transform:scale(1.06)}100%{transform:none}}
+.pie{margin-top:auto;padding-top:20px}
+.feed{position:absolute;left:0;right:0;bottom:0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:var(--card);border-top:2px solid var(--line);
+  transform:translateY(110%);transition:transform .5s var(--ease-back);box-shadow:0 -10px 30px rgba(42,29,20,.12)}
+.feed.on{transform:none}
+.feed.ok{background:#dcf7ef;border-top-color:var(--teal)}
+.feed.no{background:#ffe4ea;border-top-color:var(--rose)}
+.feed h3{font-family:Fredoka;font-size:26px;font-weight:700}
+.feed.ok h3{color:#0b7a62}.feed.no h3{color:#b52d52}
+.feed p{font-weight:700;margin:4px 0 14px;font-size:16px;line-height:1.35}
+.confeti{position:absolute;left:50%;top:-6px;width:8px;height:8px;border-radius:2px;pointer-events:none;opacity:0}
+.confeti.go{animation:caida 1.1s var(--ease) forwards}
+@keyframes caida{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r))}}
+
+/* Logros: medallas */
+.medallas{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.medalla{border-radius:22px;background:var(--card);border:2px solid var(--line);box-shadow:0 5px 0 var(--line);padding:14px 12px;text-align:center;min-height:170px;display:grid;justify-items:center;align-content:start;gap:8px}
+.medalla .ic{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:#f1e7d8;border:3px solid #e3d3bd;position:relative}
+.medalla .ic svg{width:44px;height:44px}
+.medalla b{font-family:Fredoka;font-weight:700;font-size:16px;line-height:1.1}
+.medalla span{font-size:13px;color:var(--muted);font-weight:700}
+.medalla.gan{box-shadow:0 5px 0 #e7ac2a;border-color:#ffd166;background:#fff8e3}
+.medalla.gan .ic{background:var(--sun);border-color:var(--sun-lip);box-shadow:0 0 0 6px rgba(255,178,46,.2)}
+.medalla.gan .ic::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--sun);animation:anillo 2.2s var(--ease) infinite}
+@keyframes anillo{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+.medalla.nuevo{animation:estrena .8s var(--ease-back)}
+@keyframes estrena{0%{transform:scale(.6) rotate(-8deg)}60%{transform:scale(1.06) rotate(2deg)}100%{transform:none}}
+.medalla.bloq .ic{filter:grayscale(1);opacity:.6}
+
+/* Perfil */
+.perfil{display:grid;justify-items:center;gap:14px;text-align:center}
+.pepa-grande{width:150px;height:150px;border-radius:44px;background:#ffd9a8;border:3px solid var(--ink);display:grid;place-items:center;box-shadow:0 8px 0 var(--ink);position:relative;transition:background .3s}
+.pepa-grande svg{width:124px;height:124px;overflow:visible}
+.pepa-grande .ojos{transform-box:view-box;transform-origin:center;animation:parpadeo 4s infinite}
+.pepa-grande .sombrero{transform-box:fill-box;transform-origin:center;animation:balanceo 3s ease-in-out infinite}
+@keyframes balanceo{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.fila{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.pill{min-height:46px;padding:0 16px;border-radius:999px;border:2px solid var(--line);background:var(--card);font-family:Fredoka;font-weight:600;font-size:16px;box-shadow:0 3px 0 var(--line)}
+.pill[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 3px 0 #000}
+.bol{width:46px;height:46px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 2px var(--line),0 3px 0 var(--line)}
+.bol[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink)}
+
+/* Barra inferior */
+.nav{position:absolute;left:0;right:0;bottom:0;height:calc(74px + env(safe-area-inset-bottom));padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:rgba(255,253,248,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:2px solid var(--line)}
+.nav button{display:grid;place-items:center;align-content:center;gap:2px;border-radius:18px;font-family:Fredoka;font-weight:600;font-size:12px;color:var(--muted);transition:background .25s var(--ease),color .25s}
+.nav button svg{width:24px;height:24px;transition:transform .4s var(--ease-back)}
+.nav button.on{background:#e0f6f0;color:#0b7a62}
+.nav button.on svg{transform:translateY(-2px) scale(1.12)}
+.nav button:active{transform:scale(.96)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- INICIO -->
+  <section class="screen on" id="inicio" aria-label="Inicio">
+    <div class="pop">
+      <div class="top">
+        <div class="gem" aria-label="Racha de 3 días"><svg viewBox="0 0 24 24"><path d="M12 2c1 4 7 6 7 12a7 7 0 0 1-14 0c0-3 2-5 3-7 0 2 1 3 2 3-.5-3 0-6 2-8z" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/></svg>3 días</div>
+        <div class="gem" id="gem" aria-label="1240 monedas"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#ffb22e" stroke="#2a1d14" stroke-width="1.6"/><path d="M9 9h4.5a2 2 0 0 1 0 4H9m0 0h5" stroke="#2a1d14" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg><b id="monedas">1240</b></div>
+      </div>
+
+      <div class="pepa">
+        <div class="cara" aria-hidden="true">
+          <svg viewBox="0 0 100 100"><path d="M68 56c14-2 20-18 14-28-3 5-7 6-9 4 3-8-2-16-10-18 4 6 1 12-2 14C52 30 48 24 38 30c-6 4-6 12-2 16-6-2-12 2-12 9 0 14 16 22 32 22 6 0 12-1 12-1z" fill="#c9833e"/><ellipse cx="42" cy="54" rx="22" ry="20" fill="#ffd9a8"/><g class="ojos"><circle cx="36" cy="48" r="3.5" fill="#2a1d14"/><circle cx="48" cy="48" r="3.5" fill="#2a1d14"/></g><circle cx="30" cy="58" r="4" fill="#f0587a" opacity=".5"/><path d="M38 58q4 4 8 0" stroke="#2a1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="globo" id="globo">¡Hola! Te faltan 2 monedas… ¡para tu primer cofre!</div>
+      </div>
+
+      <div class="mapa" aria-label="Mapa de niveles">
+        <button class="nodo hecho" data-tip="Unidad 1 completada">1<span class="est">★</span></button>
+        <div class="trazo" aria-hidden="true"></div>
+        <button class="nodo hecho" data-tip="Unidad 2 completada">2<span class="est">★</span></button>
+        <div class="trazo" aria-hidden="true"></div>
+        <button class="nodo hoy" data-go="ejer" aria-label="Unidad 3, toca para empezar">3<span class="est">▶</span></button>
+        <div class="trazo" aria-hidden="true"></div>
+        <button class="nodo bloq" data-tip="Llega antes a la unidad 3">4</button>
+        <p class="etiq">Pulsa el círculo de hoy para empezar</p>
+      </div>
+
+      <div style="margin-top:22px"><button class="lip" data-go="ejer">Seguir la unidad 3</button></div>
+    </div>
+  </section>
+
+  <!-- EJERCICIO -->
+  <section class="screen" id="ejer" aria-label="Ejercicio">
+    <div style="display:flex;flex-direction:column;min-height:100%;position:relative">
+      <div class="cab">
+        <button class="cerrar" data-go="inicio" aria-label="Salir"><svg width="18" height="18" viewBox="0 0 18 18" stroke="#2a1d14" stroke-width="2.6" stroke-linecap="round"><path d="M3 3l12 12M15 3L3 15"/></svg></button>
+        <div class="progreso"><i id="prog"></i></div>
+        <div class="corazon" id="vid"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z" fill="#f0587a"/></svg><span id="vn">3</span></div>
+      </div>
+      <p class="etiq" style="margin-top:14px">Gramática · Unidad 3</p>
+      <h1 class="pregunta">She suggested <span class="blanco" id="blanco">going</span> to the cinema.</h1>
+      <div class="opc" id="opc">
+        <button class="tile" aria-pressed="false" data-ok="0">to go</button>
+        <button class="tile" aria-pressed="false" data-ok="1">going</button>
+        <button class="tile" aria-pressed="false" data-ok="0">go</button>
+      </div>
+      <div class="pie"><button class="lip" id="comp" disabled>Comprobar</button></div>
+      <div class="feed" id="feed" role="status" aria-live="polite">
+        <h3 id="fT">¡Muy bien!</h3>
+        <p id="fP">Después de <em>suggest</em> va el gerundio.</p>
+        <button class="lip sun" id="sig">Continuar</button>
+        <span class="confeti" id="cf" style="background:#ffb22e;--x:-40px;--y:-70px;--r:200deg"></span>
+        <span class="confeti" style="background:#f0587a;left:30%;--x:-20px;--y:-90px;--r:-160deg"></span>
+        <span class="confeti" style="background:#4aa8ff;left:70%;--x:30px;--y:-80px;--r:260deg"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGROS -->
+  <section class="screen" id="logros" aria-label="Logros">
+    <div class="pop">
+      <h1 style="font-size:34px;font-weight:700">Medallas</h1>
+      <p style="color:var(--muted);font-weight:700;margin-top:4px;line-height:1.35">Tres ganadas. Toca una para ver cómo se gana.</p>
+      <div class="medallas" id="medallas">
+        <button class="medalla gan" data-txt="Primera lección: ganada."><div class="ic">🌱</div><b>Primer paso</b><span>Ganada</span></button>
+        <button class="medalla gan" data-txt="Tres días seguidos: ganada."><div class="ic">🔥</div><b>Racha de 3</b><span>Ganada</span></button>
+        <button class="medalla gan" data-txt="Cien monedas en un día: ganada."><div class="ic">🪙</div><b>Monedero</b><span>Ganada</span></button>
+        <button class="medalla bloq" data-txt="Cinco sin fallar: 2 de 5."><div class="ic">🎯</div><b>Puntería</b><span>2 de 5</span></button>
+        <button class="medalla bloq" data-txt="Siete días seguidos: 3 de 7."><div class="ic">🗓️</div><b>Semana</b><span>3 de 7</span></button>
+        <button class="medalla bloq" data-txt="Nivel B2: bloqueada."><div class="ic">🏔️</div><b>Cima B2</b><span>Bloqueada</span></button>
+      </div>
+      <p id="msgM" role="status" aria-live="polite" style="margin-top:16px;min-height:24px;font-weight:700;color:var(--muted)"></p>
+    </div>
+  </section>
+
+  <!-- PERFIL -->
+  <section class="screen" id="perfil" aria-label="Perfil">
+    <div class="pop perfil">
+      <div class="pepa-grande" id="pg"></div>
+      <h1 style="font-size:32px;font-weight:700">Carla</h1>
+      <p style="color:var(--muted);font-weight:700">Nivel B1 · 3 días de racha</p>
+      <p class="etiq" style="margin-top:6px">Color de fondo</p>
+      <div class="fila" id="cols">
+        <button class="bol" aria-pressed="true" style="background:#ffd9a8" data-c="#ffd9a8" aria-label="Melocotón"></button>
+        <button class="bol" aria-pressed="false" style="background:#bff0e0" data-c="#bff0e0" aria-label="Menta"></button>
+        <button class="bol" aria-pressed="false" style="background:#d4c6ff" data-c="#d4c6ff" aria-label="Lila"></button>
+        <button class="bol" aria-pressed="false" style="background:#bfe4ff" data-c="#bfe4ff" aria-label="Cielo"></button>
+      </div>
+      <p class="etiq">Adorno</p>
+      <div class="fila">
+        <button class="pill" aria-pressed="false" id="sombr">Sombrero</button>
+        <button class="pill" aria-pressed="false" id="lazo">Lazo</button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Principal">
+    <button class="on" data-go="inicio" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9H3z"/><path d="M10 20v-5h4v5"/></svg>Plaza</button>
+    <button data-go="ejer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>Practicar</button>
+    <button data-go="logros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/></svg>Medallas</button>
+    <button data-go="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Perfil</button>
+  </nav>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function go(id){
+  $$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('.nav button').forEach(b=>{const on=b.dataset.go===id;b.classList.toggle('on',on);on?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current');});
+  if(id==='ejer') reiniciar();
+}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+$$('[data-tip]').forEach(b=>b.addEventListener('click',()=>{ $('#globo').textContent=b.dataset.tip+'. ¡Sigue así!'; }));
+$$('#medallas .medalla').forEach(b=>b.addEventListener('click',()=>{ $('#msgM').textContent=b.dataset.txt; }));
+
+// Ejercicio
+let elegida=null, vidas=3, hechas=0;
+const TOTAL=5;
+function reiniciar(){
+  elegida=null; vidas=3; hechas=0;
+  $$('#opc .tile').forEach(t=>{t.setAttribute('aria-pressed','false');t.classList.remove('ok','no');});
+  $('#comp').disabled=true; $('#comp').hidden=false; $('#feed').classList.remove('on','ok','no');
+  $('#blanco').textContent='going'; pintar();
+}
+function pintar(){ $('#vn').textContent=vidas; $('#prog').style.width=(hechas/TOTAL*100)+'%'; }
+$$('#opc .tile').forEach(t=>t.addEventListener('click',()=>{
+  if($('#feed').classList.contains('on')) return;
+  elegida=t; $$('#opc .tile').forEach(x=>x.setAttribute('aria-pressed',String(x===t)));
+  $('#comp').disabled=false;
+}));
+$('#comp').addEventListener('click',()=>{
+  if(!elegida) return;
+  const ok=elegida.dataset.ok==='1';
+  elegida.classList.add(ok?'ok':'no');
+  $('#fT').textContent=ok?'¡Muy bien!':'Casi, ¡otra vez!';
+  $('#fP').innerHTML=ok?'Después de <em>suggest</em> va el gerundio.':'Después de <em>suggest</em> va el gerundio: <strong>going</strong>.';
+  $('#feed').className='feed on '+(ok?'ok':'no');
+  if(!ok){ vidas--; const c=document.querySelector('.corazon'); c.classList.remove('roto'); void c.offsetWidth; c.classList.add('roto'); }
+  if(ok && !reduce){ $$('.confeti').forEach(c=>{c.classList.remove('go');void c.offsetWidth;c.classList.add('go');}); }
+  $('#comp').hidden=true;
+  $('#blanco').textContent='going';
+});
+$('#sig').addEventListener('click',()=>{
+  hechas++; pintar();
+  if(vidas<=0){ go('inicio'); return; }
+  if(hechas>=TOTAL){
+    go('logros');
+    const m=$$('#medallas .medalla')[4];
+    m.classList.remove('bloq'); m.classList.add('gan','nuevo');
+    m.querySelector('span').textContent='Ganada';
+    $('#msgM').textContent='¡Semana en marcha! Medalla nueva.';
+    return;
+  }
+  elegida=null; $$('#opc .tile').forEach(t=>{t.setAttribute('aria-pressed','false');t.classList.remove('ok','no');});
+  $('#feed').classList.remove('on','ok','no'); $('#comp').hidden=false; $('#comp').disabled=true;
+});
+
+// Pepa grande (perfil)
+const C={color:'#ffd9a8'};
+function pepa(bg){
+  $('#pg').style.background=bg;
+  const sombr=$('#sombr').getAttribute('aria-pressed')==='true';
+  const lazo=$('#lazo').getAttribute('aria-pressed')==='true';
+  $('#pg').innerHTML=`<svg viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M68 56c14-2 20-18 14-28-3 5-7 6-9 4 3-8-2-16-10-18 4 6 1 12-2 14C52 30 48 24 38 30c-6 4-6 12-2 16-6-2-12 2-12 9 0 14 16 22 32 22 6 0 12-1 12-1z" fill="#c9833e"/>
+    <ellipse cx="42" cy="54" rx="22" ry="20" fill="#ffd9a8" stroke="#2a1d14" stroke-width="1.5"/>
+    <g class="ojos"><circle cx="36" cy="48" r="3.5" fill="#2a1d14"/><circle cx="48" cy="48" r="3.5" fill="#2a1d14"/></g>
+    <circle cx="30" cy="58" r="4" fill="#f0587a" opacity=".5"/>
+    <path d="M38 58q4 4 8 0" stroke="#2a1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    ${sombr?'<g class="sombrero"><ellipse cx="42" cy="30" rx="20" ry="4" fill="#2a1d14"/><rect x="30" y="18" width="24" height="12" rx="5" fill="#2a1d14"/><rect x="30" y="25" width="24" height="3" fill="#ffb22e"/></g>':''}
+    ${lazo?'<path d="M56 74l8-4v8zM56 74l8 4v-8z" fill="#f0587a" stroke="#2a1d14" stroke-width="1.2"/>':''}
+  </svg>`;
+}
+pepa(C.color);
+$$('#cols .bol').forEach(b=>b.addEventListener('click',()=>{
+  $$('#cols .bol').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  pepa(b.dataset.c);
+}));
+['#sombr','#lazo'].forEach(id=>$(id).addEventListener('click',()=>{ const b=$(id); b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')); pepa($('#pg').style.background||C.color); }));
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eef2f6">
+<title>Maqueta A · Cuaderno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Concepto: un cuaderno de examen. Papel cuadriculado, tinta azul para lo correcto
+   y bolígrafo rojo solo para corregir. Un único gesto llamativo: el sello de los logros. */
+:root{
+  --paper:#eef2f6; --card:#fbfcfe; --ink:#15243b; --muted:#5b6b82; --line:#c9d3e0;
+  --blue:#2f54eb; --blue-soft:#e3eaff; --red:#e5484d; --ok:#1f9d6b;
+  --ease:cubic-bezier(.23,1,.32,1); --ease-io:cubic-bezier(.77,0,.175,1);
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:"Instrument Sans",system-ui,sans-serif; color:var(--ink);
+  background:var(--paper);
+  background-image:linear-gradient(to right,rgba(47,84,235,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(47,84,235,.07) 1px,transparent 1px);
+  background-size:24px 24px;
+  -webkit-font-smoothing:antialiased; overscroll-behavior:none;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button:active{transform:scale(.98)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:12px}
+
+.app{max-width:430px;margin:0 auto;height:100dvh;position:relative;overflow:hidden}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.kicker{font-size:13px;font-weight:600;color:var(--muted)}
+.margin{border-left:2px solid rgba(229,72,77,.45);padding-left:14px}
+
+/* Pantallas */
+.screen{
+  position:absolute;inset:0 0 84px 0;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top)) 18px 28px;
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .4s var(--ease);
+}
+.screen.on{opacity:1;transform:none;pointer-events:auto}
+.stagger>*{opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease),transform .5s var(--ease)}
+.screen.on .stagger>*{opacity:1;transform:none}
+.screen.on .stagger>*:nth-child(2){transition-delay:.05s}
+.screen.on .stagger>*:nth-child(3){transition-delay:.1s}
+.screen.on .stagger>*:nth-child(4){transition-delay:.15s}
+.screen.on .stagger>*:nth-child(5){transition-delay:.2s}
+
+/* Tarjeta de papel */
+.sheet{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+  padding:18px; position:relative;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 27px,rgba(47,84,235,.10) 27px 28px);
+  background-position:0 18px;
+}
+
+/* Hoy */
+.hoy{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.ring{width:84px;height:84px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:8}
+.ring .bg{stroke:var(--blue-soft)}
+.ring .fg{stroke:var(--blue);stroke-linecap:round;stroke-dasharray:226;stroke-dashoffset:226;transition:stroke-dashoffset 1.1s var(--ease) .3s}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;font-family:"Newsreader",serif;font-size:22px;font-weight:700}
+.ring small{display:block;font-family:"Instrument Sans",sans-serif;font-size:11px;color:var(--muted);font-weight:600;text-align:center;margin-top:-6px}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;
+  border-radius:14px;background:var(--blue);color:#fff;font-weight:700;font-size:16px;
+  transition:transform .12s var(--ease),background .2s;
+}
+.btn:disabled{background:#b9c6e6;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+
+/* Camino de unidades */
+.unidades{display:grid;gap:10px;margin-top:6px}
+.unidad{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-align:left;width:100%}
+.unidad .n{font-family:"Newsreader",serif;font-size:24px;font-weight:700;color:var(--blue)}
+.unidad .t{font-weight:600;font-size:15px}
+.unidad .s{font-size:13px;color:var(--muted)}
+.unidad .bar{height:6px;border-radius:3px;background:var(--blue-soft);margin-top:8px;overflow:hidden}
+.unidad .bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:3px;transition:width 1s var(--ease) .4s}
+.screen.on .unidad .bar i{width:var(--w)}
+.unidad.bloq{opacity:.55}
+.unidad.bloq .n{color:var(--muted)}
+
+/* Sellos de logros */
+.sellos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sello{
+  aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:8px;
+  border:2.5px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;line-height:1.15;
+  transform:rotate(-4deg);background:rgba(251,252,254,.7);
+  box-shadow:inset 0 0 0 4px var(--card),inset 0 0 0 5px rgba(47,84,235,.25);
+  transition:transform .4s var(--ease);
+}
+.sello:nth-child(2n){transform:rotate(3deg)}
+.sello.off{border-color:var(--line);color:#9aa8bd;transform:none;box-shadow:none;background:transparent;border-style:dashed}
+.sello.recien{animation:sellar .55s var(--ease) both}
+@keyframes sellar{0%{transform:scale(1.6) rotate(-12deg);opacity:0}60%{transform:scale(.94) rotate(-4deg);opacity:1}100%{transform:scale(1) rotate(-4deg)}}
+
+/* Lección */
+.top{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.cerrar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);background:var(--card);flex:none}
+.pasos{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pasos i{height:8px;border-radius:4px;background:var(--line);transition:background .4s var(--ease)}
+.pasos i.hecho{background:var(--blue)}
+.pasos i.act{background:linear-gradient(90deg,var(--blue) 50%,var(--line) 50%);background-size:200% 100%;animation:pulsoLinea 1.6s var(--ease-io) infinite}
+@keyframes pulsoLinea{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.pregunta{font-family:"Newsreader",serif;font-size:30px;line-height:1.2;margin:18px 0 22px;font-weight:500}
+.hueco{display:inline-block;min-width:88px;border-bottom:2.5px solid var(--ink);text-align:center;color:transparent}
+.opts{display:grid;gap:10px}
+.opt{
+  display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center;min-height:56px;padding:12px 14px;
+  border-radius:14px;background:var(--card);border:1.5px solid var(--line);text-align:left;font-size:17px;font-weight:500;
+  transition:border-color .2s,background .2s,transform .12s;
+}
+.opt .L{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:14px;background:var(--paper);color:var(--muted)}
+.opt[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-soft)}
+.opt[aria-pressed="true"] .L{background:var(--blue);color:#fff}
+.opt.right{border-color:var(--ok);background:#e6f6ef}
+.opt.right .L{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--red);animation:tiembla .4s var(--ease)}
+.opt.wrong .L{background:var(--red);color:#fff}
+@keyframes tiembla{0%,100%{transform:none}25%{transform:translateX(-6px)}55%{transform:translateX(5px)}80%{transform:translateX(-2px)}}
+
+/* Corrección con bolígrafo rojo */
+.corr{position:relative;display:inline}
+.corr::after{content:"";position:absolute;left:-2px;right:-2px;bottom:-4px;height:6px;border-bottom:2.5px solid var(--red);border-radius:0 0 40% 40%;transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease) .15s}
+.fb.bad .corr::after{transform:scaleX(1)}
+
+.fb{
+  position:absolute;left:0;right:0;bottom:0;padding:20px 18px calc(18px + env(safe-area-inset-bottom));
+  background:var(--card);border-top:1.5px solid var(--line);border-radius:22px 22px 0 0;
+  transform:translateY(105%);transition:transform .5s var(--ease);box-shadow:0 -12px 30px -20px rgba(21,36,59,.35);
+}
+.fb.on{transform:none}
+.fb h2{font-size:26px;display:flex;align-items:center;gap:10px}
+.fb.ok h2{color:var(--ok)} .fb.bad h2{color:var(--red)}
+.fb p{color:var(--muted);margin:6px 0 14px;font-size:15px;line-height:1.45}
+.check{width:34px;height:34px;flex:none}
+.check path{stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .5s var(--ease) .2s}
+.fb.on .check path{stroke-dashoffset:0}
+.xp{position:absolute;right:20px;top:-14px;font-family:"Newsreader",serif;font-weight:700;color:var(--blue);font-size:20px;opacity:0;pointer-events:none}
+.xp.go{animation:xpSube 1s var(--ease) both}
+@keyframes xpSube{0%{opacity:0;transform:translateY(10px)}20%{opacity:1}100%{opacity:0;transform:translateY(-40px)}}
+
+/* Logros y perfil */
+.avatar{width:96px;height:96px;border-radius:50%;background:var(--card);border:2px solid var(--ink);display:grid;place-items:center;position:relative;box-shadow:0 0 0 5px var(--paper),0 0 0 6px var(--line)}
+.avatar svg{width:84px;height:84px;overflow:visible}
+.avatar .eyes{transform-box:view-box;transform-origin:50px 54px;animation:parpadeo 4.5s infinite}
+@keyframes parpadeo{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.avatar{animation:respira 3.2s ease-in-out infinite}
+@keyframes respira{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.sw{width:44px;height:44px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1.5px var(--line);padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2.5px var(--ink)}
+
+/* Barra inferior */
+.nav{
+  position:absolute;left:0;right:0;bottom:0;height:calc(72px + env(safe-area-inset-bottom));
+  padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
+  background:rgba(238,242,246,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
+}
+.nav button{display:grid;place-items:center;align-content:center;gap:3px;border-radius:14px;font-size:12px;font-weight:600;color:var(--muted);transition:color .2s}
+.nav button svg{width:22px;height:22px;transition:transform .35s var(--ease)}
+.nav button.on{color:var(--blue)}
+.nav button.on svg{transform:translateY(-2px) scale(1.08)}
+.nav button.on::before{content:"";position:absolute}
+.nav button{position:relative}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HOY -->
+  <section class="screen on" id="hoy" aria-label="Hoy">
+    <div class="stagger">
+      <p class="kicker">Jueves, 5 de noviembre</p>
+      <h1 class="margin" style="margin-top:6px;font-size:34px">Hola, Carlos</h1>
+      <div class="sheet" style="margin-top:18px">
+        <div class="hoy">
+          <div>
+            <h2 style="font-size:21px">Objetivo de hoy</h2>
+            <p style="color:var(--muted);font-size:14px;margin-top:6px;line-height:1.4">12 de 30 XP. Una lección y estarás al día.</p>
+            <p style="margin-top:12px;font-size:14px;font-weight:600">3 días seguidos</p>
+          </div>
+          <div class="ring" aria-label="40 por ciento del objetivo">
+            <svg viewBox="0 0 84 84"><circle class="bg" cx="42" cy="42" r="36"/><circle class="fg" id="anillo" cx="42" cy="42" r="36"/></svg>
+            <div class="num">12<small>/30</small></div>
+          </div>
+        </div>
+        <button class="btn" style="margin-top:18px" data-go="lec">Empezar lección</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin:26px 0 10px">
+        <h2 style="font-size:22px">Tu camino</h2>
+        <span class="kicker">Nivel B1</span>
+      </div>
+      <div class="unidades">
+        <button class="unidad" data-go="lec"><span class="n">3</span><span><span class="t">Tiempos del pasado</span><span class="s" style="display:block">6 de 8 lecciones</span><span class="bar" style="display:block"><i style="--w:75%"></i></span></span><span class="s">→</span></button>
+        <button class="unidad" data-go="lec"><span class="n">4</span><span><span class="t">Gerundio e infinitivo</span><span class="s" style="display:block">Empieza aquí</span><span class="bar" style="display:block"><i style="--w:8%"></i></span></span><span class="s">→</span></button>
+        <div class="unidad bloq"><span class="n">5</span><span><span class="t">Condicionales</span><span class="s" style="display:block">Bloqueada hasta la unidad 4</span></span><span class="s">·</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LECCIÓN -->
+  <section class="screen" id="lec" aria-label="Lección">
+    <div style="position:relative;min-height:100%;display:flex;flex-direction:column">
+      <div class="top">
+        <button class="cerrar" data-go="hoy" aria-label="Salir de la lección">✕</button>
+        <div class="pasos" id="pasos"><i class="hecho"></i><i class="hecho"></i><i class="act"></i><i></i><i></i></div>
+      </div>
+      <p class="kicker">Gramática · B1</p>
+      <h1 class="pregunta">She suggested <span class="hueco" id="hueco">&nbsp;</span> to the cinema.</h1>
+      <div class="opts" id="opts">
+        <button class="opt" aria-pressed="false" data-ok="0"><span class="L">A</span><span>to go</span></button>
+        <button class="opt" aria-pressed="false" data-ok="1"><span class="L">B</span><span>going</span></button>
+        <button class="opt" aria-pressed="false" data-ok="0"><span class="L">C</span><span>go</span></button>
+      </div>
+      <div style="margin-top:auto;padding-top:20px;position:relative">
+        <button class="btn" id="comprobar" disabled>Comprobar</button>
+        <button class="btn" id="seguir" hidden style="margin-top:0">Continuar</button>
+      </div>
+      <div class="fb" id="fb" role="status" aria-live="polite">
+        <h2><svg class="check" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path id="tic" d="M7 18 L14 25 L27 9"/></svg><span id="fbT">¡Correcto!</span></h2>
+        <p id="fbP">Después de suggest va el gerundio: «going».</p>
+        <span class="xp" id="xp">+10 XP</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGROS -->
+  <section class="screen" id="logros" aria-label="Logros">
+    <div class="stagger">
+      <p class="kicker">Tus sellos</p>
+      <h1 style="font-size:34px;margin-top:4px">Logros</h1>
+      <p style="color:var(--muted);margin:8px 0 22px;font-size:15px;line-height:1.45">Cada sello se gana con una acción concreta. Toca uno para ver cómo se consigue.</p>
+      <div class="sellos" id="sellos">
+        <button class="sello" data-txt="Primera lección: completada.">Primera lección</button>
+        <button class="sello" data-txt="Tres días seguidos: completado.">3 días seguidos</button>
+        <button class="sello" data-txt="Objetivo diario cumplido: completado.">Objetivo cumplido</button>
+        <button class="sello off" data-txt="Cinco lecciones sin fallar: bloqueado.">Sin fallos ×5</button>
+        <button class="sello off" data-txt="Una semana seguida: bloqueado.">7 días seguidos</button>
+        <button class="sello off" data-txt="Nivel B2 superado: bloqueado.">Nivel B2</button>
+      </div>
+      <p id="msgSello" role="status" aria-live="polite" style="margin-top:20px;min-height:24px;font-size:14px;color:var(--muted)"></p>
+    </div>
+  </section>
+
+  <!-- PERFIL -->
+  <section class="screen" id="perfil" aria-label="Perfil">
+    <div class="stagger" style="display:grid;justify-items:center;gap:14px;text-align:center">
+      <div class="avatar" id="av"></div>
+      <h1 style="font-size:30px">Carlos</h1>
+      <p class="kicker">Nivel B1 · 3 días seguidos</p>
+      <div class="sheet" style="width:100%;text-align:left;margin-top:12px">
+        <p class="kicker" style="margin-bottom:10px">Color del fondo</p>
+        <div class="chips" id="colores" style="gap:10px">
+          <button class="sw" aria-pressed="true" style="background:#2f54eb" data-c="#2f54eb" aria-label="Azul"></button>
+          <button class="sw" aria-pressed="false" style="background:#1f9d6b" data-c="#1f9d6b" aria-label="Verde"></button>
+          <button class="sw" aria-pressed="false" style="background:#f0a24b" data-c="#f0a24b" aria-label="Naranja"></button>
+          <button class="sw" aria-pressed="false" style="background:#d6457a" data-c="#d6457a" aria-label="Rosa"></button>
+        </div>
+        <p class="kicker" style="margin:16px 0 10px">Accesorio</p>
+        <div class="chips">
+          <button class="chip" aria-pressed="false" id="gafas">Gafas</button>
+          <button class="chip" aria-pressed="false" id="sombrero">Sombrero</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Principal">
+    <button data-go="hoy" class="on" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Hoy</button>
+    <button data-go="lec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>Ejercicios</button>
+    <button data-go="logros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg>Logros</button>
+    <button data-go="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Perfil</button>
+  </nav>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Avatar: zorro sencillo dibujado en SVG (los ojos parpadean por CSS)
+function avatarSvg(fill){
+  return `<svg viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M20 40 L28 10 L46 30 Z M80 40 L72 10 L54 30 Z" fill="${fill}" opacity=".85"/>
+    <circle cx="50" cy="56" r="34" fill="${fill}"/>
+    <g class="eyes"><ellipse cx="38" cy="54" rx="5" ry="6" fill="#15243b"/><ellipse cx="62" cy="54" rx="5" ry="6" fill="#15243b"/></g>
+    <path d="M42 70 Q50 77 58 70" stroke="#15243b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="30" cy="66" r="4.5" fill="#fff" opacity=".35"/><circle cx="70" cy="66" r="4.5" fill="#fff" opacity=".35"/>
+    <g id="gafasG" style="display:none"><circle cx="38" cy="54" r="9" fill="none" stroke="#15243b" stroke-width="2.5"/><circle cx="62" cy="54" r="9" fill="none" stroke="#15243b" stroke-width="2.5"/><path d="M47 54h6" stroke="#15243b" stroke-width="2.5"/></g>
+    <g id="sombreroG" style="display:none"><rect x="26" y="20" width="48" height="8" rx="3" fill="#15243b"/><rect x="36" y="6" width="28" height="18" rx="6" fill="#15243b"/></g>
+  </svg>`;
+}
+$('#av').innerHTML=avatarSvg('#2f54eb');
+
+// Navegación entre pantallas
+function go(id){
+  $$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('.nav button').forEach(b=>{const on=b.dataset.go===id;b.classList.toggle('on',on);on?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current');});
+  if(id==='lec') startLesson();
+  if(id==='hoy') requestAnimationFrame(()=>$('#anillo').style.strokeDashoffset=(226*0.6).toFixed(1));
+}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+requestAnimationFrame(()=>$('#anillo').style.strokeDashoffset=(226*0.6).toFixed(1));
+
+// Lección
+let picked=null, paso=2;
+function startLesson(){
+  picked=null; $$('.opt').forEach(o=>{o.setAttribute('aria-pressed','false');o.classList.remove('right','wrong');});
+  $('#comprobar').hidden=false; $('#comprobar').disabled=true; $('#seguir').hidden=true;
+  $('#fb').classList.remove('on','ok','bad'); $('#hueco').textContent=' ';
+}
+$$('.opt').forEach(o=>o.addEventListener('click',()=>{
+  if(!$('#fb').classList.contains('on')){ picked=o; $$('.opt').forEach(x=>x.setAttribute('aria-pressed',String(x===o))); $('#comprobar').disabled=false; }
+}));
+function xp(){ const e=$('#xp'); e.classList.remove('go'); void e.offsetWidth; e.classList.add('go'); }
+$('#comprobar').addEventListener('click',()=>{
+  if(!picked) return;
+  const ok=picked.dataset.ok==='1', fb=$('#fb');
+  fb.classList.add('on',ok?'ok':'bad');
+  $('#fbT').textContent=ok?'¡Correcto!':'Casi';
+  $('#fbP').innerHTML=ok?'Después de <em>suggest</em> va el gerundio: «going».':'Después de <em>suggest</em> va el gerundio. La correcta es <strong>going</strong>.';
+  $('#hueco').textContent=ok?'going':'going';
+  picked.classList.add(ok?'right':'wrong');
+  if(ok && !reduce) xp();
+  $('#comprobar').hidden=true; $('#seguir').hidden=false;
+  if(!ok) $('#fbP').insertAdjacentHTML('afterbegin','<span class="corr" style="display:none"></span>');
+  const pasos=$$('#pasos i'); if(paso<pasos.length){ pasos[paso].className='hecho'; paso++; if(paso<pasos.length) pasos[paso].className='act'; }
+});
+$('#seguir').addEventListener('click',()=>{
+  if(paso>=5){ go('logros'); $('#msgSello').textContent='¡Primera lección completada! Sello desbloqueado.'; desbloquear(0); return; }
+  startLesson();
+});
+function desbloquear(i){ const s=$$('.sello')[i]; s.classList.remove('off'); s.classList.add('recien'); }
+
+// Sellos
+$$('.sello').forEach(s=>s.addEventListener('click',()=>{ $('#msgSello').textContent=s.dataset.txt; }));
+
+// Accesorios y color del avatar
+$$('#colores .sw').forEach(b=>b.addEventListener('click',()=>{
+  $$('#colores .sw').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  $('#av').innerHTML=avatarSvg(b.dataset.c);
+  aplicarAcc();
+}));
+function aplicarAcc(){
+  const g=$('#gafas').getAttribute('aria-pressed')==='true', s=$('#sombrero').getAttribute('aria-pressed')==='true';
+  const av=$('#av svg'); if(!av) return;
+  av.querySelector('#gafasG').style.display=g?'':'none';
+  av.querySelector('#sombreroG').style.display=s?'':'none';
+}
+$('#gafas').addEventListener('click',()=>{ const b=$('#gafas'); b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')); aplicarAcc(); });
+$('#sombrero').addEventListener('click',()=>{ const b=$('#sombrero'); b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')); aplicarAcc(); });
+</script>
+</body>
+</html>
