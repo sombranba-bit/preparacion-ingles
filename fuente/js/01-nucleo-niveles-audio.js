@@ -282,7 +282,7 @@ const AREAS = [
   { k: "ejercicios", label: "Practicar", ico: '<path d="M4 20l4-1 11-11-3-3L5 16z"/>', subs: [["ejercicios", "Ejercicios"], ["audio", "Audio"], ["lectura", "Lectura libre"], ["recursos", "Recursos"]] },
   { k: "logros", label: "Sellos", ico: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>', subs: [["logros", "Logros"], ["ranking", "Liga"]] },
   { k: "tienda", label: "Tienda", ico: '<path d="M5 8h14l-1 12.5H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>', subs: null },
-  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: [["perfil", "Perfil"], ["importar", "Importar y copia"]] }
+  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: [["importar", "Importar y copia"]] }
 ];
 let activeTab = "practica";
 // Área a la que pertenece una pestaña interna
@@ -297,7 +297,7 @@ export function renderTabs() {
   box.querySelectorAll("button").forEach(b => b.onclick = () => {
     const a = AREAS.find(x => x.k === b.dataset.area);
     if (a.k === "ejercicios" && practicarAccion) return practicarAccion();   // Practicar abre el ejercicio, como en la maqueta
-    showTab(a.subs ? a.subs[0][0] : a.k);
+    showTab(a.k === "perfil" ? "perfil" : a.subs ? a.subs[0][0] : a.k);   // Perfil va directo a su panel (sin subpestaña propia)
   });
   const sub = $("subtabs");
   if (sub) {

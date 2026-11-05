@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jk2xx9oFcKhhMWwpqdM3l3X96DGcMGk2i1MpiPEiDZM=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-WdqFxCVk7s3Dd2YCClQ8PwxDVFUyXQJ/45lew+Gy9zA=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-CqpwG9OrRPcbNN2OhXnwftmerh+Y1H7zPKCPs0u9anQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-WdqFxCVk7s3Dd2YCClQ8PwxDVFUyXQJ/45lew+Gy9zA=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
@@ -2309,7 +2309,7 @@ const AREAS = [
   { k: "ejercicios", label: "Practicar", ico: '<path d="M4 20l4-1 11-11-3-3L5 16z"/>', subs: [["ejercicios", "Ejercicios"], ["audio", "Audio"], ["lectura", "Lectura libre"], ["recursos", "Recursos"]] },
   { k: "logros", label: "Sellos", ico: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>', subs: [["logros", "Logros"], ["ranking", "Liga"]] },
   { k: "tienda", label: "Tienda", ico: '<path d="M5 8h14l-1 12.5H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>', subs: null },
-  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: [["perfil", "Perfil"], ["importar", "Importar y copia"]] }
+  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: [["importar", "Importar y copia"]] }
 ];
 let activeTab = "practica";
 // Área a la que pertenece una pestaña interna
@@ -2324,7 +2324,7 @@ function renderTabs() {
   box.querySelectorAll("button").forEach(b => b.onclick = () => {
     const a = AREAS.find(x => x.k === b.dataset.area);
     if (a.k === "ejercicios" && practicarAccion) return practicarAccion();   // Practicar abre el ejercicio, como en la maqueta
-    showTab(a.subs ? a.subs[0][0] : a.k);
+    showTab(a.k === "perfil" ? "perfil" : a.subs ? a.subs[0][0] : a.k);   // Perfil va directo a su panel (sin subpestaña propia)
   });
   const sub = $("subtabs");
   if (sub) {
