@@ -109,3 +109,10 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .btn-mini.tuyo{background:#f3e6d2;color:#7a6656;box-shadow:none}
 
 .d4-fila .d4-n{color:#2a1d14}
+
+/* Inicio: sin el título ni el modo de color en la cabecera; solo los niveles */
+@media (max-width:820px){
+  body:has(#home:not(.hidden)) header .brand,
+  body:has(#home:not(.hidden)) #themeBar{display:none}
+  body:has(#home:not(.hidden)) header{padding:8px 12px}
+}
