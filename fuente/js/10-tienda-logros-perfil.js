@@ -4,7 +4,7 @@ import { $, ico } from "./01-nucleo-niveles-audio.js";
 import { rewards, saveRewards, spendCoins, accOwned, logrosHtml, ACC_PRECIO } from "./04-recompensas-logros-copia-auto.js";
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, P_ACCS, P_ANIMALS, accList, profileOpenList, profileSetMode } from "./03-perfiles.js";
-import { xpTotal, rankInfo } from "./02-progreso-xp-racha-mascota.js";
+import { xpTotal, rankInfo, infoSellosHtml } from "./02-progreso-xp-racha-mascota.js";
 
 /* ---------- Catálogo de marcos y efectos (precios de la maqueta D4) ---------- */
 const T_MARCOS = [
@@ -137,6 +137,7 @@ function tiendaEquipar(k, siempre = false) {
 export function renderLogrosPanel() {
   const box = $("logrosBox");
   if (box) box.innerHTML = logrosHtml();
+  const info = $("logrosInfo"); if (info) info.innerHTML = infoSellosHtml();
   const sub = $("logrosSub"), cnt = box?.querySelector(".ach-count");
   if (sub && cnt) sub.textContent = `Conseguidos ${cnt.textContent}. Toca uno para ver cómo se gana.`;
 }

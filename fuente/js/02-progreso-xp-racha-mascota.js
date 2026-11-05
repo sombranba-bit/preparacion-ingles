@@ -155,6 +155,25 @@ function cardClockTxt() {
   return `${fecha.charAt(0).toUpperCase()}${fecha.slice(1)} · ${hora}`;
 }
 setInterval(() => { const c = $("clockTxt"); if (c) c.textContent = cardClockTxt(); }, 15000);
+export function infoSellosHtml() {
+  const xp = xpTotal(), r = rankInfo(xp), s = streakInfo();
+  const pct = r.nextMin ? Math.min(100, Math.round((xp - r.min) / (r.nextMin - r.min) * 100)) : 100;
+  const rankTxt = r.nextMin ? `Faltan ${r.nextMin - xp} XP para ${r.nextName}` : "Has alcanzado el rango máximo";
+  const thisWeek = xpBetween(6, 0), lastWeek = xpBetween(13, 7);
+  const weekTxt = thisWeek === 0 && lastWeek === 0 ? "Aún no hay actividad esta semana."
+    : lastWeek === 0 ? `Esta semana: ${thisWeek} XP`
+    : thisWeek > lastWeek ? `Esta semana: ${thisWeek} XP, ¡más que la pasada (${lastWeek})!`
+    : `Esta semana: ${thisWeek} XP · la semana pasada: ${lastWeek} XP`;
+  const TIPS = ["Lee la explicación de cada fallo antes de seguir.", "Diez minutos al día rinden más que dos horas el fin de semana.", "Repite en voz alta lo que escuchas: entrena pronunciación y comprensión a la vez.", "Revisa los errores de ayer antes de empezar algo nuevo.", "Escuchar sin mirar el texto es el mejor examen para tu oído."];
+  return `<div class="d4-rango card">
+      <p class="muted small" id="clockTxt">${cardClockTxt()}</p>
+      <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
+      <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
+      <p class="muted small gp-foot">${weekTxt}</p>
+      <p class="muted small">Escudos: ${(s.freezeLeft ? 1 : 0) + rewards().shields} · Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
+      <p class="muted small">${TIPS[Math.floor(Date.now() / 86400000) % TIPS.length]}</p>
+    </div>`;
+}
 export function renderGame() {
   const el = $("gamePanel");
   if (!el) return;
@@ -189,11 +208,9 @@ export function renderGame() {
   el.innerHTML = `
     <div class="d4-cab">
       <div class="d4-quien"><div class="d4-av" id="mSlotHome"></div>
-        <div><p class="d4-kicker"><span id="clockTxt">${cardClockTxt()}</span> · Nivel ${currentLevel} · <button type="button" class="d4-cambio" id="cambiarNivel">Cambiar</button></p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
+        <div><p class="d4-kicker">Preparación oficial · Nivel ${currentLevel} · <button type="button" class="d4-cambio" id="cambiarNivel">Cambiar</button></p><h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2></div></div>
       <div class="d4-pills">
         <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
-        <span class="d4-pill st-shield" data-k="shield">${ico("shield", 16)}<b class="st-num">${(s.freezeLeft ? 1 : 0) + rewards().shields}</b></span>
-        <span class="d4-pill st-coin" data-k="coin">${ico("coin", 16)}<b class="st-num">${rewards().coins}</b></span>
       </div>
     </div>
     <div class="d4-hero card">
@@ -202,16 +219,8 @@ export function renderGame() {
       <p class="d4-sub gh-main">${heroMain}</p>
       <div class="xp-track d4-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${DAILY_GOAL}" aria-valuenow="${today}" aria-label="Objetivo diario de XP"><div class="xp-fill" style="width:${goalPct}%"></div></div>
       <button class="d4-lip" id="empezarBtn" type="button">Empezar</button>
-      <p class="d4-tip gh-sub">${heroTip}</p>
     </div>
     <div class="d4-semana" aria-label="Esta semana">${semana}</div>
-    <div class="d4-rango card">
-      <div class="gp-head"><span>Rango <strong>${r.name}</strong> · ${xp} XP</span><span class="muted">${rankTxt}</span></div>
-      <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progreso hacia el siguiente rango"><div class="xp-fill" style="width:${pct}%"></div></div>
-      <p class="muted small gp-foot">${weekTxt}</p>
-      <p class="muted small gh-shield">Próximo escudo en ${7 - (rewards().goalDays % 7)} días con objetivo cumplido.</p>
-      <p class="muted small">${LEVELS[currentLevel].desc}</p>
-    </div>
     <div id="d4Acciones"></div>
     <div id="d4Camino"></div>
   `;
