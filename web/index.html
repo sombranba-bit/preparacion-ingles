@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-wsGZpGAbJlpkaWVG4bNkvc2/zfarln/xUhlHtZ/I63c=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-fDGH37TX29JV1iuXzBLWgIFkQBYMVHcZvuu6esP356E=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1402,15 +1402,24 @@ body:has(#exercise:not(.hidden)){grid-template-columns:minmax(0,1fr) !important}
 body:has(#exercise:not(.hidden)) main{grid-column:1}
 body:has(#exercise:not(.hidden)) #dprog,body:has(#exercise:not(.hidden)) #dexam{display:none !important}
 body:has(#exercise:not(.hidden)) footer{grid-column:1}
-/* Perfil en escritorio: identidad y personaje a la izquierda; estadísticas, color, idioma y tema a la derecha. Sin huecos. */
+/* Perfil: dos columnas reales (identidad+personaje | color+idiomas+tema); estadísticas arriba a lo ancho. */
 @media (min-width:821px){
-  #p-perfil{grid-template-columns:320px minmax(0,1fr);align-items:start}
-  #perfilCab{grid-column:1;grid-row:1 / span 3;align-self:start;position:sticky;top:20px}
-  #p-perfil .perfil-stats{grid-column:2;grid-row:1}
-  #p-perfil>:nth-child(5){grid-column:2;grid-row:2}
-  #p-perfil>:nth-child(6){grid-column:2;grid-row:3}
-  #p-perfil>:nth-child(7){grid-column:2;grid-row:4}
-  #p-perfil>:nth-child(4){grid-column:1;grid-row:4 / span 2}
+  #p-perfil{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px 24px;align-items:start}
+  #p-perfil>.m-slot{grid-column:1/-1}
+  #p-perfil .perfil-stats{grid-column:1/-1;grid-row:1;margin:0}
+  .perfil-izq{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:18px}
+  .perfil-der{grid-column:2;grid-row:2;display:flex;flex-direction:column;gap:18px}
+  #perfilCab{grid-column:auto;grid-row:auto;position:sticky;top:20px;margin:0}
+  .perfil-izq .bloque,.perfil-der .bloque{margin:0 !important}
+}
+/* Móvil: el mismo orden de siempre (identidad, estadísticas, personaje, color, idiomas, tema) */
+@media (max-width:820px){
+  #p-perfil{display:flex;flex-direction:column}
+  .perfil-izq,.perfil-der{display:contents}
+  #perfilCab{order:0}
+  #perfilStats{order:1}
+  .perfil-izq>.bloque{order:2}
+  .perfil-der>.bloque{order:3}
 }
 </style>
 </head>
@@ -1792,17 +1801,20 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
   <!-- PERFIL: avatar, monedas y perfiles (importar y copia de seguridad están en su sub-pestaña) -->
   <section id="p-perfil" class="panel hidden">
     <div class="m-slot"></div>
-    <div class="perfil" id="perfilCab"></div>
-    <div class="bloque" style="margin-top:20px">
-      <span class="etiq">Personaje</span>
-      <div class="avatares" id="avatares"></div>
+    <div class="perfil-izq">
+      <div class="perfil" id="perfilCab"></div>
+      <div class="bloque" style="margin-top:0">
+        <span class="etiq">Personaje</span>
+        <div class="avatares" id="avatares"></div>
+      </div>
     </div>
-    <div class="bloque" style="margin-top:18px">
+    <div class="perfil-der">
+    <div class="bloque">
       <span class="etiq">Color de fondo</span>
       <div class="bol-fila" id="cols"></div>
     </div>
 
-    <div class="bloque card ajuste" style="margin-top:18px">
+    <div class="bloque card ajuste">
       <span class="etiq">Idioma de las explicaciones</span>
       <div class="seg" id="segExpl" role="group" aria-label="Idioma de las explicaciones">
         <button aria-pressed="true" data-v="es" type="button">Español</button>
@@ -1813,6 +1825,7 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
         <button aria-pressed="true" data-v="en" type="button">Inglés</button>
         <button aria-pressed="false" data-v="es" type="button">Español</button>
       </div>
+    </div>
     </div>
   </section>
 
@@ -9159,7 +9172,7 @@ function renderPerfilPanel() {
   // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
   const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
   let st = $("perfilStats");
-  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("p-perfil").insertBefore(st, $("p-perfil").querySelector(".bloque")); }
+  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("p-perfil").querySelector(".perfil-izq").after(st); }
   st.innerHTML = [["Puntos totales", xpTotal() + " XP"], ["Racha", dias + (dias === 1 ? " día" : " días")], ["Logros", logrosOk + " de " + sel.length], ["Rango", rankInfo(xpTotal()).name]]
     .map(([a, b]) => `<div class="card"><span class="muted">${a}</span><b>${b}</b></div>`).join("");
   const personajes = $("avatares");

@@ -397,17 +397,20 @@
   <!-- PERFIL: avatar, monedas y perfiles (importar y copia de seguridad están en su sub-pestaña) -->
   <section id="p-perfil" class="panel hidden">
     <div class="m-slot"></div>
-    <div class="perfil" id="perfilCab"></div>
-    <div class="bloque" style="margin-top:20px">
-      <span class="etiq">Personaje</span>
-      <div class="avatares" id="avatares"></div>
+    <div class="perfil-izq">
+      <div class="perfil" id="perfilCab"></div>
+      <div class="bloque" style="margin-top:0">
+        <span class="etiq">Personaje</span>
+        <div class="avatares" id="avatares"></div>
+      </div>
     </div>
-    <div class="bloque" style="margin-top:18px">
+    <div class="perfil-der">
+    <div class="bloque">
       <span class="etiq">Color de fondo</span>
       <div class="bol-fila" id="cols"></div>
     </div>
 
-    <div class="bloque card ajuste" style="margin-top:18px">
+    <div class="bloque card ajuste">
       <span class="etiq">Idioma de las explicaciones</span>
       <div class="seg" id="segExpl" role="group" aria-label="Idioma de las explicaciones">
         <button aria-pressed="true" data-v="es" type="button">Español</button>
@@ -418,6 +421,7 @@
         <button aria-pressed="true" data-v="en" type="button">Inglés</button>
         <button aria-pressed="false" data-v="es" type="button">Español</button>
       </div>
+    </div>
     </div>
   </section>
 

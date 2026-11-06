@@ -186,7 +186,7 @@ export function renderPerfilPanel() {
   // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
   const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
   let st = $("perfilStats");
-  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("p-perfil").insertBefore(st, $("p-perfil").querySelector(".bloque")); }
+  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("p-perfil").querySelector(".perfil-izq").after(st); }
   st.innerHTML = [["Puntos totales", xpTotal() + " XP"], ["Racha", dias + (dias === 1 ? " día" : " días")], ["Logros", logrosOk + " de " + sel.length], ["Rango", rankInfo(xpTotal()).name]]
     .map(([a, b]) => `<div class="card"><span class="muted">${a}</span><b>${b}</b></div>`).join("");
   const personajes = $("avatares");
