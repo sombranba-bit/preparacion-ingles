@@ -244,6 +244,24 @@ async function nubeBorrarCuenta() {
 document.addEventListener("copias-ver", () => { nubeCopias(); });
 
 /* ---------- Liga: pantalla ---------- */
+// Tarjeta de liga en el panel de escritorio: una consulta como mucho cada minuto
+let dprogLiga = { t: 0, html: "" };
+document.addEventListener("dprog-liga", async () => {
+  const box = document.getElementById("dprog"); if (!box) return;
+  const pintar = html => { box.querySelector("#dprogLiga")?.remove(); box.insertAdjacentHTML("beforeend", `<div class="dprog-card" id="dprogLiga">${html}</div>`); };
+  if (!nubeE.uid) return pintar('<span class="muted">Liga semanal</span><strong>Inicia sesión</strong><span class="muted">para entrar en la liga global</span>');
+  if (Date.now() - dprogLiga.t < 60000 && dprogLiga.html) return pintar(dprogLiga.html);
+  pintar('<span class="muted">Liga semanal</span><span class="muted">Cargando…</span>');
+  try {
+    const f = await nubeFs(), m = f.m, db = f.db, semana = weekStartKey();
+    const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.orderBy("xp", "desc"), m.limit(200)));
+    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp), i = filas.findIndex(r => r.uid === nubeE.uid);
+    dprogLiga = { t: Date.now(), html: i >= 0
+      ? `<span class="muted">Liga semanal</span><strong>${i + 1}.º de ${filas.length}</strong><span class="muted">${filas[i].xp} XP esta semana</span>`
+      : '<span class="muted">Liga semanal</span><strong>Sin puntos aún</strong><span class="muted">Haz un ejercicio para entrar</span>' };
+  } catch (e) { dprogLiga = { t: 0, html: "" }; return pintar('<span class="muted">Liga semanal</span><span class="muted">No disponible ahora</span>'); }
+  pintar(dprogLiga.html);
+});
 function ligaFechas() {
   const ini = new Date(weekStartKey() + "T12:00"), fin = new Date(ini); fin.setDate(fin.getDate() + 6);
   const prox = new Date(ini); prox.setDate(prox.getDate() + 7); prox.setHours(0, 0, 0, 0);

@@ -203,6 +203,7 @@ export function renderDprog() {
   box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>${s.days} ${s.days === 1 ? "día" : "días"}</strong></div>
     <div class="dprog-card"><span class="muted">Rango</span><strong>${r.name}</strong><span class="muted">${xp} XP · ${falta}</span></div>
     <div class="dprog-card"><span class="muted">Monedas</span><strong>${rewards().coins}</strong></div>`;
+  document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
 
 export function renderHome() {
