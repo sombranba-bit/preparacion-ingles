@@ -124,12 +124,22 @@ export const CAT=[
   {id:'nieve',k:'marco',nombre:'Nieve',desc:'Copos que caen',precio:350,animado:true},
   {id:'burbujas',k:'marco',nombre:'Burbujas',desc:'Burbujas que suben',precio:300,animado:true},
   {id:'cosmico',k:'marco',nombre:'Cósmico',desc:'Dos órbitas de luz',precio:500,animado:true},
+  {id:'bn-arena',k:'banner',nombre:'Arena',desc:'Fondo cálido',precio:0},
+  {id:'bn-menta',k:'banner',nombre:'Menta',desc:'Fondo fresco',precio:0},
+  {id:'bn-cielo',k:'banner',nombre:'Cielo',desc:'Fondo claro',precio:0},
+  {id:'bn-olas',k:'banner',nombre:'Olas',desc:'Olas suaves que se mueven',precio:0,animado:true},
+  {id:'bn-noche',k:'banner',nombre:'Noche estrellada',desc:'Cielo oscuro con estrellas',precio:300},
+  {id:'bn-bosque',k:'banner',nombre:'Bosque',desc:'Hojas verdes',precio:350},
+  {id:'bn-atardecer',k:'banner',nombre:'Atardecer',desc:'Degradado cálido que se mueve',precio:400,animado:true},
+  {id:'bn-confeti',k:'banner',nombre:'Fiesta',desc:'Confeti que cae despacio',precio:450,animado:true},
 ];
 export const FREE_AV=[{id:'ardilla',nombre:'Pepa'},{id:'zorro',nombre:'Lucas'},{id:'erizo',nombre:'Erika'}];
 export const GRAD='linear-gradient(120deg,#ffd9a8,#ff9ecf,#9ee7ff,#c9ffb0,#ffd9a8)';
 export const MARCO_COL={sencillo:'#2a1d14',hojas:'#18a58a',marco:'#ffb22e',arcoiris:'#ffd166',estrellas:'#ffd166',llamas:'#ff7a3d',nieve:'#4aa8ff',burbujas:'#5fd6ff',cosmico:'#a57bff'};
 export const PARTICULAS={hojas:1,estrellas:1,llamas:1,nieve:1,burbujas:1,cosmico:1};
-export const OWNED_INICIAL=['ardilla','zorro','erizo','#ffd9a8','sencillo','hojas'];
+export const OWNED_INICIAL=['ardilla','zorro','erizo','#ffd9a8','sencillo','hojas','bn-arena','bn-menta','bn-cielo','bn-olas'];
+// Franja de banner sobre el personaje (inicio y perfil). Sin banner equipado, no sale nada.
+export const bnHtml = id => id ? `<div class="bn ${id}" aria-hidden="true"></div>` : "";
 
 export function marcoIcono(id){
   const INK='#2a1d14';

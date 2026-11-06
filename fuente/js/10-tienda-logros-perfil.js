@@ -1,10 +1,10 @@
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
 // Las monedas son las de la app (rewards); lo comprado queda en rewards().owned y el equipo en el perfil activo.
 import { $, currentLevel, showTab } from "./01-nucleo-niveles-audio.js";
-import { rewards, saveRewards, spendCoins, sellosDatos } from "./04-recompensas-logros-copia-auto.js";
+import { rewards, saveRewards, spendCoins, sellosDatos, renderHome } from "./04-recompensas-logros-copia-auto.js";
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
-import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx } from "./00-personajes-d4.js";
+import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx, bnHtml } from "./00-personajes-d4.js";
 import { infoSellosHtml, lsGet, lsSet, xpTotal, streakInfo, rankInfo } from "./02-progreso-xp-racha-mascota.js";
 
 const COIN = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg>`;
@@ -29,7 +29,7 @@ export function tiendaPrecio(it) {
 // Personaje y efectos del perfil activo (valores por defecto si el perfil es antiguo)
 export function avatarActual() {
   const p = activeProfile();
-  return { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...((p && p.avatar) || {}) };
+  return { animal: "ardilla", color: "#ffd9a8", marco: null, banner: null, efectos: [], ...((p && p.avatar) || {}) };
 }
 function cambiarAvatar(fn) {
   const list = getProfiles(), act = activeProfile();
@@ -43,6 +43,7 @@ function cambiarAvatar(fn) {
 // Repinta todo lo que muestra el personaje: mascota, perfil, tienda y lista de perfiles
 export function aplicarAvatares() {
   renderTienda(); renderPerfilPanel();
+  if ($("gamePanel")) renderHome();   // el inicio también muestra el banner
   const m = $("mascotBtn"); if (m && m.querySelector(".av")) m.querySelector(".av").outerHTML = avatarSvg(avatarActual(), 56);
 }
 
@@ -56,6 +57,7 @@ export function toast(t) {
 function icono(it) {
   if (it.k === "avatar") return `<span style="display:block;width:48px;height:48px">${AV[it.id]}</span>`;
   if (it.k === "color") return it.animado ? `<span class="sw-grad" style="background:${GRAD}"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
+  if (it.k === "banner") return `<span class="bn-prev ${it.id}" aria-hidden="true"></span>`;
   if (it.k === "marco") return `<span class="pv-marco${it.id === "arcoiris" ? " pv-arco" : ""}" ${["hojas", "estrellas", "llamas", "nieve", "burbujas", "cosmico"].includes(it.id) ? `data-p="${it.id}"` : ""} style="--mc:${({ sencillo: "#2a1d14", hojas: "#18a58a", marco: "#ffb22e", arcoiris: "#ffd166", estrellas: "#ffd166", llamas: "#ff7a3d", nieve: "#4aa8ff", burbujas: "#5fd6ff", cosmico: "#a57bff" })[it.id]}"></span>`;
   return `<span class="pv pv-${it.id}"><svg class="ic" aria-hidden="true"><use href="#i-${it.id === "destellos" ? "destello" : it.id}"/></svg></span>`;
 }
@@ -65,6 +67,7 @@ function estadoBtn(it, p) {
     if (it.k === "avatar") return av.animal === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
     if (it.k === "color") return av.color === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
     if (it.k === "marco") return av.marco === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
+    if (it.k === "banner") return av.banner === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
     if (it.k === "efecto") return `<button class="btn-mini ${(av.efectos || []).includes(it.id) ? "tuyo" : ""}" data-toggle="${it.id}">${(av.efectos || []).includes(it.id) ? "Activo" : "Activar"}</button>`;
   }
   if (MONEDAS() < p.final) return `<button class="btn-mini tuyo" disabled>Te faltan ${p.final - MONEDAS()}</button>`;
@@ -93,6 +96,7 @@ export function renderTienda() {
   $("t-color").innerHTML = CAT.filter(c => c.k === "color").map(fila).join("");
   $("t-efecto").innerHTML = CAT.filter(c => c.k === "efecto").map(fila).join("");
   $("t-marco").innerHTML = CAT.filter(c => c.k === "marco").map(fila).join("");
+  if ($("t-banner")) $("t-banner").innerHTML = CAT.filter(c => c.k === "banner").map(fila).join("");
   $$("#p-tienda [data-comprar]").forEach(b => b.onclick = () => pedir(b.dataset.comprar));
   $$("#p-tienda [data-equip]").forEach(b => b.onclick = () => equipar(b.dataset.equip));
   $$("#p-tienda [data-toggle]").forEach(b => b.onclick = () => alternar(b.dataset.toggle));
@@ -122,6 +126,7 @@ function equipar(id) {
   if (it.k === "avatar") cambiarAvatar(av => ({ ...av, animal: id }));
   else if (it.k === "color") cambiarAvatar(av => ({ ...av, color: id }));
   else if (it.k === "marco") cambiarAvatar(av => ({ ...av, marco: id }));
+  else if (it.k === "banner") cambiarAvatar(av => ({ ...av, banner: id }));
 }
 function alternar(id) {
   cambiarAvatar(av => { const s = new Set(av.efectos || []); if (s.has(id)) s.delete(id); else s.add(id); return { ...av, efectos: [...s] }; });
@@ -194,8 +199,8 @@ export function renderPerfilPanel() {
   iniciarPestanasPerfil();
   const p = activeProfile(), av = avatarActual();
   const nombre = p ? p.name : "Invitado";
-  box.innerHTML = `<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
-    <h1 class="perfil-nombre">${nombre}</h1>
+  box.innerHTML = `${bnHtml(av.banner)}<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
+    <h1 class="perfil-nombre">${escHtml(nombre)}</h1>
     <p class="etiq" id="nivelPerfil"></p>
     <button class="chip" type="button" data-ir-tienda style="min-height:40px">${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();

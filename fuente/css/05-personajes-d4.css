@@ -63,22 +63,18 @@
 .sw-grad{display:block;width:40px;height:40px;border-radius:50%;background-size:300% 300%;animation:fg 6s linear infinite;box-shadow:0 0 0 1.5px var(--line)}
 .sw-c{display:block;width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 1.5px var(--line)}
 .pv{display:inline-block;font-size:28px;line-height:1}
-.pv-aura{animation:aura 2.4s ease-in-out infinite;border-radius:50%}
 .pv-destellos{animation:tw 1.6s ease-in-out infinite}
 .pv-vivo{animation:vivo 2.2s ease-in-out infinite}
 .pv-confeti{animation:tw 1.2s linear infinite}
 .pv-marco{display:block;width:40px;height:40px;border-radius:50%;background:var(--surface2)}
 .pv-oro{box-shadow:0 0 0 4px #ffb22e}
 .fondo-grad{background-size:300% 300%!important;animation:fg 6s linear infinite}
-.fx-aura{animation:aura 2.4s ease-in-out infinite}
 .fx-vivo svg{animation:vivo 2.2s ease-in-out infinite}
 .av{position:relative}
 .av.salta{animation:salta .6s cubic-bezier(.34,1.45,.64,1)}
-@keyframes aura{0%,100%{outline:2px solid rgba(255,178,46,.7);outline-offset:4px}50%{outline:2px solid rgba(255,178,46,0);outline-offset:14px}}
 @keyframes fg{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 @keyframes tw{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(25deg)}}
 @keyframes vivo{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-3px) rotate(-3deg)}75%{transform:translateY(-2px) rotate(3deg)}}
-@keyframes arco{0%{box-shadow:0 0 0 4px #ff6b6b,0 7px 0 var(--text)}33%{box-shadow:0 0 0 4px #ffd166,0 7px 0 var(--text)}66%{box-shadow:0 0 0 4px #5fd6ff,0 7px 0 var(--text)}100%{box-shadow:0 0 0 4px #ff6b6b,0 7px 0 var(--text)}}
 @keyframes salta{0%{transform:translateY(0)}35%{transform:translateY(-14px) scale(1.04)}70%{transform:translateY(0) scale(.98)}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){.fx-aura,.fx-vivo svg,.sp,.pv,.sw-grad,.fondo-grad,.marco-arco,.av.salta,.pv-arco{animation:none!important}}
 .av{isolation:isolate}
@@ -322,7 +318,7 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #landing .lp-titulo{font:600 26px/1.2 Fredoka,Nunito,sans-serif;margin:0 40px 0 0;color:var(--ink);text-wrap:balance}
 #landing .lp-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border:1px solid var(--rule);border-radius:14px;padding:4px}
 #landing .lp-tabs button{border:0;background:transparent;color:var(--muted);font:700 15px Nunito,sans-serif;padding:10px;border-radius:10px;cursor:pointer}
-#landing .lp-tabs button[aria-selected="true"]{background:var(--acc);color:#fff}
+#landing .lp-tabs button[aria-selected="true"]{background:var(--acc);color:var(--on-accent,#fff)}
 #landing .lp-tabs button:focus-visible,#landing .lp-invitado:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 #landing #lpElige .lp-cuenta{padding:0;border:0;background:none;margin:0;gap:14px}
 .cta-campo{display:grid;gap:6px;font-weight:700;font-size:15px}
@@ -343,3 +339,25 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #landing:has(#lpElige:not([hidden])) > .lp-top{order:0}
 #landing #lpElige{order:1}
 .cta-chk[hidden]{display:none}
+
+/* Banners: franja sobre el personaje (inicio y perfil). Solo se animan transform y opacity. */
+.bn{position:relative;overflow:hidden;width:100%;height:76px;border-radius:16px;border:2px solid var(--line);box-sizing:border-box;flex:none;margin:0 0 6px}
+.bn::before,.bn::after,.bn-prev::before,.bn-prev::after{content:"";position:absolute;inset:0;pointer-events:none}
+.bn-prev{display:block;position:relative;overflow:hidden;width:64px;height:40px;border-radius:10px;border:2px solid var(--line);box-sizing:border-box;flex:none}
+#home #gamePanel>.bn{order:1}
+#perfilCab .bn{order:-1;flex:0 0 100%}
+
+.bn-arena{background:linear-gradient(135deg,#ffe2b8,#ffc878)}
+.bn-menta{background:#bff0e0}
+.bn-cielo{background:linear-gradient(#bfe4ff,#eaf7ff)}
+.bn-olas{background:linear-gradient(#bfe4ff,#dff4f0)}
+.bn-olas::before{left:0;top:auto;bottom:-8px;height:60%;width:200%;background:radial-gradient(ellipse 36px 18px at 50% 100%,rgba(24,165,138,.45) 96%,transparent) 0 0/72px 100% repeat-x;animation:bn-desliza 5s linear infinite}
+.bn-noche{background:#1d2a4a}
+.bn-noche::before{background:radial-gradient(circle 1.5px at 18% 28%,#fff,transparent),radial-gradient(circle 1px at 42% 70%,#ffe9a8,transparent),radial-gradient(circle 1.5px at 66% 22%,#fff,transparent),radial-gradient(circle 1px at 84% 60%,#cfe3ff,transparent),radial-gradient(circle 1px at 92% 18%,#fff,transparent)}
+.bn-bosque{background:linear-gradient(135deg,#1f6b4a,#0f4a33)}
+.bn-bosque::before{background:radial-gradient(ellipse 14px 8px at 14% 60%,rgba(127,214,160,.8),transparent),radial-gradient(ellipse 12px 7px at 70% 34%,rgba(168,232,190,.6),transparent),radial-gradient(ellipse 16px 9px at 90% 74%,rgba(127,214,160,.8),transparent)}
+.bn-atardecer::before{left:0;width:200%;background:linear-gradient(90deg,#ff8a5c,#f0587a,#7b5cff,#ff8a5c);animation:bn-desliza 12s linear infinite}
+.bn-confeti{background:#fff3d6}
+.bn-confeti::before{inset:0 0 auto 0;height:calc(100% + 46px);background:radial-gradient(circle 4px at 20px 20px,#f0587a 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 9px 31px,#4aa8ff 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 34px 9px,#18a58a 90%,transparent) 0 0/46px 46px;animation:bn-cae 3s linear infinite}
+@keyframes bn-desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bn-cae{from{transform:translateY(-46px)}to{transform:translateY(0)}}

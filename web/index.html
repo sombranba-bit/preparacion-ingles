@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pO0Rmpq9l7NC4QwtNftzkiHjE3PpaiA3qZqaMVXn7lU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1g1IR8c4+RYTYgUE5jZtSZl8zM0FKs/EMiLwfpJgshk=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -249,10 +249,10 @@ footer{grid-row:3;grid-column:2}
 .tabs button[aria-pressed="true"]{box-shadow:inset 0 0 0 1px var(--accent)}
 .tab-ico{border-color:var(--accent)}
 .audio-bar .btn{border-color:var(--accent);color:var(--accent)}
-.wave i{display:block;width:3px;height:4px;background:var(--accent);opacity:.35}
+.wave i{display:block;width:3px;height:14px;background:var(--accent);opacity:.35;transform-origin:50% 100%}
 .audio-bar.playing .wave i{opacity:1;animation:wvb .6s steps(3) infinite}
 .audio-bar.playing .wave i:nth-child(2){animation-delay:.1s}.audio-bar.playing .wave i:nth-child(3){animation-delay:.2s}.audio-bar.playing .wave i:nth-child(4){animation-delay:.3s}.audio-bar.playing .wave i:nth-child(5){animation-delay:.4s}
-@keyframes wvb{0%{height:4px}33%{height:14px}66%{height:9px}100%{height:4px}}
+@keyframes wvb{0%{transform:scaleY(.29)}33%{transform:scaleY(1)}66%{transform:scaleY(.64)}100%{transform:scaleY(.29)}}
 .section-btn strong{overflow-wrap:anywhere;hyphens:auto}
 :root{--lvl-tint:28%}
 body{background:radial-gradient(circle at 0% 0%,color-mix(in srgb,var(--lvl-color,var(--accent)) 22%,transparent),transparent 45%),var(--bg)}
@@ -863,11 +863,10 @@ main{padding-bottom:110px}
 .fr-dorado::after{border-color:#ffb22e;box-shadow:0 0 12px rgba(255,178,46,.5)}
 .fr-arcoiris::after{border:none;padding:3px;background:conic-gradient(from var(--ang,0deg),#ff6b6b,#ffd166,#c6f432,#5fd6ff,#a57bff,#ff6b6b);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:girar 3.6s linear infinite}
 .fr-llamas::after,.fr-estrellas::after,.fr-nieve::after,.fr-burbujas::after,.fr-cosmico::after,.fr-hojas::after{box-shadow:0 0 12px var(--mc)}
-.fr.fx-aura{box-shadow:0 0 0 3px rgba(255,178,46,.55);animation:aura 2.4s ease-in-out infinite}
+.fr.fx-aura{box-shadow:0 0 0 3px rgba(255,178,46,.55)}
 .fr.fx-vivo svg{animation:vivo 2.2s ease-in-out infinite;transform-origin:50% 92%}
 @property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes girar{to{--ang:360deg}}
-@keyframes aura{0%,100%{box-shadow:0 0 0 3px rgba(255,178,46,.55)}50%{box-shadow:0 0 0 9px rgba(255,178,46,0)}}
 @keyframes vivo{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.fr-arcoiris::after,.fr.fx-aura,.fr.fx-vivo svg{animation:none!important}.fr canvas.fxc{display:none}}
 
@@ -1175,22 +1174,18 @@ header{display:none}
 .sw-grad{display:block;width:40px;height:40px;border-radius:50%;background-size:300% 300%;animation:fg 6s linear infinite;box-shadow:0 0 0 1.5px var(--line)}
 .sw-c{display:block;width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 1.5px var(--line)}
 .pv{display:inline-block;font-size:28px;line-height:1}
-.pv-aura{animation:aura 2.4s ease-in-out infinite;border-radius:50%}
 .pv-destellos{animation:tw 1.6s ease-in-out infinite}
 .pv-vivo{animation:vivo 2.2s ease-in-out infinite}
 .pv-confeti{animation:tw 1.2s linear infinite}
 .pv-marco{display:block;width:40px;height:40px;border-radius:50%;background:var(--surface2)}
 .pv-oro{box-shadow:0 0 0 4px #ffb22e}
 .fondo-grad{background-size:300% 300%!important;animation:fg 6s linear infinite}
-.fx-aura{animation:aura 2.4s ease-in-out infinite}
 .fx-vivo svg{animation:vivo 2.2s ease-in-out infinite}
 .av{position:relative}
 .av.salta{animation:salta .6s cubic-bezier(.34,1.45,.64,1)}
-@keyframes aura{0%,100%{outline:2px solid rgba(255,178,46,.7);outline-offset:4px}50%{outline:2px solid rgba(255,178,46,0);outline-offset:14px}}
 @keyframes fg{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 @keyframes tw{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(25deg)}}
 @keyframes vivo{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-3px) rotate(-3deg)}75%{transform:translateY(-2px) rotate(3deg)}}
-@keyframes arco{0%{box-shadow:0 0 0 4px #ff6b6b,0 7px 0 var(--text)}33%{box-shadow:0 0 0 4px #ffd166,0 7px 0 var(--text)}66%{box-shadow:0 0 0 4px #5fd6ff,0 7px 0 var(--text)}100%{box-shadow:0 0 0 4px #ff6b6b,0 7px 0 var(--text)}}
 @keyframes salta{0%{transform:translateY(0)}35%{transform:translateY(-14px) scale(1.04)}70%{transform:translateY(0) scale(.98)}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){.fx-aura,.fx-vivo svg,.sp,.pv,.sw-grad,.fondo-grad,.marco-arco,.av.salta,.pv-arco{animation:none!important}}
 .av{isolation:isolate}
@@ -1434,7 +1429,7 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #landing .lp-titulo{font:600 26px/1.2 Fredoka,Nunito,sans-serif;margin:0 40px 0 0;color:var(--ink);text-wrap:balance}
 #landing .lp-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border:1px solid var(--rule);border-radius:14px;padding:4px}
 #landing .lp-tabs button{border:0;background:transparent;color:var(--muted);font:700 15px Nunito,sans-serif;padding:10px;border-radius:10px;cursor:pointer}
-#landing .lp-tabs button[aria-selected="true"]{background:var(--acc);color:#fff}
+#landing .lp-tabs button[aria-selected="true"]{background:var(--acc);color:var(--on-accent,#fff)}
 #landing .lp-tabs button:focus-visible,#landing .lp-invitado:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 #landing #lpElige .lp-cuenta{padding:0;border:0;background:none;margin:0;gap:14px}
 .cta-campo{display:grid;gap:6px;font-weight:700;font-size:15px}
@@ -1455,6 +1450,28 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #landing:has(#lpElige:not([hidden])) > .lp-top{order:0}
 #landing #lpElige{order:1}
 .cta-chk[hidden]{display:none}
+
+/* Banners: franja sobre el personaje (inicio y perfil). Solo se animan transform y opacity. */
+.bn{position:relative;overflow:hidden;width:100%;height:76px;border-radius:16px;border:2px solid var(--line);box-sizing:border-box;flex:none;margin:0 0 6px}
+.bn::before,.bn::after,.bn-prev::before,.bn-prev::after{content:"";position:absolute;inset:0;pointer-events:none}
+.bn-prev{display:block;position:relative;overflow:hidden;width:64px;height:40px;border-radius:10px;border:2px solid var(--line);box-sizing:border-box;flex:none}
+#home #gamePanel>.bn{order:1}
+#perfilCab .bn{order:-1;flex:0 0 100%}
+
+.bn-arena{background:linear-gradient(135deg,#ffe2b8,#ffc878)}
+.bn-menta{background:#bff0e0}
+.bn-cielo{background:linear-gradient(#bfe4ff,#eaf7ff)}
+.bn-olas{background:linear-gradient(#bfe4ff,#dff4f0)}
+.bn-olas::before{left:0;top:auto;bottom:-8px;height:60%;width:200%;background:radial-gradient(ellipse 36px 18px at 50% 100%,rgba(24,165,138,.45) 96%,transparent) 0 0/72px 100% repeat-x;animation:bn-desliza 5s linear infinite}
+.bn-noche{background:#1d2a4a}
+.bn-noche::before{background:radial-gradient(circle 1.5px at 18% 28%,#fff,transparent),radial-gradient(circle 1px at 42% 70%,#ffe9a8,transparent),radial-gradient(circle 1.5px at 66% 22%,#fff,transparent),radial-gradient(circle 1px at 84% 60%,#cfe3ff,transparent),radial-gradient(circle 1px at 92% 18%,#fff,transparent)}
+.bn-bosque{background:linear-gradient(135deg,#1f6b4a,#0f4a33)}
+.bn-bosque::before{background:radial-gradient(ellipse 14px 8px at 14% 60%,rgba(127,214,160,.8),transparent),radial-gradient(ellipse 12px 7px at 70% 34%,rgba(168,232,190,.6),transparent),radial-gradient(ellipse 16px 9px at 90% 74%,rgba(127,214,160,.8),transparent)}
+.bn-atardecer::before{left:0;width:200%;background:linear-gradient(90deg,#ff8a5c,#f0587a,#7b5cff,#ff8a5c);animation:bn-desliza 12s linear infinite}
+.bn-confeti{background:#fff3d6}
+.bn-confeti::before{inset:0 0 auto 0;height:calc(100% + 46px);background:radial-gradient(circle 4px at 20px 20px,#f0587a 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 9px 31px,#4aa8ff 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 34px 9px,#18a58a 90%,transparent) 0 0/46px 46px;animation:bn-cae 3s linear infinite}
+@keyframes bn-desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bn-cae{from{transform:translateY(-46px)}to{transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -1831,6 +1848,8 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
     <div class="filas" id="t-efecto"></div>
     <h3 class="seccion">Marcos</h3>
     <div class="filas" id="t-marco"></div>
+    <h3 class="seccion">Banners</h3>
+    <div class="filas" id="t-banner"></div>
     <p class="etiq" style="margin-top:18px;font-size:13px">Los precios cambian cada día. Las ofertas aparecen con su señal y se ven hasta medianoche. Lo que compras es solo aspecto: todas las lecciones son gratis.</p>
   </section>
 
@@ -2224,12 +2243,22 @@ const CAT=[
   {id:'nieve',k:'marco',nombre:'Nieve',desc:'Copos que caen',precio:350,animado:true},
   {id:'burbujas',k:'marco',nombre:'Burbujas',desc:'Burbujas que suben',precio:300,animado:true},
   {id:'cosmico',k:'marco',nombre:'Cósmico',desc:'Dos órbitas de luz',precio:500,animado:true},
+  {id:'bn-arena',k:'banner',nombre:'Arena',desc:'Fondo cálido',precio:0},
+  {id:'bn-menta',k:'banner',nombre:'Menta',desc:'Fondo fresco',precio:0},
+  {id:'bn-cielo',k:'banner',nombre:'Cielo',desc:'Fondo claro',precio:0},
+  {id:'bn-olas',k:'banner',nombre:'Olas',desc:'Olas suaves que se mueven',precio:0,animado:true},
+  {id:'bn-noche',k:'banner',nombre:'Noche estrellada',desc:'Cielo oscuro con estrellas',precio:300},
+  {id:'bn-bosque',k:'banner',nombre:'Bosque',desc:'Hojas verdes',precio:350},
+  {id:'bn-atardecer',k:'banner',nombre:'Atardecer',desc:'Degradado cálido que se mueve',precio:400,animado:true},
+  {id:'bn-confeti',k:'banner',nombre:'Fiesta',desc:'Confeti que cae despacio',precio:450,animado:true},
 ];
 const FREE_AV=[{id:'ardilla',nombre:'Pepa'},{id:'zorro',nombre:'Lucas'},{id:'erizo',nombre:'Erika'}];
 const GRAD='linear-gradient(120deg,#ffd9a8,#ff9ecf,#9ee7ff,#c9ffb0,#ffd9a8)';
 const MARCO_COL={sencillo:'#2a1d14',hojas:'#18a58a',marco:'#ffb22e',arcoiris:'#ffd166',estrellas:'#ffd166',llamas:'#ff7a3d',nieve:'#4aa8ff',burbujas:'#5fd6ff',cosmico:'#a57bff'};
 const PARTICULAS={hojas:1,estrellas:1,llamas:1,nieve:1,burbujas:1,cosmico:1};
-const OWNED_INICIAL=['ardilla','zorro','erizo','#ffd9a8','sencillo','hojas'];
+const OWNED_INICIAL=['ardilla','zorro','erizo','#ffd9a8','sencillo','hojas','bn-arena','bn-menta','bn-cielo','bn-olas'];
+// Franja de banner sobre el personaje (inicio y perfil). Sin banner equipado, no sale nada.
+const bnHtml = id => id ? `<div class="bn ${id}" aria-hidden="true"></div>` : "";
 
 function marcoIcono(id){
   const INK='#2a1d14';
@@ -3013,6 +3042,7 @@ function renderGame() {
         <p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p>
         <span class="d4-pills"><span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span><span class="d4-pill st-coin" data-k="coin"><svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg><b class="st-num">${rewards().coins}</b></span></span>
       </div>
+      ${bnHtml((activeProfile()?.avatar || {}).banner)}
       <div class="d4-quien">
         <div class="d4-av" id="mSlotHome"></div>
         <h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2>
@@ -9101,7 +9131,7 @@ function tiendaPrecio(it) {
 // Personaje y efectos del perfil activo (valores por defecto si el perfil es antiguo)
 function avatarActual() {
   const p = activeProfile();
-  return { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...((p && p.avatar) || {}) };
+  return { animal: "ardilla", color: "#ffd9a8", marco: null, banner: null, efectos: [], ...((p && p.avatar) || {}) };
 }
 function cambiarAvatar(fn) {
   const list = getProfiles(), act = activeProfile();
@@ -9115,6 +9145,7 @@ function cambiarAvatar(fn) {
 // Repinta todo lo que muestra el personaje: mascota, perfil, tienda y lista de perfiles
 function aplicarAvatares() {
   renderTienda(); renderPerfilPanel();
+  if ($("gamePanel")) renderHome();   // el inicio también muestra el banner
   const m = $("mascotBtn"); if (m && m.querySelector(".av")) m.querySelector(".av").outerHTML = avatarSvg(avatarActual(), 56);
 }
 
@@ -9128,6 +9159,7 @@ function toast(t) {
 function icono(it) {
   if (it.k === "avatar") return `<span style="display:block;width:48px;height:48px">${AV[it.id]}</span>`;
   if (it.k === "color") return it.animado ? `<span class="sw-grad" style="background:${GRAD}"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
+  if (it.k === "banner") return `<span class="bn-prev ${it.id}" aria-hidden="true"></span>`;
   if (it.k === "marco") return `<span class="pv-marco${it.id === "arcoiris" ? " pv-arco" : ""}" ${["hojas", "estrellas", "llamas", "nieve", "burbujas", "cosmico"].includes(it.id) ? `data-p="${it.id}"` : ""} style="--mc:${({ sencillo: "#2a1d14", hojas: "#18a58a", marco: "#ffb22e", arcoiris: "#ffd166", estrellas: "#ffd166", llamas: "#ff7a3d", nieve: "#4aa8ff", burbujas: "#5fd6ff", cosmico: "#a57bff" })[it.id]}"></span>`;
   return `<span class="pv pv-${it.id}"><svg class="ic" aria-hidden="true"><use href="#i-${it.id === "destellos" ? "destello" : it.id}"/></svg></span>`;
 }
@@ -9137,6 +9169,7 @@ function estadoBtn(it, p) {
     if (it.k === "avatar") return av.animal === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
     if (it.k === "color") return av.color === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
     if (it.k === "marco") return av.marco === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
+    if (it.k === "banner") return av.banner === it.id ? `<button class="btn-mini tuyo" disabled>Equipado</button>` : `<button class="btn-mini tuyo" data-equip="${it.id}">Equipar</button>`;
     if (it.k === "efecto") return `<button class="btn-mini ${(av.efectos || []).includes(it.id) ? "tuyo" : ""}" data-toggle="${it.id}">${(av.efectos || []).includes(it.id) ? "Activo" : "Activar"}</button>`;
   }
   if (MONEDAS() < p.final) return `<button class="btn-mini tuyo" disabled>Te faltan ${p.final - MONEDAS()}</button>`;
@@ -9165,6 +9198,7 @@ function renderTienda() {
   $("t-color").innerHTML = CAT.filter(c => c.k === "color").map(fila).join("");
   $("t-efecto").innerHTML = CAT.filter(c => c.k === "efecto").map(fila).join("");
   $("t-marco").innerHTML = CAT.filter(c => c.k === "marco").map(fila).join("");
+  if ($("t-banner")) $("t-banner").innerHTML = CAT.filter(c => c.k === "banner").map(fila).join("");
   $$("#p-tienda [data-comprar]").forEach(b => b.onclick = () => pedir(b.dataset.comprar));
   $$("#p-tienda [data-equip]").forEach(b => b.onclick = () => equipar(b.dataset.equip));
   $$("#p-tienda [data-toggle]").forEach(b => b.onclick = () => alternar(b.dataset.toggle));
@@ -9194,6 +9228,7 @@ function equipar(id) {
   if (it.k === "avatar") cambiarAvatar(av => ({ ...av, animal: id }));
   else if (it.k === "color") cambiarAvatar(av => ({ ...av, color: id }));
   else if (it.k === "marco") cambiarAvatar(av => ({ ...av, marco: id }));
+  else if (it.k === "banner") cambiarAvatar(av => ({ ...av, banner: id }));
 }
 function alternar(id) {
   cambiarAvatar(av => { const s = new Set(av.efectos || []); if (s.has(id)) s.delete(id); else s.add(id); return { ...av, efectos: [...s] }; });
@@ -9266,8 +9301,8 @@ function renderPerfilPanel() {
   iniciarPestanasPerfil();
   const p = activeProfile(), av = avatarActual();
   const nombre = p ? p.name : "Invitado";
-  box.innerHTML = `<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
-    <h1 class="perfil-nombre">${nombre}</h1>
+  box.innerHTML = `${bnHtml(av.banner)}<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
+    <h1 class="perfil-nombre">${escHtml(nombre)}</h1>
     <p class="etiq" id="nivelPerfil"></p>
     <button class="chip" type="button" data-ir-tienda style="min-height:40px">${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();

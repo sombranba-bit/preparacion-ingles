@@ -1,5 +1,6 @@
 import { $, LEVELS, appStore, currentLevel, ico } from "./01-nucleo-niveles-audio.js";
 import { activeProfile, avatarSvg, escHtml } from "./03-perfiles.js";
+import { bnHtml } from "./00-personajes-d4.js";
 import {
   ADV,
   addCoins,
@@ -211,6 +212,7 @@ export function renderGame() {
         <p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p>
         <span class="d4-pills"><span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span><span class="d4-pill st-coin" data-k="coin"><svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg><b class="st-num">${rewards().coins}</b></span></span>
       </div>
+      ${bnHtml((activeProfile()?.avatar || {}).banner)}
       <div class="d4-quien">
         <div class="d4-av" id="mSlotHome"></div>
         <h2 class="d4-saludo">Hola${pName ? ", " + pName : ""}</h2>

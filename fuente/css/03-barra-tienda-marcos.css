@@ -41,11 +41,10 @@ main{padding-bottom:110px}
 .fr-dorado::after{border-color:#ffb22e;box-shadow:0 0 12px rgba(255,178,46,.5)}
 .fr-arcoiris::after{border:none;padding:3px;background:conic-gradient(from var(--ang,0deg),#ff6b6b,#ffd166,#c6f432,#5fd6ff,#a57bff,#ff6b6b);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:girar 3.6s linear infinite}
 .fr-llamas::after,.fr-estrellas::after,.fr-nieve::after,.fr-burbujas::after,.fr-cosmico::after,.fr-hojas::after{box-shadow:0 0 12px var(--mc)}
-.fr.fx-aura{box-shadow:0 0 0 3px rgba(255,178,46,.55);animation:aura 2.4s ease-in-out infinite}
+.fr.fx-aura{box-shadow:0 0 0 3px rgba(255,178,46,.55)}
 .fr.fx-vivo svg{animation:vivo 2.2s ease-in-out infinite;transform-origin:50% 92%}
 @property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes girar{to{--ang:360deg}}
-@keyframes aura{0%,100%{box-shadow:0 0 0 3px rgba(255,178,46,.55)}50%{box-shadow:0 0 0 9px rgba(255,178,46,0)}}
 @keyframes vivo{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.fr-arcoiris::after,.fr.fx-aura,.fr.fx-vivo svg{animation:none!important}.fr canvas.fxc{display:none}}
 
