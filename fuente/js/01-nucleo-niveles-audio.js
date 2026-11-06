@@ -348,8 +348,14 @@ export function playUserAudio() {
   setPlayLabel(PAUSA_LBL);
 }
 
+/* La voz natural (13-voz-natural.js) se engancha aquí sin importarse para no crear dependencias circulares */
+export const vozGancho = { hablar: null, parar: null, alternar: null };
 export function speak(text, item = {}) {
   if (userAudio[itemKey()]) { playUserAudio(); return; }
+  if (vozGancho.hablar && vozGancho.hablar(text, item, () => speakSistema(text, item), (item.rate || 0.95) * SPEEDS[speedIdx])) return;   // voz natural si está descargada
+  speakSistema(text, item);
+}
+function speakSistema(text, item = {}) {
   if (!("speechSynthesis" in window)) { $("audioStatus").textContent = "Tu navegador no admite audio."; return; }
   speechSynthesis.cancel(); ttsPaused = false;
   const u = new SpeechSynthesisUtterance(text);
@@ -366,6 +372,7 @@ export function speak(text, item = {}) {
   speechSynthesis.speak(u);
 }
 export function stopAudio() {
+  if (vozGancho.parar) vozGancho.parar();
   $("audioBar").classList.remove("playing");
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   ttsPaused = false;
@@ -374,6 +381,7 @@ export function stopAudio() {
 }
 /* Escuchar / pausar / reanudar el audio de la pregunta actual */
 export function togglePlay(item) {
+  if (vozGancho.alternar && vozGancho.alternar()) return;
   if (userAudio[itemKey()]) {
     if (userEl && !userEl.ended && userEl.currentTime > 0) {
       if (userEl.paused) { userEl.play(); setPlayLabel(PAUSA_LBL); $("audioBar").classList.add("playing"); }

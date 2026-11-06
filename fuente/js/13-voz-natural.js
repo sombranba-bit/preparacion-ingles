@@ -1,4 +1,4 @@
-import { $, RAW_LS } from "./01-nucleo-niveles-audio.js";
+import { $, RAW_LS, setPlayLabel, PAUSA_LBL, vozGancho } from "./01-nucleo-niveles-audio.js";
 
 /* ============================================================
    VOZ NATURAL: descarga del modelo (~86 MB) con pantalla propia
@@ -6,9 +6,12 @@ import { $, RAW_LS } from "./01-nucleo-niveles-audio.js";
    - Usuario con perfil que aún no decidió: hoja inferior al iniciar sesión.
    Se puede pausar, reanudar (con Range) y saltar; saltar avisa de que la voz será menos natural.
    ============================================================ */
-const VOZ_URL = "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model_q8f16.onnx";
-const VOZ_TAM = 86 * 1048576;   // estimación; se corrige con Content-Length
-const VOZ_CACHE = "voz-natural-v1";
+const VOZ_ID = "onnx-community/Kokoro-82M-v1.0-ONNX";
+const VOZ_URL = "https://huggingface.co/" + VOZ_ID + "/resolve/main/onnx/model_quantized.onnx";
+const VOZ_TAM = 92361116;        // tamaño del modelo q8; se corrige con Content-Length
+const VOZ_CACHE = "transformers-cache";   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
+const VOZ_LIB = "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js";
+let vozTts = null, vozCargando = null, vozEl = null, vozTurno = 0;
 let vozCtl = null;       // { partes, recibidos, total, velocidad, activa, ac }
 let vozModo = "", vozAlCerrar = null;
 
@@ -167,6 +170,7 @@ async function vozTerminar() {
     vozGuardar({ estado: "descargada", total: c.total });
     vozPintar();
     vozPintarAjustes();
+    vozCargar();
   } catch (e) { vozFallo(); }
 }
 
@@ -221,3 +225,43 @@ function vozPintarAjustes() {
 }
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", vozPintarAjustes);
 else vozPintarAjustes();
+
+/* Voz natural para leer: el motor se carga la primera vez y, si algo falla, se usa la voz del dispositivo */
+function vozCargar() {
+  if (vozCargando) return vozCargando;
+  vozCargando = (async () => {
+    const m = await import(VOZ_LIB);
+    vozTts = await m.KokoroTTS.from_pretrained(VOZ_ID, { dtype: "q8", device: "wasm" });
+  })().catch(() => { vozCargando = null; });
+  return vozCargando;
+}
+function vozHablar(text, item, respaldo, velocidad) {
+  if (vozLeer().estado !== "descargada") return false;
+  if (!vozTts) { vozCargar(); return false; }   // mientras carga, suena la voz del dispositivo
+  vozParar();
+  const turno = ++vozTurno;
+  const voz = item.accent === "en-US" ? "af_heart" : "bf_emma";
+  vozTts.generate(text, { voice: voz, speed: velocidad }).then(async a => {
+    if (turno !== vozTurno) return;   // se pidió otra cosa mientras tanto
+    vozEl = new Audio(URL.createObjectURL(await a.toBlob()));
+    vozEl.onended = () => { vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+    $("audioStatus").textContent = "Reproduciendo con voz natural…";
+    $("audioBar").classList.add("playing");
+    setPlayLabel(PAUSA_LBL);
+    await vozEl.play();
+  }).catch(() => { vozEl = null; if (turno === vozTurno) respaldo(); });
+  return true;
+}
+function vozParar() {
+  vozTurno++;
+  if (vozEl) { vozEl.pause(); vozEl = null; }
+}
+/* Pausar o reanudar la voz natural; devuelve false si no está sonando */
+function vozAlternar() {
+  if (!vozEl) return false;
+  if (vozEl.paused) { vozEl.play(); setPlayLabel(PAUSA_LBL); $("audioBar").classList.add("playing"); }
+  else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
+  return true;
+}
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar });
+if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);
