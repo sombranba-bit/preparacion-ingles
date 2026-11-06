@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-u2yoZcAhRLtbhohO9ObyQmmNQRoURbOk+CytED3S1cU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-TzNxZw44bEOsKSMipKhz4p618/giCLEZx3A7lEvOJcQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -420,7 +420,7 @@ section:not(.hidden),#exercise:not(.hidden),#result:not(.hidden){animation:fadeU
 .prof-row .btn{width:100%;margin:0;min-height:44px}
 .prof-row-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .prof-row-3 .btn{font-size:var(--fs-sm);padding:10px 8px}
-#pgManage.hidden{display:none}
+
 @media (max-width:520px){.prof-row,.prof-row-3{grid-template-columns:1fr}}
 .prof-confirm{display:flex;flex-direction:column;gap:14px;text-align:center;font-size:var(--fs-base);line-height:1.45}
 .prof-confirm.hidden{display:none}
@@ -2967,7 +2967,9 @@ function profileOpenList() {
   $("profActions").classList.remove("hidden");
   $("pEdit").classList.toggle("hidden", list.length === 0);
   $("pDel").classList.toggle("hidden", list.length === 0);
-  $("pgManage").classList.toggle("hidden", list.length === 0);
+  const sesion = !!(window.ctaEstado && window.ctaEstado.user);   // con cuenta no hay invitado, y el borrado de cuenta solo existe con cuenta
+  $("pFilaInvitado").style.display = sesion ? "none" : "";
+  $("pFilaCuenta").style.display = sesion ? "" : "none";
   $("pNew").classList.remove("hidden");
   $("profForm").classList.add("hidden");
   $("pClose").classList.toggle("hidden", !act);
@@ -9568,33 +9570,29 @@ async function nubeRender() {
         <div class="prof-grp-lbl">Perfiles</div>
         <div class="prof-row">
           <button class="btn" id="pNew" type="button">Nuevo perfil</button>
-          <button class="btn secondary" id="pGuest" type="button">Entrar como invitado</button>
-        </div>
-      </div>
-      <div class="prof-group" id="pgManage">
-        <div class="prof-grp-lbl">Gestionar</div>
-        <div class="prof-row">
           <button class="btn secondary" id="pEdit" type="button">Editar perfil</button>
-          <button class="btn secondary" id="pDel" type="button">Eliminar perfil</button>
         </div>
+        <div class="prof-row" id="pFilaInvitado"><button class="btn secondary" id="pGuest" type="button" style="grid-column:1 / -1">Entrar como invitado</button></div>
       </div>
       <div class="prof-group">
-        <div class="prof-grp-lbl">Datos</div>
-        <div class="prof-row prof-row-3">
+        <div class="prof-grp-lbl">Progreso</div>
+        <div class="prof-row">
           <button class="btn secondary" id="pExport" type="button">Exportar progreso</button>
-          <button class="btn secondary" id="pAutoDl" type="button">Copia automática</button>
           <button class="btn secondary" id="pImport" type="button">Importar progreso</button>
         </div>
         <div class="prof-row">
-          <button class="btn secondary" id="pBorrarTodo" type="button" style="color:#b3261e">Borrar todos los datos</button>
-        </div>
-        <div class="prof-row">
-          <button class="btn secondary" id="pBorrarCuenta" type="button" style="color:#b3261e">Borrar mi cuenta</button>
-        </div>
-        <div class="prof-row">
+          <button class="btn secondary" id="pAutoDl" type="button">Copia automática</button>
           <button class="btn secondary" id="pCopias" type="button">Copias en la nube</button>
         </div>
         <div id="nubeCopias" hidden></div>
+      </div>
+      <div class="prof-group">
+        <div class="prof-grp-lbl">Zona de peligro</div>
+        <div class="prof-row">
+          <button class="btn secondary" id="pDel" type="button" style="color:#b3261e">Eliminar perfil</button>
+          <button class="btn secondary" id="pBorrarTodo" type="button" style="color:#b3261e">Borrar todos los datos</button>
+        </div>
+        <div class="prof-row" id="pFilaCuenta"><button class="btn secondary" id="pBorrarCuenta" type="button" style="color:#b3261e;grid-column:1 / -1">Borrar mi cuenta</button></div>
       </div>
       <input type="file" id="pImportFile" accept="application/json" hidden>
     </div>

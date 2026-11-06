@@ -395,7 +395,7 @@ section:not(.hidden),#exercise:not(.hidden),#result:not(.hidden){animation:fadeU
 .prof-row .btn{width:100%;margin:0;min-height:44px}
 .prof-row-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .prof-row-3 .btn{font-size:var(--fs-sm);padding:10px 8px}
-#pgManage.hidden{display:none}
+
 @media (max-width:520px){.prof-row,.prof-row-3{grid-template-columns:1fr}}
 .prof-confirm{display:flex;flex-direction:column;gap:14px;text-align:center;font-size:var(--fs-base);line-height:1.45}
 .prof-confirm.hidden{display:none}

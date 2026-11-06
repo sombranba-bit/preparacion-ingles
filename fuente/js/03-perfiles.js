@@ -61,7 +61,9 @@ export function profileOpenList() {
   $("profActions").classList.remove("hidden");
   $("pEdit").classList.toggle("hidden", list.length === 0);
   $("pDel").classList.toggle("hidden", list.length === 0);
-  $("pgManage").classList.toggle("hidden", list.length === 0);
+  const sesion = !!(window.ctaEstado && window.ctaEstado.user);   // con cuenta no hay invitado, y el borrado de cuenta solo existe con cuenta
+  $("pFilaInvitado").style.display = sesion ? "none" : "";
+  $("pFilaCuenta").style.display = sesion ? "" : "none";
   $("pNew").classList.remove("hidden");
   $("profForm").classList.add("hidden");
   $("pClose").classList.toggle("hidden", !act);
