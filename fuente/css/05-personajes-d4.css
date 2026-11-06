@@ -277,3 +277,10 @@
   #levels::before{display:none}   /* el rótulo ocupaba una celda de la rejilla y dejaba C2 sola */
   .niveles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
 }
+
+/* Monedas: la cifra destaca en dorado en la cabecera del inicio */
+.d4-pills .st-coin{background:#fff1c2;border-color:#f5c542;box-shadow:0 3px 0 #d98a0c;padding:6px 14px 6px 10px}
+.d4-pills .st-coin .st-num{font-size:20px}
+.d4-pills .st-coin svg{width:22px;height:22px}
+/* En escritorio ancho la racha con sus días ya está en el panel de la derecha: aquí solo quedan las monedas */
+@media (min-width:1100px){.d4-pills .st-streak{display:none}}
