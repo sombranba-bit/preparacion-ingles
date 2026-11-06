@@ -280,13 +280,13 @@ const PANELS = { practica: "home", ejercicios: "p-ejercicios", audio: "p-audio",
 const AREAS = [
   { k: "practica", label: "Inicio", subs: null, ico: '<path d="M3 11l9-7 9 7v9H3z"/><path d="M10 20v-5h4v5"/>' },
   { k: "ejercicios", label: "Practicar", ico: '<path d="M4 20l4-1 11-11-3-3L5 16z"/>', subs: [["ejercicios", "Ejercicios"], ["audio", "Audio"], ["lectura", "Lectura libre"], ["recursos", "Recursos"]] },
-  { k: "logros", label: "Trofeos", ico: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>', subs: [["logros", "Logros"], ["ranking", "Liga"]] },
+  { k: "logros", label: "Progreso", ico: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>', subs: [["logros", "Logros"], ["ranking", "Liga"]] },
   { k: "tienda", label: "Tienda", ico: '<path d="M5 8h14l-1 12.5H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>', subs: null },
-  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: [["importar", "Importar y copia"]] }
+  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: null }
 ];
 let activeTab = "practica";
 // Área a la que pertenece una pestaña interna
-const areaDe = k => AREAS.find(a => a.k === k || (a.subs && a.subs.some(s => s[0] === k))) || AREAS[0];
+const areaDe = k => AREAS.find(a => a.k === (k === "importar" ? "perfil" : k) || (a.subs && a.subs.some(s => s[0] === k))) || AREAS[0];
 let practicarAccion = null;
 export function setPracticarAccion(f) { practicarAccion = f; }
 export function renderTabs() {

@@ -1,6 +1,6 @@
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
 // Las monedas son las de la app (rewards); lo comprado queda en rewards().owned y el equipo en el perfil activo.
-import { $, currentLevel } from "./01-nucleo-niveles-audio.js";
+import { $, currentLevel, showTab } from "./01-nucleo-niveles-audio.js";
 import { rewards, saveRewards, spendCoins, sellosDatos } from "./04-recompensas-logros-copia-auto.js";
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
@@ -195,6 +195,7 @@ export function renderPerfilPanel() {
       cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
     });
   }
+  const importar = document.createElement("button"); importar.className = "chip"; importar.type = "button"; importar.style.minHeight = "40px"; importar.textContent = "Importar y copia"; importar.onclick = () => showTab("importar"); box.appendChild(importar);
   const sesion = window.ctaEstado && window.ctaEstado.user;
   if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)

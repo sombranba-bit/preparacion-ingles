@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-su1RsjP/texDrWqOZxuGKdTvgKjJQMzLeX0Btx4o72U=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-EGVtEtaUn5i4ioDwXWe1bz5QCtFLJO07IF2qjP+p/Tw=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -2446,13 +2446,13 @@ const PANELS = { practica: "home", ejercicios: "p-ejercicios", audio: "p-audio",
 const AREAS = [
   { k: "practica", label: "Inicio", subs: null, ico: '<path d="M3 11l9-7 9 7v9H3z"/><path d="M10 20v-5h4v5"/>' },
   { k: "ejercicios", label: "Practicar", ico: '<path d="M4 20l4-1 11-11-3-3L5 16z"/>', subs: [["ejercicios", "Ejercicios"], ["audio", "Audio"], ["lectura", "Lectura libre"], ["recursos", "Recursos"]] },
-  { k: "logros", label: "Trofeos", ico: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>', subs: [["logros", "Logros"], ["ranking", "Liga"]] },
+  { k: "logros", label: "Progreso", ico: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>', subs: [["logros", "Logros"], ["ranking", "Liga"]] },
   { k: "tienda", label: "Tienda", ico: '<path d="M5 8h14l-1 12.5H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>', subs: null },
-  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: [["importar", "Importar y copia"]] }
+  { k: "perfil", label: "Perfil", ico: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', subs: null }
 ];
 let activeTab = "practica";
 // Área a la que pertenece una pestaña interna
-const areaDe = k => AREAS.find(a => a.k === k || (a.subs && a.subs.some(s => s[0] === k))) || AREAS[0];
+const areaDe = k => AREAS.find(a => a.k === (k === "importar" ? "perfil" : k) || (a.subs && a.subs.some(s => s[0] === k))) || AREAS[0];
 let practicarAccion = null;
 function setPracticarAccion(f) { practicarAccion = f; }
 function renderTabs() {
@@ -9057,6 +9057,7 @@ function renderPerfilPanel() {
       cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
     });
   }
+  const importar = document.createElement("button"); importar.className = "chip"; importar.type = "button"; importar.style.minHeight = "40px"; importar.textContent = "Importar y copia"; importar.onclick = () => showTab("importar"); box.appendChild(importar);
   const sesion = window.ctaEstado && window.ctaEstado.user;
   if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
