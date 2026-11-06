@@ -228,6 +228,30 @@
   #dprog .dprog-card{margin-bottom:14px;padding:16px;border-radius:18px;border:2px solid var(--line);background:var(--bg);display:grid;gap:4px}
   #dprog .dprog-card strong{font-family:Fredoka,Nunito,sans-serif;font-size:26px}
 }
+/* Perfil: estadísticas en tarjetas (2 columnas en móvil) */
+.perfil-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
+.perfil-stats .card{padding:12px;display:grid;gap:2px}
+.perfil-stats b{font-family:Fredoka,Nunito,sans-serif;font-size:19px}
+
+/* Perfil en escritorio: identidad a la izquierda, estadísticas y ajustes a la derecha */
+@media (min-width:821px){
+  #p-perfil{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;align-items:start}
+  #p-perfil>.m-slot{grid-column:1/-1}
+  #perfilCab{grid-column:1;grid-row:1 / span 12;position:sticky;top:20px;margin:0;padding:24px;border:2px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}
+  #perfilCab>:not(.chip){grid-column:1/-1}
+  #perfilCab>.chip{min-height:44px;justify-content:center;margin:0}
+  #perfilCab>[data-ir-tienda]{grid-column:1/-1}
+  #p-perfil>.bloque{margin-top:0 !important;grid-column:2}
+  #p-perfil .avatares{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  #p-perfil .perfil-stats{grid-column:2;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0}
+  #p-perfil .perfil-stats .card{padding:16px;gap:4px}
+  #p-perfil .perfil-stats b{font-size:22px}
+}
+@media (min-width:1100px){
+  body[data-tab="perfil"]{grid-template-columns:232px minmax(0,1fr)}
+  body[data-tab="perfil"] #dprog{display:none !important}
+}
+
 /* Escritorio: una sola columna centrada; la barra inferior va alineada a ella */
 @media (min-width:821px){
   main{width:100%;max-width:1200px;margin:0 auto;padding:28px 24px 110px}

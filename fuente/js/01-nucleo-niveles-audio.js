@@ -293,6 +293,7 @@ export function renderTabs() {
   const box = $("bnav");
   if (!box) return;
   const area = areaDe(activeTab);
+  document.body.dataset.tab = area.k;   // el CSS de escritorio lo usa para ocultar el panel de progreso en Perfil
   box.innerHTML = AREAS.map(a => `<button type="button" data-area="${a.k}" class="${a === area ? "on" : ""}" aria-current="${a === area ? "page" : "false"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a.ico}</svg>${a.label}</button>`).join("");
   box.querySelectorAll("button").forEach(b => b.onclick = () => {
     const a = AREAS.find(x => x.k === b.dataset.area);

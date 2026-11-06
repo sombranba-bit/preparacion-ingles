@@ -5,7 +5,7 @@ import { rewards, saveRewards, spendCoins, sellosDatos } from "./04-recompensas-
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
 import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx } from "./00-personajes-d4.js";
-import { infoSellosHtml, lsGet, lsSet } from "./02-progreso-xp-racha-mascota.js";
+import { infoSellosHtml, lsGet, lsSet, xpTotal, streakInfo, rankInfo } from "./02-progreso-xp-racha-mascota.js";
 import { salirCuenta } from "./11-cuentas.js";
 
 const COIN = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg>`;
@@ -183,6 +183,12 @@ export function renderPerfilPanel() {
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();
   box.querySelector(".perfil-av-wrap .av").onclick = () => profileOpenList();
   $("nivelPerfil").textContent = "Examen " + currentLevel + " · objetivo oficial";
+  // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
+  const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
+  let st = $("perfilStats");
+  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("p-perfil").insertBefore(st, $("p-perfil").querySelector(".bloque")); }
+  st.innerHTML = [["Puntos totales", xpTotal() + " XP"], ["Racha", dias + (dias === 1 ? " día" : " días")], ["Logros", logrosOk + " de " + sel.length], ["Rango", rankInfo(xpTotal()).name]]
+    .map(([a, b]) => `<div class="card"><span class="muted">${a}</span><b>${b}</b></div>`).join("");
   const personajes = $("avatares");
   if (personajes) {
     const todos = FREE_AV.map(a => ({ id: a.id, nombre: a.nombre, precio: 0 })).concat(CAT.filter(c => c.k === "avatar"));
