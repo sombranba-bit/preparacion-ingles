@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-VSzP+QHrA6OG8GoA5zWxoAT7pEwEYBkgwLue6gsch5g=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Tw70Y51OBVyiqZPPk7+Rkv/lU0/rcL6VC530iblSpv8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1516,6 +1516,7 @@ header{display:none}
   <!-- INICIO -->
   <section id="home" class="panel">
     <div class="card game" id="gamePanel"></div>
+    <div id="homeNivel"><h3 class="d4-seccion">Nivel del examen</h3><div class="niveles" id="homeLevels" role="group" aria-label="Clasificación del examen"></div></div>
     <div id="homeSecciones"></div>
   </section>
 
@@ -2661,7 +2662,7 @@ function renderLevels() {
   document.documentElement.style.setProperty("--grad", `linear-gradient(135deg, ${lvc}, color-mix(in srgb, ${lvc} 55%, #ffffff))`);
   document.documentElement.style.setProperty("--ink", ["A1", "A2"].includes(currentLevel) ? "#0b0a1f" : "#ffffff");
   document.documentElement.style.setProperty("--pill-ink", inkFor(lc(LEVELS[currentLevel])));
-  const box = $("levels");
+  for (const box of [$("levels"), $("homeLevels")].filter(Boolean)) {   // Perfil y el inicio
   box.innerHTML = "";
   Object.keys(LEVELS).forEach(lv => {
     const b = document.createElement("button");
@@ -2681,6 +2682,7 @@ function renderLevels() {
     };
     box.appendChild(b);
   });
+  }
   const nota = $("nivelNota"); if (nota) nota.textContent = NOTA_NIVEL[currentLevel] || "";
   const np = $("nivelPerfil"); if (np) np.textContent = "Examen " + currentLevel + " · objetivo oficial";
 }

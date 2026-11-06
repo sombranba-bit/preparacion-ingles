@@ -418,7 +418,7 @@ export function renderLevels() {
   document.documentElement.style.setProperty("--grad", `linear-gradient(135deg, ${lvc}, color-mix(in srgb, ${lvc} 55%, #ffffff))`);
   document.documentElement.style.setProperty("--ink", ["A1", "A2"].includes(currentLevel) ? "#0b0a1f" : "#ffffff");
   document.documentElement.style.setProperty("--pill-ink", inkFor(lc(LEVELS[currentLevel])));
-  const box = $("levels");
+  for (const box of [$("levels"), $("homeLevels")].filter(Boolean)) {   // Perfil y el inicio
   box.innerHTML = "";
   Object.keys(LEVELS).forEach(lv => {
     const b = document.createElement("button");
@@ -438,6 +438,7 @@ export function renderLevels() {
     };
     box.appendChild(b);
   });
+  }
   const nota = $("nivelNota"); if (nota) nota.textContent = NOTA_NIVEL[currentLevel] || "";
   const np = $("nivelPerfil"); if (np) np.textContent = "Examen " + currentLevel + " · objetivo oficial";
 }
