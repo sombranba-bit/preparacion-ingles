@@ -7,7 +7,7 @@ const CTA_VERSION = "11.0.2";
 const CTA_BASE = "https://cdn.jsdelivr.net/npm/firebase@" + CTA_VERSION;
 const CTA_CONFIG = {
   apiKey: "AIzaSyDQuzx_qnyN8hEhY0BEzUQZxJ10h35QESY",
-  authDomain: "preparacion-examenes-de-ingles.firebaseapp.com",
+  authDomain: "preparacion-examenes-de-ingles.web.app",
   projectId: "preparacion-examenes-de-ingles",
   storageBucket: "preparacion-examenes-de-ingles.firebasestorage.app",
   messagingSenderId: "27081435513",
