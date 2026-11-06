@@ -218,5 +218,6 @@
   .bnav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,960px);border-radius:20px 20px 0 0}
   .sellos{grid-template-columns:repeat(3,minmax(0,1fr))}
   .sello{aspect-ratio:auto;min-height:210px}
+  #levels::before{display:none}   /* el rótulo ocupaba una celda de la rejilla y dejaba C2 sola */
   .niveles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
 }
