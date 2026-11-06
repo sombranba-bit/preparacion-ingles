@@ -214,8 +214,8 @@
 @media (min-width:821px){
   body{grid-template-columns:minmax(0,1fr)}
   main,footer{grid-column:1}
-  main{width:100%;max-width:960px;margin:0 auto;padding:28px 24px 110px}
-  .bnav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,960px);border-radius:20px 20px 0 0}
+  main{width:100%;max-width:1200px;margin:0 auto;padding:28px 24px 110px}
+  .bnav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,1200px);border-radius:20px 20px 0 0}
   .sellos{grid-template-columns:repeat(3,minmax(0,1fr))}
   .sello{aspect-ratio:auto;min-height:210px}
   #levels::before{display:none}   /* el rótulo ocupaba una celda de la rejilla y dejaba C2 sola */
