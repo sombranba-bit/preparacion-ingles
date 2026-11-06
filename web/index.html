@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pO0Rmpq9l7NC4QwtNftzkiHjE3PpaiA3qZqaMVXn7lU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-SUt1vw6X13gpbYqhK7A88LD5gdo/v5BR0JL03AvoQPE=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pO0Rmpq9l7NC4QwtNftzkiHjE3PpaiA3qZqaMVXn7lU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -9949,7 +9949,8 @@ try { cuentaInicializar(); } catch(e){}
   const L = document.getElementById("landing"), tb = document.getElementById("lpTheme");
   // Al entrar a la app se recuerda en la pestaña: las recargas internas (crear perfil, cambiar) no vuelven a la portada
   const cerrar = () => { L.classList.add("lp-off"); document.body.classList.remove("lp-open"); try { sessionStorage.setItem("entro", "1"); } catch (e) {} };
-  const abrir = () => { L.classList.remove("lp-off"); document.body.classList.add("lp-open"); window.scrollTo(0, 0); };
+  // Ir a la portada muestra la página de inicio, no la tarjeta de acceso (que se abre solo con Empezar o al pedir cuenta)
+  const abrir = () => { const el = document.getElementById("lpElige"); if (el) el.hidden = true; L.classList.remove("lp-off"); document.body.classList.add("lp-open"); window.scrollTo(0, 0); };
   let entro = false;
   try { entro = sessionStorage.getItem("entro") === "1"; } catch (e) {}
   if (entro) cerrar(); else document.body.classList.add("lp-open");

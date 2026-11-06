@@ -6,7 +6,8 @@ import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js
   const L = document.getElementById("landing"), tb = document.getElementById("lpTheme");
   // Al entrar a la app se recuerda en la pestaña: las recargas internas (crear perfil, cambiar) no vuelven a la portada
   const cerrar = () => { L.classList.add("lp-off"); document.body.classList.remove("lp-open"); try { sessionStorage.setItem("entro", "1"); } catch (e) {} };
-  const abrir = () => { L.classList.remove("lp-off"); document.body.classList.add("lp-open"); window.scrollTo(0, 0); };
+  // Ir a la portada muestra la página de inicio, no la tarjeta de acceso (que se abre solo con Empezar o al pedir cuenta)
+  const abrir = () => { const el = document.getElementById("lpElige"); if (el) el.hidden = true; L.classList.remove("lp-off"); document.body.classList.add("lp-open"); window.scrollTo(0, 0); };
   let entro = false;
   try { entro = sessionStorage.getItem("entro") === "1"; } catch (e) {}
   if (entro) cerrar(); else document.body.classList.add("lp-open");
