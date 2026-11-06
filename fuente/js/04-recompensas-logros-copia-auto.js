@@ -219,6 +219,7 @@ export function renderDprog() {
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
 document.addEventListener("cuenta-cambio", () => renderDprog());
+document.addEventListener("DOMContentLoaded", () => renderDprog());   // que el menú lateral tenga sus botones aunque el inicio no se haya pintado aún
 
 export function renderHome() {
   const rb = $("repasoBox");
