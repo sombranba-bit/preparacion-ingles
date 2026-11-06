@@ -215,3 +215,6 @@ header{display:none}
 .lg-fila-in input{font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--card,var(--surface));color:inherit;width:100%;box-sizing:border-box}
 .liga-sin-cuenta{margin-top:16px}
 #nubeBox .lg-hero,#nubeBox .lg-aviso{margin-bottom:0}
+
+/* Solo para lectores de pantalla: título de la app que no se ve */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

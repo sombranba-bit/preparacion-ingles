@@ -39,7 +39,7 @@
 .tienda-item{position:relative;display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px;border-radius:18px;background:var(--surface);border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
 .tienda-item .ico-t{width:56px;height:56px;border-radius:16px;background:var(--surface2);display:grid;place-items:center;overflow:hidden}
 .tienda-item .ico-t svg{width:46px;height:46px}
-.tienda-item .cartel{position:absolute;top:-9px;right:-6px;background:#e5484d;color:#fff;font-family:Fredoka;font-weight:700;font-size:11px;padding:3px 8px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #b52d52}
+.tienda-item .cartel{position:absolute;top:-9px;right:-6px;background:#c42b30;color:#fff;font-family:Fredoka;font-weight:700;font-size:11px;padding:3px 8px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #b52d52}
 .btn-mini{min-height:40px;padding:0 14px;border-radius:14px;background:#18a58a;color:#fff;font-family:Fredoka;font-weight:700;font-size:14px;box-shadow:0 4px 0 #0d7a64;white-space:nowrap}
 .btn-mini:active{transform:translateY(3px);box-shadow:0 1px 0 #0d7a64}
 .btn-mini:disabled{background:var(--surface2);color:var(--muted);box-shadow:0 4px 0 var(--line);cursor:default}
@@ -138,7 +138,8 @@
 .confirma{position:fixed;left:14px;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:60}
 .toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:16px;right:16px;z-index:70}
 .tienda-item .precio{font-family:Fredoka,Nunito,sans-serif;font-weight:700;display:inline-flex;align-items:center;gap:4px}
-.tienda-item .precio s{opacity:.6}
+.tienda-item .precio s{opacity:1;color:var(--muted)}
+:root:not([data-mode="dark"]) .tienda-item .precio s{color:#6b635b}   /* contraste 4,5:1 sobre crema */
 .perfil .chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface2);border:0;font-family:Nunito,system-ui,sans-serif;font-weight:800;font-size:14px;color:var(--text)}
 /* Contraste AAA (7:1) con texto blanco o oscuro sobre los botones y etiquetas de la tienda */
 .btn-mini{background:#0a5c4d;box-shadow:0 4px 0 #063d33}
