@@ -2,7 +2,7 @@
 <html lang="es" data-pal="crema" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-cPP3E912k5wbSIKk5u4jdoPHHx5k04FeNwgCq/VWmtQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-u2yoZcAhRLtbhohO9ObyQmmNQRoURbOk+CytED3S1cU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -9043,6 +9043,10 @@ function renderPerfilPanel() {
   }
   const sesion = window.ctaEstado && window.ctaEstado.user;
   if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
+  // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
+  const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); box.appendChild(b); };
+  if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");
+  borrar("Borrar todos los datos", "borrar-datos");
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
   idiomas.forEach(([id, key, def]) => {
     const seg = $(id);

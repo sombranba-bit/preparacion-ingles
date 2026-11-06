@@ -197,6 +197,10 @@ export function renderPerfilPanel() {
   }
   const sesion = window.ctaEstado && window.ctaEstado.user;
   if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
+  // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
+  const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); box.appendChild(b); };
+  if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");
+  borrar("Borrar todos los datos", "borrar-datos");
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
   idiomas.forEach(([id, key, def]) => {
     const seg = $(id);
