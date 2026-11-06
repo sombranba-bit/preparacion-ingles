@@ -4,7 +4,7 @@ import { ITEMS } from "./01-nucleo-niveles-audio.js";
    se reescribe aquí, a la dificultad de ese nivel. Clave: [nivel, texto original] → cambios. */
 const REESCRITAS = [
   ["B2", "By the time we arrived, the film ___.", { q: "By the time the police arrived, the thieves ___ the building.", options: ["had already left", "has already left", "already leave"], answer: 0, explain: "FCE · Use of English: pasado perfecto para una acción anterior a otra en el pasado." }],
-  ["A2", "By the time we arrived, the film ___.", { q: "When I got home, my sister ___ dinner.", options: ["was cooking", "cooks", "cooked"], answer: 0, explain: "A2 · Pasado continuo para una acción en curso cuando llegó otra." }],
+  ["A2", "By the time we arrived, the film ___.", { q: "When we arrived at the park, the children ___ football.", options: ["were playing", "played", "play"], answer: 0, explain: "A2 · Pasado continuo para una acción en curso cuando llegó otra." }],
   ["A2", "I'm used to ___ early.", { q: "My grandmother ___ in a small village when she was young.", options: ["lived", "lives", "living"], answer: 0, explain: "A2 · Pasado simple para un hábito o un estado terminado." }],
   ["C1", "I'd rather you ___ mention it to anyone.", { q: "I'd much rather he ___ told me himself than hear it from someone else.", options: ["had", "has", "would have"], answer: 0, explain: "C1 · «I'd rather» + pasado perfecto para lamentar algo del pasado." }],
   ["B2", "Had she ___ earlier, she would have caught the train.", { q: "If she ___ earlier, she would have caught the train.", options: ["had left", "left", "would leave"], answer: 0, explain: "B2 · Tercer condicional: if + pasado perfecto + would have + participio." }],

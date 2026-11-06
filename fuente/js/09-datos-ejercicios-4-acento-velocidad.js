@@ -16,7 +16,8 @@ import { loadCustom } from "./05-formatos-pdf-restaurar-copia.js";
 /* Acento y velocidad por nivel: los ítems antiguos los reparten de forma automática */
 {
   const RATE = { A1: 0.78, A2: 0.86, B1: 0.95, B2: 1.0, C1: 1.06, C2: 1.12 };
-  const ACCENTS = { A1: ["en-GB", "en-US", "en-AU"], A2: ["en-GB", "en-US", "en-AU"], B1: ["en-GB", "en-US", "en-AU", "en-IN"], B2: ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"], C1: ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"], C2: ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"] };
+  const ALL = ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"];
+  const ACCENTS = { A1: ALL, A2: ALL, B1: ALL, B2: ALL, C1: ALL, C2: ALL };
   const INFER = /suggest|impl|attitude|feel|why|mean|probabl|opinion|concern|prefer|infer|regret|doubt|sceptic|likely|surpris|think|sound|view/i;
   const cnt = {};
   ITEMS.forEach(i => {

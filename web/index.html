@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-xBW09w0sQhdTnBTg0Wh5zwl3uA8UF74edi/s5RvJm2o=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-iGLUMDanmf3njGW411GhA+LCGAGqbq1mRNAuC73zJE4=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -9016,7 +9016,8 @@ ITEMS.push(...EXTRA_ITEMS);
 /* Acento y velocidad por nivel: los ítems antiguos los reparten de forma automática */
 {
   const RATE = { A1: 0.78, A2: 0.86, B1: 0.95, B2: 1.0, C1: 1.06, C2: 1.12 };
-  const ACCENTS = { A1: ["en-GB", "en-US", "en-AU"], A2: ["en-GB", "en-US", "en-AU"], B1: ["en-GB", "en-US", "en-AU", "en-IN"], B2: ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"], C1: ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"], C2: ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"] };
+  const ALL = ["en-GB", "en-US", "en-AU", "en-IN", "en-IE"];
+  const ACCENTS = { A1: ALL, A2: ALL, B1: ALL, B2: ALL, C1: ALL, C2: ALL };
   const INFER = /suggest|impl|attitude|feel|why|mean|probabl|opinion|concern|prefer|infer|regret|doubt|sceptic|likely|surpris|think|sound|view/i;
   const cnt = {};
   ITEMS.forEach(i => {
@@ -9111,7 +9112,7 @@ renderHome();
    se reescribe aquí, a la dificultad de ese nivel. Clave: [nivel, texto original] → cambios. */
 const REESCRITAS = [
   ["B2", "By the time we arrived, the film ___.", { q: "By the time the police arrived, the thieves ___ the building.", options: ["had already left", "has already left", "already leave"], answer: 0, explain: "FCE · Use of English: pasado perfecto para una acción anterior a otra en el pasado." }],
-  ["A2", "By the time we arrived, the film ___.", { q: "When I got home, my sister ___ dinner.", options: ["was cooking", "cooks", "cooked"], answer: 0, explain: "A2 · Pasado continuo para una acción en curso cuando llegó otra." }],
+  ["A2", "By the time we arrived, the film ___.", { q: "When we arrived at the park, the children ___ football.", options: ["were playing", "played", "play"], answer: 0, explain: "A2 · Pasado continuo para una acción en curso cuando llegó otra." }],
   ["A2", "I'm used to ___ early.", { q: "My grandmother ___ in a small village when she was young.", options: ["lived", "lives", "living"], answer: 0, explain: "A2 · Pasado simple para un hábito o un estado terminado." }],
   ["C1", "I'd rather you ___ mention it to anyone.", { q: "I'd much rather he ___ told me himself than hear it from someone else.", options: ["had", "has", "would have"], answer: 0, explain: "C1 · «I'd rather» + pasado perfecto para lamentar algo del pasado." }],
   ["B2", "Had she ___ earlier, she would have caught the train.", { q: "If she ___ earlier, she would have caught the train.", options: ["had left", "left", "would leave"], answer: 0, explain: "B2 · Tercer condicional: if + pasado perfecto + would have + participio." }],
@@ -9182,6 +9183,817 @@ for (const [pred, cambios] of CORRECCIONES) {
   if (!hallados.length) console.warn("Corrección sin ejercicio:", cambios);
   hallados.forEach(it => Object.assign(it, cambios));
 }
+
+/* 100 ejercicios nuevos de nivel A1 (originales, al estilo de Movers/KET de nivel básico):
+   40 de gramática, 30 de lectura y 30 de escucha. */
+(function () {
+  const out = [];
+  const LV = "A1";
+  function push(o) {
+    o.level = LV;
+    if (ITEMS.concat(out).some(x => x.level === LV && x.q === o.q && (x.passage || x.audio || "") === (o.passage || o.audio || ""))) return; /* sin duplicados */
+    /* Reparte la respuesta correcta entre las posiciones (no siempre la primera) */
+    if (o.options && o.options.length > 1) {
+      const n = o.options.length, k = out.length % n;
+      o.options = o.options.slice(k).concat(o.options.slice(0, k));
+      o.answer = (o.answer - k + n) % n;
+    }
+    out.push(o);
+  }
+  function G(part, q, o, a, e) { push({ type: "grammar", q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function R(part, pass, q, o, a, e) { push({ type: "reading", passage: pass, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function L(part, audio, q, o, a, e) { push({ type: "listening", audio: audio, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+
+  const GR = "A1 · Gramática";
+  G(GR, "She ___ a student.", ["is", "are", "am"], 0, "Con she se usa is.");
+  G(GR, "They ___ from Spain.", ["are", "is", "am"], 0, "Con they se usa are.");
+  G(GR, "I ___ a red bag.", ["have", "has", "is"], 0, "Con I se usa have.");
+  G(GR, "He ___ like pizza.", ["doesn't", "don't", "isn't"], 0, "Con he en negativa: doesn't.");
+  G(GR, "We ___ playing football now.", ["are", "is", "do"], 0, "Presente continuo con we: are + -ing.");
+  G(GR, "There ___ two books on the table.", ["are", "is", "have"], 0, "Plural: there are.");
+  G(GR, "___ you like coffee?", ["Do", "Does", "Are"], 0, "Preguntas con you: Do.");
+  G(GR, "She ___ to school every day.", ["goes", "go", "going"], 0, "Presente simple con she: -es.");
+  G(GR, "She can ___ very fast.", ["run", "to run", "running"], 0, "Después de can va el verbo sin «to».");
+  G(GR, "My brother ___ English on Mondays.", ["studies", "study", "studys"], 0, "Consonante + y → ies.");
+  G(GR, "Look! It ___ now.", ["is raining", "rains", "rain"], 0, "Algo que pasa ahora: presente continuo.");
+  G(GR, "This is ___ apple.", ["an", "a", "the"], 0, "Delante de vocal se usa an.");
+  G(GR, "I have ___ sisters.", ["two", "second", "too"], 0, "Two es el número 2.");
+  G(GR, "___ is your name?", ["What", "Who", "Where"], 0, "Para preguntar el nombre: What.");
+  G(GR, "The cat is ___ the table.", ["under", "of", "to"], 0, "Under = debajo de.");
+  G(GR, "We ___ at home yesterday.", ["were", "are", "was"], 0, "Pasado de we: were.");
+  G(GR, "He ___ a film last night.", ["watched", "watch", "watching"], 0, "Pasado simple: watched.");
+  G(GR, "They ___ go to the park last Sunday.", ["did not", "do not", "are not"], 0, "Pasado en negativa: did not + verbo base.");
+  G(GR, "I'm ___ hungry.", ["very", "much", "many"], 0, "Very + adjetivo.");
+  G(GR, "Our house is ___ than yours.", ["bigger", "more big", "biggest"], 0, "Comparativo corto: bigger.");
+  G(GR, "This book is the ___ in the shop.", ["cheapest", "cheaper", "cheap"], 0, "Superlativo: the cheapest.");
+  G(GR, "Mum, can I have ___ water, please?", ["some", "any", "a"], 0, "Con incontables en afirmativa: some.");
+  G(GR, "There aren't ___ eggs left.", ["any", "some", "a"], 0, "En negativa con plurales: any.");
+  G(GR, "She likes ___ to music.", ["listening", "listen", "listens"], 0, "Like + -ing.");
+  G(GR, "My birthday is ___ June.", ["in", "on", "at"], 0, "Meses: in.");
+  G(GR, "The lesson starts ___ nine o'clock.", ["at", "in", "on"], 0, "Horas: at.");
+  G(GR, "We go to school ___ bus.", ["by", "with", "in"], 0, "Medio de transporte: by bus.");
+  G(GR, "Where ___ your parents work?", ["do", "does", "are"], 0, "Pregunta con your parents: do.");
+  G(GR, "He is ___ than his sister.", ["taller", "tall", "tallest"], 0, "Comparativo: taller than.");
+  G(GR, "She ___ her homework yet.", ["hasn't finished", "didn't finish", "doesn't finish"], 0, "Yet con present perfect negativo: hasn't finished.");
+  G(GR, "I ___ never been to Japan.", ["have", "has", "am"], 0, "Con I: have been.");
+  G(GR, "It is ___ cold today, so take a coat.", ["very", "much", "many"], 0, "Very cold.");
+  G(GR, "Can you ___ me the time, please?", ["tell", "say", "speak"], 0, "Tell + persona: tell me.");
+  G(GR, "The shop ___ at 9 a.m. every day.", ["opens", "open", "opening"], 0, "Tercera persona singular: opens.");
+  G(GR, "I'm going to ___ a cake tomorrow.", ["bake", "baking", "baked"], 0, "Going to + verbo base.");
+  G(GR, "Let's ___ to the cinema.", ["go", "to go", "going"], 0, "Let's + verbo base.");
+  G(GR, "What time ___ it?", ["is", "are", "does"], 0, "La hora: what time is it?");
+  G(GR, "Tim ___ get up early on Saturdays.", ["doesn't", "don't", "isn't"], 0, "Tercera persona en negativa: doesn't.");
+
+  const RD = "A1 · Lectura";
+  R(RD, "Tom has a dog called Max. Max likes to run in the park every morning.", "What does Max like to do?", ["Sleep", "Run in the park", "Swim"], 1, "Max corre en el parque.");
+  R(RD, "Anna is ten years old. She lives in a flat with her mum and dad.", "How old is Anna?", ["Ten", "Twelve", "Eleven"], 0, "Tiene diez años.");
+  R(RD, "Today is Sunday. We are going to visit our grandma. She makes the best cakes.", "Where are they going?", ["To the park", "To grandma's house", "To school"], 1, "Van a visitar a la abuela.");
+  R(RD, "My favourite colour is blue. I have a blue bag, a blue hat and blue shoes.", "What is the writer's favourite colour?", ["Red", "Green", "Blue"], 2, "Su color favorito es el azul.");
+  R(RD, "Ben gets up at seven. He has breakfast, brushes his teeth and goes to school.", "What does Ben do after breakfast?", ["He goes to bed", "He brushes his teeth", "He goes to the shop"], 1, "Después del desayuno se lava los dientes.");
+  R(RD, "The supermarket is open from 8 a.m. to 10 p.m. It is closed on Christmas Day.", "When is the supermarket closed?", ["On Christmas Day", "At 8 a.m.", "At 10 p.m."], 0, "Está cerrado el día de Navidad.");
+  R(RD, "Lucy has a cat. Its name is Mimi. Mimi is black and white.", "What colour is Mimi?", ["All black", "Black and white", "Brown"], 1, "Mimi es blanca y negra.");
+  R(RD, "It is raining today, so we are staying at home. We are playing cards.", "What are they doing?", ["Playing cards", "Going swimming", "Walking in the rain"], 0, "Juegan a las cartas.");
+  R(RD, "Sam is a doctor. He works at the hospital near the school.", "Where does Sam work?", ["At a school", "At a hospital", "At a shop"], 1, "Trabaja en un hospital.");
+  R(RD, "Our class has twenty students. Ten are girls and ten are boys.", "How many boys are in the class?", ["Twenty", "Ten", "Five"], 1, "Diez son chicos.");
+  R(RD, "Maria likes sport. On Tuesdays she plays tennis, and on Thursdays she swims.", "What does Maria do on Thursdays?", ["She plays tennis", "She swims", "She reads"], 1, "Los jueves nada.");
+  R(RD, "Welcome to our café! We serve tea, coffee and cakes. Open every day from 9 to 5.", "What time does the café close?", ["At nine", "At five", "At six"], 1, "Cierra a las cinco.");
+  R(RD, "Ali has a new bike. It is red and very fast. He rides it to school every day.", "How does Ali go to school?", ["By bus", "On foot", "By bike"], 2, "Va en bici.");
+  R(RD, "The shop is opposite the bank. You can buy bread and milk there.", "What can you buy in the shop?", ["Bread and milk", "Money", "Shoes"], 0, "Pan y leche.");
+  R(RD, "Emma is from London, but now she lives in Madrid. She likes the sun.", "Where does Emma live now?", ["In London", "In Madrid", "In Paris"], 1, "Ahora vive en Madrid.");
+  R(RD, "There are three rooms in my flat: a kitchen, a bathroom and a bedroom.", "How many rooms are there?", ["Two", "Three", "Four"], 1, "Hay tres habitaciones.");
+  R(RD, "Jack is tall. He plays basketball at school and he is very good.", "What sport does Jack play?", ["Football", "Basketball", "Tennis"], 1, "Juega baloncesto.");
+  R(RD, "Please don't play with the ball in the house. Play in the garden, please.", "Where should you play?", ["In the house", "In the garden", "In the kitchen"], 1, "Jugar en el jardín.");
+  R(RD, "My dad cooks dinner on Fridays. We eat pasta and salad.", "What do they eat on Fridays?", ["Pizza", "Pasta and salad", "Soup"], 1, "Pasta y ensalada.");
+  R(RD, "Kate has a big family. She has two brothers and one sister.", "How many brothers does Kate have?", ["One", "Two", "Three"], 1, "Tiene dos hermanos.");
+  R(RD, "The bus to the beach leaves at half past ten. Please be at the stop at ten.", "When should you be at the bus stop?", ["At ten", "At half past ten", "At eleven"], 0, "A las diez.");
+  R(RD, "Paul likes to read before bed. This week he is reading a book about animals.", "What is Paul reading?", ["A book about animals", "A magazine", "A map"], 0, "Un libro sobre animales.");
+  R(RD, "It's hot in summer. We go to the beach and swim in the sea.", "What do they do in summer?", ["They ski", "They swim", "They skate"], 1, "Nadan en el mar.");
+  R(RD, "My grandad is seventy. He has a small garden with roses and tomatoes.", "What is in the garden?", ["Roses and tomatoes", "Apples", "Cars"], 0, "Rosas y tomates.");
+  R(RD, "Lisa wants a new phone for her birthday. It costs fifty euros.", "How much is the phone?", ["Fifty euros", "Ten euros", "Five euros"], 0, "Cincuenta euros.");
+  R(RD, "Our teacher is called Mr Brown. He is from Scotland and he is very funny.", "Where is Mr Brown from?", ["England", "Scotland", "Ireland"], 1, "Es de Escocia.");
+  R(RD, "Tina gets to school at quarter past eight. The lessons start at half past eight.", "What time do the lessons start?", ["At 8:15", "At 8:30", "At 9:00"], 1, "A las 8:30.");
+  R(RD, "There is a park near my house. It has a lake and lots of ducks.", "What is in the park?", ["A lake and ducks", "A zoo", "A museum"], 0, "Tiene lago y patos.");
+  R(RD, "On Saturdays I clean my room and help my mum in the kitchen.", "What does the writer do on Saturdays?", ["Cleans the room and helps in the kitchen", "Goes to school", "Works in a shop"], 0, "Limpia y ayuda en la cocina.");
+
+  const LI = "A1 · Escucha";
+  L(LI, "Man: Excuse me, is this the bus to the station? Woman: No, it's the one over there.", "Where is the woman pointing?", ["To the station", "Over there", "To the bank"], 1, "Señala el autobús de allí.");
+  L(LI, "Girl: What's your favourite animal? Boy: I like dogs. They are very friendly.", "What is the boy's favourite animal?", ["Cats", "Dogs", "Birds"], 1, "Le gustan los perros.");
+  L(LI, "Mum: Have you got your bag? Son: Yes, it's in the hall.", "Where is the bag?", ["In the kitchen", "In the hall", "In the car"], 1, "Está en el vestíbulo.");
+  L(LI, "Teacher: Open your books at page ten. Students: OK.", "Which page should the students open?", ["Page 1", "Page 10", "Page 100"], 1, "Página diez.");
+  L(LI, "Woman: What time is it? Man: It's half past three.", "What time is it?", ["3:30", "3:00", "4:30"], 0, "Son las tres y media.");
+  L(LI, "Boy: Can I have a sandwich? Dad: Yes, but first wash your hands.", "What must the boy do first?", ["Eat the sandwich", "Wash his hands", "Go to bed"], 1, "Lavarse las manos primero.");
+  L(LI, "Girl: Is it cold outside? Man: Yes, take your coat.", "What should the girl take?", ["Her coat", "Her hat", "Her bike"], 0, "El abrigo.");
+  L(LI, "Woman: How much is the apple? Shopkeeper: Forty cents.", "How much is the apple?", ["Forty cents", "Four euros", "Fourteen cents"], 0, "Cuarenta céntimos.");
+  L(LI, "Man: Where do you live? Girl: I live near the park, next to the school.", "Where does the girl live?", ["Near the park", "Near the sea", "In the city centre"], 0, "Cerca del parque.");
+  L(LI, "Mum: Are you hungry? Son: Yes, I'd like some pasta.", "What would the son like?", ["Some pasta", "Some soup", "Some fruit"], 0, "Pasta.");
+  L(LI, "Teacher: Who has a pet? Boy: I do. I have a rabbit.", "What pet does the boy have?", ["A rabbit", "A cat", "A fish"], 0, "Un conejo.");
+  L(LI, "Woman: Let's go to the cinema on Friday. Man: Great, I'll buy the tickets.", "What will the man do?", ["Buy the tickets", "Cook dinner", "Call his mum"], 0, "Compra las entradas.");
+  L(LI, "Girl: Do you play any sports? Boy: Yes, I play football on Sundays.", "When does the boy play football?", ["On Sundays", "On Mondays", "On Saturdays"], 0, "Los domingos.");
+  L(LI, "Man: How many brothers do you have? Girl: I have one brother. He's seven.", "How old is the brother?", ["Seven", "Seventeen", "Five"], 0, "Tiene siete años.");
+  L(LI, "Waiter: Would you like tea or coffee? Customer: Tea, please. With no milk.", "What does the customer want?", ["Coffee with milk", "Tea without milk", "Water"], 1, "Té sin leche.");
+  L(LI, "Woman: Is the shop open on Mondays? Man: No, it's closed on Mondays.", "Is the shop open on Mondays?", ["Yes", "No", "Only in the morning"], 1, "Está cerrado los lunes.");
+  L(LI, "Girl: My bike is broken. Dad: Don't worry, we'll fix it after lunch.", "When will they fix the bike?", ["Before lunch", "After lunch", "Tomorrow"], 1, "Después de comer.");
+  L(LI, "Boy: Where's the library? Woman: It's on the second floor, next to the lift.", "Where is the library?", ["On the ground floor", "On the second floor", "Next to the bank"], 1, "Segunda planta.");
+  L(LI, "Man: What's the weather like? Woman: It's sunny, but a bit windy.", "What is the weather like?", ["Sunny and windy", "Rainy", "Snowing"], 0, "Soleado y algo ventoso.");
+  L(LI, "Mum: Did you brush your teeth? Child: Yes, Mum.", "Did the child brush their teeth?", ["Yes", "No"], 0, "Sí.");
+  L(LI, "Girl: Let's meet at the café at three. Boy: OK, see you there.", "What time will they meet?", ["At two", "At three", "At four"], 1, "A las tres.");
+  L(LI, "Teacher: Put your pens down, please. The test starts now.", "What does the teacher say to do?", ["Put the pens down", "Write a letter", "Sing a song"], 0, "Dejar los bolígrafos.");
+  L(LI, "Man: Is the post office far? Woman: No, it's five minutes on foot.", "How long does it take to walk there?", ["Five minutes", "Fifteen minutes", "One hour"], 0, "Cinco minutos.");
+  L(LI, "Girl: I like your shoes. Boy: Thanks, they're new.", "What does the girl say about the shoes?", ["She likes them", "She hates them", "She has the same ones"], 0, "Le gustan.");
+  L(LI, "Dad: Please turn off the light. Son: Sorry, I forgot.", "What does the dad ask?", ["Turn off the light", "Open the window", "Close the door"], 0, "Apagar la luz.");
+  L(LI, "Woman: Which is your room? Girl: The one at the end of the corridor.", "Where is the girl's room?", ["At the end of the corridor", "In the kitchen", "Upstairs by the stairs"], 0, "Al final del pasillo.");
+  L(LI, "Man: How do you get to work? Woman: I walk. It takes about ten minutes.", "How does the woman get to work?", ["On foot", "By car", "By bus"], 0, "Andando.");
+  L(LI, "Boy: Happy birthday, Anna! Girl: Thank you! I'm eight today.", "How old is Anna today?", ["Six", "Eight", "Eighteen"], 1, "Cumple ocho años.");
+
+  G(GR, "Sara and Ana ___ best friends.", ["are", "is", "am"], 0, "Plural: are.");
+  G(GR, "I don't ___ any milk.", ["have", "has", "having"], 0, "Con I en negativa: don't have.");
+  R(RD, "On Sundays we go to the market. My mum buys apples, bread and fish there.", "What does the mum buy at the market?", ["Shoes", "Apples, bread and fish", "Toys"], 1, "Manzanas, pan y pescado.");
+  R(RD, "Carlos has a blue car. It is old, but it works well.", "What colour is Carlos's car?", ["Red", "Blue", "White"], 1, "Es azul.");
+  L(LI, "Girl: Where's the cat? Boy: It's sleeping under the bed.", "Where is the cat?", ["Under the bed", "On the sofa", "In the garden"], 0, "Debajo de la cama.");
+
+  G(GR, "The dog is ___ the door.", ["next to", "next of", "next from"], 0, "Next to = al lado de.");
+  G(GR, "My mum ___ a doctor.", ["is", "are", "am"], 0, "Tercera persona singular: is.");
+  G(GR, "Where ___ the toilet?", ["is", "are", "am"], 0, "Pregunta singular: where is.");
+  R(RD, "Lucy's house is blue. It has a big garden with a swing and a small pond.", "What is in the garden?", ["A swing and a pond", "A car", "A swimming pool"], 0, "Un columpio y un estanque.");
+  R(RD, "Peter has three pets: a fish, a hamster and a parrot. The parrot can say his name.", "What can the parrot say?", ["Peter's name", "Good morning", "Hello"], 0, "El nombre de Peter.");
+  L(LI, "Woman: What's the weather like today? Man: It's cloudy, but it's not raining.", "What's the weather like?", ["Cloudy", "Sunny", "Snowy"], 0, "Nublado.");
+  G(GR, "The book is ___ the desk.", ["on", "in", "at"], 0, "On = encima de.");
+  R(RD, "Max has a big red ball. He plays with it in the garden every afternoon.", "Where does Max play with his ball?", ["In the garden", "In the kitchen", "At school"], 0, "En el jardín.");
+  ITEMS.push(...out);
+})();
+
+/* 100 ejercicios nuevos de nivel A2 (originales, al estilo de KET):
+   gramática, lectura, escucha y reformulación sencilla. */
+(function () {
+  const out = [];
+  const LV = "A2";
+  function push(o) {
+    o.level = LV;
+    if (ITEMS.concat(out).some(x => x.level === LV && x.q === o.q && (x.passage || x.audio || "") === (o.passage || o.audio || ""))) return; /* sin duplicados */
+    /* Reparte la respuesta correcta entre las posiciones (no siempre la primera) */
+    if (o.options && o.options.length > 1) {
+      const n = o.options.length, k = out.length % n;
+      o.options = o.options.slice(k).concat(o.options.slice(0, k));
+      o.answer = (o.answer - k + n) % n;
+    }
+    out.push(o);
+  }
+  function G(part, q, o, a, e) { push({ type: "grammar", q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function R(part, pass, q, o, a, e) { push({ type: "reading", passage: pass, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function L(part, audio, q, o, a, e) { push({ type: "listening", audio: audio, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function T(part, q, hint, acc, e) { push({ type: "rephrase", q: q, hint: hint, accepted: acc, explain: part + ": " + e, part: part }); }
+
+  const GR = "A2 · Gramática";
+  G(GR, "Last summer we ___ to Portugal.", ["went", "go", "goes"], 0, "Pasado simple irregular: went.");
+  G(GR, "She has ___ seen that film.", ["already", "yet", "still"], 0, "Already en afirmativa con present perfect.");
+  G(GR, "Have you ___ been to London?", ["ever", "never", "yet"], 0, "Ever en preguntas de experiencia.");
+  G(GR, "I haven't finished my homework ___.", ["yet", "already", "ever"], 0, "Yet en negativa, al final de la frase.");
+  G(GR, "If it rains tomorrow, we ___ at home.", ["will stay", "would stay", "stayed"], 0, "Primer condicional: will + verbo base.");
+  G(GR, "The letter ___ yesterday by my brother.", ["was posted", "posted", "is post"], 0, "Pasiva en pasado: was + participio.");
+  G(GR, "This is the man ___ lives next door.", ["who", "which", "where"], 0, "Relativo para personas: who.");
+  G(GR, "My car is ___ than yours.", ["faster", "more fast", "fastest"], 0, "Comparativo de fast: faster.");
+  G(GR, "She is the ___ student in the class.", ["best", "better", "good"], 0, "Superlativo irregular: the best.");
+  G(GR, "You ___ eat so much sugar. It's bad for you.", ["shouldn't", "don't should", "isn't"], 0, "Consejo negativo: shouldn't.");
+  G(GR, "I'm ___ to the cinema with my friends tonight.", ["going", "go", "went"], 0, "Planes: going to.");
+  G(GR, "When I was a child, I ___ to the beach every summer.", ["used to go", "use to go", "was go"], 0, "Hábito pasado: used to + verbo base.");
+  G(GR, "He ___ working when the phone rang.", ["was", "were", "is"], 0, "Pasado continuo con he: was.");
+  G(GR, "We ___ dinner when the lights went out.", ["were having", "have had", "are having"], 0, "Pasado continuo para una acción en curso.");
+  G(GR, "Can you ___ me the way to the station?", ["show", "sell", "paint"], 0, "Show me the way.");
+  G(GR, "There is ___ milk in the fridge, so we need to buy some.", ["not much", "not many", "much not"], 0, "Incontable: not much.");
+  G(GR, "How ___ people were at the party?", ["many", "much", "long"], 0, "Contables: how many.");
+  G(GR, "I'd like ___ tea, please.", ["a cup of", "a cup", "cups"], 0, "A cup of tea.");
+  G(GR, "She asked me ___ I was from.", ["where", "what", "who"], 0, "Pregunta indirecta con lugar: where.");
+  G(GR, "He said that he ___ tired.", ["was", "is", "be"], 0, "Estilo indirecto: was.");
+  G(GR, "The film was ___ than I expected.", ["better", "gooder", "more good"], 0, "Comparativo irregular: better.");
+  G(GR, "Let's ___ for a walk after lunch.", ["go", "going", "to go"], 0, "Let's + verbo base.");
+  G(GR, "It's ___ expensive to live in the city centre.", ["very", "much", "many"], 0, "Very + adjetivo.");
+  G(GR, "I'm looking forward ___ my holidays.", ["to", "at", "for"], 0, "Look forward to.");
+  G(GR, "She ___ her keys. She can't open the door.", ["has lost", "lost", "is losing"], 0, "Resultado presente: present perfect.");
+  G(GR, "Don't forget ___ the lights when you leave.", ["to turn off", "turning off", "turn off"], 0, "Forget to + infinitivo.");
+  G(GR, "My sister is interested ___ painting.", ["in", "on", "at"], 0, "Interested in.");
+  G(GR, "You must ___ a seatbelt in the car.", ["wear", "wearing", "to wear"], 0, "Modal + verbo base.");
+  G(GR, "Every morning I ___ coffee before work.", ["drink", "drinks", "am drink"], 0, "Presente simple con I.");
+  G(GR, "The children ___ in the garden at the moment.", ["are playing", "play", "played"], 0, "Ahora mismo: presente continuo.");
+  G(GR, "I got up early ___ I could catch the train.", ["so that", "because", "although"], 0, "Para expresar finalidad: so that.");
+  G(GR, "If I ___ rich, I would buy a big house.", ["were", "was going to", "will be"], 0, "Condicional 2 con «were».");
+  G(GR, "Sorry, I ___ your name. Can you repeat it?", ["didn't catch", "don't catch", "wasn't catch"], 0, "Pasado simple en negativa.");
+  G(GR, "My parents ___ married for thirty years.", ["have been", "are", "were been"], 0, "Duración hasta ahora: present perfect continuo o simple.");
+  G(GR, "Mum, ___ you help me with my homework?", ["could", "must", "did"], 0, "Could para pedir favores con educación.");
+  G(GR, "The shop ___ on Sundays, so we went on Saturday.", ["is closed", "closes", "is close"], 0, "Estado: is closed.");
+  G(GR, "I don't know ___ to go for my holidays.", ["where", "what", "which"], 0, "Where to go.");
+  G(GR, "This exercise is ___ than the last one.", ["more difficult", "difficulter", "most difficult"], 0, "Comparativo de adjetivo largo.");
+  G(GR, "Peter ___ at the hospital since last year.", ["has worked", "worked", "works"], 0, "Since + present perfect.");
+
+  const RD = "A2 · Lectura";
+  R(RD, "Dear Sam, I'm sorry I missed your party. I had a cold and stayed in bed all weekend. See you soon, Lisa.", "Why did Lisa miss the party?", ["She was working", "She had a cold", "She was on holiday"], 1, "Tenía un resfriado.");
+  R(RD, "The new café on Main Street opens at seven every morning. It sells cakes, sandwiches and great coffee.", "When does the café open?", ["At seven", "At nine", "At noon"], 0, "A las siete.");
+  R(RD, "Tom wants to buy a new bike. He has been saving money for three months and now he has enough.", "What has Tom been doing?", ["Riding his bike", "Saving money", "Selling his bike"], 1, "Ahorrando dinero.");
+  R(RD, "Visitors must show their ticket at the gate. Children under five can enter for free.", "Who can enter for free?", ["Children under five", "Visitors with a ticket", "Adults"], 0, "Niños menores de cinco años.");
+  R(RD, "Last week Emma went to the doctor because her back hurt. The doctor gave her some tablets and told her to rest.", "Why did Emma go to the doctor?", ["Her back hurt", "She had a cold", "She lost her bag"], 0, "Le dolía la espalda.");
+  R(RD, "The library is closed on Mondays. On other days it opens from ten until eight.", "When is the library closed?", ["On Mondays", "On Sundays", "After eight"], 0, "Los lunes.");
+  R(RD, "My grandfather is a great cook. He makes the best soup in the family, and everyone asks him for the recipe.", "What is the grandfather good at?", ["Cooking", "Painting", "Driving"], 0, "Cocinar.");
+  R(RD, "The school trip to the zoo was cancelled because of the rain. It will take place next month instead.", "What happened to the school trip?", ["It was cancelled", "It was a success", "It went to the museum"], 0, "Se canceló por la lluvia.");
+  R(RD, "Hi Jo! We are at the hotel now. The room is small but the view is wonderful. Love, Mark.", "What is the view like?", ["Terrible", "Wonderful", "Boring"], 1, "Es maravillosa.");
+  R(RD, "Our school is building a new gym. It will be ready by next September, and students can use it after lessons.", "When will the gym be ready?", ["Next September", "Last year", "Next week"], 0, "El próximo septiembre.");
+  R(RD, "Anna doesn't like cold weather, so she always goes to Spain in winter. She says the sun makes her happy.", "Why does Anna go to Spain in winter?", ["She likes cold weather", "She doesn't like cold weather", "She works there"], 1, "No le gusta el frío.");
+  R(RD, "Please remember to bring your own towel to the swimming pool. Towels cannot be rented at the desk.", "What must you bring to the pool?", ["A towel", "A swimsuit only", "Money"], 0, "Una toalla.");
+  R(RD, "Last Saturday Max and his friends played football in the park. They won the game three to one.", "What was the score?", ["Three to one", "One to three", "Two to two"], 0, "Ganaron tres a uno.");
+  R(RD, "The bus is usually late in the morning, so I always leave home twenty minutes earlier.", "Why does the writer leave early?", ["The bus is usually late", "The bus is free", "The writer likes walking"], 0, "El autobús suele llegar tarde.");
+  R(RD, "Maria is learning to play the guitar. She practises for half an hour every evening.", "How long does Maria practise each evening?", ["Half an hour", "One hour", "Ten minutes"], 0, "Media hora.");
+  R(RD, "The hotel has a pool, a gym and free wifi. Breakfast is served from seven to ten.", "What time is breakfast served?", ["From seven to ten", "From ten to twelve", "All day"], 0, "De siete a diez.");
+  R(RD, "I lost my phone on the train yesterday. I went to the station office and a kind man gave it back to me.", "What happened to the phone?", ["It was lost and then returned", "It was sold", "It is still lost"], 0, "Lo recuperó.");
+  R(RD, "Kids love the new playground. It has slides, swings and a big sandpit.", "What is in the playground?", ["Slides, swings and a sandpit", "A pool", "A football pitch"], 0, "Toboganes, columpios y arenero.");
+  R(RD, "Our teacher says we should read in English every day, even for ten minutes. It helps us learn new words.", "What does the teacher recommend?", ["Reading every day", "Watching TV", "Sleeping more"], 0, "Leer cada día.");
+  R(RD, "Jack is going to move to Edinburgh next month. He has already found a flat near the university.", "What has Jack already done?", ["He has found a flat", "He has sold his car", "He has left his job"], 0, "Ya ha encontrado piso.");
+  R(RD, "Please keep this room tidy. Put your books on the shelf and your bags under the table.", "Where should you put your bags?", ["On the shelf", "Under the table", "On the bed"], 1, "Debajo de la mesa.");
+  R(RD, "The concert was amazing! The band played all their famous songs and the crowd sang along.", "How was the concert?", ["Boring", "Amazing", "Too short"], 1, "Fue increíble.");
+  R(RD, "Nina has two dogs and a cat. The dogs love long walks, but the cat prefers to sleep all day.", "What does the cat like to do?", ["Go for walks", "Sleep all day", "Play football"], 1, "Dormir todo el día.");
+  R(RD, "If you want to join the club, fill in the form and give it to the teacher before Friday.", "When must the form be given in?", ["Before Friday", "After Monday", "On Sunday"], 0, "Antes del viernes.");
+  R(RD, "Mark can't come to the meeting because he is ill. He will send his report by email instead.", "How will Mark send his report?", ["By email", "By post", "He will bring it"], 0, "Por correo electrónico.");
+  R(RD, "The museum was built in 1900. Every year, thousands of visitors come to see its dinosaur collection.", "What is the museum famous for?", ["Its dinosaur collection", "Its paintings", "Its garden"], 0, "Su colección de dinosaurios.");
+  R(RD, "My brother works in a supermarket on weekends. He stacks the shelves and helps customers.", "What does the brother do on weekends?", ["He works in a supermarket", "He goes to school", "He sleeps"], 0, "Trabaja en un supermercado.");
+
+  const LI = "A2 · Escucha";
+  L(LI, "Man: Do you want to go swimming on Saturday? Woman: I'd love to, but I have to visit my gran.", "What does the woman have to do on Saturday?", ["Go swimming", "Visit her gran", "Work"], 1, "Visitar a su abuela.");
+  L(LI, "Woman: What time does the film start? Man: At half past seven. We should be there by seven.", "When should they arrive?", ["At seven", "At half past seven", "At eight"], 0, "A las siete.");
+  L(LI, "Boy: I've bought a new computer game. Girl: Really? Can I play it after school?", "What has the boy bought?", ["A computer game", "A new bike", "A phone"], 0, "Un videojuego.");
+  L(LI, "Man: Excuse me, where is the nearest chemist? Woman: Go straight on and turn right at the church.", "Where does the woman tell the man to turn?", ["Left at the church", "Right at the church", "Right at the bank"], 1, "A la derecha de la iglesia.");
+  L(LI, "Mum: Did you finish your homework? Son: Not yet. I'll do it after dinner.", "When will the son do his homework?", ["Before dinner", "After dinner", "Tomorrow"], 1, "Después de cenar.");
+  L(LI, "Woman: How was your holiday? Man: Great! The weather was perfect and the food was delicious.", "How was the man's holiday?", ["Terrible", "Great", "Average"], 1, "Muy bueno.");
+  L(LI, "Girl: Could you help me carry these bags? Dad: Of course. Are they heavy?", "What does the girl ask her dad?", ["To carry the bags", "To buy bags", "To cook dinner"], 0, "Ayudarla con las bolsas.");
+  L(LI, "Man: Which room do you want? Woman: The one with the sea view, please.", "Which room does the woman want?", ["The one with the sea view", "The one near the lift", "The cheapest one"], 0, "La que tiene vistas al mar.");
+  L(LI, "Boy: I'm tired of studying. Mum: Take a break, then. A short walk will help.", "What does the mum suggest?", ["Studying harder", "Taking a short walk", "Going to bed"], 1, "Dar un paseo corto.");
+  L(LI, "Woman: We're going to paint the kitchen this weekend. Man: Great idea. I'll buy the paint on Friday.", "When will the man buy the paint?", ["On Friday", "On Saturday", "On Sunday"], 0, "El viernes.");
+  L(LI, "Girl: Is the museum open today? Man: No, it's closed on Tuesdays. Come tomorrow.", "Why can't they visit the museum today?", ["It's closed on Tuesdays", "It's raining", "It's too expensive"], 0, "Cierra los martes.");
+  L(LI, "Boy: How much was the ticket? Girl: Ten pounds, and it included a drink.", "What was included in the ticket?", ["A drink", "A map", "A souvenir"], 0, "Una bebida.");
+  L(LI, "Man: Shall we take the train or the bus? Woman: The train is faster, so let's take that.", "How will they travel?", ["By bus", "By train", "By car"], 1, "En tren, es más rápido.");
+  L(LI, "Mum: Did you call Grandma? Son: Yes, she sends her love and wants to see us next week.", "When does Grandma want to see them?", ["Next week", "Tomorrow", "Next month"], 0, "La semana que viene.");
+  L(LI, "Woman: I'm going to learn to swim this year. Man: That's a good plan. Start with a class.", "What does the man suggest?", ["Starting with a class", "Buying a boat", "Swimming alone"], 0, "Empezar con una clase.");
+  L(LI, "Girl: The shop is closed. Boy: It opens at nine tomorrow, so we can come back then.", "When does the shop open?", ["Tonight", "At nine tomorrow", "At nine today"], 1, "Mañana a las nueve.");
+  L(LI, "Man: Have you seen my glasses? Woman: They're on the table next to the TV.", "Where are the glasses?", ["On the table", "On the sofa", "In the car"], 0, "En la mesa.");
+  L(LI, "Boy: Can I borrow your pen? Girl: Sure, but please give it back before the test.", "What does the girl want?", ["The boy to give the pen back before the test", "The boy to buy a pen", "The boy to write a letter"], 0, "Que se la devuelva antes del examen.");
+  L(LI, "Woman: Our flight leaves at six in the morning. Man: Then we should get a taxi at four.", "When should they get a taxi?", ["At four", "At six", "At seven"], 0, "A las cuatro.");
+  L(LI, "Girl: I'm really hungry. Dad: Lunch will be ready in ten minutes.", "When will lunch be ready?", ["In ten minutes", "Now", "In an hour"], 0, "En diez minutos.");
+  L(LI, "Man: Why is the road closed? Woman: They are repairing the bridge. It should open next week.", "Why is the road closed?", ["Repairs to the bridge", "A football match", "A parade"], 0, "Reparan el puente.");
+  L(LI, "Boy: I've been to Italy three times. Girl: Wow! What is your favourite city?", "How many times has the boy been to Italy?", ["Three times", "Two times", "Five times"], 0, "Tres veces.");
+  L(LI, "Woman: Where did you put the keys? Man: I think I left them in the car.", "Where does the man think the keys are?", ["In the car", "In the kitchen", "In his bag"], 0, "En el coche.");
+  L(LI, "Girl: Let's invite Tom to the party. Boy: Good idea, but he's away until Friday.", "When will Tom be back?", ["On Friday", "On Monday", "Today"], 0, "El viernes.");
+  L(LI, "Man: The meeting has been moved to Thursday. Woman: Thanks for telling me. I'll update my calendar.", "When is the meeting now?", ["On Thursday", "On Wednesday", "On Friday"], 0, "El jueves.");
+  L(LI, "Mum: Which dress do you want to wear? Girl: The blue one, because it's my favourite.", "Which dress does the girl choose?", ["The blue one", "The red one", "The green one"], 0, "El azul.");
+
+  G(GR, "My friends ___ to the party yesterday, but I stayed at home.", ["went", "go", "gone"], 0, "Pasado simple: went.");
+  G(GR, "You ___ wear a coat today. It's warm outside.", ["don't need to", "mustn't", "needn't"], 0, "Don't need to = no hace falta.");
+  G(GR, "I think it ___ rain later.", ["will", "is going", "would"], 0, "Predicción sin evidencia: will.");
+  G(GR, "She speaks English ___ than her brother.", ["better", "more good", "gooder"], 0, "Comparativo irregular de well: better.");
+  R(RD, "Ella's train was delayed by twenty minutes, so she missed the first part of the meeting.", "Why did Ella miss the first part of the meeting?", ["Her train was late", "She was ill", "The meeting was cancelled"], 0, "El tren llegó tarde.");
+  R(RD, "Our neighbours are moving to Bilbao next year. They say they will miss the park near our house.", "Where are the neighbours moving?", ["To Bilbao", "To the park", "To another house on our street"], 0, "A Bilbao.");
+  L(LI, "Woman: Have you ever tried sushi? Man: Yes, twice. I really liked it.", "How many times has the man tried sushi?", ["Once", "Twice", "Never"], 1, "Dos veces.");
+  L(LI, "Boy: Our club meets on Wednesdays at five. Girl: I can't come on Wednesdays, but I'll try on Thursdays.", "When can the girl come?", ["On Wednesdays", "On Thursdays", "On Fridays"], 1, "Los jueves.");
+
+  G(GR, "When we arrived at the park, the children ___ football.", ["were playing", "played", "play"], 0, "Pasado continuo para una acción en curso.");
+  G(GR, "I'm not very good ___ cooking.", ["at", "in", "for"], 0, "Good at = bueno en.");
+  R(RD, "The bakery on the corner sells fresh bread every morning. It is closed on Sundays.", "When is the bakery closed?", ["On Sundays", "On Mondays", "Every morning"], 0, "Los domingos.");
+  L(LI, "Girl: Are you coming to the match? Boy: I'd love to, but I have to finish my project first.", "Why can't the boy go to the match?", ["He has to finish a project", "He is ill", "The match is cancelled"], 0, "Tiene que acabar un proyecto.");
+  G(GR, "She ___ her bike to school yesterday.", ["rode", "rides", "riding"], 0, "Pasado simple irregular: rode.");
+  ITEMS.push(...out);
+})();
+
+/* 100 ejercicios nuevos de nivel B1 (originales, al estilo de PET):
+   gramática, lectura, escucha y reformulación. */
+(function () {
+  const out = [];
+  const LV = "B1";
+  function push(o) {
+    o.level = LV;
+    if (ITEMS.concat(out).some(x => x.level === LV && x.q === o.q && (x.passage || x.audio || "") === (o.passage || o.audio || ""))) return; /* sin duplicados */
+    /* Reparte la respuesta correcta entre las posiciones (no siempre la primera) */
+    if (o.options && o.options.length > 1) {
+      const n = o.options.length, k = out.length % n;
+      o.options = o.options.slice(k).concat(o.options.slice(0, k));
+      o.answer = (o.answer - k + n) % n;
+    }
+    out.push(o);
+  }
+  function G(part, q, o, a, e) { push({ type: "grammar", q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function R(part, pass, q, o, a, e) { push({ type: "reading", passage: pass, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function L(part, audio, q, o, a, e) { push({ type: "listening", audio: audio, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function T(part, q, hint, acc, e) { push({ type: "rephrase", q: q, hint: hint, accepted: acc, explain: part + ": " + e, part: part }); }
+
+  const GR = "PET · Use of English";
+  G(GR, "If I ___ you, I would apologise to her.", ["were", "was", "am"], 0, "Condicional 2: if I were you.");
+  G(GR, "The bridge ___ built in 1890.", ["was", "is", "has"], 0, "Pasiva en pasado simple.");
+  G(GR, "She asked me ___ I had finished the report.", ["whether", "that", "what"], 0, "Pregunta indirecta sí/no: whether o if.");
+  G(GR, "He ___ be at home now. His car is outside.", ["must", "can", "should"], 0, "Deducción segura: must be.");
+  G(GR, "I wish I ___ more time to study.", ["had", "have", "would have"], 0, "Wish + pasado simple para presente.");
+  G(GR, "By the time you arrive, I ___ dinner.", ["will have cooked", "will cook", "cook"], 0, "Futuro perfecto con by the time.");
+  G(GR, "Tom ___ playing tennis since he was ten.", ["has been", "was", "is"], 0, "Duración hasta ahora: present perfect continuo.");
+  G(GR, "The man ___ car was stolen is very upset.", ["whose", "who", "which"], 0, "Relativo posesivo: whose.");
+  G(GR, "She suggested ___ to the cinema.", ["going", "to go", "go"], 0, "Suggest + -ing.");
+  G(GR, "I'd rather you ___ tell him about it yet.", ["didn't", "don't", "won't"], 0, "I'd rather + pasado simple.");
+  G(GR, "The children were told ___ quiet in the library.", ["to be", "be", "being"], 0, "Tell + persona + to + infinitivo.");
+  G(GR, "She made me ___ the mess in the kitchen.", ["clean up", "cleaning up to", "to clean up"], 0, "Make + persona + infinitivo sin to.");
+  G(GR, "___ the rain, we enjoyed the trip.", ["Despite", "Although", "However"], 0, "Despite + sustantivo o -ing.");
+  G(GR, "I'll call you as soon as I ___ home.", ["get", "will get", "got"], 0, "Tras as soon as: presente simple (futuro en sentido).");
+  G(GR, "You needn't ___ the dishes. I'll do them later.", ["wash", "to wash", "washing"], 0, "Needn't + verbo base.");
+  G(GR, "The meeting ___ because the manager was ill.", ["was cancelled", "cancelled", "has cancel"], 0, "Pasiva en pasado.");
+  G(GR, "He is ___ to speak three languages.", ["able", "capable", "possible"], 0, "Be able to.");
+  G(GR, "She plays the piano ___ than her sister.", ["better", "more good", "more well"], 0, "Comparativo irregular de well: better.");
+  G(GR, "Had we known about the storm, we ___ earlier.", ["would have left", "would leave", "left"], 0, "Tercer condicional con inversión: would have left.");
+  G(GR, "I'm not used ___ getting up so early.", ["to", "for", "at"], 0, "Be used to + -ing.");
+  G(GR, "The more you practise, ___ you will get.", ["the better", "better", "more good"], 0, "The more..., the better.");
+  G(GR, "Don't forget ___ the windows before you leave.", ["to close", "closing", "close"], 0, "Forget/remember to + infinitivo para algo pendiente.");
+  G(GR, "She ___ her homework when the teacher came in.", ["had just finished", "just finished", "has just finish"], 0, "Had just + participio para algo justo antes de otra acción.");
+  G(GR, "They ___ the film before, so they didn't want to see it again.", ["had already seen", "already saw", "have already see"], 0, "Pasado perfecto para algo anterior.");
+  G(GR, "Jack, ___ is a famous actor, lives in our street.", ["who", "which", "whose"], 0, "Relativo de persona con comas: who.");
+  G(GR, "If we ___ earlier, we would have caught the bus.", ["had left", "left", "would leave"], 0, "Tercer condicional.");
+  G(GR, "It's the second time I ___ this book.", ["have read", "read", "am reading"], 0, "Second time con present perfect.");
+  G(GR, "You ___ bring your own pen to the exam. The school provides them.", ["don't have to", "mustn't", "shouldn't"], 0, "Don't have to = no es necesario.");
+  G(GR, "Whatever you decide, I ___ support you.", ["will", "would", "am going"], 0, "Compromiso futuro: will.");
+  G(GR, "The food was so ___ that we ate everything.", ["delicious", "deliciously", "deliciousness"], 0, "Adjetivo tras was.");
+  G(GR, "I'm sorry I ___ your birthday. I was very busy.", ["forgot", "forget", "have forgot"], 0, "Pasado simple para una acción terminada.");
+  G(GR, "The lift ___ out of order, so we took the stairs.", ["was", "is", "were been"], 0, "Pasado de is: was.");
+
+  const RD = "PET · Reading";
+  R(RD, "Ben has been working at the bakery for two years. He gets up at five every morning to bake bread before the shop opens.", "What time does Ben get up?", ["At five", "At seven", "At nine"], 0, "A las cinco.");
+  R(RD, "Visitors are reminded that photography is not allowed inside the museum. Please leave your bags in the lockers near the entrance.", "What must visitors do with their bags?", ["Put them in the lockers", "Take them inside", "Leave them outside"], 0, "Dejarlas en las taquillas.");
+  R(RD, "Lara wanted to learn to surf, so she booked three lessons. On the first day she fell into the water many times, but she was determined to continue.", "How did Lara feel about the lessons?", ["Bored", "Determined", "Angry"], 1, "Decidida a continuar.");
+  R(RD, "The new train line will reduce the journey time between the two cities by half. Work will begin next spring.", "When will the work start?", ["Next spring", "Last year", "Next winter"], 0, "La próxima primavera.");
+  R(RD, "Dear Mrs Lee, thank you for your letter. Unfortunately, the course is full this term, but we will add your name to the waiting list.", "What will the school do with the letter writer's name?", ["Add it to a waiting list", "Delete it", "Send it to another school"], 0, "Lista de espera.");
+  R(RD, "Many people think that cycling to work is dangerous. However, a recent study showed that cyclists in cities are safer than they expected.", "What did the study show?", ["Cycling is more dangerous", "Cyclists are safer than expected", "Nobody cycles to work"], 1, "Los ciclistas son más seguros de lo esperado.");
+  R(RD, "The festival has music on four stages this year. Tickets for the main stage sold out within an hour, but there are still some for the smaller stages.", "What is still available?", ["Tickets for the main stage", "Tickets for the smaller stages", "Nothing"], 1, "Entradas para los escenarios pequeños.");
+  R(RD, "Hotel guests can use the pool from seven in the morning until ten at night. Children must be accompanied by an adult at all times.", "What must children do at the pool?", ["Be with an adult", "Swim alone", "Arrive before seven"], 0, "Ir acompañados de un adulto.");
+  R(RD, "Our school trip to the castle was great fun. The guide told us funny stories about the kings who had lived there.", "How did the writer feel about the trip?", ["It was great fun", "It was disappointing", "It was too short"], 0, "Fue muy divertido.");
+  R(RD, "Jenny used to hate maths, but last year a new teacher changed her mind. Now she says it is her favourite subject.", "How does Jenny feel about maths now?", ["She hates it", "It is her favourite subject", "She doesn't study it"], 1, "Es su asignatura favorita.");
+  R(RD, "The company has decided to close its office in London. Staff will be offered jobs in the Manchester branch instead.", "What will happen to the staff?", ["They will be offered jobs in Manchester", "They will be fired", "They will move to London"], 0, "Ofrecerán trabajo en Manchester.");
+  R(RD, "A man who lives in our village has saved a dog from the river. The dog is now living happily with his family.", "What happened to the dog?", ["It is living with a family", "It drowned", "It ran away"], 0, "Vive feliz con una familia.");
+  R(RD, "Tips for a good night's sleep: avoid coffee after lunch, switch off your phone an hour before bed, and keep your room cool.", "What should you do an hour before bed?", ["Drink coffee", "Switch off your phone", "Exercise"], 1, "Apagar el móvil.");
+  R(RD, "The shop is having a sale this week. Everything in the summer section is half price, and you can get a free bag with purchases over fifty euros.", "What do you get free with purchases over fifty euros?", ["A bag", "A T-shirt", "A discount card"], 0, "Una bolsa.");
+  R(RD, "Sam has never been abroad, but he has started learning French. He hopes to visit Paris next year with his friends.", "What does Sam hope to do next year?", ["Visit Paris", "Move to France", "Learn Spanish"], 0, "Visitar París.");
+  R(RD, "Our flight was cancelled because of the fog. The airline offered us a hotel for the night and a free meal.", "What did the airline offer?", ["A hotel and a meal", "A refund only", "A new flight tomorrow"], 0, "Hotel y comida.");
+  R(RD, "Please note that the library will be closed next Monday for maintenance. Books can be returned on Tuesday.", "When can books be returned?", ["On Monday", "On Tuesday", "On Sunday"], 1, "El martes.");
+  R(RD, "Olivia loves painting. She has been to art classes since she was seven, and last month her picture won a prize.", "What happened last month?", ["She won a prize", "She stopped painting", "She moved abroad"], 0, "Ganó un premio.");
+  R(RD, "The town council wants to build a new park near the river. Local people are invited to a meeting next week to share their ideas.", "What are local people invited to do?", ["Share their ideas", "Pay for the park", "Move away"], 0, "Compartir sus ideas.");
+  R(RD, "Thomas started his own business after university. At first it was difficult, but now he has five employees and a busy shop.", "How many employees does Thomas have?", ["Three", "Five", "Ten"], 1, "Cinco.");
+  R(RD, "Remember that the school photo will be taken on Thursday morning. Students should wear their uniform and arrive on time.", "What should students wear for the photo?", ["Their uniform", "Sports clothes", "Their own clothes"], 0, "El uniforme.");
+  R(RD, "My cousin lives in a small village in the mountains. He says the air is fresh, but there are very few shops nearby.", "What is a disadvantage of his village?", ["There are few shops", "The air is dirty", "It is too big"], 0, "Pocas tiendas.");
+  R(RD, "Hannah is nervous about her driving test on Friday. Her instructor says she is ready and that she should relax.", "How does Hannah feel?", ["Nervous", "Relaxed", "Bored"], 0, "Nerviosa.");
+  R(RD, "The new software is easy to use, but it needs an update before it works on older computers. The company will release it in October.", "When will the update be released?", ["In October", "Next week", "Never"], 0, "En octubre.");
+  R(RD, "When we arrived at the beach, it had already started raining, so we went to the cinema instead.", "Why did they go to the cinema?", ["It was raining", "The beach was closed", "They were tired"], 0, "Llovía.");
+  R(RD, "Maria applied for the job last month. She has been waiting for a reply ever since, and she is starting to lose hope.", "How does Maria feel now?", ["Hopeful", "Less hopeful", "Excited"], 1, "Menos esperanzada.");
+
+  const LI = "PET · Listening";
+  L(LI, "Man: Have you decided what to do at the weekend? Woman: We're going to the coast, if the weather is nice.", "What will they do at the weekend?", ["Go to the coast", "Stay at home", "Visit relatives"], 0, "Ir a la costa.");
+  L(LI, "Woman: The bus was late again this morning. Man: That's the third time this week. You should complain to the company.", "What does the man suggest?", ["Complaining to the company", "Taking a taxi", "Walking to work"], 0, "Quejarse a la empresa.");
+  L(LI, "Girl: Did you enjoy the concert? Boy: It was amazing, but the sound system was too loud for my ears.", "What did the boy think of the concert?", ["It was amazing but too loud", "It was boring", "He didn't go"], 0, "Increíble pero muy alto.");
+  L(LI, "Man: Could you pick up some bread on your way home? Woman: Sure, but the bakery closes at six.", "When does the bakery close?", ["At six", "At five", "At seven"], 0, "A las seis.");
+  L(LI, "Woman: Shall we book a table for eight? Man: Let's make it half past seven, because my sister has a class at eight.", "What time will they eat?", ["At half past seven", "At eight", "At seven"], 0, "A las siete y media.");
+  L(LI, "Boy: I think I've left my umbrella on the train. Girl: You should call the lost property office.", "What should the boy do?", ["Call the lost property office", "Buy a new umbrella", "Go home"], 0, "Llamar a objetos perdidos.");
+  L(LI, "Man: I've applied for a job at the hospital. Woman: That's great! When will you find out?", "When will the man find out?", ["Next week", "Today", "Next year"], 0, "La semana que viene.");
+  L(LI, "Girl: Our team lost the match yesterday. Boy: It's not the end of the season. We can still win the league.", "How does the boy feel about the team?", ["Hopeful", "Angry", "Bored"], 0, "Esperanzado.");
+  L(LI, "Woman: I'm thinking of studying abroad next year. Man: Really? Which country? Woman: Probably Canada, because I want to improve my English.", "Why does the woman want to go to Canada?", ["To improve her English", "To find a job", "To visit family"], 0, "Para mejorar su inglés.");
+  L(LI, "Boy: The museum has a new exhibition about space. Girl: I'd like to see it, but tickets are expensive on weekends.", "What is the girl's problem?", ["Tickets are expensive on weekends", "The museum is closed", "The exhibition is boring"], 0, "Las entradas son caras los fines de semana.");
+  L(LI, "Man: Excuse me, is this seat taken? Woman: No, please sit down. The train is very crowded today.", "What does the woman say about the train?", ["It is very crowded", "It is empty", "It is late"], 0, "Muy llena.");
+  L(LI, "Girl: I'm going to start going to the gym. Mum: That's a good idea. Try to go three times a week.", "How often does the mum suggest going?", ["Three times a week", "Every day", "Once a month"], 0, "Tres veces por semana.");
+  L(LI, "Woman: Did you water the plants while I was away? Man: Yes, but I forgot the one in the bathroom.", "Which plant did the man forget?", ["The one in the bathroom", "The one in the garden", "All of them"], 0, "El del baño.");
+  L(LI, "Man: Why are you so late? Girl: Sorry, the road was closed because of an accident.", "Why is the girl late?", ["The road was closed", "She overslept", "The bus broke down"], 0, "Carretera cortada.");
+  L(LI, "Boy: My grandparents are coming to stay next month. Girl: Oh nice! Will they stay in your room?", "What does the girl ask?", ["Whether the grandparents will stay in the boy's room", "Where the bathroom is", "When they arrive"], 0, "Pregunta si se quedarán en la habitación del chico.");
+  L(LI, "Woman: What's the best way to learn new words? Man: I write them in a notebook and review them every evening.", "What does the man do to learn words?", ["Writes them and reviews them", "Listens to music", "Uses a dictionary only"], 0, "Los escribe y repasa.");
+  L(LI, "Girl: Did you see the new art gallery? Boy: Yes, it's in the old factory. The building is beautiful.", "Where is the art gallery?", ["In an old factory", "In a new building", "Next to the station"], 0, "En una antigua fábrica.");
+  L(LI, "Man: Can we move the meeting to Friday? Woman: I'm afraid I'm busy then, but Thursday afternoon would be fine.", "When can the woman meet?", ["Thursday afternoon", "Friday", "Friday morning"], 0, "El jueves por la tarde.");
+  L(LI, "Boy: I've finally finished my project. Mum: Well done! You must be very relieved.", "How does the boy probably feel?", ["Relieved", "Worried", "Confused"], 0, "Aliviado.");
+  L(LI, "Woman: Do you know where the printer is? Man: It's on the second floor, but it's been broken since Monday.", "What is the problem with the printer?", ["It has been broken since Monday", "It is missing", "It is too slow"], 0, "Roto desde el lunes.");
+  L(LI, "Girl: I'd like to adopt a cat. Dad: Let's talk about it after your exams, when you have more time.", "When does the dad want to talk about it?", ["After the exams", "Tomorrow", "Never"], 0, "Después de los exámenes.");
+  L(LI, "Man: The shop was full of people. Woman: It's always busy before Christmas. We should have gone earlier.", "Why was the shop busy?", ["It was before Christmas", "It was a holiday", "There was a sale on Monday"], 0, "Antes de Navidad.");
+  L(LI, "Boy: How long does it take to get to the airport? Woman: About forty minutes by car, but you should allow an hour during rush hour.", "How long should you allow during rush hour?", ["One hour", "Forty minutes", "Two hours"], 0, "Una hora.");
+  L(LI, "Girl: Where did you go on holiday? Man: We went to the mountains. It was cold, but the views were incredible.", "What was the weather like?", ["Cold", "Hot", "Rainy"], 0, "Frío.");
+  L(LI, "Woman: I think we should repaint the living room. Man: Good idea, but let's wait until next summer when we have more money.", "When does the man want to repaint?", ["Next summer", "Tomorrow", "Now"], 0, "El próximo verano.");
+
+  G(GR, "The report ___ by the team before the deadline.", ["had been finished", "has finished", "finished"], 0, "Pasiva perfecta para algo anterior a otro momento del pasado.");
+  G(GR, "I'd like to know ___ the train leaves.", ["when", "what time is", "that"], 0, "Pregunta indirecta con when.");
+  G(GR, "She is taller ___ her mother.", ["than", "that", "as"], 0, "Comparativo: taller than.");
+  G(GR, "Neither my brother ___ my parents like spicy food.", ["nor", "or", "neither"], 0, "Neither ... nor.");
+  G(GR, "He told me he ___ to Paris the following week.", ["would go", "will go", "goes"], 0, "Estilo indirecto: will → would.");
+  G(GR, "Unless you hurry, you ___ the bus.", ["will miss", "miss", "would miss"], 0, "Primer condicional con unless.");
+  G(GR, "I ___ my glasses. I can't see the board.", ["have lost", "lost", "am losing"], 0, "Resultado presente: present perfect.");
+  G(GR, "We are going to ___ the old house next year.", ["renovate", "renovated", "renovation"], 0, "Verbo base tras going to.");
+  G(GR, "The film was so ___ that I fell asleep.", ["boring", "bored", "boringly"], 0, "Adjetivo -ing para describir la causa.");
+  G(GR, "She ___ in this company since 2015.", ["has worked", "worked", "is working"], 0, "Since + present perfect.");
+  R(RD, "Last week the council announced that the swimming pool will reopen after three months of repairs. The new pool will have a larger children's area.", "What will the new pool have?", ["A larger children's area", "A restaurant", "A car park"], 0, "Una zona infantil más grande.");
+  R(RD, "Although Peter is only twelve, he already knows how to cook several dishes. He often helps his grandmother in the kitchen on Sundays.", "When does Peter help his grandmother?", ["On Sundays", "Every day", "On holidays"], 0, "Los domingos.");
+  R(RD, "Customers who return a product within thirty days can get a full refund. The receipt must be shown at the till.", "What must customers show to get a refund?", ["The receipt", "The product box", "A bank card"], 0, "El recibo.");
+  L(LI, "Man: Did you remember to send the email? Woman: Yes, I sent it this morning, before the meeting.", "When did the woman send the email?", ["This morning", "Last night", "After the meeting"], 0, "Esta mañana.");
+  L(LI, "Girl: Why don't we go to the new Italian restaurant? Boy: That's a good idea, but I think it's fully booked on Friday.", "Why can't they go on Friday?", ["It's fully booked", "It's closed", "It's too expensive"], 0, "Está completo.");
+  L(LI, "Woman: Our train was cancelled. Man: Don't worry, the next one leaves in twenty minutes from platform four.", "Which platform is the next train?", ["Platform four", "Platform two", "Platform nine"], 0, "Andén cuatro.");
+  L(LI, "Boy: I'm really looking forward to the summer holidays. Girl: Me too. I'm planning to read lots of books.", "What is the girl planning to do?", ["Read lots of books", "Work in a shop", "Study maths"], 0, "Leer muchos libros.");
+
+  G(GR, "She told me she ___ never been to Italy.", ["had", "has", "have"], 0, "Estilo indirecto: had.");
+  G(GR, "If you ___ harder, you would pass the exam.", ["studied", "study", "will study"], 0, "Condicional 2 con studied.");
+  R(RD, "The concert was postponed because the lead singer had lost her voice. Tickets will be valid for the new date.", "Why was the concert postponed?", ["The singer lost her voice", "The venue was closed", "The tickets were sold out"], 0, "La cantante perdió la voz.");
+  L(LI, "Man: Have you finished reading the novel? Woman: Not yet, but I'm nearly at the end.", "How far has the woman read?", ["Nearly to the end", "Halfway", "She has not started"], 0, "Casi al final.");
+  G(GR, "The guests ___ arrived by the time we got to the hotel.", ["had", "have", "has"], 0, "Pasado perfecto para una acción anterior.");
+  ITEMS.push(...out);
+})();
+
+/* 100 ejercicios nuevos de nivel B2 (originales, al estilo de FCE):
+   gramática y vocabulario, lectura con inferencia, escucha y reformulación. */
+(function () {
+  const out = [];
+  const LV = "B2";
+  function push(o) {
+    o.level = LV;
+    if (ITEMS.concat(out).some(x => x.level === LV && x.q === o.q && (x.passage || x.audio || "") === (o.passage || o.audio || ""))) return; /* sin duplicados */
+    /* Reparte la respuesta correcta entre las posiciones (no siempre la primera) */
+    if (o.options && o.options.length > 1) {
+      const n = o.options.length, k = out.length % n;
+      o.options = o.options.slice(k).concat(o.options.slice(0, k));
+      o.answer = (o.answer - k + n) % n;
+    }
+    out.push(o);
+  }
+  function G(part, q, o, a, e) { push({ type: "grammar", q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function R(part, pass, q, o, a, e) { push({ type: "reading", passage: pass, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function L(part, audio, q, o, a, e) { push({ type: "listening", audio: audio, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function T(part, q, hint, acc, e) { push({ type: "rephrase", q: q, hint: hint, accepted: acc, explain: part + ": " + e, part: part }); }
+
+  const GR = "FCE · Use of English";
+  G(GR, "I'd rather you ___ say anything until we know the facts.", ["didn't", "don't", "wouldn't"], 0, "I'd rather + pasado simple: didn't.");
+  G(GR, "The package ___ to have arrived by now, but it hasn't.", ["ought", "is", "gets"], 0, "Ought to + infinitivo con to.");
+  G(GR, "She ___ up smoking last year after a long struggle.", ["gave", "left", "stopped on"], 0, "Give up + -ing.");
+  G(GR, "Despite ___ exhausted, she kept going.", ["being", "to be", "she was"], 0, "Despite + -ing.");
+  G(GR, "The manager insisted ___ the report before Friday.", ["on the team finishing", "the team finishes", "the team to finish"], 0, "Insist on + -ing.");
+  G(GR, "Had they ___ the warning, they would have avoided the accident.", ["heeded", "heed", "heeding"], 0, "Tercer condicional con inversión: had heeded.");
+  G(GR, "The new policy will come ___ effect next month.", ["into", "in", "to"], 0, "Come into effect.");
+  G(GR, "I'm not ___ to working late every night.", ["used", "accustomed for", "use"], 0, "Be used to + -ing.");
+  G(GR, "The town ___ a significant change since I last visited.", ["has undergone", "has gone under", "has underwent"], 0, "Undergo a change: has undergone.");
+  G(GR, "It's high time we ___ a decision about the budget.", ["made", "make", "will make"], 0, "It's high time + pasado simple.");
+  G(GR, "Not only ___ the exam, but she also got the top grade.", ["did she pass", "she passed", "she did pass"], 0, "Inversión tras not only.");
+  G(GR, "He is ___ to be the best candidate for the job.", ["likely", "probable", "possibly"], 0, "Be likely to.");
+  G(GR, "The results ___ far more positive than the experts had predicted.", ["were", "was", "are"], 0, "Results en plural: were.");
+  G(GR, "If it ___ for the storm, we would have arrived on time.", ["hadn't been", "wasn't", "weren't"], 0, "Tercer condicional con it: hadn't been.");
+  G(GR, "She is ___ to attend the conference, but she has other commitments.", ["supposed", "suppose", "supposing"], 0, "Be supposed to.");
+  G(GR, "The hotel was ___ to the beach, which made it very convenient.", ["close", "closely", "closer than"], 0, "Close to.");
+  G(GR, "Do you mind ___ the window? It's freezing in here.", ["closing", "to close", "close"], 0, "Mind + -ing.");
+  G(GR, "The meeting was ___ off because the speaker was ill.", ["called", "put", "taken"], 0, "Call off = cancelar.");
+  G(GR, "She has a ___ for getting lost in new cities.", ["habit", "custom to", "practice"], 0, "Have a habit of: habit.");
+  G(GR, "The proposal was ___ down by the committee.", ["turned", "pulled", "put"], 0, "Turn down = rechazar.");
+  G(GR, "He ___ the chance to study abroad because of his family.", ["passed up", "gave away on", "set off"], 0, "Pass up = dejar pasar una oportunidad.");
+  G(GR, "The team ___ the opposition by three goals to one.", ["beat", "won over of", "defeated to"], 0, "Beat someone = vencer.");
+  G(GR, "Scarcely ___ the door when the phone started ringing.", ["had she closed", "she had closed", "did she close"], 0, "Scarcely + inversión.");
+  G(GR, "I ___ a lot of time on this project, so I'm glad it's finished.", ["have spent", "spent", "have been spending"], 0, "Present perfect para una experiencia reciente con resultado.");
+  G(GR, "It was ___ the best film I've seen this year.", ["by far", "far by", "far more"], 0, "By far + superlativo.");
+  G(GR, "She wouldn't have got the job ___ her excellent references.", ["without", "unless", "despite"], 0, "Without + sustantivo.");
+  G(GR, "The bridge is ___ repair, so drivers should take another route.", ["under", "in", "on"], 0, "Under repair.");
+  G(GR, "They made ___ that the project would be finished on time.", ["sure", "certain of", "safe"], 0, "Make sure that.");
+  G(GR, "He is ___ to be a very talented musician.", ["said", "told", "spoken"], 0, "Be said to be.");
+  G(GR, "She ___ her temper when the waiter spilled the coffee.", ["lost", "missed", "dropped"], 0, "Lose one's temper.");
+  G(GR, "We ___ a lot of progress in the last few months.", ["have made", "did", "have done"], 0, "Make progress.");
+  G(GR, "The festival ___ place every year in the autumn.", ["takes", "is taken", "takes on"], 0, "Take place = tener lugar.");
+  G(GR, "I wish I ___ the answer to that question yesterday.", ["had known", "knew", "would know"], 0, "Lamentar algo del pasado: had known.");
+  G(GR, "He ___ his time in the library studying for the exam.", ["spent", "passed", "lost"], 0, "Spend time + -ing.");
+
+  const RD = "FCE · Reading";
+  R(RD, "Many people assume that the decline in bee populations only affects honey production. In fact, bees pollinate around a third of the food we eat, so the consequences are far more serious.", "What is the writer's main point?", ["Bees only produce honey", "The loss of bees affects much more than honey", "Bees are not important"], 1, "Afecta mucho más que la miel.");
+  R(RD, "The museum's new director has promised to make the collection more accessible. Ticket prices will be reduced for students, and guided tours will be offered in several languages.", "What change is planned for students?", ["Free tours", "Lower ticket prices", "Longer opening hours"], 1, "Entradas más baratas.");
+  R(RD, "Few people realise how much planning goes into a successful festival. Organisers often begin work two years in advance, negotiating with artists and securing funding.", "According to the text, when do organisers start planning?", ["Two years before", "Two months before", "On the day"], 0, "Dos años antes.");
+  R(RD, "Critics argue that the new law will do little to reduce traffic. They claim that without better public transport, drivers will simply continue to use their cars.", "What do the critics say?", ["The law will reduce traffic", "Drivers will continue using cars", "Public transport is excellent"], 1, "Seguirán usando el coche.");
+  R(RD, "When Lena first moved abroad, she struggled to make friends. Gradually, by joining a choir and volunteering at a local shelter, she built a network she now considers her second family.", "How did Lena make friends?", ["By joining a choir and volunteering", "By studying at a university", "By moving back home"], 0, "Coro y voluntariado.");
+  R(RD, "The company's profits fell sharply last year, yet its share price rose. Analysts attribute this to investors' confidence in the new product range.", "Why did the share price rise?", ["Profits increased", "Investors trusted the new products", "The company sold its factories"], 1, "Confianza en la nueva gama.");
+  R(RD, "Although the novel was initially rejected by twelve publishers, it went on to become a bestseller and was translated into over thirty languages.", "What happened to the novel in the end?", ["It was rejected by all publishers", "It became a bestseller", "It was never published"], 1, "Se convirtió en un superventas.");
+  R(RD, "Researchers have found that people who sleep fewer than six hours a night are more likely to make errors at work. The study, however, did not account for shift patterns.", "What limitation does the study have?", ["It did not consider shift patterns", "It involved only children", "It measured sleep in hours"], 0, "No tuvo en cuenta los turnos.");
+  R(RD, "The village had been almost abandoned until a group of young artists moved in. Within a few years, galleries and cafés had opened, and tourists began to visit.", "What brought tourists to the village?", ["Its new galleries and cafés", "A new railway", "A famous monument"], 0, "Galerías y cafés.");
+  R(RD, "Fitness experts recommend that people should not focus solely on running. Strength training and flexibility exercises are equally important for long-term health.", "What do experts say about running?", ["It is the only exercise needed", "It should be combined with other exercise", "It is harmful"], 1, "Combinarlo con otros ejercicios.");
+  R(RD, "The article examines how social media has changed the way young people form opinions. While some benefits are clear, the author warns against accepting information without checking it.", "What does the author warn against?", ["Using social media at all", "Accepting information without checking", "Forming opinions"], 1, "Aceptar información sin comprobarla.");
+  R(RD, "Tourists are advised to book accommodation early during the summer season. Prices rise quickly and popular hotels often sell out weeks in advance.", "Why should tourists book early?", ["Prices rise and hotels sell out", "Hotels close in summer", "Flights are cheaper"], 0, "Los precios suben y se llenan.");
+  R(RD, "The school has introduced a new reading scheme. Pupils who read for at least thirty minutes a day receive a certificate, which many of them display proudly in their classrooms.", "What do pupils receive for reading?", ["A certificate", "Money", "Extra holidays"], 0, "Un certificado.");
+  R(RD, "The scientist admitted that her early hypothesis had been wrong. Instead of hiding the results, she published them and invited other researchers to challenge her conclusions.", "What did the scientist do with her results?", ["She hid them", "She published them", "She destroyed them"], 1, "Los publicó.");
+  R(RD, "Living in a big city has many advantages, but it can also be expensive and stressful. Many residents now choose to live on the outskirts and commute by train.", "Why do some residents live outside the city?", ["It is cheaper and less stressful", "They are not allowed to live in the centre", "The trains are free"], 0, "Más barato y menos estrés.");
+  R(RD, "Although the painting was attributed to a famous artist for decades, recent tests suggest that it was produced by one of his students.", "What do recent tests suggest?", ["The painting is by the famous artist", "The painting was made by a student", "The painting is a fake from the 20th century"], 1, "Lo hizo un alumno.");
+  R(RD, "Employees who work from home often report feeling more productive, but some miss the social contact of the office. Many companies now offer a mix of both.", "What do many companies offer now?", ["Only office work", "A mix of home and office work", "Only home working"], 1, "Mezcla de ambos.");
+  R(RD, "The mountain village can only be reached by a narrow road that is closed in winter. Its residents rely on helicopters for emergencies.", "How do residents deal with emergencies in winter?", ["They use helicopters", "They walk to town", "They wait for spring"], 0, "Helicópteros.");
+  R(RD, "The actor said he had never expected the role to change his career. Since the film was released, he has received offers from directors all over the world.", "What has happened since the film was released?", ["He has received offers worldwide", "He has retired", "He has stopped acting"], 0, "Ofertas de todo el mundo.");
+  R(RD, "Local farmers have started selling their produce directly to customers. This has reduced costs and allowed the farmers to keep a larger share of the profits.", "What is one benefit for farmers?", ["They keep more profit", "They must pay more tax", "They need fewer customers"], 0, "Se quedan con más beneficio.");
+  R(RD, "The committee's report praised the city's efforts to reduce waste, but it criticised the lack of recycling bins in poorer neighbourhoods.", "What did the committee criticise?", ["Lack of recycling bins in poorer areas", "The cost of waste collection", "The number of parks"], 0, "Falta de contenedores en barrios pobres.");
+
+  const LI = "FCE · Listening";
+  L(LI, "Woman: I was sure the new restaurant would be busy, but it was almost empty. Man: Perhaps people are put off by the prices.", "What does the man suggest?", ["People think it's too expensive", "The food is poor", "It's closed on weekends"], 0, "Los precios disuaden.");
+  L(LI, "Man: Are you going to apply for the scholarship? Woman: I'd like to, but the application deadline is so close that I'm not sure I'll manage it.", "How does the woman feel about the scholarship?", ["She is unsure she can meet the deadline", "She has already been accepted", "She doesn't want it"], 0, "Duda que llegue al plazo.");
+  L(LI, "Woman: The team has been working around the clock, but the client still isn't happy. Man: Maybe we should ask them what they actually need.", "What does the man suggest?", ["Asking the client what they need", "Working faster", "Stopping the project"], 0, "Preguntar al cliente.");
+  L(LI, "Boy: I can't believe the film won best picture. Girl: I know, it was a surprise, but I thought the acting was excellent.", "What does the girl think of the film?", ["The acting was excellent", "It was too long", "It was badly made"], 0, "La interpretación era excelente.");
+  L(LI, "Man: Shall we go hiking this weekend? Woman: It depends on the forecast. If it's going to rain, let's do something indoors.", "What will they do if it rains?", ["Do something indoors", "Go hiking anyway", "Cancel the trip forever"], 0, "Algo en interiores.");
+  L(LI, "Girl: My sister has been offered a promotion, but it means moving abroad. Boy: That's a big decision. Has she decided yet?", "What is the girl's sister considering?", ["A promotion that involves moving abroad", "A new car", "Retiring early"], 0, "Un ascenso con traslado al extranjero.");
+  L(LI, "Woman: The repairs should have been finished by now. Man: I know. The contractors keep blaming the weather, but I suspect they're just behind schedule.", "What does the man suspect?", ["The contractors are behind schedule", "The weather is very bad", "The repairs are complete"], 0, "Van retrasados.");
+  L(LI, "Man: I'm not convinced the new policy will work. Woman: Give it time. Changes like this usually take a while to show results.", "What is the woman's attitude to the policy?", ["She thinks it needs time", "She is sure it will fail", "She wants it cancelled"], 0, "Necesita tiempo.");
+  L(LI, "Girl: Did you know the library is extending its opening hours? Boy: Really? That will be a relief during exam season.", "Why is the boy pleased?", ["It will help during exam season", "The library is cheaper", "He lives next to it"], 0, "Ayuda en época de exámenes.");
+  L(LI, "Woman: I've been trying to get through to the bank all morning. Man: Have you tried the online chat? It's often quicker than the phone line.", "What does the man recommend?", ["Using the online chat", "Visiting the bank", "Calling again later"], 0, "Chat en línea.");
+  L(LI, "Boy: We should have checked the weather before we set off. Girl: True, but we didn't expect the fog to be so thick.", "What do they regret?", ["Not checking the weather", "Choosing the wrong route", "Bringing too much food"], 0, "No mirar el tiempo.");
+  L(LI, "Man: The festival was a huge success, wasn't it? Woman: It was, though I think the organisers underestimated the number of visitors.", "What does the woman think about the organisers?", ["They underestimated visitor numbers", "They were very well prepared", "They cancelled the festival"], 0, "Subestimaron el número de visitantes.");
+  L(LI, "Girl: I've finally decided to take up painting. Boy: Good for you! It's a great way to relax after work.", "Why does the boy support the girl's decision?", ["Painting relaxes people", "It is very profitable", "It is easy to learn"], 0, "Relaja.");
+  L(LI, "Woman: I wouldn't have bought the car if I'd known how expensive the insurance was. Man: Yes, it's a lot more than I expected too.", "How does the woman feel about the car?", ["She regrets buying it", "She is delighted with it", "She has sold it"], 0, "Se arrepiente.");
+  L(LI, "Man: The new manager seems very strict. Woman: At first, perhaps, but she's fair and she listens to everyone's ideas.", "What is the woman's opinion of the manager?", ["She is fair and listens", "She is unfair and rude", "She is too lazy"], 0, "Es justa y escucha.");
+  L(LI, "Boy: Do you think I should study medicine or engineering? Girl: Whatever you choose, you need to be passionate about it, or it will be a struggle.", "What does the girl advise?", ["To choose what he is passionate about", "To choose medicine", "To choose the easier course"], 0, "Elegir lo que le apasiona.");
+  L(LI, "Woman: The concert was cancelled at the last minute. Man: That's disappointing, but at least they'll refund the tickets.", "How does the man feel?", ["Disappointed but relieved about the refund", "Excited", "Angry with the band"], 0, "Decepcionado pero aliviado.");
+  L(LI, "Girl: Why did you change your mind about the holiday? Man: The flights became much more expensive, so we decided to stay closer to home.", "Why did the man change his plans?", ["The flights became more expensive", "The hotel closed", "His friends cancelled"], 0, "Los vuelos subieron.");
+
+  const TR = "FCE · Use of English";
+  T(TR, "Rewrite: 'It's a pity I didn't study harder.' → 'I wish I ___ harder.'", "Lamentar algo pasado: wish + pasado perfecto.", ["had studied"], "Wish + pasado perfecto para lamentar el pasado.");
+  T(TR, "Rewrite: 'You should have told me earlier.' → 'I wish you ___ me earlier.'", "Pasado perfecto tras wish.", ["had told"], "Wish + had + participio.");
+  T(TR, "Rewrite: 'The shop is open until midnight.' → 'The shop stays ___ midnight.'", "Expresión con «open» → «open until».", ["open until", "open till"], "Stay open until.");
+  T(TR, "Complete: 'Although it was expensive, we bought it.' → 'In ___ its price, we bought it.'", "Expresión: despite + sustantivo.", ["spite of", "spite"], "In spite of = a pesar de.");
+  T(TR, "Rewrite: 'He is so clever that he understands everything.' → 'He is ___ clever that he understands everything.'", "Estructura: such/so + adjetivo.", ["so"], "So + adjetivo + that.");
+  T(TR, "Complete: 'I didn't have time to finish the report.' → 'I ran out ___ time to finish the report.'", "Preposición tras «run out».", ["of"], "Run out of = quedarse sin.");
+
+  G(GR, "The authors ___ that the figures had been manipulated.", ["claimed", "claimed about", "claimed of"], 0, "Claim + that.");
+  G(GR, "Were it not ___ the rain, we would have gone for a walk.", ["for", "to", "of"], 0, "Were it not for = si no fuera por.");
+  G(GR, "When we arrived at the station, the train ___ already left.", ["had", "has", "was"], 0, "Pasado perfecto para algo anterior a otro pasado.");
+  G(GR, "It's no use ___ to him; he never listens.", ["arguing", "to argue", "argue"], 0, "It's no use + -ing.");
+  G(GR, "The hotel offers ___ views of the mountains.", ["stunning", "stunningly", "stun"], 0, "Adjetivo ante sustantivo.");
+  G(GR, "I'm afraid I ___ with you on this point.", ["disagree", "disagreed", "am disagree"], 0, "Presente simple con I.");
+  G(GR, "By next year, the company ___ its headquarters to Berlin.", ["will have moved", "will move", "has moved"], 0, "Futuro perfecto con by next year.");
+  G(GR, "He was accused ___ stealing the money.", ["of", "for", "about"], 0, "Accuse someone of + -ing.");
+  G(GR, "The more carefully you plan, ___ mistakes you will make.", ["the fewer", "the less", "fewer"], 0, "The fewer + contables.");
+  G(GR, "They were ___ to leave the building immediately.", ["instructed", "instructed to", "instruct"], 0, "Be instructed to + infinitivo.");
+  R(RD, "Many cities are experimenting with car-free zones. Early results suggest that air quality improves, although shop owners often worry about losing customers.", "What do shop owners often worry about?", ["Losing customers", "Pollution", "Rising rents"], 0, "Perder clientes.");
+  R(RD, "The discovery of the tomb was accidental. A workman digging a foundation hit a stone slab that turned out to cover the entrance.", "How was the tomb found?", ["By accident", "After years of research", "Through satellite images"], 0, "Por accidente.");
+  R(RD, "Critics have accused the film of being too sentimental. Its defenders, however, argue that its emotional honesty is precisely what makes it powerful.", "What do the film's defenders say?", ["It is emotionally honest", "It is too long", "It is badly acted"], 0, "Es emocionalmente honesta.");
+  R(RD, "Fewer young people are learning to drive than in previous decades. Some experts blame the high cost of lessons, while others point to the growth of public transport.", "What is one reason experts give?", ["The high cost of lessons", "Driving has been banned", "Cars are too cheap"], 0, "El coste de las clases.");
+  R(RD, "The restaurant's menu changes every month to reflect what is in season. Customers say this keeps the dishes fresh and gives them a reason to return.", "Why do customers like the menu?", ["It stays fresh and gives a reason to return", "It is cheap", "It has many desserts"], 0, "Se mantiene fresco y anima a volver.");
+  R(RD, "Archaeologists believe the settlement was abandoned after a long drought. Pottery found on the site suggests that its inhabitants moved south.", "What do archaeologists think caused the abandonment?", ["A long drought", "A war", "An earthquake"], 0, "Una larga sequía.");
+  L(LI, "Man: I've read the contract three times and I still don't understand clause five. Woman: Let's ask the lawyer to explain it before we sign anything.", "What does the woman suggest?", ["Asking the lawyer to explain it", "Signing it immediately", "Ignoring clause five"], 0, "Pedir al abogado que lo explique.");
+  L(LI, "Girl: Do you think the company will hire more staff this year? Boy: Possibly, but I'd expect them to wait until the figures improve.", "What does the boy think?", ["The company will probably wait", "The company will hire a lot", "The company will close"], 0, "Esperará a que mejoren las cifras.");
+  L(LI, "Woman: The new bridge is much more useful than I expected. Man: It has certainly cut my journey time, but the noise from the traffic is awful.", "What is the man's complaint?", ["Traffic noise", "The journey is too long", "The bridge is unsafe"], 0, "El ruido del tráfico.");
+  L(LI, "Boy: Why are you so quiet? Girl: I've just found out I didn't get the scholarship I applied for.", "Why is the girl quiet?", ["She didn't get the scholarship", "She is tired", "She is angry at the boy"], 0, "No le dieron la beca.");
+  L(LI, "Man: I'd never have guessed that the old factory would become a theatre. Woman: It's remarkable what a bit of imagination can achieve.", "What does the woman think?", ["Imagination can achieve remarkable things", "The factory should be demolished", "Theatres are too expensive"], 0, "La imaginación logra cosas notables.");
+
+  G(GR, "The new road ___ by the time the next election is held.", ["will have been built", "will be built", "has built"], 0, "Futuro perfecto pasivo.");
+  R(RD, "Many employers now value soft skills, such as communication and teamwork, as highly as technical qualifications. Recruiters say these skills are harder to teach.", "Why do recruiters value soft skills?", ["They are harder to teach", "They are cheaper", "They are in fashion"], 0, "Son más difíciles de enseñar.");
+  ITEMS.push(...out);
+})();
+
+/* 100 ejercicios nuevos de nivel C1 (originales, al estilo de CAE):
+   gramática y vocabulario, lectura con inferencia, escucha y reformulación. */
+(function () {
+  const out = [];
+  const LV = "C1";
+  function push(o) {
+    o.level = LV;
+    if (ITEMS.concat(out).some(x => x.level === LV && x.q === o.q && (x.passage || x.audio || "") === (o.passage || o.audio || ""))) return; /* sin duplicados */
+    /* Reparte la respuesta correcta entre las posiciones (no siempre la primera) */
+    if (o.options && o.options.length > 1) {
+      const n = o.options.length, k = out.length % n;
+      o.options = o.options.slice(k).concat(o.options.slice(0, k));
+      o.answer = (o.answer - k + n) % n;
+    }
+    out.push(o);
+  }
+  function G(part, q, o, a, e) { push({ type: "grammar", q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function R(part, pass, q, o, a, e) { push({ type: "reading", passage: pass, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function L(part, audio, q, o, a, e) { push({ type: "listening", audio: audio, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function T(part, q, hint, acc, e) { push({ type: "rephrase", q: q, hint: hint, accepted: acc, explain: part + ": " + e, part: part }); }
+
+  const UE = "CAE · Use of English";
+  G(UE, "Little ___ that the decision would have such far-reaching consequences.", ["did they realise", "they realised", "had they realised"], 0, "Inversión tras little en registro formal.");
+  G(UE, "Had the committee ___ the evidence more carefully, it would have reached a different verdict.", ["examined", "examine", "examining"], 0, "Tercer condicional con inversión: had examined.");
+  G(UE, "The proposal ___ with considerable reluctance by the board.", ["was received", "received", "has been received"], 0, "Pasiva: was received.");
+  G(UE, "She ___ to be the most gifted pianist of her generation.", ["is widely held", "is widely holding", "widely holds"], 0, "Be widely held to be = se considera.");
+  G(UE, "Not until the results ___ published did the scientists speak publicly.", ["were", "had been", "are"], 0, "Not until + pasiva en pasado: were published.");
+  G(UE, "It is essential that every candidate ___ the form before the deadline.", ["submit", "submits", "submitting"], 0, "Subjuntivo tras essential that: forma base.");
+  G(UE, "The negotiations ___ on for months before a settlement was reached.", ["dragged", "were dragged", "had dragged on to"], 0, "Drag on: pasado simple.");
+  G(UE, "He ___ the blame for the failure on his assistant.", ["laid", "lay", "lain"], 0, "Lay the blame on = echar la culpa a.");
+  G(UE, "The council has ___ to the pressure from local residents.", ["given in", "given up", "given out"], 0, "Give in = ceder.");
+  G(UE, "Whatever ___ the outcome, we must accept it with good grace.", ["the", "is", "a"], 0, "Whatever + sustantivo: the outcome.");
+  G(UE, "The directors were ___ aware of the risks involved.", ["fully", "full", "fulfilled"], 0, "Fully aware.");
+  G(UE, "She was ___ to take responsibility for the error.", ["quick", "fast", "fastly"], 0, "Quick to + infinitivo.");
+  G(UE, "Had I ___ about the delay, I would have rearranged the meeting.", ["known", "knew", "know"], 0, "Inversión condicional 3: had known.");
+  G(UE, "The lecture was ___ over our heads.", ["way", "much", "far"], 0, "Go over someone's head: way over our heads.");
+  G(UE, "The article ___ the government for its failure to act.", ["castigates", "castigates on", "castigates of"], 0, "Castigate someone = criticar duramente.");
+  G(UE, "I was ___ to find that the house had already been sold.", ["dismayed", "dismaying", "dismay"], 0, "Adjetivo participial: dismayed.");
+  G(UE, "The lawyer ___ to the court that the evidence had been tampered with.", ["alleged", "alleged about", "alleged of"], 0, "Allege that = alegar que.");
+  G(UE, "The problem ___ in a lack of communication between departments.", ["lies", "lays", "lied"], 0, "The problem lies in = el problema radica en.");
+  G(UE, "He is ___ in the sense that he never says what he really thinks.", ["disingenuous", "disinterested", "unassuming"], 0, "Disingenuous = poco sincero.");
+  G(UE, "The offer was ___ tempting that she accepted it straight away.", ["so", "such", "too"], 0, "So + adjetivo + that.");
+  G(UE, "I would sooner ___ than pretend to agree.", ["resign", "to resign", "resigning"], 0, "Would sooner + verbo base.");
+  G(UE, "The manager is reluctant ___ any changes until the audit is complete.", ["to make", "making", "make"], 0, "Reluctant to + infinitivo.");
+  G(UE, "Her speech was ___ in humour and warmth.", ["laced", "lacked", "lacquered"], 0, "Laced with = impregnado de.");
+  G(UE, "The evidence, ___ in the report, was overwhelming.", ["as summarised", "summarised as", "which summarised"], 0, "Participio reducido: as summarised = tal como se resume.");
+  G(UE, "They ___ the project for lack of funds.", ["shelved", "shelved on", "shelves off"], 0, "Shelve = aparcar.");
+  G(UE, "We had ___ a clear idea of what the client wanted.", ["no", "none", "nothing"], 0, "No + sustantivo.");
+  G(UE, "The director ___ the decision to close the factory.", ["defended", "defended on", "defended for"], 0, "Defend a decision.");
+  G(UE, "I'm ___ the impression that the results are being concealed.", ["under", "over", "in"], 0, "Be under the impression = tener la impresión.");
+  G(UE, "Hardly ___ the first paragraph when she realised it was a forgery.", ["had she read", "she had read", "did she read"], 0, "Hardly + inversión con had.");
+  G(UE, "The rescue team reached the climbers ___ the storm had passed.", ["only after", "only when after", "after only"], 0, "Only after.");
+  G(UE, "The ruling ___ a major shift in the way courts interpret the law.", ["signals", "sighs", "sings"], 0, "Signal a shift.");
+  G(UE, "She ___ the offer, citing her commitments to her family.", ["declined", "declined of", "declined to"], 0, "Decline an offer.");
+  G(UE, "The committee ___ the candidates on the basis of their experience.", ["assessed", "assessed of", "assessed for"], 0, "Assess candidates.");
+  G(UE, "It was a ___ of the situation that nobody had anticipated.", ["complication", "complicate", "complicated"], 0, "Sustantivo: complication.");
+
+  const RD = "CAE · Reading";
+  R(RD, "Some historians contend that the printing press did not so much spread knowledge as concentrate it in the hands of those who could afford to publish. Others counter that its democratising effects were profound, if slow to materialise.", "What do the other historians argue?", ["The printing press had slow but profound democratising effects", "The printing press only benefited the rich", "The printing press was never widely used"], 0, "Efectos democratizadores lentos pero profundos.");
+  R(RD, "The reforestation project has been hailed as a triumph, yet its critics note that the planted species are poorly suited to the local climate and may not survive the next drought.", "What do the critics doubt?", ["That the project was a triumph", "That the planted species will survive", "That the project was funded"], 1, "Que las especies sobrevivan.");
+  R(RD, "Few would dispute that the novel is ambitious. What is less certain is whether its ambition is matched by execution; several chapters, the reviewer suggests, read as though they were written in a hurry.", "What does the reviewer suggest about some chapters?", ["They were carefully revised", "They seem rushed", "They are the best in the book"], 1, "Parecen escritos a toda prisa.");
+  R(RD, "Proponents of the scheme point to its low cost and rapid rollout. Detractors, meanwhile, warn that the savings are illusory once the long-term maintenance expenses are factored in.", "What do the detractors claim?", ["The savings are not real in the long run", "The scheme is too slow", "The scheme is too expensive to launch"], 0, "Los ahorros son ilusorios a largo plazo.");
+  R(RD, "The mayor's decision to pedestrianise the square was initially met with hostility from local traders, many of whom feared a collapse in footfall. Within a year, however, the same traders were lobbying for the restrictions to be extended.", "How did the traders' attitude change?", ["They began to support the restrictions", "They closed their shops", "They campaigned against the mayor"], 0, "Pasaron a apoyar las restricciones.");
+  R(RD, "Whether or not one accepts the author's thesis, the book compels attention. Its central claim, that memory is less a record than a reconstruction, is developed with unusual rigour.", "What does the reviewer say about the book?", ["It is hard to ignore", "It is poorly argued", "It is too short"], 0, "Obliga a prestarle atención.");
+  R(RD, "For decades the region's economy relied on a single industry. The closure of its main plant forced a painful reassessment, and the area's leaders now speak of diversification as a matter of survival.", "What do the area's leaders consider diversification to be?", ["A necessity", "An optional extra", "A failure"], 0, "Una cuestión de supervivencia.");
+  R(RD, "The study's authors are careful not to overstate their findings. They acknowledge that the sample was drawn from a single city and that the results may not generalise to rural populations.", "What limitation do the authors acknowledge?", ["The sample came from one city", "The data was lost", "The findings were overstated"], 0, "La muestra era de una ciudad.");
+  R(RD, "Her early paintings, dismissed by contemporaries as crude, are now displayed in the world's leading galleries. Her later work, by contrast, has rarely been shown outside her homeland.", "How are her later works treated?", ["They are rarely exhibited abroad", "They are sold in every gallery", "They are considered crude"], 0, "Rara vez se exponen fuera de su país.");
+  R(RD, "It would be a mistake to regard the decline of local newspapers as merely a commercial problem. Their disappearance leaves many communities without a shared record of what happens, and without anyone to hold local power to account.", "What is the author's main concern?", ["The loss of accountability in local communities", "The falling profits of newspapers", "The high cost of printing"], 0, "La pérdida de rendición de cuentas.");
+  R(RD, "The festival's programme, though eclectic, was criticised for its lack of coherence. Organisers argued that diversity was the point, a claim that many visitors found unconvincing.", "What did many visitors think of the organisers' claim?", ["They found it unconvincing", "They fully agreed", "They had not read the programme"], 0, "No les convenció.");
+  R(RD, "Economists disagree about whether the rise in automation will destroy jobs or merely transform them. The historical record offers reasons for both optimism and caution.", "What does the historical record offer?", ["Reasons for both optimism and caution", "Clear evidence that jobs will disappear", "Proof that automation has no effect"], 0, "Razones para ser optimistas y cautelosos.");
+  R(RD, "Despite the controversy surrounding his methods, the surgeon's results were undeniably impressive. Few of his peers, however, were willing to adopt the technique without further trials.", "Why were other surgeons hesitant?", ["They wanted more trials before adopting it", "They thought the results were fake", "They disliked the surgeon personally"], 0, "Querían más ensayos.");
+  R(RD, "The minister's speech was notable less for what it said than for what it omitted. Commentators noted the absence of any reference to the spending cuts that had dominated the previous week's headlines.", "What did commentators find notable about the speech?", ["What it left out", "How long it was", "Its humour"], 0, "Lo que omitió.");
+  R(RD, "Language learners often assume that fluency is a matter of vocabulary. In practice, pragmatic competence, knowing when and how to say something, is frequently the decisive factor.", "What does the writer say is often decisive?", ["Pragmatic competence", "A large vocabulary", "Grammar exercises"], 0, "La competencia pragmática.");
+  R(RD, "The team's failure to qualify was blamed on injuries, but a closer examination revealed deeper problems in recruitment and training that had gone unaddressed for years.", "What did a closer examination reveal?", ["Deeper problems in recruitment and training", "Only bad luck with injuries", "The referee was biased"], 0, "Problemas más profundos.");
+
+  const LI = "CAE · Listening";
+  L(LI, "Woman: I'm not sure the committee will accept the revised budget. Man: Perhaps not in its current form, but they may be persuaded if we address their concerns about staffing.", "What does the man suggest?", ["Addressing the staffing concerns", "Withdrawing the budget", "Ignoring the committee"], 0, "Atender preocupaciones de personal.");
+  L(LI, "Man: Honestly, I thought the reviews would be harsher. Woman: They were mixed, but I think the critics were reluctant to dismiss the book entirely.", "What is the woman's view of the reviews?", ["The critics were reluctant to dismiss the book", "They were all very positive", "They were all very harsh"], 0, "Reticentes a descartarlo.");
+  L(LI, "Woman: We've been told the software will be ready by March, but I'm sceptical given how many deadlines have already slipped. Man: Fair point. I'd build in some contingency time.", "What is the man's advice?", ["To build in contingency time", "To trust the March deadline", "To cancel the project"], 0, "Añadir margen de contingencia.");
+  L(LI, "Girl: Didn't you find the second act a bit slow? Boy: I did at first, but in hindsight it sets up the ending rather brilliantly.", "How does the boy now view the second act?", ["It sets up the ending brilliantly", "It was too fast", "It was unnecessary"], 0, "Prepara brillantemente el final.");
+  L(LI, "Man: The mayor's claims about the new bus routes don't stack up. Woman: I agree, but the figures she quoted are technically accurate; it's the conclusions that are misleading.", "What does the woman say about the mayor's figures?", ["They are accurate but the conclusions are misleading", "They are completely false", "They are unavailable"], 0, "Cifras exactas, conclusiones engañosas.");
+  L(LI, "Woman: I'd always assumed he was the one who leaked the story. Man: So had I, until I saw the timestamps on the emails. It really wasn't him.", "What did the man discover?", ["The colleague had not leaked the story", "The colleague was the leak", "The emails were lost"], 0, "El colega no filtró la historia.");
+  L(LI, "Man: The trouble with grand plans is that they rarely survive contact with reality. Woman: True, but they do provide a direction, even if the route changes.", "What is the woman's view of grand plans?", ["They provide direction even if they change", "They always fail", "They should be avoided"], 0, "Dan dirección aunque cambie la ruta.");
+  L(LI, "Woman: Do you really think the government will reverse the decision? Man: I wouldn't bet on it, though public pressure has a way of changing ministers' minds.", "What is the man's attitude?", ["He is doubtful but acknowledges pressure can work", "He is certain of a reversal", "He thinks public pressure is pointless"], 0, "Duda, pero reconoce la presión.");
+  L(LI, "Girl: I'm surprised the museum has decided to charge for entry. Boy: It's a sign of the times, I suppose, though many visitors will feel it's a step backwards.", "How does the boy feel about the decision?", ["It is a step backwards for many visitors", "It is a welcome change", "He hasn't formed an opinion"], 0, "Un paso atrás para muchos.");
+  L(LI, "Man: Do you think the report reflects the true state of the industry? Woman: Only in part. It relies heavily on the companies' own disclosures, which are rarely impartial.", "What is the woman's concern about the report?", ["It relies on biased disclosures", "It is too brief", "It was not published"], 0, "Se basa en declaraciones poco imparciales.");
+  L(LI, "Woman: I've been thinking about whether to take the transfer. Man: You know my view: the offer is generous, but you'd be giving up a lot of stability.", "What does the man think?", ["The offer is generous but stability is lost", "The transfer is a bad idea", "She should take it immediately"], 0, "La oferta es buena pero pierde estabilidad.");
+  L(LI, "Man: Why did the negotiations collapse? Woman: Mainly because neither side was prepared to concede on the question of pensions.", "What caused the collapse?", ["Neither side would concede on pensions", "The venue was unsuitable", "A journalist leaked the terms"], 0, "Ninguno cedía en las pensiones.");
+  L(LI, "Girl: Your presentation was very persuasive. Boy: Thanks, though I suspect the audience was more impressed by the slides than by my argument.", "What does the boy suspect?", ["The slides impressed the audience more than the argument", "The audience was bored", "The slides were badly designed"], 0, "Las diapositivas impresionaron más.");
+  L(LI, "Woman: I'd rather we waited for the test results before making a decision. Man: I understand, but we can't afford to stand still while the market moves.", "What is the man's position?", ["They can't wait while the market moves", "They should wait for the results", "They should abandon the project"], 0, "No pueden esperar.");
+  L(LI, "Boy: I don't see why the council is so keen on the new road. Girl: They'll tell you it's about traffic, but the land it's built on has been earmarked for development for years.", "What does the girl suggest is the real reason?", ["Land for development", "Reducing traffic", "Improving air quality"], 0, "Terrenos para urbanizar.");
+
+  const TR = "CAE · Use of English";
+  T(TR, "Rewrite: 'Although the results were disappointing, the team remained optimistic.' → 'Disappointing ___, the team remained optimistic.'", "Inversión de adjetivo con «though».", ["though the results were", "though results were"], "Disappointing though the results were.");
+  T(TR, "Rewrite: 'I\'m sorry I didn\'t call you.' → 'I ___ not calling you.'", "Usa un verbo que expresa arrepentimiento.", ["regret"], "I regret not calling you.");
+  T(TR, "Rewrite: 'It is possible that the flight will be delayed.' → 'The flight ___ delayed.'", "Probabilidad: may / might.", ["may be", "might be", "could be"], "May / might be.");
+  T(TR, "Rewrite: 'You must not use your phone during the exam.' → 'Using your phone during the exam ___.'", "Prohibición en forma de «is not allowed».", ["is not allowed", "is prohibited", "is forbidden"], "Is not allowed / prohibited / forbidden.");
+  T(TR, "Rewrite: 'I didn't expect such a warm welcome.' → 'Such ___ welcome I hadn't expected.'", "Inversión con «such a».", ["a warm"], "Such a warm welcome.");
+
+  G(UE, "Such ___ the chaos that the police had to close the station.", ["was", "were", "had been"], 0, "Such + was + sustantivo para consecuencia.");
+  G(UE, "The senator ___ to have accepted the bribe, though he denies it.", ["is alleged", "alleges", "is alleging"], 0, "Be alleged to have + participio.");
+  G(UE, "The contract ___ be interpreted in more than one way.", ["is open to", "is open for", "opens to"], 0, "Be open to interpretation.");
+  G(UE, "He ___ his reputation on a single, risky investment.", ["staked", "risked on", "bet of"], 0, "Stake one's reputation on.");
+  G(UE, "I'd have no objection ___ the meeting being moved to Tuesday.", ["to", "for", "at"], 0, "Have no objection to + -ing.");
+  G(UE, "No sooner ___ the report than the manager called a meeting.", ["had they published", "they had published", "did they published"], 0, "No sooner + inversión con had.");
+  G(UE, "The judge ___ the defendant of all charges.", ["acquitted", "acquitted from", "absolved for"], 0, "Acquit someone of.");
+  G(UE, "She ___ a remarkable degree of composure during the crisis.", ["displayed", "displayed of", "exhibited on"], 0, "Display composure.");
+  G(UE, "Were the proposal ___ to a vote, it would almost certainly fail.", ["put", "placed", "set on"], 0, "Put to a vote.");
+  G(UE, "The conclusions ___ with the evidence presented in the appendix.", ["are at odds", "are odds", "are in odds"], 0, "Be at odds with = estar en desacuerdo con.");
+  G(UE, "Their claims ___ scrutiny once the documents were examined.", ["did not withstand", "did not stand up with", "did not hold of"], 0, "Withstand scrutiny = resistir el escrutinio.");
+  G(UE, "The whole affair was ___ with secrecy from start to finish.", ["shrouded", "covered of", "wrapped on"], 0, "Shroud in secrecy.");
+  R(RD, "The architect's designs are often described as audacious, but her buildings are in fact governed by a rigorous concern for the lives of those who use them. The boldness lies in the forms, not in the purpose.", "Where does the architect's boldness lie?", ["In the forms", "In the purpose", "In the cost"], 0, "En las formas.");
+  R(RD, "Public trust in institutions tends to erode gradually, then collapse suddenly. Once a scandal exposes a pattern of concealment, even routine announcements are met with suspicion.", "What happens after a scandal exposes concealment?", ["Routine announcements are treated with suspicion", "Trust is restored at once", "Institutions are dissolved"], 0, "Se sospecha incluso de anuncios rutinarios.");
+  R(RD, "Ancient coins recovered from the seabed suggest that trade routes linking the two regions were far more extensive than scholars had assumed. The coins, many bearing foreign inscriptions, now prompt a rethink of earlier models.", "What do the coins prompt scholars to do?", ["Reconsider earlier models", "Abandon archaeology", "Ignore foreign influence"], 0, "Replantear modelos anteriores.");
+  R(RD, "Although the report was commissioned to address rising costs, its most striking finding concerned staff morale, which the authors describe as 'quietly corrosive'.", "What is the report's most striking finding?", ["Staff morale is quietly corrosive", "Costs are falling", "Management is too strict"], 0, "La moral del personal se deteriora en silencio.");
+  R(RD, "Writers who rely heavily on adjectives often produce prose that is vivid but imprecise. A stronger verb, the editor insists, does more work than three decorative adjectives.", "What does the editor prefer?", ["Stronger verbs", "More adjectives", "Longer sentences"], 0, "Verbos más fuertes.");
+  R(RD, "Many fans of the series were disappointed by its final season, arguing that the plot had been resolved too hastily. The showrunners, however, maintained that the ending had been planned from the outset.", "What did the showrunners claim?", ["The ending had been planned from the start", "The series was cancelled", "The fans wrote the ending"], 0, "El final estaba planeado desde el principio.");
+  R(RD, "Local councils have long struggled to balance development with conservation. Recent legislation, which obliges planners to consider heritage sites at an early stage, has been welcomed by conservationists.", "How have conservationists reacted to the legislation?", ["They have welcomed it", "They have opposed it", "They have ignored it"], 0, "Lo han acogido bien.");
+  R(RD, "The company's sudden change of strategy surprised analysts, who had grown accustomed to its cautious approach. Some suspected a reaction to pressure from shareholders rather than a considered change of direction.", "What did some analysts suspect?", ["A reaction to shareholder pressure", "A merger was planned", "The CEO had resigned"], 0, "Reacción a la presión de los accionistas.");
+  R(RD, "Translators often face a dilemma: a literal rendering may preserve the words but lose the tone, while a free version may capture the tone at the cost of fidelity to the original.", "What dilemma do translators face?", ["Preserving words versus tone", "Choosing between two languages", "Deciding which book to translate"], 0, "Palabras frente a tono.");
+  L(LI, "Man: I'm not convinced the opposition has a coherent alternative. Woman: Coherence isn't the only currency in politics; sometimes a clear message is enough to win the argument.", "What is the woman's point?", ["A clear message can be enough", "Coherence is always essential", "The opposition has a strong plan"], 0, "Un mensaje claro puede bastar.");
+  L(LI, "Woman: The study claims a link between the drug and the side effect, but the sample was tiny. Man: Exactly. Until it's replicated on a larger scale, I'd treat the finding with caution.", "What is the man's advice?", ["To treat the finding with caution", "To start using the drug", "To ignore the side effect"], 0, "Tratar el hallazgo con cautela.");
+  L(LI, "Girl: Do you think the novel will translate well? Boy: The prose is so idiomatic that I'm not optimistic, though the story might survive the journey.", "How does the boy feel about the translation?", ["Not optimistic, but the story might survive", "Very optimistic", "He hasn't read the novel"], 0, "Poco optimista, pero la historia podría sobrevivir.");
+  L(LI, "Man: The minutes suggest the board knew about the shortfall months earlier. Woman: Which means the public statement last spring was, at best, misleading.", "What does the woman conclude?", ["The public statement was misleading", "The board was unaware", "The shortfall was minor"], 0, "La declaración fue engañosa.");
+  L(LI, "Woman: I'd assumed the new hires would be a boost, but the training period has been longer than anyone anticipated. Man: That's the price of expertise, I suppose.", "What does the man suggest about the training?", ["It is the price of expertise", "It should be cancelled", "It was unexpectedly short"], 0, "Es el precio de la experiencia.");
+  L(LI, "Boy: Why does the museum insist on keeping the original documents locked away? Girl: Conservation, mostly. Light and humidity would damage them within years.", "Why are the documents locked away?", ["To protect them from light and humidity", "Because they are fakes", "To sell them"], 0, "Para protegerlos de la luz y la humedad.");
+  L(LI, "Man: You seem unusually calm about the audit. Woman: I've learned that the worst outcomes are rarely as bad as the rumours suggest.", "What is the woman's attitude to the audit?", ["She is calm because rumours exaggerate", "She is worried about the outcome", "She has refused to take part"], 0, "Los rumores exageran.");
+  L(LI, "Girl: The compromise seems fair to me. Boy: It's fair in principle, but in practice the costs fall almost entirely on the smaller partners.", "Who bears most of the costs?", ["The smaller partners", "The largest partner", "The government"], 0, "Los socios más pequeños.");
+
+  G(UE, "I ___ the impression that the meeting had been cancelled, but I was mistaken.", ["was under", "was in", "was over"], 0, "Be under the impression.");
+
+  ITEMS.push(...out);
+})();
+
+/* 100 ejercicios nuevos de nivel C2 (originales, al estilo de CPE):
+   gramática y vocabulario avanzado, lectura con inferencia, escucha y reformulación. */
+(function () {
+  const out = [];
+  const LV = "C2";
+  function push(o) {
+    o.level = LV;
+    if (ITEMS.concat(out).some(x => x.level === LV && x.q === o.q && (x.passage || x.audio || "") === (o.passage || o.audio || ""))) return; /* sin duplicados */
+    /* Reparte la respuesta correcta entre las posiciones (no siempre la primera) */
+    if (o.options && o.options.length > 1) {
+      const n = o.options.length, k = out.length % n;
+      o.options = o.options.slice(k).concat(o.options.slice(0, k));
+      o.answer = (o.answer - k + n) % n;
+    }
+    out.push(o);
+  }
+  function G(part, q, o, a, e) { push({ type: "grammar", q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function R(part, pass, q, o, a, e) { push({ type: "reading", passage: pass, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function L(part, audio, q, o, a, e) { push({ type: "listening", audio: audio, q: q, options: o, answer: a, explain: part + ": " + e, part: part }); }
+  function T(part, q, hint, acc, e) { push({ type: "rephrase", q: q, hint: hint, accepted: acc, explain: part + ": " + e, part: part }); }
+
+  const UE = "CPE · Use of English";
+  const RD = "CPE · Reading and Use of English";
+  const LI = "CPE · Listening";
+  G(UE, "Seldom ___ such a meticulous piece of research.", ["have I encountered", "I have encountered", "did I encounter"], 0, "Inversión tras seldom en registro formal.");
+  G(UE, "So ___ were the delegates that the summit was postponed.", ["divided", "dividing", "divide"], 0, "So + adjetivo participial + que: so divided.");
+  G(UE, "The committee's deliberations were conducted ___ the strictest confidentiality.", ["under", "within", "beneath"], 0, "Under confidentiality / under the strictest confidentiality.");
+  G(UE, "Not ___ the warnings were ignored did the government act.", ["until", "unless", "before"], 0, "Not until + cláusula y después inversión: did the government act.");
+  G(UE, "The author's prose is ___ with allusions to classical mythology.", ["studded", "stuffed", "crammed of"], 0, "Be studded with = estar salpicado de.");
+  G(UE, "Her argument ___ on a premise that few would accept without question.", ["hinges", "hangs", "rests of"], 0, "Hinge on.");
+  G(UE, "The regulator's decision ___ the industry's expectations.", ["ran counter to", "ran against of", "ran up to"], 0, "Run counter to = ir en contra de.");
+  G(UE, "He ___ no pains to ensure that the event ran smoothly.", ["spared", "saved", "left"], 0, "Spare no pains = esforzarse al máximo.");
+  G(UE, "The remark was clearly ___ at the chairman, though no names were mentioned.", ["aimed", "targeted to", "pointed of"], 0, "Aim at someone.");
+  G(UE, "It is ___ that the tribunal will rule before the end of the year.", ["unlikely", "improbable of", "doubtful for"], 0, "It is unlikely that.");
+  G(UE, "Had the evidence ___ less compelling, the verdict might have been different.", ["been", "be", "was"], 0, "Inversión condicional 3: had been.");
+  G(UE, "The minister ___ a veil of secrecy over the negotiations.", ["drew", "pulled", "threw"], 0, "Draw a veil over = velar, ocultar.");
+  G(UE, "Her resignation came as ___ of a shock to the board.", ["something", "somewhat", "someone"], 0, "Something of a shock = algo sorprendente.");
+  G(UE, "The findings are ___ to be disputed by the research community.", ["likely", "probable", "apt for"], 0, "Be likely to.");
+  G(UE, "He ___ the old guard for their unwillingness to embrace change.", ["upbraided", "upbraided of", "upbraided for to"], 0, "Upbraid someone for = reprender.");
+  G(UE, "No ___ how carefully the plan was drafted, unforeseen problems emerged.", ["matter", "matters", "matter of"], 0, "No matter how.");
+  G(UE, "The report was ___ with inaccuracies, which undermined its credibility.", ["riddled", "littered of", "strewn for"], 0, "Riddled with = plagado de.");
+  G(UE, "The company has been ___ of concealing the true extent of its losses.", ["accused", "blamed for", "charged to"], 0, "Accuse someone of.");
+  G(UE, "I'd ___ not comment on the matter until the investigation is complete.", ["rather", "soon", "better"], 0, "I'd prefer not to + infinitivo.");
+  G(UE, "Only then ___ the full magnitude of the problem.", ["did they grasp", "they grasped", "had they grasped to"], 0, "Only then + inversión: did they grasp.");
+  G(UE, "The artist's early work ___ the influence of her teachers.", ["bears", "bares", "wears"], 0, "Bear the influence = mostrar la influencia.");
+  G(UE, "The judge ___ the appeal on procedural grounds.", ["dismissed", "dismissed of", "rejected for of"], 0, "Dismiss an appeal.");
+  G(UE, "Such ___ the scale of the disaster that aid arrived weeks late.", ["was", "were", "had been"], 0, "Such was the scale...");
+  G(UE, "She has a ___ for wading into arguments she knows nothing about.", ["propensity", "propension of", "tendency for of"], 0, "Propensity for.");
+  G(UE, "The speech was a ___ of the government's position on the matter.", ["distillation", "distill", "distilled"], 0, "Sustantivo: distillation = resumen esencial.");
+  G(UE, "The mayor was ___ in the midst of the scandal.", ["embroiled", "embroil", "embroiling"], 0, "Be embroiled in = verse envuelto en.");
+  G(UE, "Little ___ the consequences of their decision until it was too late.", ["did they foresee", "they foresaw", "had they foreseen"], 0, "Little + inversión.");
+  G(UE, "The essay ___ a sophisticated grasp of the subject's complexities.", ["evinces", "evinces of", "evinces to"], 0, "Evince = mostrar, revelar.");
+  G(UE, "The proposal was ___ down on the grounds that it was impractical.", ["voted", "passed", "voiced"], 0, "Vote down = rechazar mediante votación.");
+  G(UE, "The negotiators reached an ___ that satisfied neither side entirely.", ["accommodation", "accommodate", "accommodating"], 0, "Sustantivo: accommodation = acuerdo.");
+  G(UE, "Were she ___ to accept the post, the company would be delighted.", ["willing", "wishing to", "keen of"], 0, "Be willing to.");
+  R(RD, "The essayist's defence of ambiguity is more subtle than its critics allow. Ambiguity, she argues, is not a failure of communication but a deliberate invitation to the reader to participate in making meaning.", "What does the essayist argue about ambiguity?", ["It invites readers to make meaning", "It is a failure of communication", "It should be avoided in essays"], 0, "Invita al lector a construir el sentido.");
+  R(RD, "Her memoir is at once a chronicle of exile and a meditation on the impossibility of ever fully belonging. What makes it remarkable is its refusal to offer consolation.", "What makes the memoir remarkable?", ["It offers no consolation", "It is very short", "It is a novel"], 0, "No ofrece consuelo.");
+  R(RD, "Historians have long debated whether the revolution was driven by ideology or by economic desperation. The most persuasive recent accounts, however, reject this dichotomy, showing how the two were inextricably entangled.", "What do the recent accounts argue?", ["The two causes were inseparable", "Ideology was the only cause", "Economics played no role"], 0, "Las dos causas estaban inextricablemente unidas.");
+  R(RD, "The committee's findings, though couched in the language of caution, amount to a damning indictment of the agency's oversight. Few readers will fail to notice what the report leaves unsaid.", "What does the report's language suggest?", ["It is cautious but critical", "It praises the agency", "It is neutral"], 0, "Cauteloso pero muy crítico.");
+  R(RD, "What begins as a modest proposal for a footbridge soon becomes, in the councillors' hands, a referendum on the city's ambitions for itself. The bridge is never built, but the debate lingers for a decade.", "What became of the bridge?", ["It was never built", "It was built in a year", "It was demolished"], 0, "Nunca se construyó.");
+  R(RD, "Linguists disagree about how far a language shapes thought. The strong version of the hypothesis has been largely abandoned, though a more modest claim, that language nudges habitual attention, has held up well under experiment.", "Which version of the hypothesis has held up under experiment?", ["The modest version", "The strong version", "Neither version"], 0, "La versión modesta.");
+  R(RD, "The novelist's habit of withholding information forces the reader into an uneasy complicity. We begin to suspect the narrator, and then to suspect ourselves for having trusted him so readily.", "What does the novelist's technique force the reader to do?", ["Become complicit and suspicious", "Read the book quickly", "Trust the narrator completely"], 0, "Complicidad incómoda y sospecha.");
+  R(RD, "The pharmaceutical company's internal memos, leaked to the press, reveal a deliberate decision to downplay adverse reactions. Its subsequent apology, the paper notes, was notable for what it did not admit.", "What does the newspaper say about the apology?", ["It did not admit key facts", "It admitted everything", "It was never published"], 0, "No admitió hechos clave.");
+  R(RD, "The city's surge in property prices has displaced many long-standing residents, whose presence once gave the neighbourhood its character. Ironically, the same charm that attracts newcomers is steadily eroded by their arrival.", "What is the irony described?", ["Newcomers erode the charm that attracted them", "Residents are attracted to new areas", "Prices fall when newcomers arrive"], 0, "La llegada erosiona el encanto que los atrajo.");
+  R(RD, "Despite a half-century of research, the precise mechanism by which the drug acts on the brain remains elusive. Researchers are cautiously optimistic that new imaging techniques may finally resolve the question.", "What gives researchers hope?", ["New imaging techniques", "A new drug", "Funding from the government"], 0, "Nuevas técnicas de imagen.");
+  R(RD, "The translator's note, though brief, betrays a sensitivity to the untranslatable that many authors would envy. Rather than smoothing over the ambiguity, she draws the reader's attention to it.", "How does the translator handle ambiguity?", ["She draws attention to it", "She removes it", "She ignores it"], 0, "Llama la atención sobre ella.");
+  R(RD, "Few policies have been subjected to such intense scrutiny as the reform of the pension system. Its architects insist the changes are overdue; its opponents see in them a quiet dismantling of the social contract.", "How do the opponents see the reform?", ["As a dismantling of the social contract", "As overdue", "As a minor adjustment"], 0, "Como un desmantelamiento del contrato social.");
+  L(LI, "Woman: Your objection is well founded, but I'd argue that the premise of the entire study is flawed, not merely its conclusions. Man: That's a bolder claim than I was prepared to make.", "What is the woman's claim?", ["The premise of the study is flawed", "The conclusions are correct", "The study is irrelevant"], 0, "La premisa del estudio es errónea.");
+  L(LI, "Man: The minutes make curious reading. The chairman seems to have anticipated every objection. Woman: Which suggests the outcome had been settled well before the meeting began.", "What does the woman suggest?", ["The outcome had been decided beforehand", "The chairman was unprepared", "The minutes are incomplete"], 0, "El resultado estaba decidido antes.");
+  L(LI, "Girl: I can't quite decide whether his silence was tact or evasion. Boy: With him, I'd hazard it's usually both, and that's rather the point.", "What is the boy's view of the man's silence?", ["It is both tactful and evasive", "It is purely tactful", "It is simply rude"], 0, "Es tacto y evasión a la vez.");
+  L(LI, "Woman: The authors would have us believe the market corrected itself, but the data points rather to a managed retreat. Man: Hardly a comforting distinction for the investors.", "What does the man think of the distinction?", ["It is hardly comforting for investors", "It is reassuring", "It is irrelevant"], 0, "Poco tranquilizador para los inversores.");
+  L(LI, "Man: I wouldn't read too much into the delay. Woman: Easy for you to say; you weren't the one who had to placate the donors.", "How does the woman feel about the delay?", ["Frustrated, since she had to placate donors", "Relieved", "Indifferent"], 0, "Frustrada por tener que tranquilizar a los donantes.");
+  L(LI, "Girl: Did the panel actually endorse the proposal? Boy: They endorsed its principles, but balked at the costings, which is a polite way of saying they rejected it.", "What does the boy imply about the panel?", ["It effectively rejected the proposal", "It fully endorsed it", "It has not yet met"], 0, "Lo rechazó en la práctica.");
+  L(LI, "Woman: I'd half expected the archive to be a dusty backwater. Man: On the contrary, it's a hive of activity; the staff are digitising thousands of manuscripts a month.", "What surprised the woman?", ["The archive is very active", "The archive is closed", "The staff are idle"], 0, "El archivo está muy activo.");
+  L(LI, "Man: The apology was graciously worded, but it didn't address the underlying grievance. Woman: No, it was an apology for the tone rather than for the substance.", "What does the woman say about the apology?", ["It apologised for tone, not substance", "It addressed the grievance", "It was not published"], 0, "Se disculpó por el tono, no por el fondo.");
+
+  const TR = "CPE · Use of English";
+  T(TR, "Rewrite: 'Although he had every reason to be angry, he remained calm.' → 'Angry ___ he had every reason to be, he remained calm.'", "Inversión con «as» y adjetivo.", ["as"], "Adjective + as + sujeto + verbo (concesivo).");
+  T(TR, "Rewrite: 'It was a mistake to trust him.' → 'Trusting him ___ a mistake.'", "Verbo copulativo en 3.ª persona.", ["was"], "Gerund subject + was.");
+  T(TR, "Rewrite: 'I'm not sure whether she will accept.' → 'It is ___ whether she will accept.'", "Expresión de duda con «unclear».", ["unclear", "uncertain", "doubtful"], "It is unclear/uncertain/doubtful whether.");
+  T(TR, "Rewrite: 'The results surprised everybody.' → 'The results ___ everybody's expectations.'", "Verbo que significa «superar».", ["exceeded", "surpassed"], "Exceed/surpass expectations.");
+  T(TR, "Rewrite: 'He only realised his mistake after it was too late.' → 'Only after it was too late ___ his mistake.'", "Inversión tras «only after».", ["did he realise", "did he realize"], "Only after... did he realise.");
+
+  G(UE, "Nowhere ___ such ingenuity displayed as in the designs submitted that year.", ["was", "is", "has been"], 0, "Inversión tras nowhere (registro muy formal).");
+  G(UE, "The defendant's lawyers ___ every possible avenue before conceding defeat.", ["explored", "explore", "exploring"], 0, "Pasado simple para una acción terminada.");
+  G(UE, "Not a ___ of evidence supports the claim that the figures were falsified.", ["shred", "amount", "bag"], 0, "Not a shred of evidence = ni una pizca de pruebas.");
+  G(UE, "The committee was ___ divided on the question of funding.", ["sharply", "sharp", "sharpen"], 0, "Adverbio ante participio: sharply divided.");
+  G(UE, "She is adamant that the decision ___ be reconsidered.", ["should not be", "is not being", "had not been"], 0, "Insistir: should not be reconsidered (mantener el subjuntivo).");
+  G(UE, "The lecture covered ___ ground in a single hour.", ["a great deal of", "a lot of of", "much of to"], 0, "A great deal of ground = mucho terreno cubierto.");
+  G(UE, "He ___ up the argument with an unexpectedly lucid summary.", ["rounded", "rounded off", "rounded out to"], 0, "Round off = concluir.");
+  G(UE, "The directors have ___ the plans for a merger indefinitely.", ["shelved", "shelved of", "shelved for"], 0, "Shelve indefinitely.");
+  G(UE, "It is ___ hardly surprising that the project ran over budget.", ["perhaps", "maybe of", "possibly to"], 0, "Perhaps/hardly: it is perhaps hardly surprising.");
+  G(UE, "I cannot ___ the feeling that we have overlooked something important.", ["shake", "shaken", "shaking off"], 0, "Shake off / shake the feeling.");
+  G(UE, "The concession was made ___ reluctance and only after prolonged pressure.", ["with", "for", "by"], 0, "With reluctance.");
+  G(UE, "The proposal ___ to the committee for review last spring.", ["was submitted", "submitted", "has submitted"], 0, "Pasiva en pasado simple.");
+  G(UE, "Would that she ___ the courage to speak out earlier.", ["had found", "found", "has found"], 0, "Would that + pasado perfecto (deseo lamentado).");
+  G(UE, "Scarcely had the orchestra begun ___ the audience began to cough.", ["when", "then", "than"], 0, "Scarcely... when.");
+  G(UE, "The story, ___ the details were later verified, caused a sensation.", ["once", "when", "while"], 0, "Once + participio/oración: once the details were verified.");
+  G(UE, "No sooner had the storm abated ___ the rescue teams set out.", ["than", "when", "then"], 0, "No sooner... than.");
+  G(UE, "She ___ a reputation for fairness that is rarely questioned.", ["has earned", "earns", "has been earning of"], 0, "Earn a reputation.");
+  G(UE, "The lecturer's remarks were so ___ that half the audience dozed off.", ["tedious", "tediously", "tedium"], 0, "Adjetivo tras so ... that.");
+  G(UE, "They are ___ to the view that the matter should be left alone.", ["inclined", "disposed of", "minded for"], 0, "Be inclined to the view.");
+  R(RD, "The archaeologist's discovery was initially dismissed as a hoax. Subsequent analysis, however, confirmed that the artefacts were genuine, forcing a substantial revision of the region's chronology.", "What did the subsequent analysis do?", ["It confirmed the artefacts were genuine", "It proved the discovery was a hoax", "It dated the artefacts to the present day"], 0, "Confirmó que eran auténticos.");
+  R(RD, "The novel's narrator is so unreliable that readers spend the entire book attempting to reconstruct a version of events he has deliberately obscured.", "What do the readers spend the book doing?", ["Trying to reconstruct the events", "Reading the narrator's diary", "Forgetting the plot"], 0, "Reconstruir los hechos.");
+  R(RD, "Proponents of the scheme present it as a model of cooperation between public and private sectors. Critics, by contrast, see a transfer of risk onto taxpayers dressed up as partnership.", "How do critics characterise the scheme?", ["A transfer of risk to taxpayers", "A model of cooperation", "A successful partnership"], 0, "Traslado del riesgo a los contribuyentes.");
+  R(RD, "It has become fashionable to lament the decline of attention spans, yet the evidence is more ambiguous than the lamentations suggest. What has changed, perhaps, is the context in which attention is demanded.", "What does the writer suggest has changed?", ["The context in which attention is demanded", "The length of books", "The ability to read"], 0, "El contexto en que se exige atención.");
+  R(RD, "Marine biologists warn that the coral reef, already weakened by warming waters, is now vulnerable to a disease that spreads with alarming speed.", "What makes the reef vulnerable?", ["Warming waters and a fast-spreading disease", "Overfishing alone", "Tourism only"], 0, "Agua caliente y una enfermedad.");
+  R(RD, "The philosopher's late work abandons the rigid categories of his earlier writing. Admirers see a mature humility; detractors detect a retreat from the very rigour that made him famous.", "How do detractors view the late work?", ["As a retreat from rigour", "As a sign of maturity", "As a masterpiece"], 0, "Como una retirada del rigor.");
+  R(RD, "Few cities have reinvented themselves as thoroughly as this former industrial port. Warehouses have become galleries, shipyards have become housing, and the once-silent docks now throng with cyclists and tourists.", "What have the shipyards become?", ["Housing", "Galleries", "A port"], 0, "Viviendas.");
+  R(RD, "The minister's reply was technically responsive but politically evasive. It addressed each question in turn while carefully avoiding the one that mattered most to the committee.", "What did the minister avoid?", ["The question that mattered most to the committee", "Every question", "The committee itself"], 0, "La pregunta más importante para el comité.");
+  R(RD, "Public libraries, once viewed as quiet repositories of books, have increasingly become community hubs offering everything from language classes to job-search workshops.", "What role do public libraries now play?", ["Community hubs", "Quiet book repositories only", "Commercial bookshops"], 0, "Centros comunitarios.");
+  R(RD, "Her mastery of the Japanese syntax is so complete that her translations read as if they had been composed in English from the outset.", "How do her translations read?", ["As if composed in English originally", "As clumsy and literal", "As summaries"], 0, "Como si se hubieran escrito en inglés.");
+  L(LI, "Man: The expedition's findings were announced with great fanfare. Woman: Yes, but the journal's editors had clearly noticed the gaps in the methodology, which is why the article was buried in an appendix.", "What does the woman suggest?", ["The editors noticed flaws and buried the article", "The findings were ground-breaking", "The article was the main feature"], 0, "Los editores notaron fallos y lo relegaron.");
+  L(LI, "Woman: I'm loath to dismiss the proposal outright, but its assumptions about demand strike me as wildly optimistic. Man: Agreed, though I'd like to see the sensitivity analysis before passing judgement.", "What does the man want to see?", ["The sensitivity analysis", "The budget", "A new proposal"], 0, "El análisis de sensibilidad.");
+  L(LI, "Girl: Doesn't it strike you as odd that the director never once addressed the question of costs? Boy: Not particularly. Costs were never really her concern; she was interested in impact.", "What was the director interested in?", ["Impact", "Costs", "Timing"], 0, "El impacto.");
+  L(LI, "Man: I was prepared for a fierce debate, but the discussion was remarkably civil. Woman: That's because the chair had quietly reached a consensus with the main factions in advance.", "Why was the discussion civil?", ["The chair had reached consensus in advance", "Nobody attended", "The topic was trivial"], 0, "El presidente había pactado antes.");
+  L(LI, "Woman: The data are compelling, but we'd be mistaken to read causation into what is essentially a correlation. Man: Quite. Let's not let enthusiasm outrun the evidence.", "What is the man's warning?", ["Enthusiasm should not outrun the evidence", "The data are worthless", "The study should be expanded"], 0, "El entusiasmo no debe superar las pruebas.");
+  L(LI, "Boy: The tenor's performance was technically flawless, yet I found it strangely cold. Girl: I know what you mean. There was precision but very little abandon.", "What does the girl agree with?", ["The performance lacked abandon", "The performance was emotional", "The tenor was off-key"], 0, "Faltaba entrega.");
+  L(LI, "Man: Is there any realistic prospect of the talks resuming? Woman: Only if both parties are prepared to abandon the maximalist positions they've been defending in public.", "What is needed for the talks to resume?", ["Both parties must abandon maximalist positions", "A new mediator", "More funding"], 0, "Abandonar posturas maximalistas.");
+  L(LI, "Girl: I can't help thinking the scheme was doomed from the start. Boy: Hindsight is a wonderful thing; at the time, it seemed a perfectly sensible gamble.", "What does the boy say about the scheme?", ["It seemed a sensible gamble at the time", "It was clearly doomed", "It was never implemented"], 0, "Parecía una apuesta sensata.");
+  L(LI, "Woman: The moderator kept interrupting, which rather undermined the candidate's case. Man: Undermined it? I'd say it simply exposed its weaknesses.", "How do the speakers differ?", ["The man thinks the weaknesses were exposed, the woman thinks the case was undermined", "They agree entirely", "They disagree about the moderator's identity"], 0, "Matiz sobre cómo afectó al candidato.");
+  T(TR, "Rewrite: 'The report was so badly written that nobody could follow it.' → 'The report was so badly written ___ could follow it.'", "Estructura negativa con «nobody».", ["that nobody"], "So... that nobody could follow it.");
+  T(TR, "Rewrite: 'I had hardly sat down when the bell rang.' → 'Hardly ___ down when the bell rang.'", "Inversión con «hardly» y pasado perfecto.", ["had I sat"], "Hardly had I sat down when...");
+  T(TR, "Rewrite: 'Despite his age, he still runs five miles a day.' → 'Old ___, he still runs five miles a day.'", "Concesivo con «as» e inversión.", ["as he is"], "Old as he is, ...");
+  T(TR, "Rewrite: 'It is essential that the rules are followed.' → 'It is essential that the rules ___ followed.'", "Subjuntivo tras essential.", ["be"], "Subjuntivo: be followed.");
+
+  G(UE, "Under no ___ should the documents be released before the hearing.", ["circumstances", "conditions of", "situations to"], 0, "Under no circumstances = bajo ningún concepto.");
+  R(RD, "The poem's apparent simplicity conceals a dense web of allusions that rewards repeated reading. Each rereading unsettles a previous interpretation, which is perhaps the poem's point.", "What does each rereading do?", ["Unsettles a previous interpretation", "Confirms the first reading", "Makes the poem shorter"], 0, "Desestabiliza la interpretación anterior.");
+
+  ITEMS.push(...out);
+})();
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
 // Las monedas son las de la app (rewards); lo comprado queda en rewards().owned y el equipo en el perfil activo.
 
