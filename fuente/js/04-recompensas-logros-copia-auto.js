@@ -42,6 +42,7 @@ import {
   xpTotal,
 } from "./02-progreso-xp-racha-mascota.js";
 import { activeProfile, escHtml, profileOpenList } from "./03-perfiles.js";
+import { esInvitado } from "./01-nucleo-niveles-audio.js";
 import { salirCuenta } from "./11-cuentas.js";
 import {
   celebrate,
@@ -211,8 +212,9 @@ export function renderDprog() {
   // acciones de perfil desde la tarjeta del examen: cambiar perfil (crear, borrar, elegir) y cerrar sesión si hay cuenta
   if (ex) {
     const bar = document.createElement("div"); bar.className = "dexam-acc";
-    const cambia = document.createElement("button"); cambia.className = "btn secondary"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList();
-    bar.appendChild(cambia);
+    const portada = document.createElement("button"); portada.className = "btn secondary"; portada.type = "button"; portada.textContent = "Ir a la portada"; portada.onclick = () => document.querySelector("[data-inicio]")?.click();
+    bar.appendChild(portada);
+    if (!esInvitado()) { const cambia = document.createElement("button"); cambia.className = "btn secondary"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList(); bar.appendChild(cambia); }   // invitado: sin perfiles que cambiar
     if (window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "btn secondary"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); bar.appendChild(sal); }
     ex.appendChild(bar);
   }

@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Xk084SGTd+sCPQV6v9Q1CvUxOgMtvWWq881XpWutrqo=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-SUt1vw6X13gpbYqhK7A88LD5gdo/v5BR0JL03AvoQPE=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pO0Rmpq9l7NC4QwtNftzkiHjE3PpaiA3qZqaMVXn7lU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-SUt1vw6X13gpbYqhK7A88LD5gdo/v5BR0JL03AvoQPE=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -3447,8 +3447,9 @@ function renderDprog() {
   // acciones de perfil desde la tarjeta del examen: cambiar perfil (crear, borrar, elegir) y cerrar sesión si hay cuenta
   if (ex) {
     const bar = document.createElement("div"); bar.className = "dexam-acc";
-    const cambia = document.createElement("button"); cambia.className = "btn secondary"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList();
-    bar.appendChild(cambia);
+    const portada = document.createElement("button"); portada.className = "btn secondary"; portada.type = "button"; portada.textContent = "Ir a la portada"; portada.onclick = () => document.querySelector("[data-inicio]")?.click();
+    bar.appendChild(portada);
+    if (!esInvitado()) { const cambia = document.createElement("button"); cambia.className = "btn secondary"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList(); bar.appendChild(cambia); }   // invitado: sin perfiles que cambiar
     if (window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "btn secondary"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); bar.appendChild(sal); }
     ex.appendChild(bar);
   }
