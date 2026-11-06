@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es" data-pal="crema" data-mode="light">
+<html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-TzNxZw44bEOsKSMipKhz4p618/giCLEZx3A7lEvOJcQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-Fh/2rs5RQSvZLVdXZOIj+IoEwCCMezIN54V9wKtKxg4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-PGrn9bDnpkVk1JvBu6LYVhT11M6mHPP9tKir/0WHy3w=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ready4Exam">
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5fb">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff8ec">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#10201b">
 <title>Ready4Exam · Preparación de exámenes de inglés</title>
 <style>
 /* Tipografías de la maqueta D4 (Fredoka y Nunito, subconjunto latino, SIL OFL). Incrustadas: la CSP no permite recursos externos. */
@@ -31,11 +31,8 @@
 --ok-bg:color-mix(in srgb,var(--ok) 16%,var(--surface));--bad-bg:color-mix(in srgb,var(--bad) 16%,var(--surface));
 --sel:color-mix(in srgb,var(--accent) 14%,var(--surface));--focus:color-mix(in srgb,var(--accent) 22%,transparent);
 --surface2-fallback:var(--surface2)}
-:root[data-pal="noche"][data-mode="dark"]{--bg:#0b1020;--bg-top:#0b1020;--surface:#151d31;--surface2:#1c2640;--text:#e6ecff;--muted:#8e9bbd;--line:#26314f;--accent:#5eead4;--accent2:#818cf8;--hdr:#0f1628;--ok:#34d399;--ok-text:#a7f3d0;--bad:#f87171;--bad-text:#fecaca;--code-bg:#070b16;--code-text:#e6ebff;--shadow:0 10px 30px rgba(0,0,0,.35);--shadow-hi:0 14px 34px rgba(0,0,0,.45);--hdr-shadow:0 6px 20px rgba(0,0,0,.35)}
-:root[data-pal="noche"][data-mode="light"]{--bg:#f1f5fb;--bg-top:#f1f5fb;--surface:#f7fbfa;--surface2:#eaf0fa;--text:#14203b;--muted:#2b3450;--line:#d5deee;--accent:#0f766e;--accent2:#4f46e5;--hdr:#f7fbfa;--ok:#1f8a4c;--ok-text:#14552e;--bad:#d03b3b;--bad-text:#7d1f1f;--code-bg:#0f1424;--code-text:#e6ebff;--shadow:0 2px 8px rgba(28,34,51,.06);--shadow-hi:0 8px 20px rgba(28,34,51,.1);--hdr-shadow:0 4px 18px rgba(0,0,0,.08)}
-:root[data-pal="grafito"][data-mode="dark"]{--bg:#15130f;--bg-top:#15130f;--surface:#1f1c16;--surface2:#2a2620;--text:#f5efe4;--muted:#bdb4a0;--line:#3a3429;--accent:#fbbf24;--accent2:#f97316;--hdr:#1a1812;--ok:#34d399;--ok-text:#a7f3d0;--bad:#f87171;--bad-text:#fecaca;--code-bg:#070b16;--code-text:#e6ebff;--shadow:0 10px 30px rgba(0,0,0,.35);--shadow-hi:0 14px 34px rgba(0,0,0,.45);--hdr-shadow:0 6px 20px rgba(0,0,0,.35)}
-:root[data-pal="grafito"][data-mode="light"]{--bg:#faf6ee;--bg-top:#faf6ee;--surface:#fefbf5;--surface2:#f3ecdd;--text:#2a2318;--muted:#2b3450;--line:#e4dac7;--accent:#b45309;--accent2:#c2410c;--hdr:#fefbf5;--ok:#1f8a4c;--ok-text:#14552e;--bad:#d03b3b;--bad-text:#7d1f1f;--code-bg:#0f1424;--code-text:#e6ebff;--shadow:0 2px 8px rgba(28,34,51,.06);--shadow-hi:0 8px 20px rgba(28,34,51,.1);--hdr-shadow:0 4px 18px rgba(0,0,0,.08)}
-:root[data-pal="crema"][data-mode="light"]{--bg:#fff8ec;--bg-top:#fff8ec;--surface:#fffdf8;--surface2:#f3e6d2;--text:#2a1d14;--muted:#5a4636;--line:#ecd9c0;--accent:#0b5f4f;--accent2:#d98a0c;--hdr:#fffdf8;--ok:#0b7a62;--ok-text:#0b5a48;--bad:#e5484d;--bad-text:#9b1d22;--code-bg:#2a1d14;--code-text:#fff8ec;--shadow:0 5px 0 #ecd9c0;--shadow-hi:0 7px 0 #d9c3a6;--hdr-shadow:0 4px 0 #ecd9c0}
+:root{--bg:#fff8ec;--bg-top:#fff8ec;--surface:#fffdf8;--surface2:#f3e6d2;--text:#2a1d14;--muted:#5a4636;--line:#ecd9c0;--accent:#0b5f4f;--accent2:#d98a0c;--hdr:#fffdf8;--ok:#0b7a62;--ok-text:#0b5a48;--bad:#e5484d;--bad-text:#9b1d22;--code-bg:#2a1d14;--code-text:#fff8ec;--shadow:0 5px 0 #ecd9c0;--shadow-hi:0 7px 0 #d9c3a6;--hdr-shadow:0 4px 0 #ecd9c0}
+:root[data-mode="dark"]{--bg:#10201b;--bg-top:#10201b;--surface:#172b25;--surface2:#20382f;--text:#eaf5ef;--muted:#a8c4ba;--line:#2d4a40;--accent:#5fd3b5;--accent2:#f2b84b;--on-accent:#0a1f1a;--hdr:#14271f;--ok:#34d399;--ok-text:#a7f3d0;--bad:#f87171;--bad-text:#fecaca;--code-bg:#070e0c;--code-text:#e6f5ef;--shadow:0 5px 0 #0b1a16;--shadow-hi:0 7px 0 #07110e;--hdr-shadow:0 4px 0 #0b1a16}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh}
 .hidden{display:none !important}
@@ -883,7 +880,7 @@ main{padding-bottom:110px}
 </style>
 <style>
 /* Capa D4 (crema y tinta): aplica el lenguaje visual de la maqueta a las clases existentes */
-:root[data-pal="crema"][data-mode="light"]{--radius:22px;--r-md:18px;--r-lg:18px;--r-xl:22px;--grad:var(--accent)}
+:root{--radius:22px;--r-md:18px;--r-lg:18px;--r-xl:22px;--grad:var(--accent)}
 body{background-color:var(--bg);background-image:linear-gradient(to right,rgba(43,127,209,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(43,127,209,.07) 1px,transparent 1px);background-size:24px 24px}
 header{background:var(--hdr);border-bottom:2px solid var(--line);box-shadow:none;padding:12px 16px}
 .card,.section-btn,.game-hero,.stats>*{border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
@@ -9207,9 +9204,9 @@ function renderCuenta() {
     <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
     <div id="ctaFormCorreo" hidden style="display:grid;gap:8px">
       <label class="etiq" for="ctaEmail">Correo</label>
-      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
+      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
       <label class="etiq" for="ctaPass">Contraseña</label>
-      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
+      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
       <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
     </div>
     `;
@@ -9630,21 +9627,17 @@ try { cuentaInicializar(); } catch(e){}
 </script>
 <script>
 (function(){
-  var PALS = {"noche": ["Noche turquesa", "#5eead4"], "crema": ["Crema menta", "#0b5f4f"], "grafito": ["Grafito ámbar", "#fbbf24"]};
-  var SOLO_CLARO = ["noche", "crema"];
-  var root = document.documentElement, KP = 'ui-pal-B', KM = 'ui-mode-B';
+  var root = document.documentElement, KM = 'ui-mode-B';
   function gs(k,d){ try { return localStorage.getItem(k) || d; } catch(e){ return d; } }
   function ss(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
-  var pal = gs(KP, root.dataset.pal), mode = gs(KM, root.dataset.mode);
-  if (!PALS[pal]) pal = root.dataset.pal;
+  var mode = gs(KM, root.dataset.mode);
   if (mode !== 'dark' && mode !== 'light') mode = root.dataset.mode;
-  if (mode === 'dark' && SOLO_CLARO.indexOf(pal) >= 0) pal = 'grafito';
-  root.dataset.pal = pal; root.dataset.mode = mode; try { renderLevels(); renderHome(); } catch(e){}
+  root.dataset.mode = mode; try { renderLevels(); renderHome(); } catch(e){}
   var bar = document.createElement('details'); bar.id = 'themeBar';
-  var bsum = document.createElement('summary'); bsum.textContent = 'Modo y paleta'; bar.appendChild(bsum);
+  var bsum = document.createElement('summary'); bsum.textContent = 'Modo'; bar.appendChild(bsum);
   var mb = document.createElement('button'); mb.id = 'modoBtn';
   function paintMode(){ mb.innerHTML = root.dataset.mode === 'dark' ? ico('sun', 16) + ' Modo claro' : ico('moon', 16) + ' Modo oscuro'; }
-  mb.onclick = function(){ root.dataset.mode = root.dataset.mode === 'dark' ? 'light' : 'dark'; if (root.dataset.mode === 'light') root.dataset.pal = gs('ui-pal-light', 'noche'); ss(KM, root.dataset.mode); paint(); try { renderLevels(); renderHome(); var hc=document.getElementById('heroCard'); if(hc) hc.style.setProperty('--lvl-color', lc(LEVELS[currentLevel])); var ex=document.getElementById('exercise'); if(ex) ex.style.setProperty('--lvl-color', lc(LEVELS[currentLevel])); } catch(e){} };
+  mb.onclick = function(){ root.dataset.mode = root.dataset.mode === 'dark' ? 'light' : 'dark'; ss(KM, root.dataset.mode); paint(); try { renderLevels(); renderHome(); var hc=document.getElementById('heroCard'); if(hc) hc.style.setProperty('--lvl-color', lc(LEVELS[currentLevel])); var ex=document.getElementById('exercise'); if(ex) ex.style.setProperty('--lvl-color', lc(LEVELS[currentLevel])); } catch(e){} };
   var l = document.createElement('div'); l.className = 'theme-lbl'; l.textContent = 'Modo'; bar.appendChild(l);
   bar.appendChild(mb);
   var ab = document.createElement('button');
@@ -9652,20 +9645,7 @@ try { cuentaInicializar(); } catch(e){}
   ab.onclick = function(){ var a = ajustesGet(); a.monedas = a.monedas === false; ajustesSet(a); paintAj(); };
   paintAj(); bar.appendChild(ab);
 
-  var l = document.createElement('div'); l.className = 'theme-lbl'; l.textContent = 'Paleta'; bar.appendChild(l);
-  var pbs = [];
-  Object.keys(PALS).forEach(function(id){
-    var b = document.createElement('button'); b.dataset.p = id; b.style.setProperty('--pc', PALS[id][1]);
-    b.innerHTML = '<span class="dot" style="background:' + PALS[id][1] + '"></span>' + PALS[id][0];
-    b.onclick = function(){ root.dataset.pal = id; ss(KP, id); try { renderLevels(); renderHome(); } catch(e){} paint(); };
-    pbs.push(b); bar.appendChild(b);
-  });
-  function paint(){
-    if (root.dataset.mode === 'dark' && SOLO_CLARO.indexOf(root.dataset.pal) >= 0) { root.dataset.pal = 'grafito'; ss(KP, 'grafito'); try { renderLevels(); renderHome(); } catch(e){} }
-    if (root.dataset.mode === 'light') ss('ui-pal-light', root.dataset.pal);
-    paintMode();
-    pbs.forEach(function(b){ var oculta = SOLO_CLARO.indexOf(b.dataset.p) >= 0 && root.dataset.mode === 'dark'; b.style.display = oculta ? 'none' : ''; b.hidden = oculta; b.setAttribute('aria-pressed', b.dataset.p === root.dataset.pal ? 'true' : 'false'); });
-  }
+  function paint(){ paintMode(); }
   paint();
   bar.open = innerWidth > 820;
   document.getElementById('p-perfil').appendChild(bar);

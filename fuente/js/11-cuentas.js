@@ -138,9 +138,9 @@ export function renderCuenta() {
     <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
     <div id="ctaFormCorreo" hidden style="display:grid;gap:8px">
       <label class="etiq" for="ctaEmail">Correo</label>
-      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
+      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
       <label class="etiq" for="ctaPass">Contraseña</label>
-      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid #ecd9c0;background:#fffdf8;color:inherit" />
+      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
       <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
     </div>
     `;
