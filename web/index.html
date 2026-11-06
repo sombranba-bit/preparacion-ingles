@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-IKA50ctTDDGJ7/CMDM/YJI4hhEeWlk/oc+KL/inryTc=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-su1RsjP/texDrWqOZxuGKdTvgKjJQMzLeX0Btx4o72U=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -9469,6 +9469,9 @@ document.addEventListener("cuenta-borrar", () => { nubeBorrarCuenta(); });
 async function nubeBorrarCuenta() {
   if (!nubeE.uid) { alert("No hay ninguna cuenta iniciada. Para borrar solo este navegador, usa «Borrar todos los datos»."); return; }
   if (!confirm("¿Borrar tu cuenta? Se eliminan tu cuenta, tu copia en la nube, tu fila de la liga y tu pertenencia a grupos. El progreso de este navegador se mantiene. No se puede deshacer.")) return;
+  // Firebase exige una sesión reciente para borrar la cuenta: se comprueba antes de borrar nada
+  const fb = await ctaFbApp(), entro = Date.parse(fb.auth.currentUser?.metadata?.lastSignInTime || "");
+  if (!(Date.now() - entro < 5 * 60 * 1000)) { alert("Por seguridad, vuelve a entrar y pulsa otra vez «Borrar mi cuenta» enseguida. No se ha borrado nada."); return; }
   try {
     const f = await nubeFs(), m = f.m, db = f.db, uid = nubeE.uid;
     const copias = await m.getDocs(m.collection(db, "usuarios", uid, "copias"));
@@ -9480,7 +9483,6 @@ async function nubeBorrarCuenta() {
       await m.deleteDoc(m.doc(db, "grupos", c, "xp", uid));
     }
     await m.deleteDoc(m.doc(db, "usuarios", uid));
-    const fb = await ctaFbApp();
     await fb.authMod.deleteUser(fb.auth.currentUser);
   } catch (e) { alert("No se pudo borrar la cuenta: " + nubeError(e) + ". Vuelve a entrar y pulsa otra vez «Borrar mi cuenta»."); return; }
   alert("Tu cuenta se ha borrado. El progreso de este navegador sigue aquí.");

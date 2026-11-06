@@ -222,6 +222,9 @@ document.addEventListener("cuenta-borrar", () => { nubeBorrarCuenta(); });
 async function nubeBorrarCuenta() {
   if (!nubeE.uid) { alert("No hay ninguna cuenta iniciada. Para borrar solo este navegador, usa «Borrar todos los datos»."); return; }
   if (!confirm("¿Borrar tu cuenta? Se eliminan tu cuenta, tu copia en la nube, tu fila de la liga y tu pertenencia a grupos. El progreso de este navegador se mantiene. No se puede deshacer.")) return;
+  // Firebase exige una sesión reciente para borrar la cuenta: se comprueba antes de borrar nada
+  const fb = await ctaFbApp(), entro = Date.parse(fb.auth.currentUser?.metadata?.lastSignInTime || "");
+  if (!(Date.now() - entro < 5 * 60 * 1000)) { alert("Por seguridad, vuelve a entrar y pulsa otra vez «Borrar mi cuenta» enseguida. No se ha borrado nada."); return; }
   try {
     const f = await nubeFs(), m = f.m, db = f.db, uid = nubeE.uid;
     const copias = await m.getDocs(m.collection(db, "usuarios", uid, "copias"));
@@ -233,7 +236,6 @@ async function nubeBorrarCuenta() {
       await m.deleteDoc(m.doc(db, "grupos", c, "xp", uid));
     }
     await m.deleteDoc(m.doc(db, "usuarios", uid));
-    const fb = await ctaFbApp();
     await fb.authMod.deleteUser(fb.auth.currentUser);
   } catch (e) { alert("No se pudo borrar la cuenta: " + nubeError(e) + ". Vuelve a entrar y pulsa otra vez «Borrar mi cuenta»."); return; }
   alert("Tu cuenta se ha borrado. El progreso de este navegador sigue aquí.");
