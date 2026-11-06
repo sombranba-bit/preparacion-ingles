@@ -209,7 +209,7 @@ export function renderGame() {
     <div class="d4-cab">
       <div class="d4-top">
         <p class="d4-kicker">Preparación oficial · Nivel ${currentLevel}</p>
-        <span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span>
+        <span class="d4-pills"><span class="d4-pill st-streak" data-k="streak">${ico("flame", 16)}<b class="st-num">${s.days}</b></span><span class="d4-pill st-coin" data-k="coin"><svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg><b class="st-num">${rewards().coins}</b></span></span>
       </div>
       <div class="d4-quien">
         <div class="d4-av" id="mSlotHome"></div>
