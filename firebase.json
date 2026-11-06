@@ -1,5 +1,1 @@
-{
-  "hosting": {
-    "public": "web"
-  }
-}
+{"hosting":{"public":"web"},"firestore":{"rules":"reglas/firestore.rules","indexes":"firestore.indexes.json"}}

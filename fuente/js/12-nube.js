@@ -216,6 +216,29 @@ async function nubeRestaurar(c) {
   } catch (e) { alert("No se pudo restaurar: " + nubeError(e)); return; }
   location.reload();
 }
+// Borrar la cuenta: primero los datos de la nube (cada borrado lo permite la regla de su colección), luego el usuario de Auth.
+// Si Auth pide volver a entrar, lo ya borrado no vuelve y basta con repetir.
+document.addEventListener("cuenta-borrar", () => { nubeBorrarCuenta(); });
+async function nubeBorrarCuenta() {
+  if (!nubeE.uid) { alert("No hay ninguna cuenta iniciada. Para borrar solo este navegador, usa «Borrar todos los datos»."); return; }
+  if (!confirm("¿Borrar tu cuenta? Se eliminan tu cuenta, tu copia en la nube, tu fila de la liga y tu pertenencia a grupos. El progreso de este navegador se mantiene. No se puede deshacer.")) return;
+  try {
+    const f = await nubeFs(), m = f.m, db = f.db, uid = nubeE.uid;
+    const copias = await m.getDocs(m.collection(db, "usuarios", uid, "copias"));
+    await Promise.all(copias.docs.map(d => m.deleteDoc(d.ref)));
+    const liga = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("uid", "==", uid)));
+    await Promise.all(liga.docs.map(d => m.deleteDoc(d.ref)));
+    for (const c of nubeE.grupos) {
+      await m.deleteDoc(m.doc(db, "grupos", c, "miembros", uid));
+      await m.deleteDoc(m.doc(db, "grupos", c, "xp", uid));
+    }
+    await m.deleteDoc(m.doc(db, "usuarios", uid));
+    const fb = await ctaFbApp();
+    await fb.authMod.deleteUser(fb.auth.currentUser);
+  } catch (e) { alert("No se pudo borrar la cuenta: " + nubeError(e) + ". Vuelve a entrar y pulsa otra vez «Borrar mi cuenta»."); return; }
+  alert("Tu cuenta se ha borrado. El progreso de este navegador sigue aquí.");
+  location.reload();
+}
 document.addEventListener("copias-ver", () => { nubeCopias(); });
 
 /* ---------- Liga: pantalla ---------- */
@@ -249,7 +272,7 @@ async function nubeRender() {
   let filas = [], grupos = [], grupoFilas = [], err = "";
   try {
     const f = await nubeFs(), m = f.m, db = f.db, semana = weekStartKey();
-    const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.limit(200)));
+    const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.orderBy("xp", "desc"), m.limit(200)));
     filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp);
     if (nubeE.grupos.length) {
       grupos = await Promise.all(nubeE.grupos.map(async c => { const g = await m.getDoc(m.doc(db, "grupos", c)); return { c, nombre: g.exists() ? g.data().nombre : "Grupo" }; }));
@@ -269,6 +292,7 @@ async function nubeRender() {
   const sinPerfil = activeProfile() ? "" : '<p class="muted" style="margin:0">Crea un perfil para aparecer en la liga y en los grupos.</p>';
   box.innerHTML = cabecera(sub) + tabs + chips
     + (err ? `<p class="lg-msg">${escHtml(err)}</p>` : "")
+    + (!esGrupos && filas.length >= 200 ? '<p class="lg-msg">Se muestran los 200 primeros de la semana.</p>' : "")
     + `<div class="lg-podio">${ligaPodioHtml(lista, nubeE.uid)}</div><div class="lg-lista">${ligaListaHtml(lista, nubeE.uid, vacio)}</div>`
     + `<details class="lg-grupos-form"${nubeE.grupos.length ? "" : " open"}><summary>Unirse o crear un grupo</summary>
         <div class="lg-form">

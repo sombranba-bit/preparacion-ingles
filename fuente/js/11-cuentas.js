@@ -74,7 +74,15 @@ async function ctaAccion(fn) {
   finally { ctaE().busy = false; renderCuenta(); }
 }
 
+// Edad mínima para tener cuenta (LOPDGDD art. 7): declaración de la propia persona, sin guardar nada
+const edadOk = () => {
+  const ok = !!$("ctaEdad")?.checked;
+  if (!ok) { ctaE().msg = "Confirma que tienes 14 años o más para crear o entrar en una cuenta."; renderCuenta(); }
+  return ok;
+};
+
 export function entrarGoogle() {
+  if (!edadOk()) return;
   return ctaAccion(async () => {
     const fb = await ctaCargar();
     // En la app instalada (pantalla completa) la ventana emergente no funciona: se usa redirección
@@ -88,6 +96,7 @@ export function entrarCorreo(crear) {
   const email = ($("ctaEmail") || {}).value?.trim() || "";
   const pass = ($("ctaPass") || {}).value || "";
   if (!email) { ctaE().msg = "Escribe tu correo."; renderCuenta(); return; }
+  if (!edadOk()) return;
   return ctaAccion(async () => {
     const fb = await ctaCargar();
     const r = crear ? await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass) : await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
@@ -122,7 +131,9 @@ export function renderCuenta() {
   }
   const msg = `<p class="etiq" role="status" style="margin:0;min-height:20px">${escHtml(ctaE().msg || "")}</p>`;
   ctaCargar().catch(() => {});   // precarga el SDK: así la ventana de Google se abre al pulsar, sin bloqueo del navegador
-  box.innerHTML = `<span class="etiq">${crear ? "Crear cuenta" : "Iniciar sesión"}</span>
+  const edad = !!$("ctaEdad")?.checked;   // se conserva al volver a pintar el bloque
+  box.innerHTML = `<label style="display:flex;gap:10px;align-items:flex-start;margin:0 0 12px"><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""} style="min-width:20px;min-height:20px;margin-top:2px"><span class="etiq" style="text-transform:none;letter-spacing:0">Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
+    <span class="etiq">${crear ? "Crear cuenta" : "Iniciar sesión"}</span>
     <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>
     <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
     <div id="ctaFormCorreo" hidden style="display:grid;gap:8px">
