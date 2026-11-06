@@ -220,7 +220,7 @@
   #gamePanel{border:0;box-shadow:none;background:none;padding:0}
   #home #gamePanel:hover{transform:none;box-shadow:none}   /* más específico que la regla :is(...):hover, que incluye #themeBar button */   /* el contenedor del inicio no es una tarjeta que se levante */
   #d4Acciones .d4-filas,#d4Camino .d4-filas{grid-template-columns:1fr 1fr;gap:12px}
-  .dexam{display:flex;flex-direction:column;gap:8px;position:fixed;left:16px;bottom:24px;width:200px}
+  .dexam{display:flex;flex-direction:column;gap:8px;position:fixed;left:16px;bottom:24px;width:200px;z-index:31}
   .dexam .xp-track{margin:4px 0}
   #dprog .dprog-card{background:var(--surface);box-shadow:var(--shadow)}
   #dprog .dprog-card strong{font-size:30px}
