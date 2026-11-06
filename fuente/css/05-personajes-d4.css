@@ -152,8 +152,7 @@
 .sello .ring{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:var(--surface2);border:3px dashed var(--line)}
 .sello b{font-family:Fredoka;font-weight:600;font-size:15px;line-height:1.1}
 .sello small{font-size:12px;color:var(--muted);font-weight:800}
-.sello.got{border-color:#ffd166;background:#fff8e3;box-shadow:0 5px 0 #e7ac2a;transform:rotate(-2deg)}
-.sello.got:nth-child(2n){transform:rotate(2deg)}
+.sello.got{border-color:#ffd166;background:#fff8e3;box-shadow:0 5px 0 #e7ac2a}
 .sello.got .ring{background:#ffb22e;border:3px solid #d98a0a;box-shadow:0 0 0 6px rgba(255,178,46,.2)}
 .sello.off{opacity:.6}
 .sello.off .ring{filter:grayscale(1)}
@@ -210,3 +209,14 @@
 :root[data-mode="dark"] .section-btn .ico{background:color-mix(in srgb,var(--sec-soft) 38%,var(--surface))}
 :root[data-mode="dark"] .seg button{background:transparent}
 :root[data-mode="dark"] .sello.got{background:color-mix(in srgb,var(--accent2) 16%,var(--surface));border-color:var(--accent2);box-shadow:0 5px 0 color-mix(in srgb,var(--accent2) 55%,#000)}
+
+/* Escritorio: una sola columna centrada; la barra inferior va alineada a ella */
+@media (min-width:821px){
+  body{grid-template-columns:minmax(0,1fr)}
+  main,footer{grid-column:1}
+  main{width:100%;max-width:960px;margin:0 auto;padding:28px 24px 110px}
+  .bnav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,960px);border-radius:20px 20px 0 0}
+  .sellos{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sello{aspect-ratio:auto;min-height:210px}
+  .niveles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+}
