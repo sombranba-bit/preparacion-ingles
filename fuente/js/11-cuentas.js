@@ -31,6 +31,7 @@ async function ctaCargarSdk() {
   const app = appMod.initializeApp(CTA_CONFIG, "ready4exam");
   const auth = authMod.getAuth(app);
   ctaE().fb = { auth, authMod, provider: new authMod.GoogleAuthProvider(), app };
+  authMod.setPersistence(auth, authMod.indexedDBLocalPersistence).catch(() => {});   // la sesión sobrevive a cerrar la app instalada
   authMod.onAuthStateChanged(auth, u => {
     ctaE().user = u; ctaE().msg = ""; renderCuenta(); document.dispatchEvent(new Event("cuenta-cambio"));
     // sesión ya iniciada al abrir la página: entrar directo a la app, sin quedarse en la portada
@@ -115,7 +116,8 @@ export function renderCuenta() {
   if (!box) return;   // el formulario vive en la portada (pantalla de inicio)
   const crear = ctaE().modo === "crear";
   if (ctaE().user) {
-    box.innerHTML = `<p class="d4-sub" style="margin:0">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>.</p>`;
+    box.innerHTML = `<p class="d4-sub" style="margin:0">Sesión iniciada como <b>${escHtml(ctaE().user.email || ctaE().user.displayName || "usuario")}</b>.</p><button class="btn" type="button" id="ctaContinuar" style="margin-top:12px">Continuar</button>`;
+    $("ctaContinuar").onclick = () => ctaTrasEntrar();
     return;
   }
   const msg = `<p class="etiq" role="status" style="margin:0;min-height:20px">${escHtml(ctaE().msg || "")}</p>`;
