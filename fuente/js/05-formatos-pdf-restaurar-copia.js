@@ -457,6 +457,8 @@ export function finish(timeout) {
   } catch (e) {}
   lastSession = { lv: currentLevel, sec: SECTIONS[currentSection] ? SECTIONS[currentSection].name : currentSection, exam: examMode, score, total: queue.length, date: new Date(), items: queue.map((it, i) => ({ q: it.q, given: (results[i] && results[i].given) || "", ok: !!(results[i] && results[i].correct), correct: (results[i] && results[i].correctText) || "" })) };
   mascotSay(pct >= 80 ? "¡Enhorabuena! Ese resultado merece celebrarse." : "Repasa las explicaciones y lo verás mejor.", pct >= 80 ? "happy" : "think", 6000);
+  // sesión corta: al acabar vuelve al inicio (el resumen sigue en el historial de progreso)
+  if (currentSection === "corta") { renderHome(); document.querySelector("[data-inicio]")?.click(); return; }
   show("result");
 }
 

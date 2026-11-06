@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Tw70Y51OBVyiqZPPk7+Rkv/lU0/rcL6VC530iblSpv8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-wsGZpGAbJlpkaWVG4bNkvc2/zfarln/xUhlHtZ/I63c=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1396,6 +1396,22 @@ header{display:none}
 .d4-pills .st-coin svg{width:22px;height:22px}
 /* En escritorio ancho la racha con sus días ya está en el panel de la derecha: aquí solo quedan las monedas */
 @media (min-width:1100px){.d4-pills .st-streak{display:none}}
+
+/* Durante un ejercicio: solo el ejercicio, sin menú, ni panel ni tarjeta de examen a los lados */
+body:has(#exercise:not(.hidden)){grid-template-columns:minmax(0,1fr) !important}
+body:has(#exercise:not(.hidden)) main{grid-column:1}
+body:has(#exercise:not(.hidden)) #dprog,body:has(#exercise:not(.hidden)) #dexam{display:none !important}
+body:has(#exercise:not(.hidden)) footer{grid-column:1}
+/* Perfil en escritorio: identidad y personaje a la izquierda; estadísticas, color, idioma y tema a la derecha. Sin huecos. */
+@media (min-width:821px){
+  #p-perfil{grid-template-columns:320px minmax(0,1fr);align-items:start}
+  #perfilCab{grid-column:1;grid-row:1 / span 3;align-self:start;position:sticky;top:20px}
+  #p-perfil .perfil-stats{grid-column:2;grid-row:1}
+  #p-perfil>:nth-child(5){grid-column:2;grid-row:2}
+  #p-perfil>:nth-child(6){grid-column:2;grid-row:3}
+  #p-perfil>:nth-child(7){grid-column:2;grid-row:4}
+  #p-perfil>:nth-child(4){grid-column:1;grid-row:4 / span 2}
+}
 </style>
 </head>
 <body>
@@ -4068,6 +4084,8 @@ function finish(timeout) {
   } catch (e) {}
   lastSession = { lv: currentLevel, sec: SECTIONS[currentSection] ? SECTIONS[currentSection].name : currentSection, exam: examMode, score, total: queue.length, date: new Date(), items: queue.map((it, i) => ({ q: it.q, given: (results[i] && results[i].given) || "", ok: !!(results[i] && results[i].correct), correct: (results[i] && results[i].correctText) || "" })) };
   mascotSay(pct >= 80 ? "¡Enhorabuena! Ese resultado merece celebrarse." : "Repasa las explicaciones y lo verás mejor.", pct >= 80 ? "happy" : "think", 6000);
+  // sesión corta: al acabar vuelve al inicio (el resumen sigue en el historial de progreso)
+  if (currentSection === "corta") { renderHome(); document.querySelector("[data-inicio]")?.click(); return; }
   show("result");
 }
 
