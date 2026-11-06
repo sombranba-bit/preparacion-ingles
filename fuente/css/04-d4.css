@@ -219,3 +219,10 @@ header{display:none}
 /* Solo para lectores de pantalla: título de la app que no se ve */
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .d4-pills{display:flex;gap:8px;align-items:center}
+
+/* Un solo estilo de icono: mismo cuadrado, fondo neutro y trazo de texto. El color queda para el estado. */
+.section-btn .ico,.d4-ico{background:var(--surface2) !important;color:var(--text) !important}
+.d4-fila .d4-n{background:var(--surface2) !important;color:var(--text) !important;box-shadow:0 3px 0 var(--line) !important;border-radius:14px !important}
+/* Las tarjetas del inicio empiezan arriba: sin centrado vertical, el título queda a la misma altura */
+#homeGrid .section-btn{display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}
+@media (min-width:821px){#homeGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
