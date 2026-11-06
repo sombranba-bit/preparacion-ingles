@@ -1,12 +1,12 @@
 const { chromium } = require('playwright');
 const file=process.argv[2];
 (async()=>{const b=await chromium.launch();
-const combos=[['noche','dark'],['noche','light'],['grafito','dark'],['grafito','light'],['crema','light']];
-for(const [pal,mode] of combos){
+const combos=[['dark'],['light']];   // la app solo tiene claro y oscuro (sin paletas)
+for(const [mode] of combos){
  const p=await (await b.newContext({viewport:{width:1280,height:900}})).newPage();
  await p.goto('file://'+file);await p.waitForTimeout(300);
  await p.evaluate(()=>{localStorage.setItem('perfiles-ingles','[{"id":"a1","name":"Prueba","avatar":{},"prefix":""}]');localStorage.setItem('perfil-activo','a1');});
- await p.evaluate(([pal,mode])=>{localStorage.setItem('ui-pal-B',pal);localStorage.setItem('ui-mode-B',mode);},[pal,mode]);
+ await p.evaluate(mode=>{localStorage.setItem('ui-mode-B',mode);},mode);
  await p.reload();await p.waitForTimeout(400);
  if(await p.isVisible('a[data-empezar]').catch(()=>false)){await p.click('a[data-empezar]');await p.waitForTimeout(400);}
  await p.evaluate(()=>{document.querySelectorAll('details').forEach(d=>d.open=true)});
@@ -28,7 +28,7 @@ for(const [pal,mode] of combos){
     if(ratio<min)out.push({t:t.slice(0,40),r:ratio.toFixed(2),need:min,fg:cs.color,bg:`rgb(${bg.r},${bg.g},${bg.b})`,cls:(el.className&&el.className.baseVal===undefined?el.className:'').toString().slice(0,40)});
   });
   return out;});
- console.log(`== ${pal} ${mode}: ${res.length} por debajo`);
+ console.log(`== ${mode}: ${res.length} por debajo`);
  res.slice(0,25).forEach(r=>console.log('  ',r.r+':1 (min '+r.need+')',JSON.stringify(r.t),r.fg,'sobre',r.bg,'.'+r.cls));
  await p.close();}
 await b.close();})().catch(e=>console.log('EXC',e.message.slice(0,300)));
