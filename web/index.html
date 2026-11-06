@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-EGVtEtaUn5i4ioDwXWe1bz5QCtFLJO07IF2qjP+p/Tw=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YkqP2JbxxLL7/mfLSt2xApIy01Z0gcKcO3RMCo3neAM=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1316,12 +1316,26 @@ header{display:none}
 :root[data-mode="dark"] .seg button[aria-pressed="true"]{background:var(--text);color:var(--bg);box-shadow:0 2px 0 #000}   /* la regla de arriba anulaba el fondo del seleccionado */
 :root[data-mode="dark"] .sello.got{background:color-mix(in srgb,var(--accent2) 16%,var(--surface));border-color:var(--accent2);box-shadow:0 5px 0 color-mix(in srgb,var(--accent2) 55%,#000)}
 
+/* Escritorio: menú lateral a la izquierda (mismos botones que la barra) y contenido centrado */
+#dprog{display:none}
+@media (min-width:821px){
+  body{grid-template-columns:232px minmax(0,1fr)}
+  main,footer{grid-column:2}
+  .bnav{left:0;right:auto;top:0;bottom:0;transform:none;width:232px;height:100vh;grid-template-columns:1fr;align-content:start;gap:6px;padding:24px 16px;border:0;border-right:2px solid var(--line);border-radius:0;background:var(--surface)}
+  .bnav button{display:flex;align-items:center;justify-content:flex-start;gap:12px;min-height:48px;padding:10px 14px;font-size:15px;border-radius:14px}
+  .bnav button svg{width:22px;height:22px;flex:none}
+}
+/* Panel de progreso fijo a la derecha en pantallas anchas */
+@media (min-width:1100px){
+  body{grid-template-columns:232px minmax(0,1fr) 300px}
+  #dprog{display:block;grid-column:3;grid-row:1;position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:28px 22px;border-left:2px solid var(--line);background:var(--surface)}
+  #dprog .dprog-card{margin-bottom:14px;padding:16px;border-radius:18px;border:2px solid var(--line);background:var(--bg);display:grid;gap:4px}
+  #dprog .dprog-card strong{font-family:Fredoka,Nunito,sans-serif;font-size:26px}
+}
 /* Escritorio: una sola columna centrada; la barra inferior va alineada a ella */
 @media (min-width:821px){
-  body{grid-template-columns:minmax(0,1fr)}
-  main,footer{grid-column:1}
   main{width:100%;max-width:1200px;margin:0 auto;padding:28px 24px 110px}
-  .bnav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,1152px);border-radius:20px 20px 0 0}
+  main{width:100%;max-width:1200px;margin:0 auto;padding:28px 24px 110px}
   .sellos{grid-template-columns:repeat(3,minmax(0,1fr))}
   .sello{aspect-ratio:auto;min-height:210px}
   #levels::before{display:none}   /* el rótulo ocupaba una celda de la rejilla y dejaba C2 sola */
@@ -1808,6 +1822,7 @@ header{display:none}
 </main>
 <nav class="bnav" id="bnav" aria-label="Principal"></nav>
 
+<aside id="dprog" class="dprog" aria-label="Tu progreso"></aside>
 <footer>Ejercicios originales para práctica. Tu progreso se guarda en este navegador. <a href="#" data-inicio style="color:inherit;font-weight:700">Ver inicio</a></footer>
 
 <script>
@@ -3261,7 +3276,18 @@ function tweenNum(el, from, to) {
   const step = now => { const k = Math.min(1, (now - t0) / dur); el.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
   requestAnimationFrame(step);
 }
+// Panel de progreso fijo en escritorio (solo lectura, mismos datos que el inicio)
+function renderDprog() {
+  const box = $("dprog"); if (!box) return;
+  const xp = xpTotal(), r = rankInfo(xp), s = streakInfo();
+  const falta = r.nextMin ? `Faltan ${r.nextMin - xp} XP para ${r.nextName}` : "Rango máximo";
+  box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>${s.days} ${s.days === 1 ? "día" : "días"}</strong></div>
+    <div class="dprog-card"><span class="muted">Rango</span><strong>${r.name}</strong><span class="muted">${xp} XP · ${falta}</span></div>
+    <div class="dprog-card"><span class="muted">Monedas</span><strong>${rewards().coins}</strong></div>`;
+}
+
 function renderHome() {
+  renderDprog();
   const rb = $("repasoBox");
   if (rb) {
     const n = srsDue(currentLevel).length;

@@ -1,0 +1,53 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1 · Menú lateral</title><link rel="stylesheet" href="base.css">
+<style>
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:24px 16px;border-right:2px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:20px}
+.logo{font-family:system-ui,sans-serif;font-weight:700;font-size:22px;padding:0 10px}
+main{padding:32px 40px 60px;max-width:1040px;width:100%}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-bottom:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.stat b{font-family:system-ui,sans-serif;font-size:30px;display:block}
+</style></head><body>
+<div class="app">
+<aside>
+  <div class="logo">Ready4Exam</div>
+  <nav class="nav">
+    <a class="on" href="#">⌂ Inicio</a><a href="#">✎ Practicar</a><a href="#">🏅 Progreso</a><a href="#">🛍 Tienda</a><a href="#">☺ Perfil</a>
+  </nav>
+  <div style="margin-top:auto" class="card" style="padding:14px">
+    <div class="muted">Examen</div><b>A1 · objetivo oficial</b>
+    <div class="bar" style="margin-top:10px"><i style="width:33%"></i></div>
+    <div class="muted" style="margin-top:6px">50 XP para Aprendiz</div>
+  </div>
+</aside>
+<main>
+  <div class="top"><div><div class="muted">Viernes 6 de noviembre</div><h1 style="font-size:34px">Hola, Prueba</h1></div>
+    <div><span class="pill">🔥 2 días</span> <span class="pill">● 10 monedas</span></div></div>
+  <div class="hero">
+    <section class="card" style="padding:28px">
+      <span class="pill">Hoy · 10 de 30 XP</span>
+      <h2 style="font-size:34px;margin:14px 0 8px">Practicar ahora</h2>
+      <p class="muted" style="font-size:16px">Te faltan 50 XP para ser Aprendiz. Hay 1 fallo de ayer para repasar antes de algo nuevo.</p>
+      <div class="bar" style="margin:18px 0"><i style="width:33%"></i></div>
+      <button class="btn" style="width:100%">Empezar</button>
+    </section>
+    <section class="card">
+      <div class="muted">Esta semana</div>
+      <div class="dots" style="margin:16px 0;flex-wrap:wrap"><span>L</span><span>M</span><span>X</span><span class="ok">J</span><span class="ok">V</span><span>S</span><span>D</span></div>
+      <div class="mini"><span>Liga semanal</span><b>2.º</b></div>
+      <div class="mini"><span>Logros</span><b>3 de 7</b></div>
+      <div class="mini" style="border:0"><span>Monedas</span><b>10</b></div>
+    </section>
+  </div>
+  <h2 style="font-size:22px;margin:28px 0 14px">Secciones</h2>
+  <div class="grid3">
+    <div class="card sec"><i>✓</i><div><b>Ejercicios</b><div class="muted">3.424 · 4 niveles de examen</div></div></div>
+    <div class="card sec"><i>♪</i><div><b>Audio</b><div class="muted">Escucha y repite</div></div></div>
+    <div class="card sec"><i>▤</i><div><b>Lectura libre</b><div class="muted">8 lecturas sugeridas</div></div></div>
+    <div class="card sec"><i>★</i><div><b>Repaso</b><div class="muted">1 fallo pendiente</div></div></div>
+    <div class="card sec"><i>⌘</i><div><b>Recursos</b><div class="muted">Exámenes y enlaces</div></div></div>
+    <div class="card sec"><i>⇄</i><div><b>Importar y copia</b><div class="muted">Copia de seguridad</div></div></div>
+  </div>
+</main></div></body></html>

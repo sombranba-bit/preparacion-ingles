@@ -1,0 +1,53 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E4 · Mezcla 1 y 2</title><link rel="stylesheet" href="base.css">
+<style>
+.app{display:grid;grid-template-columns:232px minmax(0,1fr) 300px;min-height:100vh}
+aside.menu{position:sticky;top:0;height:100vh;padding:24px 16px;border-right:2px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:20px}
+.logo{font-weight:700;font-size:22px;padding:0 10px}
+main{padding:32px 36px 60px;min-width:0}
+aside.prog{position:sticky;top:0;height:100vh;padding:32px 24px;border-left:2px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:16px;overflow:auto}
+.hero{padding:28px;margin-bottom:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sec{display:flex;gap:14px;align-items:center}.sec i{width:44px;height:44px;border-radius:14px;background:var(--surface2);display:grid;place-items:center;font-style:normal;font-size:20px}
+.dots{display:flex;gap:6px;flex-wrap:nowrap}.dots span{width:28px;height:28px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--muted)}.dots .ok{background:var(--acc2);color:#3b2a00}
+.mini{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line)}
+</style></head><body>
+<div class="app">
+<aside class="menu">
+  <div class="logo">Ready4Exam</div>
+  <nav class="nav"><a class="on" href="#">⌂ Inicio</a><a href="#">✎ Practicar</a><a href="#">🏅 Progreso</a><a href="#">🛍 Tienda</a><a href="#">☺ Perfil</a></nav>
+  <div class="card" style="margin-top:auto;padding:14px"><div class="muted">Examen</div><b>A1 · objetivo oficial</b><div class="bar" style="margin-top:10px"><i style="width:33%"></i></div><div class="muted" style="margin-top:6px">50 XP para Aprendiz</div></div>
+</aside>
+<main>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px"><div><div class="muted">Viernes 6 de noviembre</div><h1 style="font-size:32px">Hola, Prueba</h1></div><span class="pill">● 10 monedas</span></div>
+  <section class="card hero">
+    <span class="pill">Hoy · 10 de 30 XP</span>
+    <h2 style="font-size:36px;margin:14px 0 8px">Practicar ahora</h2>
+    <p class="muted" style="font-size:16px">Te faltan 50 XP para ser Aprendiz. Antes, repasa 1 fallo de ayer.</p>
+    <div class="bar" style="margin:18px 0"><i style="width:33%"></i></div>
+    <div style="display:flex;gap:12px"><button class="btn" style="flex:1">Empezar</button><button class="btn" style="background:var(--surface2);color:var(--text);box-shadow:0 4px 0 var(--line)">Repasar 1 fallo</button></div>
+  </section>
+  <h2 style="font-size:20px;margin:26px 0 14px">Secciones</h2>
+  <div class="grid2">
+    <div class="card sec"><i>✓</i><div><b>Ejercicios</b><div class="muted">3.424 · formatos oficiales</div></div></div>
+    <div class="card sec"><i>♪</i><div><b>Audio</b><div class="muted">Escucha y repite</div></div></div>
+    <div class="card sec"><i>▤</i><div><b>Lectura libre</b><div class="muted">8 lecturas por nivel</div></div></div>
+    <div class="card sec"><i>⌘</i><div><b>Exámenes oficiales</b><div class="muted">Cambridge · EOI · TOEFL</div></div></div>
+  </div>
+</main>
+<aside class="prog">
+  <div class="muted">Racha</div>
+  <div style="font-size:30px;font-weight:800">🔥 2 días</div>
+  <div class="dots"><span>L</span><span>M</span><span>X</span><span class="ok">J</span><span class="ok">V</span><span>S</span><span>D</span></div>
+  <div class="card" style="padding:16px">
+    <div class="mini"><span>Rango</span><b>Principiante</b></div>
+    <div class="mini"><span>XP hoy</span><b>10 / 30</b></div>
+    <div class="mini" style="border:0"><span>Logros</span><b>3 de 7</b></div>
+  </div>
+  <div class="card" style="padding:16px">
+    <div class="muted" style="margin-bottom:6px">Liga semanal</div>
+    <div class="mini"><span>1. Lucas</span><b>140 XP</b></div>
+    <div class="mini" style="background:var(--surface2);border-radius:12px;padding:10px"><span>2. Tú</span><b>10 XP</b></div>
+    <div class="mini" style="border:0"><span>3. Marta</span><b>8 XP</b></div>
+  </div>
+</aside>
+</div></body></html>

@@ -195,7 +195,18 @@ function tweenNum(el, from, to) {
   const step = now => { const k = Math.min(1, (now - t0) / dur); el.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
   requestAnimationFrame(step);
 }
+// Panel de progreso fijo en escritorio (solo lectura, mismos datos que el inicio)
+export function renderDprog() {
+  const box = $("dprog"); if (!box) return;
+  const xp = xpTotal(), r = rankInfo(xp), s = streakInfo();
+  const falta = r.nextMin ? `Faltan ${r.nextMin - xp} XP para ${r.nextName}` : "Rango máximo";
+  box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>${s.days} ${s.days === 1 ? "día" : "días"}</strong></div>
+    <div class="dprog-card"><span class="muted">Rango</span><strong>${r.name}</strong><span class="muted">${xp} XP · ${falta}</span></div>
+    <div class="dprog-card"><span class="muted">Monedas</span><strong>${rewards().coins}</strong></div>`;
+}
+
 export function renderHome() {
+  renderDprog();
   const rb = $("repasoBox");
   if (rb) {
     const n = srsDue(currentLevel).length;

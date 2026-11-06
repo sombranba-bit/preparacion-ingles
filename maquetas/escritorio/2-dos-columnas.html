@@ -1,0 +1,48 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E2 · Dos columnas</title><link rel="stylesheet" href="base.css">
+<style>
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;border-bottom:2px solid var(--line);background:var(--surface)}
+.logo{font-family:system-ui,sans-serif;font-weight:700;font-size:22px}
+nav.top a{margin-left:6px;padding:10px 16px;border-radius:999px;text-decoration:none;color:var(--text);font-weight:700}
+nav.top a.on{background:var(--acc);color:#fff}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;padding:28px 40px 60px;max-width:1280px;margin:0 auto}
+.side{display:flex;flex-direction:column;gap:16px;position:sticky;top:20px;align-self:start}
+.hero{padding:30px}
+.list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+</style></head><body>
+<header><div class="logo">Ready4Exam</div>
+<nav class="top"><a class="on" href="#">Inicio</a><a href="#">Practicar</a><a href="#">Progreso</a><a href="#">Tienda</a><a href="#">Perfil</a></nav></header>
+<div class="wrap">
+<main>
+  <section class="card hero">
+    <span class="pill">Hoy · 10 de 30 XP</span>
+    <h1 style="font-size:40px;margin:14px 0 8px">Practicar ahora</h1>
+    <p class="muted" style="font-size:17px">Te faltan 50 XP para ser Aprendiz. Antes, repasa 1 fallo de ayer.</p>
+    <div class="bar" style="margin:20px 0"><i style="width:33%"></i></div>
+    <div style="display:flex;gap:12px"><button class="btn" style="flex:1">Empezar</button><button class="btn" style="background:var(--surface2);color:var(--text);box-shadow:0 4px 0 var(--line)">Repasar 1 fallo</button></div>
+  </section>
+  <h2 style="font-size:22px;margin:30px 0 4px">Secciones</h2>
+  <div class="list">
+    <div class="card sec"><i>✓</i><div><b>Ejercicios</b><div class="muted">3.424 · formatos oficiales</div></div></div>
+    <div class="card sec"><i>♪</i><div><b>Audio</b><div class="muted">Escucha y repite</div></div></div>
+    <div class="card sec"><i>▤</i><div><b>Lectura libre</b><div class="muted">8 lecturas por nivel</div></div></div>
+    <div class="card sec"><i>⌘</i><div><b>Exámenes oficiales</b><div class="muted">Cambridge · EOI · TOEFL</div></div></div>
+  </div>
+</main>
+<aside class="side">
+  <section class="card">
+    <div class="muted">Racha</div><b style="font-family:system-ui;font-size:34px">🔥 2 días</b>
+    <div class="dots" style="margin-top:14px"><span>L</span><span>M</span><span>X</span><span class="ok">J</span><span class="ok">V</span><span>S</span><span>D</span></div>
+  </section>
+  <section class="card">
+    <div class="mini"><span>Rango</span><b>Principiante</b></div>
+    <div class="mini"><span>XP</span><b>10 / 30</b></div>
+    <div class="mini" style="border:0"><span>Monedas</span><b>10</b></div>
+  </section>
+  <section class="card">
+    <div class="muted" style="margin-bottom:8px">Liga semanal</div>
+    <div class="mini"><span>1. Lucas</span><b>140 XP</b></div>
+    <div class="mini" style="background:var(--surface2);border-radius:12px;padding:10px"><span>2. Tú</span><b>10 XP</b></div>
+    <div class="mini" style="border:0"><span>3. Marta</span><b>8 XP</b></div>
+  </section>
+</aside>
+</div></body></html>
