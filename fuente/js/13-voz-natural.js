@@ -249,7 +249,7 @@ function vozHablar(text, item, respaldo, velocidad) {
     $("audioBar").classList.add("playing");
     setPlayLabel(PAUSA_LBL);
     await vozEl.play();
-  }).catch(() => { vozEl = null; if (turno === vozTurno) respaldo(); });
+  }).catch(e => { if (e && e.name === "AbortError") return; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
   return true;
 }
 function vozParar() {
@@ -259,7 +259,7 @@ function vozParar() {
 /* Pausar o reanudar la voz natural; devuelve false si no está sonando */
 function vozAlternar() {
   if (!vozEl) return false;
-  if (vozEl.paused) { vozEl.play(); setPlayLabel(PAUSA_LBL); $("audioBar").classList.add("playing"); }
+  if (vozEl.paused) { vozEl.play().catch(() => {}); setPlayLabel(PAUSA_LBL); $("audioBar").classList.add("playing"); }
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }

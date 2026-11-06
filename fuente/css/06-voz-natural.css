@@ -1,39 +1,39 @@
 /* Voz natural: pantalla de descarga (alta de perfil y hoja al iniciar sesión) */
 .voz-ov[hidden], .voz-barra[hidden], .voz-aviso[hidden] { display: none !important; }
-.voz-ov { position: fixed; inset: 0; z-index: 9000; font-family: var(--fuente, system-ui, sans-serif); color: #2a1d14; box-sizing: border-box; }
-.voz-ov .voz-card { box-sizing: border-box; background: #fffdf8; border: 2px solid #ecd9c0; border-radius: 24px; box-shadow: 0 6px 0 #ecd9c0; padding: 24px; }
-.voz-ov.alta { background: #fff8ec; overflow-y: auto; }
+.voz-ov { position: fixed; inset: 0; z-index: 9000; font-family: var(--fuente, system-ui, sans-serif); color: var(--text); box-sizing: border-box; }
+.voz-ov .voz-card { box-sizing: border-box; background: var(--surface); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 6px 0 var(--line); padding: 24px; }
+.voz-ov.alta { background: var(--bg); overflow-y: auto; }
 .voz-ov.hoja { background: rgba(42, 29, 20, .35); }
-.voz-ov.hoja .voz-card { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 24px 24px 0 0; border-width: 2px 0 0; box-shadow: 0 -6px 0 #ecd9c0; padding: 14px 24px calc(28px + env(safe-area-inset-bottom, 0px)); max-height: 90vh; overflow-y: auto; }
-.voz-pasos ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-weight: 800; font-size: 15px; color: #5a4636; }
+.voz-ov.hoja .voz-card { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 24px 24px 0 0; border-width: 2px 0 0; box-shadow: 0 -6px 0 var(--line); padding: 14px 24px calc(28px + env(safe-area-inset-bottom, 0px)); max-height: 90vh; overflow-y: auto; }
+.voz-pasos ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-weight: 800; font-size: 15px; color: var(--muted); }
 .voz-pasos li { display: flex; align-items: center; gap: 12px; }
-.voz-pasos li span { width: 28px; height: 28px; border-radius: 50%; background: #0b7a62; color: #fff; display: grid; place-items: center; flex: none; font-size: 13px; }
-.voz-pasos li.now { color: #2a1d14; }
-.voz-pasos li.now span { background: #0b5f4f; }
+.voz-pasos li span { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--on-accent, #fff); display: grid; place-items: center; flex: none; font-size: 13px; }
+.voz-pasos li.now { color: var(--text); }
+.voz-pasos li.now span { background: var(--accent); }
 .voz-main { flex: 1; min-width: 0; }
-.voz-est { margin: 0 0 8px; font-weight: 800; font-size: 14px; color: #5a4636; }
+.voz-est { margin: 0 0 8px; font-weight: 800; font-size: 14px; color: var(--muted); }
 .voz-main h2 { margin: 0 0 12px; font-family: Fredoka, Nunito, sans-serif; font-weight: 700; font-size: 30px; line-height: 1.15; }
-.voz-txt { margin: 0 0 24px; font-size: 16px; line-height: 1.5; color: #5a4636; }
-.voz-bar { height: 12px; border-radius: 999px; background: #f3e6d2; overflow: hidden; margin-bottom: 10px; }
-.voz-bar > div { height: 100%; width: 0; background: #0b5f4f; border-radius: 999px; transition: width .25s linear; }
+.voz-txt { margin: 0 0 24px; font-size: 16px; line-height: 1.5; color: var(--muted); }
+.voz-bar { height: 12px; border-radius: 999px; background: var(--surface2); overflow: hidden; margin-bottom: 10px; }
+.voz-bar > div { height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width .25s linear; }
 .voz-dat { margin: 0 0 24px; font-size: 15px; font-weight: 800; }
 .voz-acc { display: flex; flex-direction: column; gap: 12px; }
 .voz-acc button { min-height: 52px; padding: 0 20px; border-radius: 16px; font-family: Fredoka, Nunito, sans-serif; font-weight: 600; font-size: 17px; cursor: pointer; }
 .voz-acc button:disabled { opacity: .5; cursor: default; }
-.voz-b1 { border: 0; background: #0b5f4f; color: #fff; box-shadow: 0 4px 0 #063d33; }
-.voz-b2 { border: 2px solid #ecd9c0; background: #fffdf8; color: #2a1d14; box-shadow: 0 4px 0 #ecd9c0; }
-.voz-link { border: 0; background: transparent; color: #0b5f4f; font-family: Nunito, system-ui, sans-serif !important; font-weight: 800 !important; font-size: 15px !important; text-decoration: underline; min-height: 44px !important; padding: 0 !important; justify-self: start; }
-.voz-aviso { margin-top: 20px; padding: 14px 16px; border-radius: 14px; background: #fff1d6; border: 2px solid #d98a0c; font-size: 14px; line-height: 1.5; }
+.voz-b1 { border: 0; background: var(--accent); color: var(--on-accent, #fff); box-shadow: 0 4px 0 var(--line); }
+.voz-b2 { border: 2px solid var(--line); background: var(--surface); color: var(--text); box-shadow: 0 4px 0 var(--line); }
+.voz-link { border: 0; background: transparent; color: var(--accent); font-family: Nunito, system-ui, sans-serif !important; font-weight: 800 !important; font-size: 15px !important; text-decoration: underline; min-height: 44px !important; padding: 0 !important; justify-self: start; }
+.voz-aviso { margin-top: 20px; padding: 14px 16px; border-radius: 14px; background: var(--surface2); border: 2px solid #d98a0c; font-size: 14px; line-height: 1.5; }
 .voz-aviso strong { display: block; margin-bottom: 4px; }
-.voz-barra { position: fixed; left: 16px; right: 16px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 9000; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 16px; box-sizing: border-box; border-radius: 16px; border: 2px solid #ecd9c0; background: #fffdf8; box-shadow: 0 4px 0 #ecd9c0; font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: 14px; color: #2a1d14; text-align: left; cursor: pointer; }
+.voz-barra { position: fixed; left: 16px; right: 16px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 9000; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 16px; box-sizing: border-box; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); box-shadow: 0 4px 0 var(--line); font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: 14px; color: var(--text); text-align: left; cursor: pointer; }
 #vozBarraTxt { flex: 1; min-width: 0; }
-.voz-barra-bar { width: 72px; height: 8px; border-radius: 999px; background: #f3e6d2; overflow: hidden; flex: none; }
-.voz-barra-bar > span { display: block; height: 100%; width: 0; background: #0b5f4f; }
+.voz-barra-bar { width: 72px; height: 8px; border-radius: 999px; background: var(--surface2); overflow: hidden; flex: none; }
+.voz-barra-bar > span { display: block; height: 100%; width: 0; background: var(--accent); }
 @media (min-width: 900px) {
   .voz-ov.alta, .voz-ov.hoja { display: flex; align-items: center; justify-content: center; }
   .voz-ov.alta .voz-card { width: 880px; display: flex; gap: 48px; align-items: center; padding: 40px; }
   .voz-ov.alta .voz-pasos { width: 220px; flex: none; }
-  .voz-ov.hoja .voz-card { position: relative; left: auto; right: auto; bottom: auto; width: 520px; border-width: 2px; border-radius: 24px; box-shadow: 0 6px 0 #ecd9c0; padding: 32px; }
+  .voz-ov.hoja .voz-card { position: relative; left: auto; right: auto; bottom: auto; width: 520px; border-width: 2px; border-radius: 24px; box-shadow: 0 6px 0 var(--line); padding: 32px; }
   .voz-ov.hoja .voz-grip { display: none; }
 }
 @media (max-width: 899px) {
@@ -45,11 +45,11 @@
 .voz-anillo { position: relative; width: 180px; height: 180px; margin: 0 auto 20px; }
 .voz-anillo svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .voz-anillo circle { fill: none; stroke-width: 14; }
-.voz-anillo-base { stroke: #f3e6d2; }
-.voz-anillo-trazo { stroke: #0b5f4f; stroke-linecap: round; transition: stroke-dashoffset .25s linear; }
+.voz-anillo-base { stroke: var(--surface2); }
+.voz-anillo-trazo { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset .25s linear; }
 .voz-anillo span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: Fredoka, Nunito, sans-serif; font-weight: 700; font-size: 26px; }
 .voz-aj-h { margin: 0 0 8px; font-family: Fredoka, Nunito, sans-serif; font-size: 20px; }
-.voz-aj-p { margin: 0 0 12px; color: #5a4636; line-height: 1.5; }
+.voz-aj-p { margin: 0 0 12px; color: var(--muted); line-height: 1.5; }
 .voz-aj-btn { min-height: 48px; padding: 0 20px; border-radius: 14px; }
 @media (min-width: 900px) { .voz-ov.alta .voz-anillo { margin: 0 0 20px; } }
 @media (prefers-reduced-motion: reduce) { .voz-anillo-trazo { transition: none; } }
