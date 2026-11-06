@@ -70,6 +70,31 @@ export const AV={
     <path d="M50 70V74M50 74Q46 79 42 76M50 74Q54 79 58 76" stroke="#2a1d14" stroke-width="1.6" fill="none" stroke-linecap="round"/>
     <rect x="47.5" y="74.5" width="5" height="5" rx="1" fill="#fff" stroke="#2a1d14" stroke-width=".9"/>
     <circle cx="30" cy="66" r="4.5" fill="#f0587a" opacity=".3"/><circle cx="70" cy="66" r="4.5" fill="#f0587a" opacity=".3"/></svg>`
+,
+  buho:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="gb" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#b08d6a"/><stop offset="1" stop-color="#6b4a2e"/></radialGradient></defs>${SH}
+    <path d="M30 26L36 10L44 24Z" fill="#6b4a2e" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M70 26L64 10L56 24Z" fill="#6b4a2e" stroke="#2a1d14" stroke-width="1.6" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="58" rx="34" ry="34" fill="url(#gb)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="50" cy="72" rx="20" ry="16" fill="#e7d3b5"/>
+    <circle cx="37" cy="48" r="13" fill="#fff8e8" stroke="#2a1d14" stroke-width="1.4"/><circle cx="63" cy="48" r="13" fill="#fff8e8" stroke="#2a1d14" stroke-width="1.4"/>
+    <circle cx="37" cy="49" r="6" fill="#2a1d14"/><circle cx="63" cy="49" r="6" fill="#2a1d14"/>
+    <circle cx="39" cy="47" r="2" fill="#fff"/><circle cx="65" cy="47" r="2" fill="#fff"/>
+    <path d="M46 60L50 68L54 60Z" fill="#f0a33a" stroke="#2a1d14" stroke-width="1.2" stroke-linejoin="round"/></svg>`,
+  rana:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="gr" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#a6e6a0"/><stop offset="1" stop-color="#3f9e5a"/></radialGradient></defs>${SH}
+    <circle cx="32" cy="34" r="13" fill="url(#gr)" stroke="#2a1d14" stroke-width="1.6"/><circle cx="68" cy="34" r="13" fill="url(#gr)" stroke="#2a1d14" stroke-width="1.6"/>
+    <circle cx="32" cy="33" r="8" fill="#fff" stroke="#2a1d14" stroke-width="1"/><circle cx="68" cy="33" r="8" fill="#fff" stroke="#2a1d14" stroke-width="1"/>
+    <circle cx="33" cy="34" r="4" fill="#2a1d14"/><circle cx="69" cy="34" r="4" fill="#2a1d14"/>
+    <ellipse cx="50" cy="62" rx="34" ry="28" fill="url(#gr)" stroke="#2a1d14" stroke-width="1.6"/>
+    <path d="M30 62Q50 76 70 62" stroke="#2a1d14" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <circle cx="26" cy="66" r="4.5" fill="#f0587a" opacity=".35"/><circle cx="74" cy="66" r="4.5" fill="#f0587a" opacity=".35"/></svg>`,
+  pulpo:`<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="gp" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#f3a6c8"/><stop offset="1" stop-color="#b4568a"/></radialGradient></defs>${SH}
+    <path d="M22 62Q18 80 26 90M36 66Q34 86 42 92M50 68Q50 90 50 94M64 66Q66 86 58 92M78 62Q82 80 74 90" stroke="#b4568a" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M22 62Q18 80 26 90M36 66Q34 86 42 92M50 68Q50 90 50 94M64 66Q66 86 58 92M78 62Q82 80 74 90" stroke="#2a1d14" stroke-width="1" fill="none" stroke-linecap="round" opacity=".5"/>
+    <path d="M18 56Q18 18 50 16Q82 18 82 56Q82 70 50 70Q18 70 18 56Z" fill="url(#gp)" stroke="#2a1d14" stroke-width="1.6"/>
+    <ellipse cx="38" cy="50" rx="6" ry="7" fill="#2a1d14"/><ellipse cx="62" cy="50" rx="6" ry="7" fill="#2a1d14"/>
+    <circle cx="40" cy="48" r="2" fill="#fff"/><circle cx="64" cy="48" r="2" fill="#fff"/>
+    <path d="M45 61Q50 65 55 61" stroke="#2a1d14" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <circle cx="28" cy="60" r="4" fill="#fff" opacity=".35"/><circle cx="72" cy="60" r="4" fill="#f0587a" opacity=".3"/></svg>`
 };
 export const CAT=[
   {id:'gato',k:'avatar',nombre:'Mía',desc:'Gato gris',precio:300},
@@ -78,6 +103,9 @@ export const CAT=[
   {id:'bruno',k:'avatar',nombre:'Bruno',desc:'Oso',precio:450},
   {id:'kiwi',k:'avatar',nombre:'Kiwi',desc:'Pájaro',precio:450},
   {id:'lola',k:'avatar',nombre:'Lola',desc:'Cerdito',precio:550},
+  {id:'buho',k:'avatar',nombre:'Ona',desc:'Búho',precio:600},
+  {id:'rana',k:'avatar',nombre:'Rita',desc:'Rana',precio:650},
+  {id:'pulpo',k:'avatar',nombre:'Poli',desc:'Pulpo',precio:700},
   {id:'#bff0e0',k:'color',nombre:'Fondo menta',desc:'Color de fondo',precio:150},
   {id:'#d4c6ff',k:'color',nombre:'Fondo lila',desc:'Color de fondo',precio:200},
   {id:'#bfe4ff',k:'color',nombre:'Fondo cielo',desc:'Color de fondo',precio:200},

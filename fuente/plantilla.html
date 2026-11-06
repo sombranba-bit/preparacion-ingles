@@ -397,30 +397,40 @@
   <!-- PERFIL: avatar, monedas y perfiles (importar y copia de seguridad están en su sub-pestaña) -->
   <section id="p-perfil" class="panel hidden">
     <div class="m-slot"></div>
-    <div class="perfil-izq">
-      <div class="perfil" id="perfilCab"></div>
-      <div class="bloque card ajuste">
-        <span class="etiq">Idioma de las explicaciones</span>
-        <div class="seg" id="segExpl" role="group" aria-label="Idioma de las explicaciones">
-          <button aria-pressed="true" data-v="es" type="button">Español</button>
-          <button aria-pressed="false" data-v="en" type="button">English</button>
-        </div>
-        <span class="etiq" style="margin-top:14px">Idioma de los ejercicios</span>
-        <div class="seg" id="segEj" role="group" aria-label="Idioma de los ejercicios">
-          <button aria-pressed="true" data-v="en" type="button">Inglés</button>
-          <button aria-pressed="false" data-v="es" type="button">Español</button>
-        </div>
-      </div>
+    <div class="perfil" id="perfilCab"></div>
+    <div class="ptabs" role="tablist" aria-label="Secciones del perfil">
+      <button role="tab" aria-selected="true" aria-controls="pPer" id="tPer" type="button">Personaje</button>
+      <button role="tab" aria-selected="false" aria-controls="pAju" id="tAju" tabindex="-1" type="button">Ajustes</button>
+      <button role="tab" aria-selected="false" aria-controls="pCue" id="tCue" tabindex="-1" type="button">Cuenta</button>
     </div>
-    <div class="perfil-der">
-      <div class="bloque" style="margin-top:0">
-        <span class="etiq">Personaje</span>
+    <div class="ppanel on" id="pPer" role="tabpanel" aria-labelledby="tPer">
+      <div class="bloque card">
+        <span class="etiq">Elige tu personaje</span>
         <div class="avatares" id="avatares"></div>
-      </div>
-      <div class="bloque">
+        <div class="sep"></div>
         <span class="etiq">Color de fondo</span>
         <div class="bol-fila" id="cols"></div>
       </div>
+    </div>
+    <div class="ppanel" id="pAju" role="tabpanel" aria-labelledby="tAju">
+      <div class="perfil-der">
+        <div class="bloque card ajuste">
+          <span class="etiq">Idioma de las explicaciones</span>
+          <div class="seg" id="segExpl" role="group" aria-label="Idioma de las explicaciones">
+            <button aria-pressed="true" data-v="es" type="button">Español</button>
+            <button aria-pressed="false" data-v="en" type="button">English</button>
+          </div>
+          <span class="etiq" style="margin-top:14px">Idioma de los ejercicios</span>
+          <div class="seg" id="segEj" role="group" aria-label="Idioma de los ejercicios">
+            <button aria-pressed="true" data-v="en" type="button">Inglés</button>
+            <button aria-pressed="false" data-v="es" type="button">Español</button>
+          </div>
+        </div>
+        <div id="perfilAjustes"></div>
+      </div>
+    </div>
+    <div class="ppanel" id="pCue" role="tabpanel" aria-labelledby="tCue">
+      <div class="bloque card" id="perfilCuenta"></div>
     </div>
   </section>
 

@@ -22,5 +22,5 @@ import { ajustesGet, ajustesSet, renderHome } from "../04-recompensas-logros-cop
   function paint(){ paintMode(); }
   paint();
   bar.open = innerWidth > 820;
-  document.querySelector('#p-perfil .perfil-der').appendChild(bar);
+  document.getElementById('perfilAjustes').appendChild(bar);
 })();

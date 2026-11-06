@@ -171,9 +171,28 @@ export function renderLogrosPanel() {
 document.addEventListener("cuenta-cambio", () => renderPerfilPanel());
 
 /* ---------- Perfil: personaje, color, nivel y tienda ---------- */
+// Pestañas de Perfil (Personaje | Ajustes | Cuenta); se conectan una vez
+let pestanasListas = false;
+function iniciarPestanasPerfil() {
+  if (pestanasListas || !$("tPer")) return;
+  pestanasListas = true;
+  const tabs = ["tPer", "tAju", "tCue"].map(id => $(id));
+  const activa = i => {
+    tabs.forEach((t, j) => { t.setAttribute("aria-selected", j === i); t.tabIndex = j === i ? 0 : -1; $(t.getAttribute("aria-controls")).classList.toggle("on", j === i); });
+    tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => activa(i));
+    t.addEventListener("keydown", ev => { if (ev.key === "ArrowRight") activa((i + 1) % 3); if (ev.key === "ArrowLeft") activa((i + 2) % 3); });
+  });
+}
+
 export function renderPerfilPanel() {
   const box = $("perfilCab");
   if (!box) return;
+  const cuenta = $("perfilCuenta") || box;
+  cuenta.innerHTML = "";
+  iniciarPestanasPerfil();
   const p = activeProfile(), av = avatarActual();
   const nombre = p ? p.name : "Invitado";
   box.innerHTML = `<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
@@ -186,7 +205,7 @@ export function renderPerfilPanel() {
   // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
   const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
   let st = $("perfilStats");
-  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("p-perfil").querySelector(".perfil-izq").after(st); }
+  if (!st) { st = document.createElement("div"); st.id = "perfilStats"; st.className = "perfil-stats"; $("perfilCab").after(st); }
   st.innerHTML = [["Puntos totales", xpTotal() + " XP"], ["Racha", dias + (dias === 1 ? " día" : " días")], ["Logros", logrosOk + " de " + sel.length], ["Rango", rankInfo(xpTotal()).name]]
     .map(([a, b]) => `<div class="card"><span class="muted">${a}</span><b>${b}</b></div>`).join("");
   const personajes = $("avatares");
@@ -201,11 +220,11 @@ export function renderPerfilPanel() {
       cambiarAvatar(a => ({ ...a, animal: b.dataset.av }));
     });
   }
-  const importar = document.createElement("button"); importar.className = "chip"; importar.type = "button"; importar.style.minHeight = "40px"; importar.textContent = "Importar y copia"; importar.onclick = () => showTab("importar"); box.appendChild(importar);
+  const importar = document.createElement("button"); importar.className = "chip"; importar.type = "button"; importar.style.minHeight = "40px"; importar.textContent = "Importar y copia"; importar.onclick = () => showTab("importar"); cuenta.appendChild(importar);
   const sesion = window.ctaEstado && window.ctaEstado.user;
-  if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); box.appendChild(sal); }
+  if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); cuenta.appendChild(sal); }
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
-  const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); box.appendChild(b); };
+  const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); cuenta.appendChild(b); };
   if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");
   borrar("Borrar todos los datos", "borrar-datos");
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
