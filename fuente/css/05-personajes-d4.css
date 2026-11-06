@@ -308,8 +308,8 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
   #perfilCab{order:0}
   #perfilStats{order:1}
   .perfil-der>.bloque:first-child{order:2}
-  .perfil-izq>.bloque{order:3}
-  .perfil-der>.bloque:last-child{order:4}
+  .perfil-der>.bloque:last-child{order:3}
+  .perfil-izq>.bloque{order:4}
   #p-perfil #themeBar{order:5}
 }
 }
