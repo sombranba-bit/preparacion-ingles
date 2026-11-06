@@ -41,7 +41,7 @@ import {
   DAILY_GOAL,
   xpTotal,
 } from "./02-progreso-xp-racha-mascota.js";
-import { activeProfile, escHtml } from "./03-perfiles.js";
+import { activeProfile, escHtml, profileOpenList } from "./03-perfiles.js";
 import { salirCuenta } from "./11-cuentas.js";
 import {
   celebrate,
@@ -208,8 +208,14 @@ export function renderDprog() {
     <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div></div>`;
   const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
   if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
-  // con cuenta iniciada, cerrar sesión desde la tarjeta del examen
-  if (ex && window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.style.marginTop = "10px"; sal.onclick = () => salirCuenta(); ex.appendChild(sal); }
+  // acciones de perfil desde la tarjeta del examen: cambiar perfil (crear, borrar, elegir) y cerrar sesión si hay cuenta
+  if (ex) {
+    const bar = document.createElement("div"); bar.className = "dexam-acc";
+    const cambia = document.createElement("button"); cambia.className = "chip"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList();
+    bar.appendChild(cambia);
+    if (window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); bar.appendChild(sal); }
+    ex.appendChild(bar);
+  }
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
 document.addEventListener("cuenta-cambio", () => renderDprog());

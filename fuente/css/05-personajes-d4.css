@@ -312,3 +312,5 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #home #gamePanel>#d4Acciones{order:6}
 #home #gamePanel>#d4Camino{order:7}
 #home>#homeSecciones{order:8}
+.dexam-acc{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.dexam-acc .chip{min-height:36px;padding:0 12px;font-size:14px}

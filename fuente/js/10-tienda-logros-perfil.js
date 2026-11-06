@@ -6,7 +6,6 @@ import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
 import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx } from "./00-personajes-d4.js";
 import { infoSellosHtml, lsGet, lsSet, xpTotal, streakInfo, rankInfo } from "./02-progreso-xp-racha-mascota.js";
-import { salirCuenta } from "./11-cuentas.js";
 
 const COIN = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-moneda"/></svg>`;
 const LOCK = `<svg class="ic ic-c" aria-hidden="true"><use href="#i-candado"/></svg>`;
@@ -222,7 +221,6 @@ export function renderPerfilPanel() {
   }
   const importar = document.createElement("button"); importar.className = "chip"; importar.type = "button"; importar.style.minHeight = "40px"; importar.textContent = "Importar y copia"; importar.onclick = () => showTab("importar"); cuenta.appendChild(importar);
   const sesion = window.ctaEstado && window.ctaEstado.user;
-  if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); cuenta.appendChild(sal); }
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
   const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); cuenta.appendChild(b); };
   if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");

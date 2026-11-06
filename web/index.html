@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-5KY63GI11IXREsjE+i3VD93K+jVU4ptJGm5r+TeBDH0=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-zCWjhCSQGQwzSpyyAVXdR6RV2kH9UuVLg20PHSdLMME=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1424,6 +1424,8 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #home #gamePanel>#d4Acciones{order:6}
 #home #gamePanel>#d4Camino{order:7}
 #home>#homeSecciones{order:8}
+.dexam-acc{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.dexam-acc .chip{min-height:36px;padding:0 12px;font-size:14px}
 </style>
 </head>
 <body>
@@ -3411,8 +3413,14 @@ function renderDprog() {
     <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div></div>`;
   const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
   if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
-  // con cuenta iniciada, cerrar sesión desde la tarjeta del examen
-  if (ex && window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.style.marginTop = "10px"; sal.onclick = () => salirCuenta(); ex.appendChild(sal); }
+  // acciones de perfil desde la tarjeta del examen: cambiar perfil (crear, borrar, elegir) y cerrar sesión si hay cuenta
+  if (ex) {
+    const bar = document.createElement("div"); bar.className = "dexam-acc";
+    const cambia = document.createElement("button"); cambia.className = "chip"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList();
+    bar.appendChild(cambia);
+    if (window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); bar.appendChild(sal); }
+    ex.appendChild(bar);
+  }
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
 document.addEventListener("cuenta-cambio", () => renderDprog());
@@ -9252,7 +9260,6 @@ function renderPerfilPanel() {
   }
   const importar = document.createElement("button"); importar.className = "chip"; importar.type = "button"; importar.style.minHeight = "40px"; importar.textContent = "Importar y copia"; importar.onclick = () => showTab("importar"); cuenta.appendChild(importar);
   const sesion = window.ctaEstado && window.ctaEstado.user;
-  if (sesion) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.style.minHeight = "40px"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); cuenta.appendChild(sal); }
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
   const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); cuenta.appendChild(b); };
   if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");
