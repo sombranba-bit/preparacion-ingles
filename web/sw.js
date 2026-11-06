@@ -6,6 +6,6 @@ self.addEventListener("install", e => e.waitUntil(caches.open(V).then(c => Promi
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k))))));
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
-  e.respondWith(fetch(e.request).then(r => { if (r.ok) caches.open(V).then(c => c.put(e.request, r.clone())); return r; })
+  e.respondWith(fetch(e.request).then(r => { if (r.ok) { const copia = r.clone(); e.waitUntil(caches.open(V).then(c => c.put(e.request, copia))); } return r; })
     .catch(() => caches.match(e.request).then(r => r || caches.match("index.html"))));
 });
