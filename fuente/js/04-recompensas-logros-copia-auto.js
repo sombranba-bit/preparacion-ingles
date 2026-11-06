@@ -207,13 +207,13 @@ export function renderDprog() {
   box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>🔥 ${s.days} ${s.days === 1 ? "día" : "días"}</strong>${semana}</div>
     <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div></div>`;
   const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
-  if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
+  if (ex) ex.innerHTML = "";   // sin tarjeta de examen: solo las acciones de abajo
   // acciones de perfil desde la tarjeta del examen: cambiar perfil (crear, borrar, elegir) y cerrar sesión si hay cuenta
   if (ex) {
     const bar = document.createElement("div"); bar.className = "dexam-acc";
-    const cambia = document.createElement("button"); cambia.className = "chip"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList();
+    const cambia = document.createElement("button"); cambia.className = "btn secondary"; cambia.type = "button"; cambia.textContent = "Cambiar perfil"; cambia.onclick = () => profileOpenList();
     bar.appendChild(cambia);
-    if (window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); bar.appendChild(sal); }
+    if (window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "btn secondary"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.onclick = () => salirCuenta(); bar.appendChild(sal); }
     ex.appendChild(bar);
   }
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
