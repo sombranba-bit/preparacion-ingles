@@ -95,12 +95,25 @@ export function entrarGoogle() {
 export function entrarCorreo(crear) {
   const email = ($("ctaEmail") || {}).value?.trim() || "";
   const pass = ($("ctaPass") || {}).value || "";
+  const recuerda = $("ctaRecuerda") ? $("ctaRecuerda").checked : true;
   if (!email) { ctaE().msg = "Escribe tu correo."; renderCuenta(); return; }
   if (!edadOk()) return;
   return ctaAccion(async () => {
     const fb = await ctaCargar();
+    await fb.authMod.setPersistence(fb.auth, recuerda ? fb.authMod.browserLocalPersistence : fb.authMod.browserSessionPersistence);
     const r = crear ? await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass) : await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
     ctaE().user = r.user;
+  });
+}
+
+// Envía el enlace para cambiar la contraseña (lo gestiona Firebase Auth)
+export function entrarRecuperar() {
+  const email = ($("ctaEmail") || {}).value?.trim() || "";
+  if (!email) { ctaE().msg = "Escribe tu correo y vuelve a pulsar «¿Olvidaste la contraseña?»."; renderCuenta(); return; }
+  return ctaAccion(async () => {
+    const fb = await ctaCargar();
+    await fb.authMod.sendPasswordResetEmail(fb.auth, email);
+    ctaE().msg = "Te hemos enviado un enlace para cambiar la contraseña a " + email + ".";
   });
 }
 
@@ -129,28 +142,34 @@ export function renderCuenta() {
     $("ctaContinuar").onclick = () => ctaTrasEntrar();
     return;
   }
-  const msg = `<p class="etiq" role="status" style="margin:0;min-height:20px">${escHtml(ctaE().msg || "")}</p>`;
+  const msg = ctaE().msg ? `<p class="etiq" role="status" style="margin:0">${escHtml(ctaE().msg)}</p>` : "";
   ctaCargar().catch(() => {});   // precarga el SDK: así la ventana de Google se abre al pulsar, sin bloqueo del navegador
-  const edad = !!$("ctaEdad")?.checked;   // se conserva al volver a pintar el bloque
-  box.innerHTML = `<label style="display:flex;gap:10px;align-items:flex-start;margin:0 0 12px"><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""} style="min-width:20px;min-height:20px;margin-top:2px"><span class="etiq" style="text-transform:none;letter-spacing:0">Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
-    <span class="etiq">${crear ? "Crear cuenta" : "Iniciar sesión"}</span>
-    <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>
-    <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
-    <div id="ctaFormCorreo" hidden style="display:grid;gap:8px">
-      <label class="etiq" for="ctaEmail">Correo</label>
-      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
-      <label class="etiq" for="ctaPass">Contraseña</label>
-      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
-      <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
+  const prevEmail = ($("ctaEmail") || {}).value || "";   // no se pierde el correo al volver a pintar
+  const edad = !!$("ctaEdad")?.checked;                 // se conserva al volver a pintar el bloque
+  const recuerda = $("ctaRecuerda") ? $("ctaRecuerda").checked : true;
+  const titulo = $("lpTitulo"); if (titulo) titulo.textContent = crear ? "Crea tu cuenta" : "Entrar en Ready4Exam";
+  document.querySelectorAll("[data-cuenta=entrar],[data-cuenta=crear]").forEach(b => b.setAttribute("aria-selected", String((b.dataset.cuenta === "crear") === crear)));
+  box.innerHTML = `${msg}
+    <label class="cta-campo">Correo
+      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" placeholder="nombre@correo.com" value="${escHtml(prevEmail)}" />
+    </label>
+    <label class="cta-campo">Contraseña
+      <span class="cta-pw"><input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" /><button type="button" id="ctaVer" aria-pressed="false">Ver</button></span>
+    </label>
+    <div class="cta-fila" id="ctaFilaEntrar" ${crear ? "hidden" : ""}>
+      <label class="cta-chk"><input id="ctaRecuerda" type="checkbox" ${recuerda ? "checked" : ""}> Mantener la sesión</label>
+      <button type="button" class="cta-enlace" id="ctaOlvido">¿Olvidaste la contraseña?</button>
     </div>
-    `;
-  box.insertAdjacentHTML("afterbegin", msg);
+    <label class="cta-chk"><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""}> <span>Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
+    <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
+    <div class="cta-sep"><span>o</span></div>
+    <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>`;
   $("ctaGoogle").onclick = entrarGoogle;
-  $("ctaCorreoAbrir").onclick = () => {
-    const f = $("ctaFormCorreo"), abierto = !f.hidden;
-    f.hidden = abierto; $("ctaCorreoAbrir").setAttribute("aria-expanded", String(!abierto));
-    if (!abierto) $("ctaEmail").focus();
+  $("ctaVer").onclick = () => {
+    const p = $("ctaPass"), v = p.type === "password";
+    p.type = v ? "text" : "password"; $("ctaVer").textContent = v ? "Ocultar" : "Ver"; $("ctaVer").setAttribute("aria-pressed", String(v));
   };
+  $("ctaOlvido").onclick = entrarRecuperar;
   $("ctaEnviar").onclick = () => entrarCorreo(crear);
 }
 

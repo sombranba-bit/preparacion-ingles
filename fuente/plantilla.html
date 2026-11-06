@@ -29,13 +29,15 @@
 <symbol id="i-confeti" viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="2.5" rx=".6" fill="#f0587a" transform="rotate(-30 6 14)"/><circle cx="17" cy="6" r="1.8" fill="#4aa8ff"/><rect x="13" y="5" width="3.5" height="2" rx=".6" fill="#ffb22e" transform="rotate(25 14 6)"/><circle cx="19" cy="14" r="1.5" fill="#a57bff"/><path d="M9 6l1.2 2.2L12.5 9" fill="none" stroke="#18a58a" stroke-width="1.6" stroke-linecap="round"/><rect x="9" y="15" width="3.5" height="2" rx=".6" fill="#18a58a" transform="rotate(-15 10 16)"/></symbol>
 </defs></svg>
 <div id="landing" class="lp-root" role="main">
-<div class="lp-elige" id="lpElige" role="dialog" aria-label="Cómo empezar" hidden>
+<div class="lp-elige" id="lpElige" role="dialog" aria-labelledby="lpTitulo" hidden>
   <button class="lp-x" type="button" data-cerrar-elige aria-label="Cerrar">×</button>
-  <p class="lp-lead" style="margin:0">¿Cómo quieres empezar?</p>
-  <button class="lp-btn" type="button" data-cuenta="crear">Crear cuenta</button>
-  <button class="lp-link" type="button" data-cuenta="entrar">Ya tengo cuenta</button>
-  <button class="lp-link" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
-  <div class="lp-cuenta" id="cuentaBox" hidden></div>
+  <h2 class="lp-titulo" id="lpTitulo">Entrar en Ready4Exam</h2>
+  <div class="lp-tabs" role="tablist">
+    <button type="button" role="tab" data-cuenta="entrar" aria-selected="true">Entrar</button>
+    <button type="button" role="tab" data-cuenta="crear" aria-selected="false">Crear cuenta</button>
+  </div>
+  <div class="lp-cuenta" id="cuentaBox"></div>
+  <button class="lp-link lp-invitado" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
 </div>
 <div class="lp-top"><div class="lp-wrap">
     <span class="lp-marca">Ready4Exam</span>

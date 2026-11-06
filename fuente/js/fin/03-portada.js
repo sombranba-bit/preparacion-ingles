@@ -20,7 +20,7 @@ import { getProfiles, profileOpenForm, profileOpenList } from "../03-perfiles.js
   document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     const el = document.getElementById("lpElige");
-    if (el) el.hidden = false; else entrarApp();
+    if (el) { el.hidden = false; ctaSetModo("entrar"); renderCuenta(); el.scrollIntoView({ block: "start" }); } else entrarApp();
   }));
   document.querySelectorAll("[data-cerrar-elige]").forEach(b => b.addEventListener("click", () => { const el = document.getElementById("lpElige"); if (el) el.hidden = true; }));
   document.querySelectorAll("[data-cuenta]").forEach(b => b.addEventListener("click", () => {

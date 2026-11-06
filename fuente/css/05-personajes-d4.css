@@ -314,3 +314,31 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #home>#homeSecciones{order:8}
 .dexam-acc{display:grid;gap:8px}
 .dexam-acc .btn{width:100%}
+
+/* Acceso: una tarjeta centrada sobre el mismo fondo, sin velo (maqueta A) */
+#landing #lpElige{position:relative;left:auto;right:auto;bottom:auto;z-index:auto;max-height:none;overflow:visible;width:100%;max-width:420px;margin:24px auto 0;padding:26px 22px 22px;border-radius:22px;background:var(--card);border:1px solid var(--rule);box-shadow:0 10px 30px rgba(10,60,50,.08);animation:none;justify-items:stretch;gap:14px}
+#landing:has(#lpElige:not([hidden])) > :not(.lp-top):not(#lpElige){display:none}
+#landing #lpElige .lp-x{top:14px;right:14px}
+#landing .lp-titulo{font:600 26px/1.2 Fredoka,Nunito,sans-serif;margin:0 40px 0 0;color:var(--ink);text-wrap:balance}
+#landing .lp-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border:1px solid var(--rule);border-radius:14px;padding:4px}
+#landing .lp-tabs button{border:0;background:transparent;color:var(--muted);font:700 15px Nunito,sans-serif;padding:10px;border-radius:10px;cursor:pointer}
+#landing .lp-tabs button[aria-selected="true"]{background:var(--acc);color:#fff}
+#landing .lp-tabs button:focus-visible,#landing .lp-invitado:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#landing #lpElige .lp-cuenta{padding:0;border:0;background:none;margin:0;gap:14px}
+.cta-campo{display:grid;gap:6px;font-weight:700;font-size:15px}
+.cta-campo input{width:100%;font:400 16px Nunito,sans-serif;color:var(--text);background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 14px;min-height:46px;min-width:0}
+.cta-pw{position:relative;display:block}
+.cta-pw input{padding-right:70px}
+.cta-pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--acc);font:700 14px Nunito,sans-serif;cursor:pointer;padding:6px 8px}
+.cta-campo input:focus-visible,.cta-pw button:focus-visible,.cta-chk input:focus-visible,.cta-enlace:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.cta-fila{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
+.cta-fila[hidden]{display:none}
+.cta-chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--muted)}
+.cta-chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--acc)}
+.cta-enlace{border:0;background:none;color:var(--acc);font:700 14px Nunito,sans-serif;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+.cta-sep{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.cta-sep::before,.cta-sep::after{content:"";flex:1;height:1px;background:var(--line)}
+#landing #lpElige #ctaEnviar{width:100%}
+#landing:has(#lpElige:not([hidden])){display:flex;flex-direction:column}
+#landing:has(#lpElige:not([hidden])) > .lp-top{order:0}
+#landing #lpElige{order:1}

@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qaGZ52czc2GD5TocbNZFuopOkNfdOqkwqSplSLTZEQQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-G5hmz6t9QgI3Bqj9U+pw8BSk4I3GxXCVY1/w+p7TzK0=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-SUt1vw6X13gpbYqhK7A88LD5gdo/v5BR0JL03AvoQPE=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1426,6 +1426,34 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #home>#homeSecciones{order:8}
 .dexam-acc{display:grid;gap:8px}
 .dexam-acc .btn{width:100%}
+
+/* Acceso: una tarjeta centrada sobre el mismo fondo, sin velo (maqueta A) */
+#landing #lpElige{position:relative;left:auto;right:auto;bottom:auto;z-index:auto;max-height:none;overflow:visible;width:100%;max-width:420px;margin:24px auto 0;padding:26px 22px 22px;border-radius:22px;background:var(--card);border:1px solid var(--rule);box-shadow:0 10px 30px rgba(10,60,50,.08);animation:none;justify-items:stretch;gap:14px}
+#landing:has(#lpElige:not([hidden])) > :not(.lp-top):not(#lpElige){display:none}
+#landing #lpElige .lp-x{top:14px;right:14px}
+#landing .lp-titulo{font:600 26px/1.2 Fredoka,Nunito,sans-serif;margin:0 40px 0 0;color:var(--ink);text-wrap:balance}
+#landing .lp-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border:1px solid var(--rule);border-radius:14px;padding:4px}
+#landing .lp-tabs button{border:0;background:transparent;color:var(--muted);font:700 15px Nunito,sans-serif;padding:10px;border-radius:10px;cursor:pointer}
+#landing .lp-tabs button[aria-selected="true"]{background:var(--acc);color:#fff}
+#landing .lp-tabs button:focus-visible,#landing .lp-invitado:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#landing #lpElige .lp-cuenta{padding:0;border:0;background:none;margin:0;gap:14px}
+.cta-campo{display:grid;gap:6px;font-weight:700;font-size:15px}
+.cta-campo input{width:100%;font:400 16px Nunito,sans-serif;color:var(--text);background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 14px;min-height:46px;min-width:0}
+.cta-pw{position:relative;display:block}
+.cta-pw input{padding-right:70px}
+.cta-pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--acc);font:700 14px Nunito,sans-serif;cursor:pointer;padding:6px 8px}
+.cta-campo input:focus-visible,.cta-pw button:focus-visible,.cta-chk input:focus-visible,.cta-enlace:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.cta-fila{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
+.cta-fila[hidden]{display:none}
+.cta-chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--muted)}
+.cta-chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--acc)}
+.cta-enlace{border:0;background:none;color:var(--acc);font:700 14px Nunito,sans-serif;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+.cta-sep{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.cta-sep::before,.cta-sep::after{content:"";flex:1;height:1px;background:var(--line)}
+#landing #lpElige #ctaEnviar{width:100%}
+#landing:has(#lpElige:not([hidden])){display:flex;flex-direction:column}
+#landing:has(#lpElige:not([hidden])) > .lp-top{order:0}
+#landing #lpElige{order:1}
 </style>
 </head>
 <body>
@@ -1438,13 +1466,15 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 <symbol id="i-confeti" viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="2.5" rx=".6" fill="#f0587a" transform="rotate(-30 6 14)"/><circle cx="17" cy="6" r="1.8" fill="#4aa8ff"/><rect x="13" y="5" width="3.5" height="2" rx=".6" fill="#ffb22e" transform="rotate(25 14 6)"/><circle cx="19" cy="14" r="1.5" fill="#a57bff"/><path d="M9 6l1.2 2.2L12.5 9" fill="none" stroke="#18a58a" stroke-width="1.6" stroke-linecap="round"/><rect x="9" y="15" width="3.5" height="2" rx=".6" fill="#18a58a" transform="rotate(-15 10 16)"/></symbol>
 </defs></svg>
 <div id="landing" class="lp-root" role="main">
-<div class="lp-elige" id="lpElige" role="dialog" aria-label="Cómo empezar" hidden>
+<div class="lp-elige" id="lpElige" role="dialog" aria-labelledby="lpTitulo" hidden>
   <button class="lp-x" type="button" data-cerrar-elige aria-label="Cerrar">×</button>
-  <p class="lp-lead" style="margin:0">¿Cómo quieres empezar?</p>
-  <button class="lp-btn" type="button" data-cuenta="crear">Crear cuenta</button>
-  <button class="lp-link" type="button" data-cuenta="entrar">Ya tengo cuenta</button>
-  <button class="lp-link" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
-  <div class="lp-cuenta" id="cuentaBox" hidden></div>
+  <h2 class="lp-titulo" id="lpTitulo">Entrar en Ready4Exam</h2>
+  <div class="lp-tabs" role="tablist">
+    <button type="button" role="tab" data-cuenta="entrar" aria-selected="true">Entrar</button>
+    <button type="button" role="tab" data-cuenta="crear" aria-selected="false">Crear cuenta</button>
+  </div>
+  <div class="lp-cuenta" id="cuentaBox"></div>
+  <button class="lp-link lp-invitado" type="button" data-cuenta="invitado">Seguir sin cuenta (solo nivel A1)</button>
 </div>
 <div class="lp-top"><div class="lp-wrap">
     <span class="lp-marca">Ready4Exam</span>
@@ -9380,12 +9410,25 @@ function entrarGoogle() {
 function entrarCorreo(crear) {
   const email = ($("ctaEmail") || {}).value?.trim() || "";
   const pass = ($("ctaPass") || {}).value || "";
+  const recuerda = $("ctaRecuerda") ? $("ctaRecuerda").checked : true;
   if (!email) { ctaE().msg = "Escribe tu correo."; renderCuenta(); return; }
   if (!edadOk()) return;
   return ctaAccion(async () => {
     const fb = await ctaCargar();
+    await fb.authMod.setPersistence(fb.auth, recuerda ? fb.authMod.browserLocalPersistence : fb.authMod.browserSessionPersistence);
     const r = crear ? await fb.authMod.createUserWithEmailAndPassword(fb.auth, email, pass) : await fb.authMod.signInWithEmailAndPassword(fb.auth, email, pass);
     ctaE().user = r.user;
+  });
+}
+
+// Envía el enlace para cambiar la contraseña (lo gestiona Firebase Auth)
+function entrarRecuperar() {
+  const email = ($("ctaEmail") || {}).value?.trim() || "";
+  if (!email) { ctaE().msg = "Escribe tu correo y vuelve a pulsar «¿Olvidaste la contraseña?»."; renderCuenta(); return; }
+  return ctaAccion(async () => {
+    const fb = await ctaCargar();
+    await fb.authMod.sendPasswordResetEmail(fb.auth, email);
+    ctaE().msg = "Te hemos enviado un enlace para cambiar la contraseña a " + email + ".";
   });
 }
 
@@ -9414,28 +9457,34 @@ function renderCuenta() {
     $("ctaContinuar").onclick = () => ctaTrasEntrar();
     return;
   }
-  const msg = `<p class="etiq" role="status" style="margin:0;min-height:20px">${escHtml(ctaE().msg || "")}</p>`;
+  const msg = ctaE().msg ? `<p class="etiq" role="status" style="margin:0">${escHtml(ctaE().msg)}</p>` : "";
   ctaCargar().catch(() => {});   // precarga el SDK: así la ventana de Google se abre al pulsar, sin bloqueo del navegador
-  const edad = !!$("ctaEdad")?.checked;   // se conserva al volver a pintar el bloque
-  box.innerHTML = `<label style="display:flex;gap:10px;align-items:flex-start;margin:0 0 12px"><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""} style="min-width:20px;min-height:20px;margin-top:2px"><span class="etiq" style="text-transform:none;letter-spacing:0">Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
-    <span class="etiq">${crear ? "Crear cuenta" : "Iniciar sesión"}</span>
-    <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>
-    <button class="cta-opcion" type="button" id="ctaCorreoAbrir" aria-expanded="false" aria-controls="ctaFormCorreo">${CTA_MAIL}<span>${crear ? "Registrarme con correo" : "Entrar con correo"}</span></button>
-    <div id="ctaFormCorreo" hidden style="display:grid;gap:8px">
-      <label class="etiq" for="ctaEmail">Correo</label>
-      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
-      <label class="etiq" for="ctaPass">Contraseña</label>
-      <input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" style="font-size:16px;min-height:44px;border-radius:12px;padding:8px 12px;border:2px solid var(--line);background:var(--surface);color:inherit" />
-      <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
+  const prevEmail = ($("ctaEmail") || {}).value || "";   // no se pierde el correo al volver a pintar
+  const edad = !!$("ctaEdad")?.checked;                 // se conserva al volver a pintar el bloque
+  const recuerda = $("ctaRecuerda") ? $("ctaRecuerda").checked : true;
+  const titulo = $("lpTitulo"); if (titulo) titulo.textContent = crear ? "Crea tu cuenta" : "Entrar en Ready4Exam";
+  document.querySelectorAll("[data-cuenta=entrar],[data-cuenta=crear]").forEach(b => b.setAttribute("aria-selected", String((b.dataset.cuenta === "crear") === crear)));
+  box.innerHTML = `${msg}
+    <label class="cta-campo">Correo
+      <input id="ctaEmail" type="email" autocomplete="email" inputmode="email" placeholder="nombre@correo.com" value="${escHtml(prevEmail)}" />
+    </label>
+    <label class="cta-campo">Contraseña
+      <span class="cta-pw"><input id="ctaPass" type="password" autocomplete="${crear ? "new-password" : "current-password"}" /><button type="button" id="ctaVer" aria-pressed="false">Ver</button></span>
+    </label>
+    <div class="cta-fila" id="ctaFilaEntrar" ${crear ? "hidden" : ""}>
+      <label class="cta-chk"><input id="ctaRecuerda" type="checkbox" ${recuerda ? "checked" : ""}> Mantener la sesión</label>
+      <button type="button" class="cta-enlace" id="ctaOlvido">¿Olvidaste la contraseña?</button>
     </div>
-    `;
-  box.insertAdjacentHTML("afterbegin", msg);
+    <label class="cta-chk"><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""}> <span>Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
+    <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
+    <div class="cta-sep"><span>o</span></div>
+    <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>`;
   $("ctaGoogle").onclick = entrarGoogle;
-  $("ctaCorreoAbrir").onclick = () => {
-    const f = $("ctaFormCorreo"), abierto = !f.hidden;
-    f.hidden = abierto; $("ctaCorreoAbrir").setAttribute("aria-expanded", String(!abierto));
-    if (!abierto) $("ctaEmail").focus();
+  $("ctaVer").onclick = () => {
+    const p = $("ctaPass"), v = p.type === "password";
+    p.type = v ? "text" : "password"; $("ctaVer").textContent = v ? "Ocultar" : "Ver"; $("ctaVer").setAttribute("aria-pressed", String(v));
   };
+  $("ctaOlvido").onclick = entrarRecuperar;
   $("ctaEnviar").onclick = () => entrarCorreo(crear);
 }
 
@@ -9911,7 +9960,7 @@ try { cuentaInicializar(); } catch(e){}
   document.querySelectorAll("[data-empezar]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     const el = document.getElementById("lpElige");
-    if (el) el.hidden = false; else entrarApp();
+    if (el) { el.hidden = false; ctaSetModo("entrar"); renderCuenta(); el.scrollIntoView({ block: "start" }); } else entrarApp();
   }));
   document.querySelectorAll("[data-cerrar-elige]").forEach(b => b.addEventListener("click", () => { const el = document.getElementById("lpElige"); if (el) el.hidden = true; }));
   document.querySelectorAll("[data-cuenta]").forEach(b => b.addEventListener("click", () => {
