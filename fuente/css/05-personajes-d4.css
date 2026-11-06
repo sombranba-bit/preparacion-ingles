@@ -214,6 +214,20 @@
 
 /* Escritorio: menú lateral a la izquierda (mismos botones que la barra) y contenido centrado */
 #dprog{display:none}
+.dexam{display:none}
+@media (min-width:821px){
+  /* Maqueta mezcla: el inicio sin marco, la tarjeta del examen bajo el menú y los ejercicios en dos columnas */
+  #gamePanel{border:0;box-shadow:none;background:none;padding:0}
+  #d4Acciones .d4-filas,#d4Camino .d4-filas{grid-template-columns:1fr 1fr;gap:12px}
+  .dexam{display:grid;gap:6px;position:fixed;left:16px;bottom:24px;width:200px;padding:14px;border:2px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);z-index:31}
+  .dexam .xp-track{margin:4px 0}
+  #dprog .dprog-card{background:var(--surface);box-shadow:var(--shadow)}
+  #dprog .dprog-card strong{font-size:30px}
+  #dprog .d4-semana{margin:6px 0 0;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+  #dprog .d4-dia i{width:26px;height:26px}
+  #dprog .mini{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+  #dprog .mini:last-child{border-bottom:0}
+}
 @media (min-width:821px){
   body{grid-template-columns:232px minmax(0,1fr)}
   main,footer{grid-column:2}
@@ -225,7 +239,7 @@
 @media (min-width:1100px){
   body{grid-template-columns:232px minmax(0,1fr) 300px}
   #dprog{display:block;grid-column:3;grid-row:1;position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:28px 22px;border-left:2px solid var(--line);background:var(--surface)}
-  #dprog .dprog-card{margin-bottom:14px;padding:16px;border-radius:18px;border:2px solid var(--line);background:var(--bg);display:grid;gap:4px}
+  #dprog .dprog-card{margin-bottom:14px;padding:16px;border-radius:18px;border:2px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:grid;gap:4px}
   #dprog .dprog-card strong{font-family:Fredoka,Nunito,sans-serif;font-size:26px}
 }
 /* Perfil: estadísticas en tarjetas (2 columnas en móvil) */

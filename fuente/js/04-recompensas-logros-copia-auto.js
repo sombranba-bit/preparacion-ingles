@@ -37,6 +37,8 @@ import {
   itemHecho,
   srsDue,
   streakInfo,
+  todayXp,
+  DAILY_GOAL,
   xpTotal,
 } from "./02-progreso-xp-racha-mascota.js";
 import { activeProfile, escHtml } from "./03-perfiles.js";
@@ -199,15 +201,16 @@ function tweenNum(el, from, to) {
 export function renderDprog() {
   const box = $("dprog"); if (!box) return;
   const xp = xpTotal(), r = rankInfo(xp), s = streakInfo();
-  const falta = r.nextMin ? `Faltan ${r.nextMin - xp} XP para ${r.nextName}` : "Rango máximo";
-  box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>${s.days} ${s.days === 1 ? "día" : "días"}</strong></div>
-    <div class="dprog-card"><span class="muted">Rango</span><strong>${r.name}</strong><span class="muted">${xp} XP · ${falta}</span></div>
-    <div class="dprog-card"><span class="muted">Monedas</span><strong>${rewards().coins}</strong></div>`;
+  const falta = r.nextMin ? `${r.nextMin - xp} XP para ${r.nextName}` : "Rango máximo";
+  const semana = document.querySelector("#gamePanel .d4-semana")?.outerHTML || "";   // la rejilla de días la pinta renderGame
+  box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>🔥 ${s.days} ${s.days === 1 ? "día" : "días"}</strong>${semana}</div>
+    <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div><div class="mini"><span>Monedas</span><b>${rewards().coins}</b></div></div>`;
+  const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
+  if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
 
 export function renderHome() {
-  renderDprog();
   const rb = $("repasoBox");
   if (rb) {
     const n = srsDue(currentLevel).length;
@@ -218,6 +221,7 @@ export function renderHome() {
   }
   $("mascot")?.classList.remove("hidden");
   renderGame();
+  renderDprog();
   $("empezarBtn").onclick = startCorta;
   const nRep = srsDue(currentLevel).length, ac = $("d4Acciones"), cm = $("d4Camino");
   ac.innerHTML = `<h3 class="d4-seccion">Repaso y simulacro</h3><div class="d4-filas">
