@@ -1,4 +1,5 @@
 import { $, PROFILE_RAW_KEYS, RAW_LS, ico } from "./01-nucleo-niveles-audio.js";
+import { vozAltaThen, vozHojaSiPendiente } from "./13-voz-natural.js";
 import { AV, CAT, FREE_AV, GRAD, MARCO_COL, PARTICULAS, OWNED_INICIAL } from "./00-personajes-d4.js";
 import { rewards } from "./04-recompensas-logros-copia-auto.js";
 
@@ -149,7 +150,7 @@ function profileCreate() {
   // El primer perfil usa los datos que ya existían en el navegador
   list.push({ id, name, avatar: { ...pDraft }, prefix: list.length === 0 ? "" : "p" + id + "|" });
   saveProfiles(list);
-  profileReload(id);
+  vozAltaThen(() => profileReload(id));
 }
 export function profilesInit() {
   $("pNew").onclick = () => profileOpenForm(false);
@@ -184,7 +185,7 @@ export function profilesInit() {
   if (RAW_LS.getItem("perfil-activo") === "invitado") profileShow(false);
   else if (getProfiles().length === 0) profileOpenForm(true);   // sin perfiles: directo a crear el primero
   else if (!activeProfile()) profileOpenList();
-  else profileShow(false);
+  else { profileShow(false); vozHojaSiPendiente(); }
 }
 
 
