@@ -57,7 +57,7 @@ import { ITEMS } from "./01-nucleo-niveles-audio.js";
   G(GR, "Sorry, I ___ your name. Can you repeat it?", ["didn't catch", "don't catch", "wasn't catch"], 0, "Pasado simple en negativa.");
   G(GR, "My parents ___ married for thirty years.", ["have been", "are", "were been"], 0, "Duración hasta ahora: present perfect continuo o simple.");
   G(GR, "Mum, ___ you help me with my homework?", ["could", "must", "did"], 0, "Could para pedir favores con educación.");
-  G(GR, "The shop ___ on Sundays, so we went on Saturday.", ["is closed", "closes", "is close"], 0, "Estado: is closed.");
+  G(GR, "The shop ___ on Sundays, so we went on Saturday.", ["is closed", "was closed", "closed"], 0, "Estado: is closed.");
   G(GR, "I don't know ___ to go for my holidays.", ["where", "what", "which"], 0, "Where to go.");
   G(GR, "This exercise is ___ than the last one.", ["more difficult", "difficulter", "most difficult"], 0, "Comparativo de adjetivo largo.");
   G(GR, "Peter ___ at the hospital since last year.", ["has worked", "worked", "works"], 0, "Since + present perfect.");

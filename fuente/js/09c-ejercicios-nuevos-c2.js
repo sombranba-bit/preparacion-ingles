@@ -97,7 +97,7 @@ import { ITEMS } from "./01-nucleo-niveles-audio.js";
   G(UE, "The proposal ___ to the committee for review last spring.", ["was submitted", "submitted", "has submitted"], 0, "Pasiva en pasado simple.");
   G(UE, "Would that she ___ the courage to speak out earlier.", ["had found", "found", "has found"], 0, "Would that + pasado perfecto (deseo lamentado).");
   G(UE, "Scarcely had the orchestra begun ___ the audience began to cough.", ["when", "then", "than"], 0, "Scarcely... when.");
-  G(UE, "The story, ___ the details were later verified, caused a sensation.", ["once", "when", "while"], 0, "Once + participio/oración: once the details were verified.");
+  G(UE, "The story, ___ the details were later verified, caused a sensation.", ["once", "until", "unless"], 0, "Once + participio/oración: once the details were verified.");
   G(UE, "No sooner had the storm abated ___ the rescue teams set out.", ["than", "when", "then"], 0, "No sooner... than.");
   G(UE, "She ___ a reputation for fairness that is rarely questioned.", ["has earned", "earns", "has been earning of"], 0, "Earn a reputation.");
   G(UE, "The lecturer's remarks were so ___ that half the audience dozed off.", ["tedious", "tediously", "tedium"], 0, "Adjetivo tras so ... that.");
