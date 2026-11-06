@@ -342,3 +342,4 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #landing:has(#lpElige:not([hidden])){display:flex;flex-direction:column}
 #landing:has(#lpElige:not([hidden])) > .lp-top{order:0}
 #landing #lpElige{order:1}
+.cta-chk[hidden]{display:none}

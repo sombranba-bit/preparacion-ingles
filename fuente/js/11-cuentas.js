@@ -77,7 +77,7 @@ async function ctaAccion(fn) {
 // Edad mínima para tener cuenta (LOPDGDD art. 7): declaración de la propia persona, sin guardar nada
 const edadOk = () => {
   const ok = !!$("ctaEdad")?.checked;
-  if (!ok) { ctaE().msg = "Confirma que tienes 14 años o más para crear o entrar en una cuenta."; renderCuenta(); }
+  if (!ok) { ctaE().edadVisible = true; ctaE().msg = "Confirma que tienes 14 años o más para continuar."; renderCuenta(); }
   return ok;
 };
 
@@ -97,7 +97,7 @@ export function entrarCorreo(crear) {
   const pass = ($("ctaPass") || {}).value || "";
   const recuerda = $("ctaRecuerda") ? $("ctaRecuerda").checked : true;
   if (!email) { ctaE().msg = "Escribe tu correo."; renderCuenta(); return; }
-  if (!edadOk()) return;
+  if (crear && !edadOk()) return;   // al entrar con correo la edad ya se declaró al crear la cuenta
   return ctaAccion(async () => {
     const fb = await ctaCargar();
     await fb.authMod.setPersistence(fb.auth, recuerda ? fb.authMod.browserLocalPersistence : fb.authMod.browserSessionPersistence);
@@ -131,7 +131,7 @@ export function salirCuenta() {
 const CTA_GOOGLE = '<svg class="cta-ico" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>';
 const CTA_MAIL = '<svg class="cta-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3" fill="#0a5c4d"/><path d="M3.5 7.5l8.5 6 8.5-6" stroke="#fffdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-export function ctaSetModo(m) { ctaE().modo = m === "crear" ? "crear" : "entrar"; }
+export function ctaSetModo(m) { ctaE().modo = m === "crear" ? "crear" : "entrar"; ctaE().edadVisible = false; }
 
 export function renderCuenta() {
   const box = $("cuentaBox");
@@ -146,6 +146,7 @@ export function renderCuenta() {
   ctaCargar().catch(() => {});   // precarga el SDK: así la ventana de Google se abre al pulsar, sin bloqueo del navegador
   const prevEmail = ($("ctaEmail") || {}).value || "";   // no se pierde el correo al volver a pintar
   const edad = !!$("ctaEdad")?.checked;                 // se conserva al volver a pintar el bloque
+  const verEdad = crear || !!ctaE().edadVisible;        // al entrar, solo aparece si pulsa Google (puede crear cuenta)
   const recuerda = $("ctaRecuerda") ? $("ctaRecuerda").checked : true;
   const titulo = $("lpTitulo"); if (titulo) titulo.textContent = crear ? "Crea tu cuenta" : "Entrar en Ready4Exam";
   document.querySelectorAll("[data-cuenta=entrar],[data-cuenta=crear]").forEach(b => b.setAttribute("aria-selected", String((b.dataset.cuenta === "crear") === crear)));
@@ -160,7 +161,7 @@ export function renderCuenta() {
       <label class="cta-chk"><input id="ctaRecuerda" type="checkbox" ${recuerda ? "checked" : ""}> Mantener la sesión</label>
       <button type="button" class="cta-enlace" id="ctaOlvido">¿Olvidaste la contraseña?</button>
     </div>
-    <label class="cta-chk"><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""}> <span>Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
+    <label class="cta-chk" id="ctaFilaEdad" ${verEdad ? "" : "hidden"}><input id="ctaEdad" type="checkbox" ${edad ? "checked" : ""}> <span>Tengo 14 años o más. Si tienes menos, pide a tu madre, padre o tutor que cree la cuenta.</span></label>
     <button class="btn" type="button" id="ctaEnviar">${crear ? "Crear cuenta" : "Entrar"}</button>
     <div class="cta-sep"><span>o</span></div>
     <button class="cta-opcion" type="button" id="ctaGoogle">${CTA_GOOGLE}<span>${crear ? "Registrarme con Google" : "Entrar con Google"}</span></button>`;
