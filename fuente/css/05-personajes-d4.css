@@ -290,11 +290,12 @@ body:has(#exercise:not(.hidden)){grid-template-columns:minmax(0,1fr) !important}
 body:has(#exercise:not(.hidden)) main{grid-column:1}
 body:has(#exercise:not(.hidden)) #dprog,body:has(#exercise:not(.hidden)) #dexam{display:none !important}
 body:has(#exercise:not(.hidden)) footer{grid-column:1}
-/* Perfil: dos columnas reales (identidad+personaje | color+idiomas+tema); estadísticas arriba a lo ancho. */
+/* Perfil: izquierda = identidad + color de fondo; derecha = personajes + idiomas; estadísticas arriba a lo ancho. */
 @media (min-width:821px){
   #p-perfil{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px 24px;align-items:start}
   #p-perfil>.m-slot{grid-column:1/-1}
   #p-perfil .perfil-stats{grid-column:1/-1;grid-row:1;margin:0}
+  #p-perfil #themeBar{grid-column:1/-1;grid-row:3}
   .perfil-izq{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:18px}
   .perfil-der{grid-column:2;grid-row:2;display:flex;flex-direction:column;gap:18px}
   #perfilCab{grid-column:auto;grid-row:auto;margin:0}
@@ -306,6 +307,9 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
   .perfil-izq,.perfil-der{display:contents}
   #perfilCab{order:0}
   #perfilStats{order:1}
-  .perfil-izq>.bloque{order:2}
-  .perfil-der>.bloque{order:3}
+  .perfil-der>.bloque:first-child{order:2}
+  .perfil-izq>.bloque{order:3}
+  .perfil-der>.bloque:last-child{order:4}
+  #p-perfil #themeBar{order:5}
+}
 }
