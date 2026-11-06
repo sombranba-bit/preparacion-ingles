@@ -1,0 +1,33 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perfil · C · Pestañas</title><link rel="stylesheet" href="base.css">
+<style>
+.head{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.head .av{margin:0;width:84px;height:84px;font-size:42px;border-radius:24px}
+.head h2{margin:0;font-size:24px}
+.head p{margin:2px 0 0;color:var(--muted);font-weight:600}
+.tabs{display:inline-flex;gap:6px;background:var(--surface2);border-radius:999px;padding:6px;margin:22px 0 18px}
+.tabs button{border:0;background:transparent;border-radius:999px;padding:10px 20px;font:inherit;font-weight:800;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--text);box-shadow:0 3px 0 var(--line)}
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start}
+.note{color:var(--muted);font-size:14px;margin:0 0 10px}
+@media (max-width:820px){.two{grid-template-columns:1fr}.tabs{display:flex}.tabs button{flex:1;padding:10px 6px;font-size:14px}}
+</style></head><body><div class="wrap">
+<section class="head">
+  <div class="av">🐻</div>
+  <div><h2>Tu nombre</h2><p>Examen A1 · 50 XP · racha de 2 días · 10 monedas</p></div>
+</section>
+<div class="tabs" role="tablist"><button role="tab" aria-selected="true">Personaje</button><button role="tab" aria-selected="false">Ajustes</button><button role="tab" aria-selected="false">Cuenta</button></div>
+<div class="two">
+  <div class="card"><p class="note">Elige tu personaje. Los bloqueados se desbloquean con monedas.</p>
+    <div class="avs">
+      <div class="on">🐻<small>Pepa</small></div><div>🦊<small>Lucas</small></div><div>🌞<small>Erika</small></div>
+      <div class="lock">🐱<small>Mía · 300</small></div><div class="lock">🐧<small>Tito · 400</small></div><div class="lock">🐰<small>Nube · 500</small></div>
+      <div class="lock">🐻‍❄️<small>Bruno · 450</small></div><div class="lock">🐸<small>Kiwi · 450</small></div><div class="lock">🐷<small>Lola · 550</small></div>
+    </div></div>
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="card"><span class="etiq">Color de fondo</span><div class="sw"><i class="on" style="background:#ffd9a0"></i><i style="background:#c8f2dd"></i><i style="background:#e6dcff"></i><i style="background:#cdeeff"></i></div></div>
+    <div class="card"><span class="etiq">Explicaciones</span><div class="seg"><button aria-pressed="true">Español</button><button aria-pressed="false">English</button></div>
+      <span class="etiq" style="margin-top:14px">Ejercicios</span><div class="seg"><button aria-pressed="true">Inglés</button><button aria-pressed="false">Español</button></div></div>
+    <div class="card"><span class="etiq">Modo</span><div class="seg"><button aria-pressed="false">Claro</button><button aria-pressed="true">Oscuro</button></div></div>
+  </div>
+</div>
+</div></body></html>

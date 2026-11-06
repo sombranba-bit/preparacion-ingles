@@ -1,0 +1,37 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perfil · A · Ajustes en lista</title><link rel="stylesheet" href="base.css">
+<style>
+.grid{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start}
+.izq{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px}
+.der{display:flex;flex-direction:column;gap:14px}
+.fila{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.fila strong{display:block}.fila small{color:var(--muted)}
+.mini{width:52px;height:52px;border-radius:16px;background:#ffd9a0;border:2px solid var(--text);display:grid;place-items:center;font-size:26px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media (max-width:820px){.grid{grid-template-columns:1fr}.izq{position:static}.stats{grid-template-columns:1fr 1fr}}
+</style></head><body><div class="wrap">
+<h1 style="margin:0 0 18px;font-size:26px">Perfil</h1>
+<div class="grid">
+  <aside class="izq">
+    <div class="card" style="text-align:center">
+      <div class="av">🐻</div>
+      <h2 style="margin:14px 0 2px;font-size:24px">Tu nombre</h2>
+      <p style="margin:0;color:var(--muted);font-weight:600">Examen A1 · objetivo oficial</p>
+      <div class="stats">
+        <div class="stat"><span>Puntos</span><b>50 XP</b></div>
+        <div class="stat"><span>Racha</span><b>2 días</b></div>
+        <div class="stat"><span>Logros</span><b>1 de 6</b></div>
+        <div class="stat"><span>Monedas</span><b>10</b></div>
+      </div>
+    </div>
+    <div class="chips"><button class="chip">Ir a la tienda</button><button class="chip">Importar y copia</button></div>
+  </aside>
+  <main class="der">
+    <div class="card fila"><div><strong>Personaje</strong><small>Pepa · cambia tu personaje</small></div><div class="mini">🐻</div></div>
+    <div class="card"><span class="etiq">Color de fondo</span><div class="sw"><i class="on" style="background:#ffd9a0"></i><i style="background:#c8f2dd"></i><i style="background:#e6dcff"></i><i style="background:#cdeeff"></i></div></div>
+    <div class="card"><span class="etiq">Idioma de las explicaciones</span><div class="seg"><button aria-pressed="true">Español</button><button aria-pressed="false">English</button></div>
+      <span class="etiq" style="margin-top:14px">Idioma de los ejercicios</span><div class="seg"><button aria-pressed="true">Inglés</button><button aria-pressed="false">Español</button></div></div>
+    <div class="card fila"><div><strong>Modo oscuro</strong><small>Se cambia también desde la barra superior</small></div><div class="seg" style="width:150px;grid-template-columns:1fr 1fr"><button aria-pressed="false">Claro</button><button aria-pressed="true">Oscuro</button></div></div>
+    <div class="danger-box"><div><strong>Cuenta y datos</strong><div style="color:var(--muted);font-size:14px">Cerrar sesión, copia de seguridad o borrar.</div></div>
+      <div class="chips"><button class="chip">Cerrar sesión</button><button class="chip">Importar y copia</button><button class="chip danger">Borrar mi cuenta</button><button class="chip danger">Borrar todos los datos</button></div></div>
+  </main>
+</div></div></body></html>
