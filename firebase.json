@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "public": ".",
-    "ignore": ["firebase.json", ".firebaserc", "**/.*", "fuente/**", "reglas/**", "maquetas/**", "ANALISIS.md", "enlaces-original.txt", "version-anterior.html", "node_modules/**"]
+    "public": "web"
   }
 }
