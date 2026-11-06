@@ -42,6 +42,7 @@ function vozMontar() {
     <div class="voz-main">
       <p class="voz-est" id="vozEst"></p>
       <h2 id="vozT">Voz natural en descarga</h2>
+      <div class="voz-anillo" aria-hidden="true"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" class="voz-anillo-base"/><circle id="vozAnilloRel" cx="80" cy="80" r="70" class="voz-anillo-trazo" stroke-dasharray="439.8" stroke-dashoffset="439.8"/></svg><span id="vozAnilloTxt"></span></div>
       <p class="voz-txt">Se descarga una sola vez y queda guardada en este equipo. Puedes seguir practicando mientras tanto.</p>
       <div class="voz-bar" role="progressbar" aria-label="Progreso de la descarga" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="vozRel"></div></div>
       <p class="voz-dat" id="vozDat"></p>
@@ -115,6 +116,7 @@ function vozPausar() {
 function vozSaltar() {
   vozPausar();
   vozGuardar({ estado: "saltada" });
+  vozPintarAjustes();
   if (vozModo === "hoja") { vozSalir(false); return; }
   $("vozAviso").hidden = false;
   vozPintar();
@@ -162,8 +164,9 @@ async function vozTerminar() {
     c.partes = [];
     c.activa = false;
     vozCtl = null;
-    vozGuardar({ estado: "descargada" });
+    vozGuardar({ estado: "descargada", total: c.total });
     vozPintar();
+    vozPintarAjustes();
   } catch (e) { vozFallo(); }
 }
 
@@ -181,7 +184,7 @@ function vozPintar() {
   if (!$("vozOv")) return;
   const c = vozCtl, est = vozLeer();
   const hecha = est.estado === "descargada", saltada = est.estado === "saltada";
-  const tot = c ? c.total : VOZ_TAM, rec = hecha ? tot : (c ? c.recibidos : 0);
+  const tot = c ? c.total : (est.total || VOZ_TAM), rec = hecha ? tot : (c ? c.recibidos : 0);
   const pct = Math.min(100, Math.floor(rec / tot * 100));
   const corre = !!(c && c.activa), enPausa = !corre && rec > 0 && !hecha;
   const mb = Math.round(tot / 1048576);
@@ -193,6 +196,8 @@ function vozPintar() {
     $("vozEst").textContent = "Paso 3 de 3 · " + (hecha ? "lista" : corre ? "descargando" : enPausa ? "en pausa" : "lista para descargar");
   }
   $("vozRel").style.width = pct + "%";
+  $("vozAnilloRel").style.strokeDashoffset = 439.8 * (1 - pct / 100);
+  $("vozAnilloTxt").textContent = pct + " %";
   $("vozOv").querySelector('[role="progressbar"]').setAttribute("aria-valuenow", pct);
   $("vozDat").textContent = pct + " % · " + Math.floor(rec / 1048576) + " de " + mb + " MB · " + rest;
   $("vozGo").textContent = hecha ? "Empezar a practicar" : corre ? "Pausar" : rec > 0 ? "Reanudar" : "Descargar ahora";
@@ -200,3 +205,19 @@ function vozPintar() {
   $("vozBarraTxt").textContent = hecha ? "Voz natural lista" : (corre ? "Descargando voz natural · " : "Descarga en pausa · ") + pct + " %";
   $("vozBarraRel").style.width = pct + "%";
 }
+
+/* Ajustes: estado de la voz y acceso para descargarla cuando se quiera (también tras haber saltado) */
+function vozPintarAjustes() {
+  const el = document.getElementById("vozAjustes");
+  if (!el) return;
+  const e = vozLeer();
+  const txt = e.estado === "descargada" ? "Voz natural descargada y guardada en este equipo."
+    : e.estado === "saltada" ? "Ahora se usa la voz de este dispositivo. Puedes descargar la voz natural cuando quieras."
+    : "Todavía no has descargado la voz natural.";
+  el.innerHTML = '<h3 class="voz-aj-h">Voz natural</h3><p class="voz-aj-p">' + txt + '</p>'
+    + (e.estado === "descargada" ? "" : '<button type="button" class="voz-b1 voz-aj-btn" id="vozAjusteBtn">Descargar voz natural</button>');
+  const b = document.getElementById("vozAjusteBtn");
+  if (b) b.onclick = () => vozAbrir("hoja", null);
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", vozPintarAjustes);
+else vozPintarAjustes();

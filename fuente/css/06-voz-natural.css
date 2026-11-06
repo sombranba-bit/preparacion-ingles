@@ -42,3 +42,14 @@
   .voz-ov.alta .voz-main h2 { text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) { .voz-bar > div, .voz-barra-bar > span { transition: none; } }
+.voz-anillo { position: relative; width: 180px; height: 180px; margin: 0 auto 20px; }
+.voz-anillo svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.voz-anillo circle { fill: none; stroke-width: 14; }
+.voz-anillo-base { stroke: #f3e6d2; }
+.voz-anillo-trazo { stroke: #0b5f4f; stroke-linecap: round; transition: stroke-dashoffset .25s linear; }
+.voz-anillo span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: Fredoka, Nunito, sans-serif; font-weight: 700; font-size: 26px; }
+.voz-aj-h { margin: 0 0 8px; font-family: Fredoka, Nunito, sans-serif; font-size: 20px; }
+.voz-aj-p { margin: 0 0 12px; color: #5a4636; line-height: 1.5; }
+.voz-aj-btn { min-height: 48px; padding: 0 20px; border-radius: 14px; }
+@media (min-width: 900px) { .voz-ov.alta .voz-anillo { margin: 0 0 20px; } }
+@media (prefers-reduced-motion: reduce) { .voz-anillo-trazo { transition: none; } }
