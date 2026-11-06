@@ -259,6 +259,10 @@ export function renderHome() {
     b.onclick = () => previaSeccion(key);
     grid.appendChild(b);
   });
+  // El inicio muestra las mismas secciones (copia de los botones de Practicar)
+  const hs = $("homeSecciones");
+  if (hs) hs.innerHTML = `<h3 class="d4-seccion">Secciones</h3><div class="section-grid" id="homeGrid"></div>`;
+  if (hs) $("homeGrid").replaceChildren(...[...grid.children].map(b => { const c = b.cloneNode(true); c.onclick = b.onclick; return c; }));
 
   const pg = $("partGrid");
   const pc = levelColor(currentLevel);
