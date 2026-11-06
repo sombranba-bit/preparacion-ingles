@@ -204,7 +204,7 @@ export function renderDprog() {
   const falta = r.nextMin ? `${r.nextMin - xp} XP para ${r.nextName}` : "Rango máximo";
   const semana = document.querySelector("#gamePanel .d4-semana")?.outerHTML || "";   // la rejilla de días la pinta renderGame
   box.innerHTML = `<div class="dprog-card"><span class="muted">Racha</span><strong>🔥 ${s.days} ${s.days === 1 ? "día" : "días"}</strong>${semana}</div>
-    <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div><div class="mini"><span>Monedas</span><b>${rewards().coins}</b></div></div>`;
+    <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div></div>`;
   const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
   if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
