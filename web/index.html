@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-voXL+X8MRoQKrs69rPQhJysTHy56WmTeg8R8UyrwG7Q=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-5KY63GI11IXREsjE+i3VD93K+jVU4ptJGm5r+TeBDH0=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1412,6 +1412,18 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
   #perfilAjustes #themeBar>summary{display:none}
   #perfilAjustes #themeBar .theme-lbl{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px}
 }
+
+/* Inicio: el nivel del examen va justo debajo del saludo, no tras toda la tarjeta de juego */
+#home{display:flex;flex-direction:column;gap:16px}
+#home #gamePanel{display:contents}
+#home #gamePanel>.d4-top{order:1}
+#home #gamePanel>.d4-quien{order:2}
+#home #homeNivel{order:3}
+#home #gamePanel>.d4-hero{order:4}
+#home #gamePanel>.d4-semana{order:5}
+#home #gamePanel>#d4Acciones{order:6}
+#home #gamePanel>#d4Camino{order:7}
+#home>#homeSecciones{order:8}
 </style>
 </head>
 <body>
@@ -3399,8 +3411,11 @@ function renderDprog() {
     <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div></div>`;
   const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
   if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
+  // con cuenta iniciada, cerrar sesión desde la tarjeta del examen
+  if (ex && window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.style.marginTop = "10px"; sal.onclick = () => salirCuenta(); ex.appendChild(sal); }
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
+document.addEventListener("cuenta-cambio", () => renderDprog());
 
 function renderHome() {
   const rb = $("repasoBox");

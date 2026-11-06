@@ -42,6 +42,7 @@ import {
   xpTotal,
 } from "./02-progreso-xp-racha-mascota.js";
 import { activeProfile, escHtml } from "./03-perfiles.js";
+import { salirCuenta } from "./11-cuentas.js";
 import {
   celebrate,
   check,
@@ -207,8 +208,11 @@ export function renderDprog() {
     <div class="dprog-card"><div class="mini"><span>Rango</span><b>${r.name}</b></div><div class="mini"><span>XP hoy</span><b>${todayXp()} / ${DAILY_GOAL}</b></div></div>`;
   const ex = $("dexam");   // tarjeta del examen en el menú lateral (solo escritorio)
   if (ex) ex.innerHTML = `<span class="muted">Examen</span><b>${currentLevel} · objetivo oficial</b><div class="xp-track"><div class="xp-fill" style="width:${r.nextMin ? Math.round((xp - r.min) / (r.nextMin - r.min) * 100) : 100}%"></div></div><span class="muted">${falta}</span>`;
+  // con cuenta iniciada, cerrar sesión desde la tarjeta del examen
+  if (ex && window.ctaEstado?.user) { const sal = document.createElement("button"); sal.className = "chip"; sal.type = "button"; sal.textContent = "Cerrar sesión"; sal.style.marginTop = "10px"; sal.onclick = () => salirCuenta(); ex.appendChild(sal); }
   document.dispatchEvent(new Event("dprog-liga"));   // la nube añade la tarjeta de liga
 }
+document.addEventListener("cuenta-cambio", () => renderDprog());
 
 export function renderHome() {
   const rb = $("repasoBox");

@@ -300,3 +300,15 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
   #perfilAjustes #themeBar>summary{display:none}
   #perfilAjustes #themeBar .theme-lbl{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px}
 }
+
+/* Inicio: el nivel del examen va justo debajo del saludo, no tras toda la tarjeta de juego */
+#home{display:flex;flex-direction:column;gap:16px}
+#home #gamePanel{display:contents}
+#home #gamePanel>.d4-top{order:1}
+#home #gamePanel>.d4-quien{order:2}
+#home #homeNivel{order:3}
+#home #gamePanel>.d4-hero{order:4}
+#home #gamePanel>.d4-semana{order:5}
+#home #gamePanel>#d4Acciones{order:6}
+#home #gamePanel>#d4Camino{order:7}
+#home>#homeSecciones{order:8}
