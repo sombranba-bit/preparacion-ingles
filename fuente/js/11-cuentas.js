@@ -76,6 +76,8 @@ async function ctaAccion(fn) {
 export function entrarGoogle() {
   return ctaAccion(async () => {
     const fb = await ctaCargar();
+    // En la app instalada (pantalla completa) la ventana emergente no funciona: se usa redirección
+    if (matchMedia("(display-mode: standalone)").matches || navigator.standalone) return fb.authMod.signInWithRedirect(fb.auth, fb.provider);
     const r = await fb.authMod.signInWithPopup(fb.auth, fb.provider);
     ctaE().user = r.user;
   });
