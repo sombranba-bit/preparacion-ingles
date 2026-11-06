@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' __SCRIPT_HASHES__ https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' __SCRIPT_HASHES__ https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -281,6 +281,12 @@
         <div class="src-row"><div><a href="https://www.youtube.com/results?search_query=IELTS+Liz+listening" target="_blank" rel="noopener">IELTS Liz (YouTube)</a> <span class="res-tag">Ex profesora</span><span class="res-tag">Listening · IELTS</span><p>Explica los errores habituales en listening y cómo detectar las trampas de las preguntas.</p></div></div>
       </div>
       <p class="muted" style="font-size:var(--fs-sm);margin:12px 0 0">Los nombres de YouTube están sin verificar desde su canal oficial; el enlace abre la búsqueda para que elijas el canal. Las etiquetas «Verificado» indican que la web o el recurso aparecieron en mi búsqueda. Estos recursos se usan en su web: la app no los reproduce.</p>
+    </div>
+
+    <h2 class="section-title">Audiolibros gratuitos por nivel</h2>
+    <div class="card">
+      <p class="muted" style="margin:0 0 12px">Grabaciones de LibriVox, de dominio público. Se escuchan en streaming desde archive.org y no se descargan a la app. El nivel es orientativo.</p>
+      <div id="audiolibros" class="src"></div>
     </div>
 
   <!-- FORMATO REAL DE LOS EXÁMENES -->
