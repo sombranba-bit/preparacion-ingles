@@ -1322,7 +1322,7 @@ header{display:none}
 @media (min-width:821px){
   /* Maqueta mezcla: el inicio sin marco, la tarjeta del examen bajo el menú y los ejercicios en dos columnas */
   #gamePanel{border:0;box-shadow:none;background:none;padding:0}
-  #gamePanel:hover{transform:none;box-shadow:none}   /* el contenedor del inicio no es una tarjeta que se levante */
+  #home #gamePanel:hover{transform:none;box-shadow:none}   /* más específico que la regla :is(...):hover, que incluye #themeBar button */   /* el contenedor del inicio no es una tarjeta que se levante */
   #d4Acciones .d4-filas,#d4Camino .d4-filas{grid-template-columns:1fr 1fr;gap:12px}
   .dexam{display:grid;gap:6px;position:fixed;left:16px;bottom:24px;width:200px;padding:14px;border:2px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);z-index:31}
   .dexam .xp-track{margin:4px 0}
