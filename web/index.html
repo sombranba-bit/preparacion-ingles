@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1sH/vyDszgKjCicIAchP0aGnrA8dS57lMZsRJFci5TE=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oBTyMMtzuSw3Ro7UhxXDUaYrA8/RjKAc29HjZWXTctU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-xp/RDHLYXgpZgyYhFIPNidwJfMEofS5X7oQOYYlKB+4=' 'sha256-Kd2E3KjowFlvCcHVHUfhoz9AlM203vYxOlXcXrcW1V0=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -9432,6 +9432,8 @@ async function nubeEntrar(u) {
 
 document.addEventListener("cuenta-cambio", () => {
   const u = ctaUsuario();
+  dprogLiga = { t: 0, html: "" };   // al cambiar de sesión, la tarjeta de liga se vuelve a consultar
+  document.dispatchEvent(new Event("dprog-liga"));
   if (!u) { nubeE.uid = null; nubeE.listo = false; nubeE.grupos = []; nubeRender(); return; }
   if (u.uid !== nubeE.uid) nubeEntrar(u);
 });
@@ -9582,13 +9584,14 @@ let dprogLiga = { t: 0, html: "" };
 document.addEventListener("dprog-liga", async () => {
   const box = document.getElementById("dprog"); if (!box) return;
   const pintar = html => { box.querySelector("#dprogLiga")?.remove(); box.insertAdjacentHTML("beforeend", `<div class="dprog-card" id="dprogLiga">${html}</div>`); };
-  if (!nubeE.uid) return pintar('<span class="muted">Liga semanal</span><strong>Inicia sesión</strong><span class="muted">para entrar en la liga global</span>');
+  const uid = nubeE.uid || ctaUsuario()?.uid;   // la sesión puede estar lista antes que la copia en la nube
+  if (!uid) return pintar('<span class="muted">Liga semanal</span><strong>Inicia sesión</strong><span class="muted">para entrar en la liga global</span>');
   if (Date.now() - dprogLiga.t < 60000 && dprogLiga.html) return pintar(dprogLiga.html);
   pintar('<span class="muted">Liga semanal</span><span class="muted">Cargando…</span>');
   try {
     const f = await nubeFs(), m = f.m, db = f.db, semana = weekStartKey();
     const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.orderBy("xp", "desc"), m.limit(200)));
-    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp), i = filas.findIndex(r => r.uid === nubeE.uid);
+    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp), i = filas.findIndex(r => r.uid === uid);
     dprogLiga = { t: Date.now(), html: i >= 0
       ? `<span class="muted">Liga semanal</span><strong>${i + 1}.º de ${filas.length}</strong><span class="muted">${filas[i].xp} XP esta semana</span>`
       : '<span class="muted">Liga semanal</span><strong>Sin puntos aún</strong><span class="muted">Haz un ejercicio para entrar</span>' };

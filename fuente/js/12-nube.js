@@ -99,6 +99,8 @@ async function nubeEntrar(u) {
 
 document.addEventListener("cuenta-cambio", () => {
   const u = ctaUsuario();
+  dprogLiga = { t: 0, html: "" };   // al cambiar de sesión, la tarjeta de liga se vuelve a consultar
+  document.dispatchEvent(new Event("dprog-liga"));
   if (!u) { nubeE.uid = null; nubeE.listo = false; nubeE.grupos = []; nubeRender(); return; }
   if (u.uid !== nubeE.uid) nubeEntrar(u);
 });
@@ -249,13 +251,14 @@ let dprogLiga = { t: 0, html: "" };
 document.addEventListener("dprog-liga", async () => {
   const box = document.getElementById("dprog"); if (!box) return;
   const pintar = html => { box.querySelector("#dprogLiga")?.remove(); box.insertAdjacentHTML("beforeend", `<div class="dprog-card" id="dprogLiga">${html}</div>`); };
-  if (!nubeE.uid) return pintar('<span class="muted">Liga semanal</span><strong>Inicia sesión</strong><span class="muted">para entrar en la liga global</span>');
+  const uid = nubeE.uid || ctaUsuario()?.uid;   // la sesión puede estar lista antes que la copia en la nube
+  if (!uid) return pintar('<span class="muted">Liga semanal</span><strong>Inicia sesión</strong><span class="muted">para entrar en la liga global</span>');
   if (Date.now() - dprogLiga.t < 60000 && dprogLiga.html) return pintar(dprogLiga.html);
   pintar('<span class="muted">Liga semanal</span><span class="muted">Cargando…</span>');
   try {
     const f = await nubeFs(), m = f.m, db = f.db, semana = weekStartKey();
     const snap = await m.getDocs(m.query(m.collection(db, "ligaSemanal"), m.where("semana", "==", semana), m.orderBy("xp", "desc"), m.limit(200)));
-    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp), i = filas.findIndex(r => r.uid === nubeE.uid);
+    const filas = snap.docs.map(d => d.data()).sort((a, b) => b.xp - a.xp), i = filas.findIndex(r => r.uid === uid);
     dprogLiga = { t: Date.now(), html: i >= 0
       ? `<span class="muted">Liga semanal</span><strong>${i + 1}.º de ${filas.length}</strong><span class="muted">${filas[i].xp} XP esta semana</span>`
       : '<span class="muted">Liga semanal</span><strong>Sin puntos aún</strong><span class="muted">Haz un ejercicio para entrar</span>' };
