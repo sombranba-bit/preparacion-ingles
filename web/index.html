@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-3zyehy5j6Dq9DTY26Y17WuPlnWoWKtZV0eiULJtjJ84=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-sPBrjyAlDSjMYORjlhferpbiwkzacxU+8b5/gObyMfM=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1470,6 +1470,14 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 .bn-confeti::before{inset:0 0 auto 0;height:calc(100% + 46px);background:radial-gradient(circle 4px at 20px 20px,#f0587a 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 9px 31px,#4aa8ff 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 34px 9px,#18a58a 90%,transparent) 0 0/46px 46px;animation:bn-cae 3s linear infinite}
 @keyframes bn-desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes bn-cae{from{transform:translateY(-46px)}to{transform:translateY(0)}}
+/* Banner como portada: el personaje se apoya sobre su borde inferior y la cabecera queda encima (solo con banner equipado) */
+.d4-cab:has(.bn){display:flex;flex-direction:column;align-items:stretch;gap:0;position:relative;margin:4px 0 16px}
+.d4-cab:has(.bn) .bn{order:0;height:150px;margin:0;border-radius:22px}
+.d4-cab:has(.bn) .d4-top{position:absolute;top:14px;left:16px;right:16px;z-index:2}
+.d4-cab:has(.bn) .d4-quien{position:relative;z-index:1;margin-top:-64px}
+#perfilCab:has(.bn){align-items:flex-end}
+#perfilCab .bn{height:150px;margin:0;border-radius:22px}
+#perfilCab:has(.bn) .perfil-av-wrap{position:relative;z-index:1;margin:-60px 0 0 12px}
 </style>
 <style>
 /* Voz natural: pantalla de descarga (alta de perfil y hoja al iniciar sesión) */
@@ -10876,7 +10884,8 @@ async function nubeRender() {
 const VOZ_ID = "onnx-community/Kokoro-82M-v1.0-ONNX";
 const VOZ_URL = "https://huggingface.co/" + VOZ_ID + "/resolve/main/onnx/model_quantized.onnx";
 const VOZ_TAM = 92361116;        // tamaño del modelo q8; se corrige con Content-Length
-const VOZ_CACHE = "transformers-cache";   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
+const VOZ_CACHE = "transformers-cache";
+const SILENCIO = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=";   // WAV mudo de 44 bytes para desbloquear el audio en el clic   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
 const VOZ_LIB = "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js";
 let vozTts = null, vozCargando = null, vozEl = null, vozTurno = 0;
 let vozCtl = null;       // { partes, recibidos, total, velocidad, activa, ac }
@@ -11122,14 +11131,19 @@ function vozHablar(text, item, respaldo, velocidad) {
   vozParar();
   const turno = ++vozTurno;
   const voz = item.accent === "en-US" ? "af_heart" : "bf_emma";
+  // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz
+  const el = new Audio(SILENCIO);
+  el.play().catch(() => {});
+  vozEl = el;
+  el.onended = () => { if (vozEl === el) vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+  $("audioStatus").textContent = "Preparando la voz natural…";
+  $("audioBar").classList.add("playing");
+  setPlayLabel(PAUSA_LBL);
   vozTts.generate(text, { voice: voz, speed: velocidad }).then(async a => {
     if (turno !== vozTurno) return;   // se pidió otra cosa mientras tanto
-    vozEl = new Audio(URL.createObjectURL(await a.toBlob()));
-    vozEl.onended = () => { vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+    el.src = URL.createObjectURL(await a.toBlob());
     $("audioStatus").textContent = "Reproduciendo con voz natural…";
-    $("audioBar").classList.add("playing");
-    setPlayLabel(PAUSA_LBL);
-    await vozEl.play();
+    await el.play();
   }).catch(e => { if (e && e.name === "AbortError") return; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
   return true;
 }

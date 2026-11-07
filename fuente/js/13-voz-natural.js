@@ -9,7 +9,8 @@ import { $, RAW_LS, setPlayLabel, PAUSA_LBL, vozGancho } from "./01-nucleo-nivel
 const VOZ_ID = "onnx-community/Kokoro-82M-v1.0-ONNX";
 const VOZ_URL = "https://huggingface.co/" + VOZ_ID + "/resolve/main/onnx/model_quantized.onnx";
 const VOZ_TAM = 92361116;        // tamaño del modelo q8; se corrige con Content-Length
-const VOZ_CACHE = "transformers-cache";   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
+const VOZ_CACHE = "transformers-cache";
+const SILENCIO = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=";   // WAV mudo de 44 bytes para desbloquear el audio en el clic   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
 const VOZ_LIB = "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js";
 let vozTts = null, vozCargando = null, vozEl = null, vozTurno = 0;
 let vozCtl = null;       // { partes, recibidos, total, velocidad, activa, ac }
@@ -255,14 +256,19 @@ function vozHablar(text, item, respaldo, velocidad) {
   vozParar();
   const turno = ++vozTurno;
   const voz = item.accent === "en-US" ? "af_heart" : "bf_emma";
+  // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz
+  const el = new Audio(SILENCIO);
+  el.play().catch(() => {});
+  vozEl = el;
+  el.onended = () => { if (vozEl === el) vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+  $("audioStatus").textContent = "Preparando la voz natural…";
+  $("audioBar").classList.add("playing");
+  setPlayLabel(PAUSA_LBL);
   vozTts.generate(text, { voice: voz, speed: velocidad }).then(async a => {
     if (turno !== vozTurno) return;   // se pidió otra cosa mientras tanto
-    vozEl = new Audio(URL.createObjectURL(await a.toBlob()));
-    vozEl.onended = () => { vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+    el.src = URL.createObjectURL(await a.toBlob());
     $("audioStatus").textContent = "Reproduciendo con voz natural…";
-    $("audioBar").classList.add("playing");
-    setPlayLabel(PAUSA_LBL);
-    await vozEl.play();
+    await el.play();
   }).catch(e => { if (e && e.name === "AbortError") return; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
   return true;
 }
