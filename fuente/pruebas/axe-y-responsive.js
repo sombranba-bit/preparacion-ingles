@@ -28,9 +28,10 @@ const res = { vistas: {}, errores: [] };
       await p.fill('#pName', 'Prueba'); await p.click('#pCreate').catch(() => {}); await p.waitForTimeout(700);
     }
     v.tabs = {};
-    const tabs = await p.$$eval('button.tab', els => els.map(e => e.textContent.trim()));
+    // Pestañas reales: la barra inferior o lateral y las subpestañas (la clase .tab ya no existe)
+    const tabs = await p.$$eval('#bnav button, #subtabs button', els => els.map(e => e.textContent.trim()));
     for (let i = 0; i < tabs.length; i++) {
-      await p.evaluate(i => document.querySelectorAll('button.tab')[i]?.click(), i); await p.waitForTimeout(250); // también las pestañas ocultas en móvil (van en Más)
+      await p.evaluate(i => document.querySelectorAll('#bnav button, #subtabs button')[i]?.click(), i); await p.waitForTimeout(250); // también las pestañas ocultas en móvil (van en Más)
       const r = await p.evaluate(() => {
         const sm = [...document.querySelectorAll('button, a[href], input, select, textarea, [role=button]')]
           .filter(e => { const s = getComputedStyle(e); if (s.display === 'none' || s.visibility === 'hidden') return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; })

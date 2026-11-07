@@ -520,7 +520,6 @@ header::-webkit-scrollbar-thumb{background:var(--line);border-radius:var(--r-pil
 }
 .ico{display:inline-block;vertical-align:-0.15em}
 .brand-mark{width:30px;height:30px;flex:none;display:block}
-.lion.tier-1{outline:2px dashed var(--accent);outline-offset:6px;border-radius:50%}
 .lion.tier-2{outline:2px solid var(--accent);outline-offset:6px;border-radius:50%}
 .lion.tier-3{outline:4px double var(--accent);outline-offset:6px;border-radius:50%}
 .gh-cap{margin:10px 0 0;font-size:var(--fs-sm)}

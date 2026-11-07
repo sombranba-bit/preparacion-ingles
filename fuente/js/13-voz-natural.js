@@ -292,5 +292,6 @@ function vozAlternar() {
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }
-Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio, activa: () => !!(vozEl || vozGenerando) });
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio, activa: () => !!(vozEl || vozGenerando),
+  precarga: () => { if (vozLeer().estado === "descargada") vozCargar(); } });   // solo si ya está en el equipo: nunca descarga sin avisar
 if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);

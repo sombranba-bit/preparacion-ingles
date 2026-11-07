@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-u7Wg1vtgFjy+TQKrPCxWvtrxsU9yKL0EfBxt2rXc7mA=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-Xs8CussIS2Z0CH0OLHSDnaBbn2J3nmZFL+MJkLeZm/Y=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -545,7 +545,6 @@ header::-webkit-scrollbar-thumb{background:var(--line);border-radius:var(--r-pil
 }
 .ico{display:inline-block;vertical-align:-0.15em}
 .brand-mark{width:30px;height:30px;flex:none;display:block}
-.lion.tier-1{outline:2px dashed var(--accent);outline-offset:6px;border-radius:50%}
 .lion.tier-2{outline:2px solid var(--accent);outline-offset:6px;border-radius:50%}
 .lion.tier-3{outline:4px double var(--accent);outline-offset:6px;border-radius:50%}
 .gh-cap{margin:10px 0 0;font-size:var(--fs-sm)}
@@ -1369,10 +1368,6 @@ header{display:none}
   .niveles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
 }
 
-/* Monedas: la cifra destaca en dorado en la cabecera del inicio */
-.d4-pills .st-coin{background:#fff1c2;border-color:#f5c542;box-shadow:0 3px 0 #d98a0c;padding:6px 14px 6px 10px}
-.d4-pills .st-coin .st-num{font-size:20px}
-.d4-pills .st-coin svg{width:22px;height:22px}
 /* En escritorio ancho la racha con sus días ya está en el panel de la derecha: aquí solo quedan las monedas */
 @media (min-width:1100px){.d4-pills .st-streak{display:none}}
 
@@ -1438,8 +1433,8 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 .cta-campo input:focus-visible,.cta-pw button:focus-visible,.cta-chk input:focus-visible,.cta-enlace:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .cta-fila{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
 .cta-fila[hidden]{display:none}
-.cta-chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--muted)}
-.cta-chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--acc)}
+.cta-chk{display:flex;gap:8px;align-items:center;min-height:44px;font-weight:400;font-size:14px;color:var(--muted)}
+.cta-chk input{margin-top:0;width:24px;height:24px;flex:none;accent-color:var(--acc)}
 .cta-enlace{border:0;background:none;color:var(--acc);font:700 14px Nunito,sans-serif;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
 .cta-sep{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
 .cta-sep::before,.cta-sep::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -1477,6 +1472,9 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #perfilCab:has(.bn){position:relative;isolation:isolate;overflow:hidden;align-items:center;margin:0 0 16px;padding:18px 18px 24px;border:2px solid var(--line);border-radius:22px;box-shadow:0 4px 0 var(--line)}
 #perfilCab:has(.bn)>*:not(.bn){position:relative;z-index:1}
 #perfilCab:has(.bn) .perfil-av-wrap{margin:0}
+
+/* Nombres largos: se parten en vez de desbordar la pantalla */
+.d4-saludo,.perfil-nombre,#perfilCab h1{overflow-wrap:anywhere;min-width:0}
 </style>
 <style>
 /* Voz natural: pantalla de descarga (alta de perfil y hoja al iniciar sesión) */
@@ -2789,7 +2787,7 @@ function playUserAudio() {
 }
 
 /* La voz natural (13-voz-natural.js) se engancha aquí sin importarse para no crear dependencias circulares */
-const vozGancho = { hablar: null, parar: null, alternar: null, sitio: null, activa: null };
+const vozGancho = { hablar: null, parar: null, alternar: null, sitio: null, activa: null, precarga: null };
 function speak(text, item = {}) {
   if (userAudio[itemKey()]) { playUserAudio(); return; }
   if (vozGancho.hablar && vozGancho.hablar(text, item, () => speakSistema(text, item), (item.rate || 0.95) * SPEEDS[speedIdx])) return;   // voz natural si está descargada
@@ -3219,7 +3217,8 @@ const P_ANIMALS = [...FREE_AV.map(a => [a.id, a.nombre]), ...CAT.filter(c => c.k
 const P_COLORES = [["#ffd9a8", "Arena"], ...CAT.filter(c => c.k === "color").map(c => [c.id, c.nombre])];
 const poseido = id => OWNED_INICIAL.includes(id) || (rewards().owned || []).includes(id);
 const escHtml = t => String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles-ingles") || "[]"); } catch (e) { return []; } }
+// El nombre se corta a 20 al leer: también cubre datos que llegan sin pasar por la creación (nube, copias antiguas)
+function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles-ingles") || "[]").map(p => ({ ...p, name: String(p.name || "").slice(0, 20) })); } catch (e) { return []; } }
 function saveProfiles(list) { RAW_LS.setItem("perfiles-ingles", JSON.stringify(list)); }
 function activeProfile() { const id = RAW_LS.getItem("perfil-activo"); return getProfiles().find(p => p.id === id) || null; }
 let pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [] };
@@ -3823,6 +3822,7 @@ function renderItem() {
   $("lecturaBtn").classList.toggle("hidden", !item.passage);
 
   if (item.audio) {
+    if (vozGancho.precarga) vozGancho.precarga();   // la voz natural se carga antes de pulsar Escuchar
     $("audioBar").classList.remove("hidden");
     $("audioStatus").textContent = "";
     const ACC = { "en-GB": "británico", "en-US": "estadounidense", "en-AU": "australiano", "en-IN": "indio", "en-IE": "irlandés" };
@@ -11168,7 +11168,8 @@ function vozAlternar() {
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }
-Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio, activa: () => !!(vozEl || vozGenerando) });
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio, activa: () => !!(vozEl || vozGenerando),
+  precarga: () => { if (vozLeer().estado === "descargada") vozCargar(); } });   // solo si ya está en el equipo: nunca descarga sin avisar
 if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);
 </script>
 <div class="profiles hidden" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfTitle">

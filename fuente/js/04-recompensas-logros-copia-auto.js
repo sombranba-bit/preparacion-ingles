@@ -480,6 +480,7 @@ export function renderItem() {
   $("lecturaBtn").classList.toggle("hidden", !item.passage);
 
   if (item.audio) {
+    if (vozGancho.precarga) vozGancho.precarga();   // la voz natural se carga antes de pulsar Escuchar
     $("audioBar").classList.remove("hidden");
     $("audioStatus").textContent = "";
     const ACC = { "en-GB": "británico", "en-US": "estadounidense", "en-AU": "australiano", "en-IN": "indio", "en-IE": "irlandés" };

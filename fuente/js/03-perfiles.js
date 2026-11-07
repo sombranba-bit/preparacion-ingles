@@ -9,7 +9,8 @@ export const P_ANIMALS = [...FREE_AV.map(a => [a.id, a.nombre]), ...CAT.filter(c
 export const P_COLORES = [["#ffd9a8", "Arena"], ...CAT.filter(c => c.k === "color").map(c => [c.id, c.nombre])];
 export const poseido = id => OWNED_INICIAL.includes(id) || (rewards().owned || []).includes(id);
 export const escHtml = t => String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-export function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles-ingles") || "[]"); } catch (e) { return []; } }
+// El nombre se corta a 20 al leer: también cubre datos que llegan sin pasar por la creación (nube, copias antiguas)
+export function getProfiles() { try { return JSON.parse(RAW_LS.getItem("perfiles-ingles") || "[]").map(p => ({ ...p, name: String(p.name || "").slice(0, 20) })); } catch (e) { return []; } }
 export function saveProfiles(list) { RAW_LS.setItem("perfiles-ingles", JSON.stringify(list)); }
 export function activeProfile() { const id = RAW_LS.getItem("perfil-activo"); return getProfiles().find(p => p.id === id) || null; }
 let pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [] };

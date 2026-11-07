@@ -260,10 +260,6 @@
   .niveles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
 }
 
-/* Monedas: la cifra destaca en dorado en la cabecera del inicio */
-.d4-pills .st-coin{background:#fff1c2;border-color:#f5c542;box-shadow:0 3px 0 #d98a0c;padding:6px 14px 6px 10px}
-.d4-pills .st-coin .st-num{font-size:20px}
-.d4-pills .st-coin svg{width:22px;height:22px}
 /* En escritorio ancho la racha con sus días ya está en el panel de la derecha: aquí solo quedan las monedas */
 @media (min-width:1100px){.d4-pills .st-streak{display:none}}
 
@@ -329,8 +325,8 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 .cta-campo input:focus-visible,.cta-pw button:focus-visible,.cta-chk input:focus-visible,.cta-enlace:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .cta-fila{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
 .cta-fila[hidden]{display:none}
-.cta-chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--muted)}
-.cta-chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--acc)}
+.cta-chk{display:flex;gap:8px;align-items:center;min-height:44px;font-weight:400;font-size:14px;color:var(--muted)}
+.cta-chk input{margin-top:0;width:24px;height:24px;flex:none;accent-color:var(--acc)}
 .cta-enlace{border:0;background:none;color:var(--acc);font:700 14px Nunito,sans-serif;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
 .cta-sep{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
 .cta-sep::before,.cta-sep::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -368,3 +364,6 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 #perfilCab:has(.bn){position:relative;isolation:isolate;overflow:hidden;align-items:center;margin:0 0 16px;padding:18px 18px 24px;border:2px solid var(--line);border-radius:22px;box-shadow:0 4px 0 var(--line)}
 #perfilCab:has(.bn)>*:not(.bn){position:relative;z-index:1}
 #perfilCab:has(.bn) .perfil-av-wrap{margin:0}
+
+/* Nombres largos: se parten en vez de desbordar la pantalla */
+.d4-saludo,.perfil-nombre,#perfilCab h1{overflow-wrap:anywhere;min-width:0}
