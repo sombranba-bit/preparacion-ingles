@@ -138,6 +138,11 @@ function vozSaltar() {
 }
 
 async function vozDescargar() {
+  // Sin espacio, la escritura en caché falla al final y la barra se queda en el 100 %: se avisa antes de empezar
+  if (!vozCtl && navigator.storage && navigator.storage.estimate) {
+    const { quota = 0, usage = 0 } = await navigator.storage.estimate().catch(() => ({}));
+    if (quota && quota - usage < VOZ_TAM * 1.3) { $("vozEst").textContent = "No hay espacio suficiente en el navegador para la voz natural (hacen falta unos 120 MB libres)."; return; }
+  }
   if (!vozCtl) vozCtl = { partes: [], recibidos: 0, total: VOZ_TAM, velocidad: 0, activa: false, ac: null };
   const c = vozCtl;
   c.activa = true;
@@ -174,6 +179,7 @@ async function vozDescargar() {
 async function vozTerminar() {
   const c = vozCtl;
   try {
+    await new Promise(r => setTimeout(r, 0));   // deja pintar el 100 % antes de la escritura pesada
     const cache = await caches.open(VOZ_CACHE);
     await cache.put(VOZ_URL, new Response(new Blob(c.partes, { type: "application/octet-stream" })));
     c.partes = [];
@@ -183,7 +189,11 @@ async function vozTerminar() {
     vozPintar();
     vozPintarAjustes();
     vozCargar();
-  } catch (e) { vozFallo(); }
+  } catch (e) {
+    if (vozCtl) vozCtl.activa = false;
+    $("vozEst").textContent = "No se pudo guardar la voz en este navegador. Puede que falte espacio; libera espacio y vuelve a intentarlo.";
+    vozPintar();
+  }
 }
 
 function vozFallo() {
@@ -253,11 +263,12 @@ function vozCargar() {
 function vozHablar(text, item, respaldo, velocidad) {
   if (vozLeer().estado !== "descargada") return false;
   // Kokoro solo tiene voces británicas y estadounidenses: el resto de acentos los lee la voz del dispositivo
-  if (item.accent !== "en-US" && item.accent !== "en-GB") return false;
+  const acento = item.accent || "en-GB";   // sin acento se muestra como británico (igual que en la pantalla)
+  if (acento !== "en-US" && acento !== "en-GB") return false;
   if (!vozTts) { vozCargar(); $("audioStatus").textContent = "La voz natural aún se está cargando; mientras, suena la del dispositivo."; return false; }
   vozParar();
   const turno = ++vozTurno;
-  const voz = item.accent === "en-US" ? "af_heart" : "bf_emma";
+  const voz = acento === "en-US" ? "af_heart" : "bf_emma";
   // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz.
   // El WAV mudo termina enseguida; por eso su final no toca la interfaz (eso lo hace el audio real).
   const el = new Audio(SILENCIO);
