@@ -361,11 +361,10 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 .bn-confeti::before{inset:0 0 auto 0;height:calc(100% + 46px);background:radial-gradient(circle 4px at 20px 20px,#f0587a 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 9px 31px,#4aa8ff 90%,transparent) 0 0/46px 46px,radial-gradient(circle 4px at 34px 9px,#18a58a 90%,transparent) 0 0/46px 46px;animation:bn-cae 3s linear infinite}
 @keyframes bn-desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes bn-cae{from{transform:translateY(-46px)}to{transform:translateY(0)}}
-/* Banner como portada: el personaje se apoya sobre su borde inferior y la cabecera queda encima (solo con banner equipado) */
-.d4-cab:has(.bn){display:flex;flex-direction:column;align-items:stretch;gap:0;position:relative;margin:4px 0 16px}
-.d4-cab:has(.bn) .bn{order:0;height:150px;margin:0;border-radius:22px}
-.d4-cab:has(.bn) .d4-top{position:absolute;top:14px;left:16px;right:16px;z-index:2}
-.d4-cab:has(.bn) .d4-quien{position:relative;z-index:1;margin-top:-64px}
-#perfilCab:has(.bn){align-items:flex-end}
-#perfilCab .bn{height:150px;margin:0;border-radius:22px}
-#perfilCab:has(.bn) .perfil-av-wrap{position:relative;z-index:1;margin:-60px 0 0 12px}
+/* Banner como fondo de todo el bloque de cabecera (solo con banner equipado): inicio y perfil */
+.d4-cab:has(.bn){position:relative;display:flex;flex-direction:column;align-items:stretch;gap:14px;isolation:isolate;overflow:hidden;margin:4px 0 16px;padding:18px 18px 26px;border:2px solid var(--line);border-radius:22px;box-shadow:0 4px 0 var(--line)}
+.d4-cab:has(.bn) .bn,#perfilCab:has(.bn) .bn{position:absolute;inset:0;width:auto;height:auto;margin:0;border:0;border-radius:0;z-index:-1}
+.d4-cab:has(.bn) .d4-top,.d4-cab:has(.bn) .d4-quien{position:relative;z-index:1;top:auto;left:auto;right:auto}
+#perfilCab:has(.bn){position:relative;isolation:isolate;overflow:hidden;align-items:center;margin:0 0 16px;padding:18px 18px 24px;border:2px solid var(--line);border-radius:22px;box-shadow:0 4px 0 var(--line)}
+#perfilCab:has(.bn)>*:not(.bn){position:relative;z-index:1}
+#perfilCab:has(.bn) .perfil-av-wrap{margin:0}
