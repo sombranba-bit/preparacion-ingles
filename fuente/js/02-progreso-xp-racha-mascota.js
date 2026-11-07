@@ -1,4 +1,4 @@
-import { $, LEVELS, appStore, currentLevel, ico } from "./01-nucleo-niveles-audio.js";
+import { $, LEVELS, appStore, currentLevel, ico, vozGancho } from "./01-nucleo-niveles-audio.js";
 import { activeProfile, avatarSvg, escHtml } from "./03-perfiles.js";
 import { bnHtml } from "./00-personajes-d4.js";
 import {
@@ -219,6 +219,7 @@ export function renderGame() {
         <p class="d4-sub">${LEVELS[currentLevel].desc}</p>
       </div>
     </div>
+    <div id="vozSlot"></div>
     <div class="d4-hero card">
       <span class="d4-chip ok">Hoy · ${today} de ${DAILY_GOAL} XP</span>
       <h2 class="d4-h">Practicar ahora</h2>
@@ -233,6 +234,7 @@ export function renderGame() {
   `;
   mascotMount();
   mascotGreet();
+  if (vozGancho.sitio) vozGancho.sitio();
 }
 
 /* ---------- Mascota interactiva: se coloca dentro de la vista actual ---------- */

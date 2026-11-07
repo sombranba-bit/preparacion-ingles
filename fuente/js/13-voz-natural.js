@@ -46,7 +46,7 @@ function vozMontar() {
       <p class="voz-est" id="vozEst"></p>
       <h2 id="vozT">Voz natural en descarga</h2>
       <div class="voz-anillo" aria-hidden="true"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" class="voz-anillo-base"/><circle id="vozAnilloRel" cx="80" cy="80" r="70" class="voz-anillo-trazo" stroke-dasharray="439.8" stroke-dashoffset="439.8"/></svg><span id="vozAnilloTxt"></span></div>
-      <p class="voz-txt">Se descarga una sola vez y queda guardada en este equipo. Puedes seguir practicando mientras tanto.</p>
+      <p class="voz-txt">Pack de voz natural para los ejercicios de listening y la lectura en voz alta. Pesa unos 88 MB, se descarga una sola vez y queda guardado en este equipo.</p>
       <div class="voz-bar" role="progressbar" aria-label="Progreso de la descarga" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="vozRel"></div></div>
       <p class="voz-dat" id="vozDat"></p>
       <div class="voz-acc">
@@ -73,8 +73,17 @@ function vozMontar() {
   $("vozBarra").onclick = () => vozAbrir("hoja", vozAlCerrar);
 }
 
+let vozBarraOn = false;   // la barra solo se ve cuando la pantalla está cerrada y la descarga sigue
+// La barra vive dentro de la cabecera de inicio (#vozSlot); la app la vuelve a colocar al pintar el inicio
+function vozSitio() {
+  const bar = $("vozBarra"), slot = $("vozSlot");
+  if (!bar) return;
+  if (slot) slot.appendChild(bar);
+  bar.hidden = !(slot && vozBarraOn);
+}
 function vozAbrir(modo, alCerrar) {
   if (!$("vozOv")) vozMontar();
+  vozBarraOn = false;
   vozModo = modo;
   if (alCerrar !== undefined && alCerrar !== null) vozAlCerrar = alCerrar;
   $("vozOv").className = "voz-ov " + modo;
@@ -89,13 +98,15 @@ function vozAbrir(modo, alCerrar) {
 function vozMinimizar() {
   if (vozLeer().estado === "descargada") { vozSalir(false); return; }
   $("vozOv").hidden = true;
-  $("vozBarra").hidden = false;
+  vozBarraOn = true;
+  vozSitio();
   vozPintar();
 }
 
 /* Cierra la pantalla. Si la descarga terminó o se decidió, sigue con el alta si hay algo pendiente */
 function vozSalir(seguir) {
   $("vozOv").hidden = true;
+  vozBarraOn = false;
   $("vozBarra").hidden = true;
   const f = seguir ? vozAlCerrar : null;
   vozAlCerrar = null;
@@ -190,23 +201,26 @@ function vozPintar() {
   const hecha = est.estado === "descargada", saltada = est.estado === "saltada";
   const tot = c ? c.total : (est.total || VOZ_TAM), rec = hecha ? tot : (c ? c.recibidos : 0);
   const pct = Math.min(100, Math.floor(rec / tot * 100));
+  const guardando = !hecha && rec > 0 && rec >= tot;   // recibida entera: se está guardando en la caché
   const corre = !!(c && c.activa), enPausa = !corre && rec > 0 && !hecha;
   const mb = Math.round(tot / 1048576);
   let rest = "calculando el tiempo…";
   if (hecha) rest = "completada";
+  else if (guardando) rest = "guardando en este equipo…";
   else if (corre && c.velocidad > 1000) rest = vozTiempo((tot - rec) / c.velocidad);
   else if (enPausa) rest = "en pausa";
   if (!$("vozEst").textContent.startsWith("No se pudo")) {
-    $("vozEst").textContent = "Paso 3 de 3 · " + (hecha ? "lista" : corre ? "descargando" : enPausa ? "en pausa" : "lista para descargar");
+    $("vozEst").textContent = "Paso 3 de 3 · " + (hecha ? "lista" : guardando ? "guardando" : corre ? "descargando" : enPausa ? "en pausa" : "lista para descargar");
   }
   $("vozRel").style.width = pct + "%";
   $("vozAnilloRel").style.strokeDashoffset = 439.8 * (1 - pct / 100);
   $("vozAnilloTxt").textContent = pct + " %";
   $("vozOv").querySelector('[role="progressbar"]').setAttribute("aria-valuenow", pct);
   $("vozDat").textContent = pct + " % · " + Math.floor(rec / 1048576) + " de " + mb + " MB · " + rest;
-  $("vozGo").textContent = hecha ? "Empezar a practicar" : corre ? "Pausar" : rec > 0 ? "Reanudar" : "Descargar ahora";
+  $("vozGo").textContent = hecha ? "Empezar a practicar" : guardando ? "Guardando…" : corre ? "Pausar" : rec > 0 ? "Reanudar" : "Descargar ahora";
+  $("vozGo").disabled = guardando;
   $("vozContinuar").disabled = !(hecha || saltada);
-  $("vozBarraTxt").textContent = hecha ? "Voz natural lista" : (corre ? "Descargando voz natural · " : "Descarga en pausa · ") + pct + " %";
+  $("vozBarraTxt").textContent = hecha ? "Voz natural lista" : guardando ? "Guardando voz natural…" : (corre ? "Descargando voz natural · " : "Descarga en pausa · ") + pct + " %";
   $("vozBarraRel").style.width = pct + "%";
 }
 
@@ -263,5 +277,5 @@ function vozAlternar() {
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }
-Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar });
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio });
 if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);

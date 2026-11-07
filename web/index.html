@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-mLVtiMZ/1qcQrpsTSEh5OGJKCyb8kLYBNeip9U7lxZs=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-3zyehy5j6Dq9DTY26Y17WuPlnWoWKtZV0eiULJtjJ84=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -119,8 +119,6 @@ select.sel,input.answer{font:inherit;padding:8px 10px;border:2px solid var(--lin
 .timer.low{background:var(--bad-bg);color:var(--bad-text)}
 .progress{height:8px;background:var(--line);border-radius:var(--r-pill);overflow:hidden;margin:10px 0 20px}
 .progress>div{height:100%;background:var(--grad);width:0;transition:width .3s;border-radius:var(--r-pill)}
-.audio-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;padding:12px;background:var(--surface2);border-radius:var(--r-md)}
-.audio-bar .muted{font-size:var(--fs-sm)}
 .passage{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-bottom:16px;white-space:pre-line}
 .question{font-size:var(--fs-md);margin:0 0 14px;font-weight:600}
 .hint{font-size:var(--fs-sm);color:var(--muted);margin:-6px 0 10px}
@@ -229,11 +227,12 @@ footer{grid-row:3;grid-column:2}
   footer{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
 }
 
-.audio-bar{position:relative;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;margin-bottom:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);font-family:ui-monospace,Consolas,monospace}
-.audio-bar::before{content:"AUDIO";position:absolute;top:-9px;left:12px;padding:0 6px;background:var(--bg);font-size:var(--fs-xs);letter-spacing:.2em;color:var(--accent)}
-.audio-bar .btn{border-radius:var(--r-sm);font-family:inherit;font-size:var(--fs-sm);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px;background:transparent;color:var(--accent);border:1px solid var(--accent);box-shadow:none}
-.audio-bar .btn.secondary{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.audio-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px;margin-bottom:16px;background:var(--surface2);border-radius:var(--r-md)}
+.audio-bar .btn{font-family:inherit;font-size:var(--fs-sm);min-height:44px;padding:0 16px;border-radius:var(--r-pill);background:var(--surface);color:var(--text);border:1px solid var(--line);box-shadow:none;text-transform:none;letter-spacing:0}
+.audio-bar #playBtn{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .audio-bar .muted{font-size:var(--fs-sm);color:var(--muted)}
+.audio-bar .wave{display:none}
+.audio-bar.playing .wave{display:inline-flex}
 .pl-file{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
 .pl-pick{display:inline-block;color:var(--accent);border:1px solid var(--accent);font-size:var(--fs-sm);border-radius:var(--r-sm);padding:8px 12px;cursor:pointer;margin:6px 0 4px;display:inline-flex;align-items:center;min-height:44px;text-transform:none}
 .pl-file:focus-visible+.pl-pick{outline:2px solid var(--accent);outline-offset:3px}
@@ -248,7 +247,6 @@ footer{grid-row:3;grid-column:2}
 .tabs button[aria-pressed="true"] .tab-ico{background:var(--accent);color:var(--bg)}
 .tabs button[aria-pressed="true"]{box-shadow:inset 0 0 0 1px var(--accent)}
 .tab-ico{border-color:var(--accent)}
-.audio-bar .btn{border-color:var(--accent);color:var(--accent)}
 .wave i{display:block;width:3px;height:14px;background:var(--accent);opacity:.35;transform-origin:50% 100%}
 .audio-bar.playing .wave i{opacity:1;animation:wvb .6s steps(3) infinite}
 .audio-bar.playing .wave i:nth-child(2){animation-delay:.1s}.audio-bar.playing .wave i:nth-child(3){animation-delay:.2s}.audio-bar.playing .wave i:nth-child(4){animation-delay:.3s}.audio-bar.playing .wave i:nth-child(5){animation-delay:.4s}
@@ -1501,9 +1499,9 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 .voz-link { border: 0; background: transparent; color: var(--accent); font-family: Nunito, system-ui, sans-serif !important; font-weight: 800 !important; font-size: 15px !important; text-decoration: underline; min-height: 44px !important; padding: 0 !important; justify-self: start; }
 .voz-aviso { margin-top: 20px; padding: 14px 16px; border-radius: 14px; background: var(--surface2); border: 2px solid #d98a0c; font-size: 14px; line-height: 1.5; }
 .voz-aviso strong { display: block; margin-bottom: 4px; }
-.voz-barra { position: fixed; left: 16px; right: 16px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 9000; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 16px; box-sizing: border-box; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); box-shadow: 0 4px 0 var(--line); font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: 14px; color: var(--text); text-align: left; cursor: pointer; }
+.voz-barra { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; margin: 0 0 16px; padding: 10px 16px; box-sizing: border-box; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); box-shadow: 0 4px 0 var(--line); font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: 14px; color: var(--text); text-align: left; cursor: pointer; }
 #vozBarraTxt { flex: 1; min-width: 0; }
-.voz-barra-bar { width: 72px; height: 8px; border-radius: 999px; background: var(--surface2); overflow: hidden; flex: none; }
+.voz-barra-bar { width: 120px; max-width: 35%; height: 8px; border-radius: 999px; background: var(--surface2); overflow: hidden; flex: none; }
 .voz-barra-bar > span { display: block; height: 100%; width: 0; background: var(--accent); }
 @media (min-width: 900px) {
   .voz-ov.alta, .voz-ov.hoja { display: flex; align-items: center; justify-content: center; }
@@ -2784,7 +2782,7 @@ function playUserAudio() {
 }
 
 /* La voz natural (13-voz-natural.js) se engancha aquí sin importarse para no crear dependencias circulares */
-const vozGancho = { hablar: null, parar: null, alternar: null };
+const vozGancho = { hablar: null, parar: null, alternar: null, sitio: null };
 function speak(text, item = {}) {
   if (userAudio[itemKey()]) { playUserAudio(); return; }
   if (vozGancho.hablar && vozGancho.hablar(text, item, () => speakSistema(text, item), (item.rate || 0.95) * SPEEDS[speedIdx])) return;   // voz natural si está descargada
@@ -3121,6 +3119,7 @@ function renderGame() {
         <p class="d4-sub">${LEVELS[currentLevel].desc}</p>
       </div>
     </div>
+    <div id="vozSlot"></div>
     <div class="d4-hero card">
       <span class="d4-chip ok">Hoy · ${today} de ${DAILY_GOAL} XP</span>
       <h2 class="d4-h">Practicar ahora</h2>
@@ -3135,6 +3134,7 @@ function renderGame() {
   `;
   mascotMount();
   mascotGreet();
+  if (vozGancho.sitio) vozGancho.sitio();
 }
 
 /* ---------- Mascota interactiva: se coloca dentro de la vista actual ---------- */
@@ -10913,7 +10913,7 @@ function vozMontar() {
       <p class="voz-est" id="vozEst"></p>
       <h2 id="vozT">Voz natural en descarga</h2>
       <div class="voz-anillo" aria-hidden="true"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" class="voz-anillo-base"/><circle id="vozAnilloRel" cx="80" cy="80" r="70" class="voz-anillo-trazo" stroke-dasharray="439.8" stroke-dashoffset="439.8"/></svg><span id="vozAnilloTxt"></span></div>
-      <p class="voz-txt">Se descarga una sola vez y queda guardada en este equipo. Puedes seguir practicando mientras tanto.</p>
+      <p class="voz-txt">Pack de voz natural para los ejercicios de listening y la lectura en voz alta. Pesa unos 88 MB, se descarga una sola vez y queda guardado en este equipo.</p>
       <div class="voz-bar" role="progressbar" aria-label="Progreso de la descarga" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="vozRel"></div></div>
       <p class="voz-dat" id="vozDat"></p>
       <div class="voz-acc">
@@ -10940,8 +10940,17 @@ function vozMontar() {
   $("vozBarra").onclick = () => vozAbrir("hoja", vozAlCerrar);
 }
 
+let vozBarraOn = false;   // la barra solo se ve cuando la pantalla está cerrada y la descarga sigue
+// La barra vive dentro de la cabecera de inicio (#vozSlot); la app la vuelve a colocar al pintar el inicio
+function vozSitio() {
+  const bar = $("vozBarra"), slot = $("vozSlot");
+  if (!bar) return;
+  if (slot) slot.appendChild(bar);
+  bar.hidden = !(slot && vozBarraOn);
+}
 function vozAbrir(modo, alCerrar) {
   if (!$("vozOv")) vozMontar();
+  vozBarraOn = false;
   vozModo = modo;
   if (alCerrar !== undefined && alCerrar !== null) vozAlCerrar = alCerrar;
   $("vozOv").className = "voz-ov " + modo;
@@ -10956,13 +10965,15 @@ function vozAbrir(modo, alCerrar) {
 function vozMinimizar() {
   if (vozLeer().estado === "descargada") { vozSalir(false); return; }
   $("vozOv").hidden = true;
-  $("vozBarra").hidden = false;
+  vozBarraOn = true;
+  vozSitio();
   vozPintar();
 }
 
 /* Cierra la pantalla. Si la descarga terminó o se decidió, sigue con el alta si hay algo pendiente */
 function vozSalir(seguir) {
   $("vozOv").hidden = true;
+  vozBarraOn = false;
   $("vozBarra").hidden = true;
   const f = seguir ? vozAlCerrar : null;
   vozAlCerrar = null;
@@ -11057,23 +11068,26 @@ function vozPintar() {
   const hecha = est.estado === "descargada", saltada = est.estado === "saltada";
   const tot = c ? c.total : (est.total || VOZ_TAM), rec = hecha ? tot : (c ? c.recibidos : 0);
   const pct = Math.min(100, Math.floor(rec / tot * 100));
+  const guardando = !hecha && rec > 0 && rec >= tot;   // recibida entera: se está guardando en la caché
   const corre = !!(c && c.activa), enPausa = !corre && rec > 0 && !hecha;
   const mb = Math.round(tot / 1048576);
   let rest = "calculando el tiempo…";
   if (hecha) rest = "completada";
+  else if (guardando) rest = "guardando en este equipo…";
   else if (corre && c.velocidad > 1000) rest = vozTiempo((tot - rec) / c.velocidad);
   else if (enPausa) rest = "en pausa";
   if (!$("vozEst").textContent.startsWith("No se pudo")) {
-    $("vozEst").textContent = "Paso 3 de 3 · " + (hecha ? "lista" : corre ? "descargando" : enPausa ? "en pausa" : "lista para descargar");
+    $("vozEst").textContent = "Paso 3 de 3 · " + (hecha ? "lista" : guardando ? "guardando" : corre ? "descargando" : enPausa ? "en pausa" : "lista para descargar");
   }
   $("vozRel").style.width = pct + "%";
   $("vozAnilloRel").style.strokeDashoffset = 439.8 * (1 - pct / 100);
   $("vozAnilloTxt").textContent = pct + " %";
   $("vozOv").querySelector('[role="progressbar"]').setAttribute("aria-valuenow", pct);
   $("vozDat").textContent = pct + " % · " + Math.floor(rec / 1048576) + " de " + mb + " MB · " + rest;
-  $("vozGo").textContent = hecha ? "Empezar a practicar" : corre ? "Pausar" : rec > 0 ? "Reanudar" : "Descargar ahora";
+  $("vozGo").textContent = hecha ? "Empezar a practicar" : guardando ? "Guardando…" : corre ? "Pausar" : rec > 0 ? "Reanudar" : "Descargar ahora";
+  $("vozGo").disabled = guardando;
   $("vozContinuar").disabled = !(hecha || saltada);
-  $("vozBarraTxt").textContent = hecha ? "Voz natural lista" : (corre ? "Descargando voz natural · " : "Descarga en pausa · ") + pct + " %";
+  $("vozBarraTxt").textContent = hecha ? "Voz natural lista" : guardando ? "Guardando voz natural…" : (corre ? "Descargando voz natural · " : "Descarga en pausa · ") + pct + " %";
   $("vozBarraRel").style.width = pct + "%";
 }
 
@@ -11130,7 +11144,7 @@ function vozAlternar() {
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }
-Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar });
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio });
 if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);
 </script>
 <div class="profiles hidden" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfTitle">
