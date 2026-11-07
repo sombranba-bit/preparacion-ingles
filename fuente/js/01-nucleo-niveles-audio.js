@@ -433,10 +433,9 @@ export function renderLevels() {
     b.type = "button";
     b.textContent = lv;
     b.setAttribute("aria-pressed", currentLevel === lv ? "true" : "false");
-    const bloqueado = esInvitado() && lv !== "A1";
-    if (bloqueado) b.classList.add("bloqueado");
+    if (esInvitado() && lv !== "A1") b.classList.add("bloqueado");
     b.onclick = () => {
-      if (bloqueado) {   // invitado: pedir cuenta para A2 y superiores
+      if (esInvitado() && lv !== "A1") {   // se comprueba al pulsar: la sesión puede haberse confirmado después de pintar   // invitado: pedir cuenta para A2 y superiores
         const portada = document.getElementById("lpElige");   // la portada ofrece crear cuenta o entrar
         if (portada) portada.hidden = false;
         document.querySelector("[data-inicio]")?.click();
@@ -451,6 +450,8 @@ export function renderLevels() {
   const np = $("nivelPerfil"); if (np) np.textContent = "Examen " + currentLevel + " · objetivo oficial";
 }
 
+
+document.addEventListener("cuenta-cambio", () => renderLevels());   // al confirmarse la sesión, los niveles dejan de estar bloqueados
 
 const PART_SVG = {
   pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
