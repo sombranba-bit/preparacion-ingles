@@ -22,7 +22,9 @@ import {
   show,
   shuffle,
   speak,
+  stopAudio,
   togglePlay,
+  vozGancho,
   userEl,
 } from "./01-nucleo-niveles-audio.js";
 import {
@@ -458,6 +460,7 @@ function updateTimer() {
 }
 
 export function renderItem() {
+  stopAudio();   // la pregunta anterior no debe seguir sonando
   if (fmt && fmt.timer) clearInterval(fmt.timer);
   answered = false; selectedOption = null;
   mascotMount();
@@ -490,7 +493,8 @@ export function renderItem() {
       speedIdx = (speedIdx + 1) % SPEEDS.length;
       $("slowBtn").textContent = SPEED_LBL[speedIdx];
       if (userEl) userEl.playbackRate = SPEEDS[speedIdx];
-      if ("speechSynthesis" in window && (speechSynthesis.speaking || speechSynthesis.paused)) speak(item.audio, item);
+      const sonando = "speechSynthesis" in window && (speechSynthesis.speaking || speechSynthesis.paused);
+      if (sonando || (vozGancho.activa && vozGancho.activa())) speak(item.audio, item);   // vuelve a generar o leer a la nueva velocidad
     };
     $("txBtn").textContent = "Transcripción";
     $("transcript").textContent = item.audio;
@@ -538,8 +542,7 @@ export function renderItem() {
   $("nextBtn").textContent = index === queue.length - 1 ? "Ver resultado" : "Siguiente →";
   $("nextBtn").onclick = next;
 
-  if (item.audio) speak(item.audio, item);
-  advRender();
+  advRender();   // el audio arranca con el botón Escuchar, no solo al mostrar la pregunta
 }
 
 function selectOption(i, btn) {

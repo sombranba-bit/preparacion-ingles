@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-sPBrjyAlDSjMYORjlhferpbiwkzacxU+8b5/gObyMfM=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-tmeKG8ebUruchCz83l50iAjCTrQtzuvl8lSX5lhYWH8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -2789,7 +2789,7 @@ function playUserAudio() {
 }
 
 /* La voz natural (13-voz-natural.js) se engancha aquí sin importarse para no crear dependencias circulares */
-const vozGancho = { hablar: null, parar: null, alternar: null, sitio: null };
+const vozGancho = { hablar: null, parar: null, alternar: null, sitio: null, activa: null };
 function speak(text, item = {}) {
   if (userAudio[itemKey()]) { playUserAudio(); return; }
   if (vozGancho.hablar && vozGancho.hablar(text, item, () => speakSistema(text, item), (item.rate || 0.95) * SPEEDS[speedIdx])) return;   // voz natural si está descargada
@@ -3802,6 +3802,7 @@ function updateTimer() {
 }
 
 function renderItem() {
+  stopAudio();   // la pregunta anterior no debe seguir sonando
   if (fmt && fmt.timer) clearInterval(fmt.timer);
   answered = false; selectedOption = null;
   mascotMount();
@@ -3834,7 +3835,8 @@ function renderItem() {
       speedIdx = (speedIdx + 1) % SPEEDS.length;
       $("slowBtn").textContent = SPEED_LBL[speedIdx];
       if (userEl) userEl.playbackRate = SPEEDS[speedIdx];
-      if ("speechSynthesis" in window && (speechSynthesis.speaking || speechSynthesis.paused)) speak(item.audio, item);
+      const sonando = "speechSynthesis" in window && (speechSynthesis.speaking || speechSynthesis.paused);
+      if (sonando || (vozGancho.activa && vozGancho.activa())) speak(item.audio, item);   // vuelve a generar o leer a la nueva velocidad
     };
     $("txBtn").textContent = "Transcripción";
     $("transcript").textContent = item.audio;
@@ -3882,8 +3884,7 @@ function renderItem() {
   $("nextBtn").textContent = index === queue.length - 1 ? "Ver resultado" : "Siguiente →";
   $("nextBtn").onclick = next;
 
-  if (item.audio) speak(item.audio, item);
-  advRender();
+  advRender();   // el audio arranca con el botón Escuchar, no solo al mostrar la pregunta
 }
 
 function selectOption(i, btn) {
@@ -11126,38 +11127,47 @@ function vozCargar() {
 }
 function vozHablar(text, item, respaldo, velocidad) {
   if (vozLeer().estado !== "descargada") return false;
-  if (!vozTts) { vozCargar(); return false; }   // mientras carga, suena la voz del dispositivo
+  // Kokoro solo tiene voces británicas y estadounidenses: el resto de acentos los lee la voz del dispositivo
+  if (item.accent !== "en-US" && item.accent !== "en-GB") return false;
+  if (!vozTts) { vozCargar(); $("audioStatus").textContent = "La voz natural aún se está cargando; mientras, suena la del dispositivo."; return false; }
   vozParar();
   const turno = ++vozTurno;
   const voz = item.accent === "en-US" ? "af_heart" : "bf_emma";
-  // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz
+  // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz.
+  // El WAV mudo termina enseguida; por eso su final no toca la interfaz (eso lo hace el audio real).
   const el = new Audio(SILENCIO);
   el.play().catch(() => {});
   vozEl = el;
-  el.onended = () => { if (vozEl === el) vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+  vozGenerando = true;
   $("audioStatus").textContent = "Preparando la voz natural…";
   $("audioBar").classList.add("playing");
   setPlayLabel(PAUSA_LBL);
   vozTts.generate(text, { voice: voz, speed: velocidad }).then(async a => {
     if (turno !== vozTurno) return;   // se pidió otra cosa mientras tanto
+    vozGenerando = false;
     el.src = URL.createObjectURL(await a.toBlob());
+    el.onended = () => { if (vozEl === el) { vozEl = null; vozFinUi(); } };
     $("audioStatus").textContent = "Reproduciendo con voz natural…";
     await el.play();
-  }).catch(e => { if (e && e.name === "AbortError") return; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
+  }).catch(e => { if (e && e.name === "AbortError") return; vozGenerando = false; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
   return true;
 }
+let vozGenerando = false;   // la voz se está generando: el botón cancela, no pausa
+function vozFinUi() { $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); $("audioStatus").textContent = ""; }
 function vozParar() {
   vozTurno++;
+  vozGenerando = false;
   if (vozEl) { vozEl.pause(); vozEl = null; }
 }
 /* Pausar o reanudar la voz natural; devuelve false si no está sonando */
 function vozAlternar() {
+  if (vozGenerando) { vozParar(); vozFinUi(); return true; }
   if (!vozEl) return false;
   if (vozEl.paused) { vozEl.play().catch(() => {}); setPlayLabel(PAUSA_LBL); $("audioBar").classList.add("playing"); }
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }
-Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio });
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio, activa: () => !!(vozEl || vozGenerando) });
 if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);
 </script>
 <div class="profiles hidden" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfTitle">

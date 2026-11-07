@@ -252,36 +252,45 @@ function vozCargar() {
 }
 function vozHablar(text, item, respaldo, velocidad) {
   if (vozLeer().estado !== "descargada") return false;
-  if (!vozTts) { vozCargar(); return false; }   // mientras carga, suena la voz del dispositivo
+  // Kokoro solo tiene voces británicas y estadounidenses: el resto de acentos los lee la voz del dispositivo
+  if (item.accent !== "en-US" && item.accent !== "en-GB") return false;
+  if (!vozTts) { vozCargar(); $("audioStatus").textContent = "La voz natural aún se está cargando; mientras, suena la del dispositivo."; return false; }
   vozParar();
   const turno = ++vozTurno;
   const voz = item.accent === "en-US" ? "af_heart" : "bf_emma";
-  // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz
+  // Desbloquea el audio dentro del clic: si no, el navegador bloquea play() al terminar de generar la voz.
+  // El WAV mudo termina enseguida; por eso su final no toca la interfaz (eso lo hace el audio real).
   const el = new Audio(SILENCIO);
   el.play().catch(() => {});
   vozEl = el;
-  el.onended = () => { if (vozEl === el) vozEl = null; $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); };
+  vozGenerando = true;
   $("audioStatus").textContent = "Preparando la voz natural…";
   $("audioBar").classList.add("playing");
   setPlayLabel(PAUSA_LBL);
   vozTts.generate(text, { voice: voz, speed: velocidad }).then(async a => {
     if (turno !== vozTurno) return;   // se pidió otra cosa mientras tanto
+    vozGenerando = false;
     el.src = URL.createObjectURL(await a.toBlob());
+    el.onended = () => { if (vozEl === el) { vozEl = null; vozFinUi(); } };
     $("audioStatus").textContent = "Reproduciendo con voz natural…";
     await el.play();
-  }).catch(e => { if (e && e.name === "AbortError") return; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
+  }).catch(e => { if (e && e.name === "AbortError") return; vozGenerando = false; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
   return true;
 }
+let vozGenerando = false;   // la voz se está generando: el botón cancela, no pausa
+function vozFinUi() { $("audioBar").classList.remove("playing"); setPlayLabel("▶ Escuchar"); $("audioStatus").textContent = ""; }
 function vozParar() {
   vozTurno++;
+  vozGenerando = false;
   if (vozEl) { vozEl.pause(); vozEl = null; }
 }
 /* Pausar o reanudar la voz natural; devuelve false si no está sonando */
 function vozAlternar() {
+  if (vozGenerando) { vozParar(); vozFinUi(); return true; }
   if (!vozEl) return false;
   if (vozEl.paused) { vozEl.play().catch(() => {}); setPlayLabel(PAUSA_LBL); $("audioBar").classList.add("playing"); }
   else { vozEl.pause(); setPlayLabel("▶ Reanudar"); $("audioBar").classList.remove("playing"); }
   return true;
 }
-Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio });
+Object.assign(vozGancho, { hablar: vozHablar, parar: vozParar, alternar: vozAlternar, sitio: vozSitio, activa: () => !!(vozEl || vozGenerando) });
 if (vozLeer().estado === "descargada") setTimeout(vozCargar, 3000);
