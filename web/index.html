@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-McWBnWRMWxHXXIB/oBNnZOZk1hhyWrWOProPLqlOQPo=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-fnQFk/WgzYdBbYUPmAZzHZVobp0ABCSnbvKtrTCYw/I=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-T69WXspPcENqxxusCMk75N7sn52/zr8dduSURoJKQZk=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -2748,16 +2748,23 @@ function renderTabs() {
 }
 function showTab(k) {
   activeTab = k;
-  mascotPark();
-  ["exercise","result"].forEach(s => $(s).classList.add("hidden"));
-  $("bnav").classList.remove("hidden");
-  Object.values(PANELS).forEach(p => $(p).classList.toggle("hidden", p !== PANELS[k]));
-  renderTabs();
-  if (k === "ranking") renderRanking();
-  if (k === "logros") renderLogrosPanel();
-  if (k === "tienda") renderTienda();
-  if (k === "perfil") renderPerfilPanel();
-  mascotMount();
+  const pintar = () => {
+    mascotPark();
+    ["exercise","result"].forEach(s => $(s).classList.add("hidden"));
+    $("bnav").classList.remove("hidden");
+    Object.values(PANELS).forEach(p => $(p).classList.toggle("hidden", p !== PANELS[k]));
+    renderTabs();
+    if (k === "ranking") renderRanking();
+    if (k === "logros") renderLogrosPanel();
+    if (k === "tienda") renderTienda();
+    if (k === "perfil") renderPerfilPanel();
+    mascotMount();
+  };
+  // Fundido nativo entre pestañas cuando el navegador lo soporta; si no, cambio directo
+  if (document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Si un toque nuevo interrumpe la animación, la promesa rechaza; el cambio de pestaña ya se aplicó, así que no hace falta más
+    const vt = document.startViewTransition(pintar); vt.ready.catch(() => {}); vt.finished.catch(() => {});
+  } else pintar();
 }
 function show(id) {
   if (id === "home") { showTab(activeTab); return; }

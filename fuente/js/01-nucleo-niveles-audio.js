@@ -310,16 +310,23 @@ export function renderTabs() {
 }
 export function showTab(k) {
   activeTab = k;
-  mascotPark();
-  ["exercise","result"].forEach(s => $(s).classList.add("hidden"));
-  $("bnav").classList.remove("hidden");
-  Object.values(PANELS).forEach(p => $(p).classList.toggle("hidden", p !== PANELS[k]));
-  renderTabs();
-  if (k === "ranking") renderRanking();
-  if (k === "logros") renderLogrosPanel();
-  if (k === "tienda") renderTienda();
-  if (k === "perfil") renderPerfilPanel();
-  mascotMount();
+  const pintar = () => {
+    mascotPark();
+    ["exercise","result"].forEach(s => $(s).classList.add("hidden"));
+    $("bnav").classList.remove("hidden");
+    Object.values(PANELS).forEach(p => $(p).classList.toggle("hidden", p !== PANELS[k]));
+    renderTabs();
+    if (k === "ranking") renderRanking();
+    if (k === "logros") renderLogrosPanel();
+    if (k === "tienda") renderTienda();
+    if (k === "perfil") renderPerfilPanel();
+    mascotMount();
+  };
+  // Fundido nativo entre pestañas cuando el navegador lo soporta; si no, cambio directo
+  if (document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Si un toque nuevo interrumpe la animación, la promesa rechaza; el cambio de pestaña ya se aplicó, así que no hace falta más
+    const vt = document.startViewTransition(pintar); vt.ready.catch(() => {}); vt.finished.catch(() => {});
+  } else pintar();
 }
 export function show(id) {
   if (id === "home") { showTab(activeTab); return; }
