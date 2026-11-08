@@ -132,6 +132,8 @@ export const CAT=[
   {id:'bn-bosque',k:'banner',nombre:'Bosque',desc:'Hojas verdes',precio:350},
   {id:'bn-atardecer',k:'banner',nombre:'Atardecer',desc:'Degradado cálido que se mueve',precio:400,animado:true},
   {id:'bn-confeti',k:'banner',nombre:'Fiesta',desc:'Confeti que cae despacio',precio:450,animado:true},
+  {id:'bn-metal',k:'banner',nombre:'Oro',desc:'Borde dorado con un reflejo que cruza',precio:400,animado:true},
+  {id:'bn-aurora',k:'banner',nombre:'Aurora',desc:'Luces de colores que se desplazan despacio',precio:500,animado:true},
 ];
 export const FREE_AV=[{id:'ardilla',nombre:'Pepa'},{id:'zorro',nombre:'Lucas'},{id:'erizo',nombre:'Erika'}];
 export const GRAD='linear-gradient(120deg,#ffd9a8,#ff9ecf,#9ee7ff,#c9ffb0,#ffd9a8)';

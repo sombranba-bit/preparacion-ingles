@@ -29,6 +29,7 @@ import {
   repeatScore,
   speakExtra,
   speechMetrics,
+  dayKey,
   srsRecord,
   streakInfo,
   todayXp,
@@ -54,7 +55,9 @@ import {
   renderHome,
   renderItem,
   results,
+  rewards,
   runQueue,
+  saveRewards,
   selectedOption,
   sessXp,
   setRespondida,
@@ -307,6 +310,20 @@ function evaluate() {
   return { correct: ok, msg: "Respuestas válidas: " + item.accepted.join(" / "), given };
 }
 
+/* Monedas por tiempo: 20 minutos seguidos (pausas de hasta 3 min) dan +3; máximo 2 veces al día */
+let tiempoIni = 0, tiempoUlt = 0, tiempoPagado = false;
+function premioTiempo() {
+  const ahora = Date.now();
+  if (ahora - tiempoUlt > 3 * 60000) { tiempoIni = ahora; tiempoPagado = false; }
+  tiempoUlt = ahora;
+  if (tiempoPagado || ahora - tiempoIni < 20 * 60000) return;
+  tiempoPagado = true;
+  const r = rewards(), hoy = dayKey(new Date());
+  if (r.tiempoDia !== hoy) { r.tiempoDia = hoy; r.tiempoN = 0; }
+  if (r.tiempoN >= 2) return;
+  r.tiempoN++; saveRewards(r); addCoins(3);
+}
+
 /* Animaciones: celebración a pantalla completa, "+XP" flotante y cuenta del resultado */
 export function celebrate(title, sub, emoji) {
   document.querySelectorAll(".celebrate").forEach(e => e.remove());
@@ -355,6 +372,7 @@ export function check() {
   results[index] = { correct: r.correct, q: item.q, given: r.given ?? (selectedOption !== null ? item.options[selectedOption] : ""), correctText: item.options ? item.options[item.answer] : item.accepted[0] };
   const dBefore = streakInfo().days, rBefore = rankInfo(xpTotal()).name;
   touchStreak();
+  if (!examMode) premioTiempo();
   let said = false;
   if (r.correct) {
     const pts = LV_PTS[currentLevel] + (examMode ? 5 : 0), before = todayXp();
@@ -362,6 +380,7 @@ export function check() {
     if (gained) floatGain(`+${gained} XP`);
     if (!examMode && before < DAILY_GOAL && todayXp() >= DAILY_GOAL) {
       addCoins(5);
+      if (streakInfo().days >= 3) addCoins(2);   // racha que paga: +2 cada día a partir del tercero
       const earned = onGoalMet();
       celebrate("¡Objetivo cumplido!", "+5 monedas", ico("target", 56));
       if (earned) setTimeout(() => celebrate("¡Escudo ganado!", "Protege tu racha si un día no practicas", ico("shield", 56)), 2900);
@@ -370,6 +389,8 @@ export function check() {
     else if (!examMode && rankInfo(xpTotal()).name !== rBefore) { celebrate("¡Nuevo rango!", rankInfo(xpTotal()).name, ico("trophy", 56)); mascotSay("", "happy", 6000, true); said = true; }
   }
   const dAfter = streakInfo().days;
+  if (!examMode && r.correct && currentSection === "repaso") addCoins(1);   // repaso con premio
+  if (!examMode && dAfter > dBefore && dAfter % 7 === 0) addCoins(20);      // cada 7 días seguidos
   if (!examMode && dAfter > dBefore && [7, 14, 30, 60, 100].includes(dAfter)) { celebrate(`¡${dAfter} días de racha!`, "Así se hace", ico("flame", 56)); }
   if (!examMode && !said && dAfter > dBefore && [7, 14, 30, 60, 100].includes(dAfter)) { mascotSay("", "happy", 6000, true); said = true; }
   if (!examMode && !said) r.correct ? mascotSay("", "happy", 4500, true) : mascotSay("", "think", 5500, true);

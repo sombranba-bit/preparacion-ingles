@@ -1,0 +1,34 @@
+name: Pruebas de la web
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  bateria:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar Playwright y Chromium
+        run: |
+          npm i -g playwright@1.47.2
+          npx playwright install --with-deps chromium
+      - name: Construir la app y comprobar que la copia publicada coincide
+        run: |
+          cd fuente && python3 construir.py
+          cp ../app-d4.html ../web/index.html
+          rm ../app-d4.html
+          git diff --exit-code ../web/index.html || (echo "web/index.html no coincide con el código: reconstruir y subir" && exit 1)
+      - name: Batería principal (15 comprobaciones)
+        run: |
+          export NODE_PATH=$(npm root -g)
+          node fuente/pruebas/bateria2.js "$GITHUB_WORKSPACE/web/index.html" | tee bateria.txt
+          test "$(grep -c '^OK' bateria.txt)" -eq 15
+          ! grep -q '^FAIL' bateria.txt

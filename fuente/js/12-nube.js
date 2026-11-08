@@ -3,6 +3,7 @@
 import { RAW_LS } from "./01-nucleo-niveles-audio.js";
 import { activeProfile, escHtml } from "./03-perfiles.js";
 import { weekXp, weekStartKey } from "./09-datos-ejercicios-4-acento-velocidad.js";
+import { ajustesGet } from "./04-recompensas-logros-copia-auto.js";
 import { ctaFbApp, ctaImportarUrl, ctaUsuario } from "./11-cuentas.js";
 
 // Claves de este navegador que no se suben a la cuenta: ajustes del dispositivo y copias locales
@@ -45,7 +46,8 @@ function nubeError(e) {
 async function nubePublicar(f) {
   const p = activeProfile(); if (!p) return;
   const { m, db } = f, semana = weekStartKey();
-  const datos = { uid: nubeE.uid, nombre: String(p.name).trim().slice(0, 40), semana, xp: Math.round(weekXp()), actualizado: m.serverTimestamp() };
+  const nombre = ajustesGet().ligaAnonima ? "Jugador" : String(p.name).trim().slice(0, 40);   // el usuario puede ocultar su nombre en la liga
+  const datos = { uid: nubeE.uid, nombre, semana, xp: Math.round(weekXp()), actualizado: m.serverTimestamp() };
   await m.setDoc(m.doc(db, "ligaSemanal", semana + "_" + nubeE.uid), datos);
   for (const g of nubeE.grupos) await m.setDoc(m.doc(db, "grupos", g, "xp", nubeE.uid), datos);
 }

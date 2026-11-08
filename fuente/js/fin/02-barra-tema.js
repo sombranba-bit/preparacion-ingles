@@ -18,6 +18,10 @@ import { ajustesGet, ajustesSet, renderHome } from "../04-recompensas-logros-cop
   function paintAj(){ ab.innerHTML = ico('coin', 16) + (ajustesGet().monedas === false ? ' Mostrar +1 al acertar: no' : ' Mostrar +1 al acertar: sí'); }
   ab.onclick = function(){ var a = ajustesGet(); a.monedas = a.monedas === false; ajustesSet(a); paintAj(); };
   paintAj(); bar.appendChild(ab);
+  var lb = document.createElement('button');
+  function paintLiga(){ lb.textContent = 'Mi nombre en la liga: ' + (ajustesGet().ligaAnonima ? 'oculto' : 'visible'); }
+  lb.onclick = function(){ var a = ajustesGet(); a.ligaAnonima = !a.ligaAnonima; ajustesSet(a); paintLiga(); };
+  paintLiga(); bar.appendChild(lb);
 
   function paint(){ paintMode(); }
   paint();
