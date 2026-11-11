@@ -2,7 +2,7 @@
 // Uso: node fuente/pruebas/tiempo-estudio.js [ruta a web/index.html]
 const { chromium } = require('playwright');
 const path = require('path');
-const file = process.argv[2] || path.resolve(__dirname, '../../web/index.html');
+const file = path.resolve(process.argv[2] || path.join(__dirname, '../../web/index.html'));
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage();
