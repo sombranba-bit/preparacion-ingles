@@ -114,7 +114,7 @@ function pRenderForm() {
   chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (pCreando || poseido(v)) pDraft.animal = v; },
     it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${pCreando || poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   chips($("pColors"), P_COLORES, pDraft.color, v => { if (poseido(v)) pDraft.color = v; },
-    it => `<span class="prof-sw" style="background:${it[0] === "grad" ? GRAD : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
+    it => `<span class="prof-sw" style="background:${it[0] === "grad" ? "#e8e2d4" : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   $("pPreview").innerHTML = avatarSvg(pDraft, 120);
 }
 export function profileOpenForm(first, p) {

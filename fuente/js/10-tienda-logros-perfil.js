@@ -243,7 +243,7 @@ export function renderPerfilPanel() {
   const cols = $("cols");
   if (cols) {
     const lista = ["#ffd9a8"].concat(CAT.filter(c => c.k === "color").map(c => c.id));
-    cols.innerHTML = lista.map(c => `<button class="bol ${poseido(c) ? "" : "bloqueado"}" aria-pressed="${av.color === c}" style="background:${c === "grad" ? GRAD : c}" data-c="${c}" aria-label="Color"></button>`).join("");
+    cols.innerHTML = lista.map(c => `<button class="bol ${poseido(c) ? "" : "bloqueado"}" aria-pressed="${av.color === c}" style="background:${c === "grad" ? "#e8e2d4" : c}" data-c="${c}" aria-label="Color"></button>`).join("");
     $$("#cols [data-c]").forEach(b => b.onclick = () => {
       if (!poseido(b.dataset.c)) { toast("Cómpralo en la tienda"); return; }
       cambiarAvatar(a => ({ ...a, color: b.dataset.c }));

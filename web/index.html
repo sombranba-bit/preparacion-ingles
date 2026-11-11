@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-Zuha1ZXQ0ncNAu1eVZqnSua5aW4Nz/PZtJUHFbly5fk=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-s5lwAnOcon/2eMzRll21eIdIw9TRAm0+88GlaWhbTS0=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -3342,7 +3342,7 @@ function pRenderForm() {
   chips($("pAnimals"), P_ANIMALS, pDraft.animal, v => { if (pCreando || poseido(v)) pDraft.animal = v; },
     it => `<span class="prof-mini">${avatarSvg({ ...pDraft, animal: it[0] }, 56)}</span>${it[1]}${pCreando || poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   chips($("pColors"), P_COLORES, pDraft.color, v => { if (poseido(v)) pDraft.color = v; },
-    it => `<span class="prof-sw" style="background:${it[0] === "grad" ? GRAD : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
+    it => `<span class="prof-sw" style="background:${it[0] === "grad" ? "#e8e2d4" : it[0]}"></span>${it[1]}${poseido(it[0]) ? "" : ` · ${ico("lock", 12)}`}`);
   $("pPreview").innerHTML = avatarSvg(pDraft, 120);
 }
 function profileOpenForm(first, p) {
@@ -10890,7 +10890,7 @@ function renderPerfilPanel() {
   const cols = $("cols");
   if (cols) {
     const lista = ["#ffd9a8"].concat(CAT.filter(c => c.k === "color").map(c => c.id));
-    cols.innerHTML = lista.map(c => `<button class="bol ${poseido(c) ? "" : "bloqueado"}" aria-pressed="${av.color === c}" style="background:${c === "grad" ? GRAD : c}" data-c="${c}" aria-label="Color"></button>`).join("");
+    cols.innerHTML = lista.map(c => `<button class="bol ${poseido(c) ? "" : "bloqueado"}" aria-pressed="${av.color === c}" style="background:${c === "grad" ? "#e8e2d4" : c}" data-c="${c}" aria-label="Color"></button>`).join("");
     $$("#cols [data-c]").forEach(b => b.onclick = () => {
       if (!poseido(b.dataset.c)) { toast("Cómpralo en la tienda"); return; }
       cambiarAvatar(a => ({ ...a, color: b.dataset.c }));
