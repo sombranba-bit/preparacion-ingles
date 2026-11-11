@@ -56,7 +56,7 @@ export function toast(t) {
 /* ---------- Tienda ---------- */
 function icono(it) {
   if (it.k === "avatar") return `<span style="display:block;width:48px;height:48px">${AV[it.id]}</span>`;
-  if (it.k === "color") return it.animado ? `<span class="sw-grad" style="background:${GRAD}"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
+  if (it.k === "color") return it.animado ? `<span class="sw-c" style="background:#e8e2d4"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
   if (it.k === "banner") return `<span class="bn-prev ${it.id}" aria-hidden="true"></span>`;
   if (it.k === "marco") return `<span class="pv-marco${it.id === "arcoiris" ? " pv-arco" : ""}" ${["hojas", "estrellas", "llamas", "nieve", "burbujas", "cosmico"].includes(it.id) ? `data-p="${it.id}"` : ""} style="--mc:${({ sencillo: "#2a1d14", hojas: "#18a58a", marco: "#ffb22e", arcoiris: "#ffd166", estrellas: "#ffd166", llamas: "#ff7a3d", nieve: "#4aa8ff", burbujas: "#5fd6ff", cosmico: "#a57bff" })[it.id]}"></span>`;
   return `<span class="pv pv-${it.id}"><svg class="ic" aria-hidden="true"><use href="#i-${it.id === "destellos" ? "destello" : it.id}"/></svg></span>`;

@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-EbJzxL/Qhm258CaLRWv00i2nCsTPPndDDi5u+kDxI8Y=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-Zuha1ZXQ0ncNAu1eVZqnSua5aW4Nz/PZtJUHFbly5fk=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -136,7 +136,7 @@ input.answer:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px 
 .feedback.ok{background:var(--ok-bg);color:var(--ok-text)}
 .feedback.bad{background:var(--bad-bg);color:var(--bad-text)}
 .actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.btn{background:var(--grad);color:var(--ink,#fff);border:none;border-radius:var(--r-md);padding:11px 20px;font:inherit;font-weight:600;cursor:pointer}
+.btn{background:var(--accent);color:var(--on-accent);border:none;border-radius:var(--r-md);padding:11px 20px;font:inherit;font-weight:600;cursor:pointer}
 @media (hover:hover) and (pointer:fine){.btn:hover{filter:brightness(1.06)}}
 .btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
@@ -411,7 +411,7 @@ section:not(.hidden),#exercise:not(.hidden),#result:not(.hidden){animation:fadeU
 .prof-close{align-self:stretch;margin-top:4px}
 .prof-actions{display:flex;flex-direction:column;gap:16px}
 .prof-group{display:flex;flex-direction:column;gap:8px}
-.prof-grp-lbl{font-size:var(--fs-sm);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.prof-grp-lbl{font-size:var(--fs-sm);font-weight:700;color:var(--muted)}
 .prof-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .prof-row .btn{width:100%;margin:0;min-height:44px}
 .prof-row-3{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -622,7 +622,7 @@ header::-webkit-scrollbar-thumb{background:var(--line);border-radius:var(--r-pil
 .prof-card{background:var(--surface2);border:1px solid var(--line)}
 .prof-pick{font-family:inherit;color:var(--text)}
 .prof-del{background:none;border:0;cursor:pointer;color:var(--muted);opacity:1;font-size:var(--fs-base)}
-.prof-label,.prof-opt{color:var(--muted);opacity:1;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:var(--fs-sm)}
+.prof-label,.prof-opt{color:var(--muted);opacity:1;font-weight:700;font-size:var(--fs-sm)}
 .prof-opt.hidden{display:none}
 .prof-chip{background:var(--surface2);border:1px solid var(--line);color:var(--text);font-family:inherit;font-weight:600}
 .prof-chip[aria-pressed="true"]{border-color:var(--accent);background:var(--sel);box-shadow:inset 0 0 0 1px var(--accent)}
@@ -881,7 +881,7 @@ main{padding-bottom:110px}
 body{background-color:var(--bg);background-image:linear-gradient(to right,rgba(43,127,209,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(43,127,209,.07) 1px,transparent 1px);background-size:24px 24px}
 header{background:var(--hdr);border-bottom:2px solid var(--line);box-shadow:none;padding:12px 16px}
 .card,.section-btn,.game-hero,.stats>*{border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
-.btn{min-height:52px;border-radius:18px;box-shadow:0 6px 0 var(--accent-lip,#0a4d41);font-weight:800}
+.btn{min-height:52px;border-radius:18px;box-shadow:none;font-weight:800}
 .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #0a4d41}
 .btn.secondary{box-shadow:0 5px 0 var(--line)}
 .lvl{border-radius:999px;box-shadow:0 3px 0 var(--line)}
@@ -1346,7 +1346,8 @@ header{display:none}
   body{grid-template-columns:232px minmax(0,1fr) 300px}
   #gamePanel>.d4-semana{display:none}   /* la racha con los días ya está en el panel de la derecha */
   #dprog{display:block;grid-column:3;grid-row:1;position:sticky;top:0;align-self:start;height:100vh;height:100dvh;overflow:auto;padding:28px 22px;border-left:2px solid var(--line);background:var(--surface)}
-  #dprog .dprog-card{margin-bottom:14px;padding:16px;border-radius:18px;border:2px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:grid;gap:4px}
+  #dprog .dprog-card{margin-bottom:0;padding:16px 0;border-radius:0;border:0;border-bottom:1px solid var(--line);background:transparent;box-shadow:none;display:grid;gap:4px}
+  #dprog .dprog-card:last-child{border-bottom:0}
   #dprog .dprog-card strong{font-family:Fredoka,Nunito,sans-serif;font-size:26px}
 }
 /* Perfil: estadísticas en tarjetas (2 columnas en móvil) */
@@ -3350,7 +3351,7 @@ function profileOpenForm(first, p) {
   profileSetMode(null);
   $("profConfirm").classList.add("hidden");
   pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...(p ? p.avatar : {}) };
-  $("profTitle").textContent = first ? "¡Bienvenido/a! ¿Cómo te llamas?" : p ? "Editar perfil" : "Nuevo perfil";
+  $("profTitle").textContent = first ? "¿Cómo te llamas?" : p ? "Editar perfil" : "Nuevo perfil";
   $("pCreate").textContent = p ? "Guardar cambios" : "Crear perfil";
   $("profList").classList.add("hidden");
   $("pNew").classList.add("hidden");
@@ -10702,7 +10703,7 @@ function toast(t) {
 /* ---------- Tienda ---------- */
 function icono(it) {
   if (it.k === "avatar") return `<span style="display:block;width:48px;height:48px">${AV[it.id]}</span>`;
-  if (it.k === "color") return it.animado ? `<span class="sw-grad" style="background:${GRAD}"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
+  if (it.k === "color") return it.animado ? `<span class="sw-c" style="background:#e8e2d4"></span>` : `<span class="sw-c" style="background:${it.id}"></span>`;
   if (it.k === "banner") return `<span class="bn-prev ${it.id}" aria-hidden="true"></span>`;
   if (it.k === "marco") return `<span class="pv-marco${it.id === "arcoiris" ? " pv-arco" : ""}" ${["hojas", "estrellas", "llamas", "nieve", "burbujas", "cosmico"].includes(it.id) ? `data-p="${it.id}"` : ""} style="--mc:${({ sencillo: "#2a1d14", hojas: "#18a58a", marco: "#ffb22e", arcoiris: "#ffd166", estrellas: "#ffd166", llamas: "#ff7a3d", nieve: "#4aa8ff", burbujas: "#5fd6ff", cosmico: "#a57bff" })[it.id]}"></span>`;
   return `<span class="pv pv-${it.id}"><svg class="ic" aria-hidden="true"><use href="#i-${it.id === "destellos" ? "destello" : it.id}"/></svg></span>`;

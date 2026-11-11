@@ -123,7 +123,7 @@ export function profileOpenForm(first, p) {
   profileSetMode(null);
   $("profConfirm").classList.add("hidden");
   pDraft = { animal: "ardilla", color: "#ffd9a8", marco: null, efectos: [], ...(p ? p.avatar : {}) };
-  $("profTitle").textContent = first ? "¡Bienvenido/a! ¿Cómo te llamas?" : p ? "Editar perfil" : "Nuevo perfil";
+  $("profTitle").textContent = first ? "¿Cómo te llamas?" : p ? "Editar perfil" : "Nuevo perfil";
   $("pCreate").textContent = p ? "Guardar cambios" : "Crear perfil";
   $("profList").classList.add("hidden");
   $("pNew").classList.add("hidden");
