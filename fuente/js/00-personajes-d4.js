@@ -115,6 +115,11 @@ export const CAT=[
   {id:'aura',k:'efecto',nombre:'Aura',desc:'Un halo que late alrededor',precio:300,animado:true},
   {id:'destellos',k:'efecto',nombre:'Destellos',desc:'Chispas que parpadean',precio:350,animado:true},
   {id:'vivo',k:'efecto',nombre:'Personaje vivo',desc:'Se mueve y da un salto al acertar',precio:400,animado:true},
+  {id:'pixel-acierto',k:'efecto',nombre:'Píxeles al acertar',desc:'Una ráfaga de píxeles en cada acierto',precio:250},
+  {id:'pixel-aura',k:'efecto',nombre:'Píxeles flotantes',desc:'Cuadraditos que giran alrededor del personaje',precio:300,animado:true},
+  {id:'pixel-racha',k:'efecto',nombre:'Corazones al cumplir el objetivo',desc:'Suben corazones de píxel al cumplir el objetivo diario',precio:300},
+  {id:'pixel-logro',k:'efecto',nombre:'Trofeo al lograr algo',desc:'Un trofeo de píxel al desbloquear un logro',precio:350},
+  {id:'pixel-sesion',k:'efecto',nombre:'Lluvia al terminar',desc:'Lluvia de píxeles al terminar una sesión',precio:300},
   {id:'sencillo',k:'marco',nombre:'Marco sencillo',desc:'Borde liso',precio:0},
   {id:'hojas',k:'marco',nombre:'Hojas',desc:'Hojas que caen despacio',precio:0,animado:true},
   {id:'marco',k:'marco',nombre:'Marco dorado',desc:'Borde dorado fijo',precio:350},
@@ -138,7 +143,7 @@ export const CAT=[
 export const FREE_AV=[{id:'ardilla',nombre:'Pepa'},{id:'zorro',nombre:'Lucas'},{id:'erizo',nombre:'Erika'}];
 export const GRAD='linear-gradient(120deg,#ffd9a8,#ff9ecf,#9ee7ff,#c9ffb0,#ffd9a8)';
 export const MARCO_COL={sencillo:'#2a1d14',hojas:'#18a58a',marco:'#ffb22e',arcoiris:'#ffd166',estrellas:'#ffd166',llamas:'#ff7a3d',nieve:'#4aa8ff',burbujas:'#5fd6ff',cosmico:'#a57bff'};
-export const PARTICULAS={hojas:1,estrellas:1,llamas:1,nieve:1,burbujas:1,cosmico:1};
+export const PARTICULAS={hojas:1,estrellas:1,llamas:1,nieve:1,burbujas:1,cosmico:1,pixeles:1};
 export const OWNED_INICIAL=['ardilla','zorro','erizo','#ffd9a8','sencillo','hojas','bn-arena','bn-menta','bn-cielo','bn-olas'];
 // Franja de banner sobre el personaje (inicio y perfil). Sin banner equipado, no sale nada.
 export const bnHtml = id => id ? `<div class="bn ${id}" aria-hidden="true"></div>` : "";
@@ -179,7 +184,8 @@ export function fxParticulas(el,tipo,clave){
     nieve:{n:14,forma:'dot',col:['#ffffff','#cfe9ff'],cae:1},
     burbujas:{n:8,forma:'ring',col:['#8fe3ff','#c9f3ff'],sube:1},
     cosmico:{n:4,forma:'dot',col:['#a57bff','#5fd6ff'],orb:1},
-    hojas:{n:7,forma:'leaf',col:['#18a58a','#7bc96a'],cae:1}
+    hojas:{n:7,forma:'leaf',col:['#18a58a','#7bc96a'],cae:1},
+    pixeles:{n:8,forma:'pixel',col:['#ff7a9c','#ffd166','#8fe3ff'],orb:1}
   }[tipo];
   const c=document.createElement('canvas'); c.className='fxc';
   c.width=CW*dpr; c.height=CH*dpr; c.style.width=CW+'px'; c.style.height=CH+'px';
@@ -202,6 +208,7 @@ export function fxParticulas(el,tipo,clave){
     else if(cfg.forma==='drop'){ x.beginPath(); x.moveTo(0,-q.s*1.6); x.quadraticCurveTo(q.s*1.1,0,0,q.s*.9); x.quadraticCurveTo(-q.s*1.1,0,0,-q.s*1.6); x.fill(); }
     else if(cfg.forma==='ring'){ x.lineWidth=1.2; x.beginPath(); x.arc(0,0,q.s*1.1,0,6.28); x.stroke(); }
     else if(cfg.forma==='leaf'){ x.beginPath(); x.ellipse(0,0,q.s*1.3,q.s*.7,0,0,6.28); x.fill(); }
+    else if(cfg.forma==='pixel'){ x.fillRect(-q.s*.6,-q.s*.6,q.s*1.2,q.s*1.2); }
     else { x.beginPath(); x.arc(0,0,q.s*.7,0,6.28); x.fill(); }
     x.restore();
   };

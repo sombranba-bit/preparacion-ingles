@@ -95,7 +95,7 @@ export function avatarSvg(av, size = 64) {
   else if (m === "sencillo") cl += " marco-simple";
   else if (m) cl += " marco-part";
   if (bg === "grad") cl += " fondo-grad";
-  const fxp = [PARTICULAS[m] ? m : "", f.includes("destellos") ? "estrellas" : ""].filter(Boolean).join(" ");
+  const fxp = [PARTICULAS[m] ? m : "", f.includes("destellos") ? "estrellas" : "", f.includes("pixel-aura") ? "pixeles" : ""].filter(Boolean).join(" ");
   return `<span class="${cl}"${fxp ? ` data-fxp="${fxp}"` : ""} style="width:${size}px;height:${size}px;border-radius:${Math.round(size * 0.3)}px;background:${bg === "grad" ? GRAD : bg};--mc:${MARCO_COL[m] || "#2a1d14"}">${AV[animal]}</span>`;
 }
 

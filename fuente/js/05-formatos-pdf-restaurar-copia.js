@@ -37,6 +37,7 @@ import {
   xpTotal,
 } from "./02-progreso-xp-racha-mascota.js";
 import { escHtml } from "./03-perfiles.js";
+import { celebrarEvento } from "./10b-efectos-pixel.js";
 import {
   addCoins,
   advRedo,
@@ -382,6 +383,7 @@ export function check() {
       addCoins(5);
       if (streakInfo().days >= 3) addCoins(2);   // racha que paga: +2 cada día a partir del tercero
       const earned = onGoalMet();
+      celebrarEvento("racha");
       celebrate("¡Objetivo cumplido!", "+5 monedas", ico("target", 56));
       if (earned) setTimeout(() => celebrate("¡Escudo ganado!", "Protege tu racha si un día no practicas", ico("shield", 56)), 2900);
       mascotSay(earned ? "¡Has ganado un escudo! Protege tu racha." : "", "happy", 6000, true); said = true;
@@ -436,6 +438,7 @@ export function finish(timeout) {
   for (let i = 0; i < queue.length; i++) if (!results[i]) results[i] = { correct: false, q: queue[i].q, given: "", correctText: queue[i].options ? queue[i].options[queue[i].answer] : queue[i].accepted[0] };
   const score = results.filter(r => r.correct).length;
   const pct = Math.round((score / queue.length) * 100);
+  if (!examMode) celebrarEvento("sesion");
   $("resEmoji").innerHTML = pct >= 80 ? ico("trophy", 52) : pct >= 50 ? ico("star", 52) : ico("book", 52);
   $("resLabel").textContent = examMode ? (timeout ? "Se acabó el tiempo" : "Resultado del examen") : "Tu resultado";
   $("scoreText").textContent = `${score} / ${queue.length}`;

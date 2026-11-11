@@ -3,6 +3,7 @@
 import { $, currentLevel, showTab } from "./01-nucleo-niveles-audio.js";
 import { rewards, saveRewards, spendCoins, sellosDatos, renderHome } from "./04-recompensas-logros-copia-auto.js";
 import { celebrate } from "./05-formatos-pdf-restaurar-copia.js";
+import { celebrarEvento } from "./10b-efectos-pixel.js";
 import { getProfiles, saveProfiles, activeProfile, avatarSvg, poseido, profileOpenList, escHtml } from "./03-perfiles.js";
 import { AV, CAT, FREE_AV, GRAD, marcoIcono, fxParticulas, confetiFx, bnHtml } from "./00-personajes-d4.js";
 import { infoSellosHtml, lsGet, lsSet, xpTotal, streakInfo, rankInfo } from "./02-progreso-xp-racha-mascota.js";
@@ -136,6 +137,7 @@ function alternar(id) {
 export function celebrarAcierto() {
   const av = avatarActual(), f = av.efectos || [];
   if (f.includes("confeti")) confetiFx();
+  celebrarEvento("acierto");
   if (f.includes("vivo")) { const h = document.querySelector("#mascotBtn .av"); if (h) { h.classList.remove("salta"); void h.offsetWidth; h.classList.add("salta"); } }
 }
 

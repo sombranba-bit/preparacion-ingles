@@ -46,6 +46,7 @@ import {
 import { activeProfile, escHtml, profileOpenList } from "./03-perfiles.js";
 import { esInvitado } from "./01-nucleo-niveles-audio.js";
 import { salirCuenta } from "./11-cuentas.js";
+import { celebrarEvento } from "./10b-efectos-pixel.js";
 import {
   celebrate,
   check,
@@ -143,6 +144,7 @@ export function checkLogros() {
   const nuevos = LOGROS.filter(l => !got.includes(l.id) && logroOk(l));
   if (!nuevos.length) return;
   r.logros = [...got, ...nuevos.map(l => l.id)]; saveRewards(r);
+  celebrarEvento("logro");
   const box = document.querySelector(".ach-panel");
   if (box) box.outerHTML = logrosHtml();   // se actualiza en vivo, sin esperar a volver a la pantalla principal
   // Varios a la vez (p. ej. al estrenar la función) se muestran en una sola celebración
