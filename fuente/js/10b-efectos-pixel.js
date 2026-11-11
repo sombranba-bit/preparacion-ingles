@@ -34,7 +34,7 @@ function pixelFx(tipo) {
     if (s >= dur) { c.remove(); return; }
     if (tipo === "acierto") ps.forEach(p => { const k = s; x.globalAlpha = 1 - s / dur; x.fillStyle = p.c; x.fillRect(p.x + p.vx * k - 3, p.y + p.vy * k + 300 * k * k - 3, 6, 6); });
     if (tipo === "racha") ps.forEach(p => { const k = s - p.t0; if (k < 0) return; x.globalAlpha = Math.min(1, k * 2) * (1 - Math.max(0, k - 1.4) / 0.6); x.save(); x.translate(p.x - 12, H - 240 * k * 0.9 - 40 * k * k * 0); pixelForma(x, 0, PIXEL_FORMAS.corazon, p.c, 3); x.restore(); });
-    if (tipo === "logro") { const e = Math.min(1, s * 3); x.globalAlpha = Math.max(0, 1 - Math.max(0, s - 1.8) / 0.6); x.save(); x.translate(W / 2 - 24 * e, H * 0.35 - 24 * e); x.scale(e, e); pixelForma(x, 0, PIXEL_FORMAS.trofeo, "#ffd166", 6); x.restore(); }
+    if (tipo === "logro") { const e = Math.min(1, s * 3); x.globalAlpha = Math.max(0, 1 - Math.max(0, s - 1.8) / 0.6); x.save(); x.translate(W / 2 - 32 * e, H * 0.8 - 32 * e); x.scale(e, e); pixelForma(x, 0, PIXEL_FORMAS.trofeo, "#ffd166", 8); x.restore(); }
     if (tipo === "sesion") ps.forEach(p => { const k = s - p.t0; if (k < 0) return; x.globalAlpha = 0.9; x.fillStyle = p.c; const y = p.y + p.v * k; if (y < H) x.fillRect(p.x, y, 5, 5); });
     x.globalAlpha = 1;
     requestAnimationFrame(tick);

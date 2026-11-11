@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-eUQIY9hwlfN9wi9bcDuCT4oQRfpR/vNb5uE9c3/Lcvk=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-MSiv78+d+nsiQaa13v5FkiJ8ppJFZJQB6eB6KDoM1uw=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -4173,12 +4173,14 @@ function evaluate() {
 }
 
 /* Monedas por tiempo: 20 minutos seguidos (pausas de hasta 3 min) dan +3; máximo 2 veces al día */
-let tiempoIni = 0, tiempoUlt = 0, tiempoPagado = false;
+let tiempoActivo = 0, tiempoUlt = 0, tiempoPagado = false;
 function premioTiempo() {
   const ahora = Date.now();
-  if (ahora - tiempoUlt > 3 * 60000) { tiempoIni = ahora; tiempoPagado = false; }
+  // Cada pausa cuenta como máximo 3 min (leer una explicación no corta el tiempo); más de 30 min sin responder empieza de cero
+  if (!tiempoUlt || ahora - tiempoUlt > 30 * 60000) { tiempoActivo = 0; tiempoPagado = false; }
+  if (tiempoUlt) tiempoActivo += Math.min(ahora - tiempoUlt, 3 * 60000);
   tiempoUlt = ahora;
-  if (tiempoPagado || ahora - tiempoIni < 20 * 60000) return;
+  if (tiempoPagado || tiempoActivo < 20 * 60000) return;
   tiempoPagado = true;
   const r = rewards(), hoy = dayKey(new Date());
   if (r.tiempoDia !== hoy) { r.tiempoDia = hoy; r.tiempoN = 0; }
@@ -10944,7 +10946,7 @@ function pixelFx(tipo) {
     if (s >= dur) { c.remove(); return; }
     if (tipo === "acierto") ps.forEach(p => { const k = s; x.globalAlpha = 1 - s / dur; x.fillStyle = p.c; x.fillRect(p.x + p.vx * k - 3, p.y + p.vy * k + 300 * k * k - 3, 6, 6); });
     if (tipo === "racha") ps.forEach(p => { const k = s - p.t0; if (k < 0) return; x.globalAlpha = Math.min(1, k * 2) * (1 - Math.max(0, k - 1.4) / 0.6); x.save(); x.translate(p.x - 12, H - 240 * k * 0.9 - 40 * k * k * 0); pixelForma(x, 0, PIXEL_FORMAS.corazon, p.c, 3); x.restore(); });
-    if (tipo === "logro") { const e = Math.min(1, s * 3); x.globalAlpha = Math.max(0, 1 - Math.max(0, s - 1.8) / 0.6); x.save(); x.translate(W / 2 - 24 * e, H * 0.35 - 24 * e); x.scale(e, e); pixelForma(x, 0, PIXEL_FORMAS.trofeo, "#ffd166", 6); x.restore(); }
+    if (tipo === "logro") { const e = Math.min(1, s * 3); x.globalAlpha = Math.max(0, 1 - Math.max(0, s - 1.8) / 0.6); x.save(); x.translate(W / 2 - 32 * e, H * 0.8 - 32 * e); x.scale(e, e); pixelForma(x, 0, PIXEL_FORMAS.trofeo, "#ffd166", 8); x.restore(); }
     if (tipo === "sesion") ps.forEach(p => { const k = s - p.t0; if (k < 0) return; x.globalAlpha = 0.9; x.fillStyle = p.c; const y = p.y + p.v * k; if (y < H) x.fillRect(p.x, y, 5, 5); });
     x.globalAlpha = 1;
     requestAnimationFrame(tick);

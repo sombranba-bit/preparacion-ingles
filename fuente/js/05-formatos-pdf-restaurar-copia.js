@@ -312,12 +312,14 @@ function evaluate() {
 }
 
 /* Monedas por tiempo: 20 minutos seguidos (pausas de hasta 3 min) dan +3; máximo 2 veces al día */
-let tiempoIni = 0, tiempoUlt = 0, tiempoPagado = false;
+let tiempoActivo = 0, tiempoUlt = 0, tiempoPagado = false;
 function premioTiempo() {
   const ahora = Date.now();
-  if (ahora - tiempoUlt > 3 * 60000) { tiempoIni = ahora; tiempoPagado = false; }
+  // Cada pausa cuenta como máximo 3 min (leer una explicación no corta el tiempo); más de 30 min sin responder empieza de cero
+  if (!tiempoUlt || ahora - tiempoUlt > 30 * 60000) { tiempoActivo = 0; tiempoPagado = false; }
+  if (tiempoUlt) tiempoActivo += Math.min(ahora - tiempoUlt, 3 * 60000);
   tiempoUlt = ahora;
-  if (tiempoPagado || ahora - tiempoIni < 20 * 60000) return;
+  if (tiempoPagado || tiempoActivo < 20 * 60000) return;
   tiempoPagado = true;
   const r = rewards(), hoy = dayKey(new Date());
   if (r.tiempoDia !== hoy) { r.tiempoDia = hoy; r.tiempoN = 0; }
