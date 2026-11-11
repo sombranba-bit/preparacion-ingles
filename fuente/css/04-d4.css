@@ -2,11 +2,11 @@
 :root{--radius:22px;--r-md:18px;--r-lg:18px;--r-xl:22px;--grad:var(--accent)}
 body{background-color:var(--bg);background-image:linear-gradient(to right,rgba(43,127,209,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(43,127,209,.07) 1px,transparent 1px);background-size:24px 24px}
 header{background:var(--hdr);border-bottom:2px solid var(--line);box-shadow:none;padding:12px 16px}
-.card,.section-btn,.game-hero,.stats>*{border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.card,.section-btn,.game-hero,.stats>*{border:2px solid var(--line);box-shadow:none}
 .btn{min-height:52px;border-radius:18px;box-shadow:none;font-weight:800}
-.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #0a4d41}
-.btn.secondary{box-shadow:0 5px 0 var(--line)}
-.lvl{border-radius:999px;box-shadow:0 3px 0 var(--line)}
+.btn:active{transform:translateY(4px);box-shadow:none}
+.btn.secondary{box-shadow:none}
+.lvl{border-radius:999px;box-shadow:none}
 .bnav{background:color-mix(in srgb,var(--surface) 96%,transparent);border-top:2px solid var(--line)}
 .bnav button.on{background:color-mix(in srgb,var(--ok) 16%,var(--surface));color:var(--ok)}
 
@@ -18,14 +18,14 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 
 /* Inicio: acciones como filas de la maqueta (icono de color a la izquierda) */
 #sectionGrid{display:grid;grid-template-columns:1fr;gap:10px}
-#sectionGrid .section-btn{display:grid;grid-template-columns:46px 1fr;gap:4px 12px;align-items:center;padding:12px 14px;border-radius:18px;border:2px solid var(--line);box-shadow:0 4px 0 var(--line);background:var(--card,var(--surface))}
+#sectionGrid .section-btn{display:grid;grid-template-columns:46px 1fr;gap:4px 12px;align-items:center;padding:12px 14px;border-radius:18px;border:2px solid var(--line);box-shadow:none;background:var(--card,var(--surface))}
 #sectionGrid .section-btn .ico{grid-row:1/3;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--sec-soft)}
 #sectionGrid .section-btn strong{font-size:16px}
 #sectionGrid .section-btn span{font-size:12px;color:var(--muted);font-weight:800}
 
 /* Ejercicio: opciones como tarjetas con borde de tinta */
-.options button,.option{border-radius:18px;border:2px solid var(--line);box-shadow:0 5px 0 var(--line);min-height:58px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px}
-.options button[aria-pressed="true"],.option[aria-pressed="true"]{border-color:#2b7fd1;background:color-mix(in srgb,var(--accent) 16%,var(--surface));box-shadow:0 5px 0 var(--line)}
+.options button,.option{border-radius:18px;border:2px solid var(--line);box-shadow:none;min-height:58px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px}
+.options button[aria-pressed="true"],.option[aria-pressed="true"]{border-color:#2b7fd1;background:color-mix(in srgb,var(--accent) 16%,var(--surface));box-shadow:none}
 
 /* Barra inferior con etiquetas de la maqueta */
 .bnav button{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:11.5px}
@@ -38,7 +38,7 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .d4-kicker{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:13px;color:var(--muted)}
 .d4-saludo{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:26px;line-height:1.1;color:var(--text)}
 .d4-pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.d4-pill{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:4px 11px;border-radius:999px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-family:Fredoka,Nunito,sans-serif;font-size:14px}
+.d4-pill{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:4px 11px;border-radius:999px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:none;font-family:Fredoka,Nunito,sans-serif;font-size:14px}
 .d4-pill b{font-weight:700}
 .d4-hero{display:grid;gap:10px;justify-items:start;padding:18px}
 .d4-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:color-mix(in srgb,var(--accent2,#d98a0c) 14%,var(--surface2,var(--surface)));font-weight:800;font-size:13px;color:var(--text)}
@@ -47,23 +47,23 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .d4-sub{font-weight:700;font-size:15px;line-height:1.35;color:var(--muted)}
 .d4-bar{width:100%;height:12px;border-radius:7px;background:color-mix(in srgb,var(--text) 8%,var(--surface));margin:4px 0 6px;box-shadow:none}
 .d4-bar .xp-fill{background:linear-gradient(90deg,#18a58a,#4fd6b4);border-radius:7px}
-.d4-lip{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;background:#0f7f6c;color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:19px;border:0;box-shadow:0 6px 0 #0a5c4d;cursor:pointer}
-.d4-lip:active{transform:translateY(5px);box-shadow:0 1px 0 #0a5c4d}
+.d4-lip{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;background:#0f7f6c;color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:19px;border:0;box-shadow:none;cursor:pointer}
+.d4-lip:active{transform:translateY(5px);box-shadow:none}
 .d4-tip{font-size:13px;color:var(--muted);font-weight:700}
 .d4-semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0 6px}
 .d4-dia{display:grid;justify-items:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-size:13px;font-weight:600;color:var(--muted)}
 .d4-dia i{width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--text) 8%,var(--surface));display:grid;place-items:center;font-style:normal;font-size:14px}
-.d4-dia.hecho i{background:#ffb22e;box-shadow:0 2px 0 #d98a0c;color:var(--text)}
+.d4-dia.hecho i{background:#ffb22e;box-shadow:none;color:var(--text)}
 .d4-dia.hoy i{background:var(--card,var(--surface));border:3px solid #18a58a}
 .d4-dia.hoy{color:var(--text)}
 .d4-seccion{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:18px;margin:20px 0 10px}
 .d4-filas{display:grid;gap:10px}
-.d4-fila{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 4px 0 var(--line);text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit}
+.d4-fila{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:none;text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit}
 .d4-fila:disabled{opacity:.6;cursor:default}
 .d4-fila b{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:16px;display:block}
 .d4-fila small{font-size:12px;color:var(--muted);font-weight:800}
 .d4-ico{width:46px;height:46px;border-radius:14px;background:color-mix(in srgb,#2b7fd1 16%,var(--surface));display:grid;place-items:center;font-size:22px}
-.d4-n{color:var(--text);width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:0 3px 0 #d98a0c;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;color:var(--text)}
+.d4-n{color:var(--text);width:46px;height:46px;border-radius:50%;background:#ffb22e;box-shadow:none;display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:20px;color:var(--text)}
 .d4-rango{margin-top:14px;display:grid;gap:8px}
 .d4-rango .gp-head{display:flex;justify-content:space-between;gap:8px;font-size:14px}
 .d4-h,.d4-saludo{color:var(--text)}
@@ -74,8 +74,8 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .ach-panel .ach-head{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
 .ach-panel .ach-head h3{font-family:Fredoka,Nunito,sans-serif;font-size:18px}
 .ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;list-style:none;padding:0;margin:0}
-.ach-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 10px;border-radius:24px;background:var(--surface);border:3px solid var(--line);box-shadow:0 5px 0 var(--line);transform:none}
-.ach-item.ok{background:color-mix(in srgb,#ffd166 20%,var(--surface));border-color:#ffd166;box-shadow:0 5px 0 #e7ac2a}
+.ach-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 10px;border-radius:24px;background:var(--surface);border:3px solid var(--line);box-shadow:none;transform:none}
+.ach-item.ok{background:color-mix(in srgb,#ffd166 20%,var(--surface));border-color:#ffd166;box-shadow:none}
 .ach-item.ok:nth-child(odd){transform:rotate(-2deg)}
 .ach-item.ok:nth-child(even){transform:rotate(2deg)}
 .ach-item:not(.ok){opacity:.6}
@@ -86,7 +86,7 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 .ach-streak{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px}
 .ach-streak-lbl{font-family:Fredoka,Nunito,sans-serif;font-weight:600;color:var(--muted);margin-right:4px}
 #p-perfil .perfil-card{text-align:center;display:grid;justify-items:center;gap:12px;padding:22px}
-#p-perfil .perfil-av{width:132px;height:132px;border-radius:38px;border:3px solid var(--text);background:#ffd9a0;display:grid;place-items:center;box-shadow:0 7px 0 var(--text)}
+#p-perfil .perfil-av{width:132px;height:132px;border-radius:38px;border:3px solid var(--text);background:#ffd9a0;display:grid;place-items:center;box-shadow:none}
 #p-perfil .perfil-nombre{font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:28px;margin:4px 0 0;color:var(--text)}
 #p-perfil .perfil-card .btn{min-height:52px;border-radius:18px}
 
@@ -95,8 +95,8 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 #exercise .counter{font-family:Fredoka,Nunito,sans-serif;font-weight:600}
 #exercise .progress{height:16px;border-radius:8px;background:var(--surface2);box-shadow:none}
 #exercise .progress>div{background:linear-gradient(90deg,#18a58a,#4fd6b4);border-radius:8px}
-#exercise #checkBtn{background:#0f7f6c;color:#fff;box-shadow:0 6px 0 #0a5c4d;min-height:56px;border-radius:18px;font-family:Fredoka,Nunito,sans-serif;font-size:19px}
-#exercise #nextBtn{background:#ffb22e;color:var(--text);box-shadow:0 6px 0 #d98a0c;min-height:56px;border-radius:18px;font-family:Fredoka,Nunito,sans-serif;font-size:19px}
+#exercise #checkBtn{background:#0f7f6c;color:#fff;box-shadow:none;min-height:56px;border-radius:18px;font-family:Fredoka,Nunito,sans-serif;font-size:19px}
+#exercise #nextBtn{background:#ffb22e;color:var(--text);box-shadow:none;min-height:56px;border-radius:18px;font-family:Fredoka,Nunito,sans-serif;font-size:19px}
 #exercise .feedback{border-radius:20px;padding:16px;border:2px solid var(--line);background:var(--card,var(--surface))}
 #exercise .feedback.ok{background:color-mix(in srgb,#18a58a 18%,var(--surface));border-color:#18a58a}
 #exercise .feedback.bad{background:color-mix(in srgb,#e5484d 16%,var(--surface));border-color:#e5484d}
@@ -105,7 +105,7 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
 /* ===== Tienda D4 ===== */
 .t-saldo,.t-saldo *{color:var(--text);font-family:Fredoka,Nunito,sans-serif}
 .section-title{font-family:Fredoka,Nunito,sans-serif;text-transform:none;letter-spacing:0;font-size:19px;font-weight:600;color:var(--text)}
-.btn-mini{background:#18a58a;color:#fff;box-shadow:0 4px 0 #0d7a64;font-family:Fredoka,Nunito,sans-serif;border-radius:16px;font-size:16px}
+.btn-mini{background:#18a58a;color:#fff;box-shadow:none;font-family:Fredoka,Nunito,sans-serif;border-radius:16px;font-size:16px}
 .btn-mini.tuyo{background:var(--surface2);color:var(--muted);box-shadow:none}
 
 .d4-fila .d4-n{color:var(--text)}
@@ -117,8 +117,8 @@ h1,h2,h3,.brand h1,.btn,.lvl,.section-btn strong,.subtab,.tab,.saludo{font-famil
   body:has(#home:not(.hidden)) header{padding:8px 12px}
 }
 .d4-avatares{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:6px}
-.d4-av-op{min-height:98px;border-radius:20px;border:2px solid var(--line);background:var(--surface);box-shadow:0 4px 0 var(--line);display:grid;place-items:center;align-content:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:14px;color:var(--text);cursor:pointer}
-.d4-av-op[aria-pressed="true"]{border-color:var(--text);box-shadow:0 4px 0 var(--text)}
+.d4-av-op{min-height:98px;border-radius:20px;border:2px solid var(--line);background:var(--surface);box-shadow:none;display:grid;place-items:center;align-content:center;gap:4px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:14px;color:var(--text);cursor:pointer}
+.d4-av-op[aria-pressed="true"]{border-color:var(--text);box-shadow:none}
 .d4-av-op:active{transform:translateY(2px)}
 
 /* Cabecera: solo los niveles; el título y el modo de color pasan a sus pantallas */
@@ -132,7 +132,7 @@ header{display:none}
 .section-btn::before,.section-btn::after{display:none}
 
 /* Ejercicio: salir como botón redondo con × (el texto queda para lectores de pantalla) */
-#exercise #backBtn{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;font-size:0;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:0 3px 0 var(--line);display:inline-grid;place-items:center}
+#exercise #backBtn{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;font-size:0;background:var(--card,var(--surface));border:2px solid var(--line);box-shadow:none;display:inline-grid;place-items:center}
 #exercise #backBtn::before{content:"✕";font-size:18px;font-weight:800;color:var(--text)}
 
 /* Tienda: banda de ofertas del día, como en la maqueta */
@@ -158,7 +158,7 @@ header{display:none}
 .d4-cab{grid-template-columns:minmax(0,1fr)}
 .d4-ico svg{width:30px;height:30px}
 /* Camino: círculos con los colores de la paleta crema menta */
-.d4-fila .d4-n{background:#0b5f4f;box-shadow:0 3px 0 #073f35;color:var(--surface)}
+.d4-fila .d4-n{background:#0b5f4f;box-shadow:none;color:var(--surface)}
 .d4-dia i svg{width:12px;height:12px}
 
 /* Vista previa antes de practicar */
@@ -167,7 +167,7 @@ header{display:none}
 .previa-op{margin:8px 0 0;padding-left:18px}
 
 /* Liga (Trofeos): cabecera, podio, lista con barras */
-.lg-hero{background:var(--accent);color:var(--surface);border-radius:24px;padding:20px 20px 18px;box-shadow:0 6px 0 #073f35;display:grid;gap:4px}
+.lg-hero{background:var(--accent);color:var(--surface);border-radius:24px;padding:20px 20px 18px;box-shadow:none;display:grid;gap:4px}
 .lg-hero .etiq{color:#cfe9e1;font-size:13px;font-weight:700}
 .lg-num{display:flex;align-items:baseline;gap:8px}
 .lg-num b{font-family:Fredoka,Nunito,sans-serif;font-size:52px;line-height:1}
@@ -182,7 +182,7 @@ header{display:none}
 .lg-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px}
 .lg-chip{flex:none;border:2px solid var(--line);background:var(--card,var(--surface));border-radius:16px;padding:8px 12px;font:inherit;font-weight:700;text-align:left;cursor:pointer;color:var(--text)}
 .lg-chip small{display:block;font-size:11px;color:var(--muted);font-weight:700}
-.lg-chip.on{border-color:var(--accent);box-shadow:0 3px 0 var(--accent)}
+.lg-chip.on{border-color:var(--accent);box-shadow:none}
 .lg-podio{display:grid;grid-template-columns:1fr 1.2fr 1fr;align-items:end;gap:8px;margin:14px 0 10px}
 .lg-pod{display:grid;justify-items:center;gap:3px;text-align:center;min-width:0}
 .lg-av{width:52px;height:52px;border-radius:50%;background:var(--accent);color:var(--surface);display:grid;place-items:center;font-family:Fredoka,Nunito,sans-serif;font-weight:700;font-size:22px}
@@ -222,7 +222,7 @@ header{display:none}
 
 /* Un solo estilo de icono: mismo cuadrado, fondo neutro y trazo de texto. El color queda para el estado. */
 .section-btn .ico,.d4-ico{background:var(--surface2) !important;color:var(--text) !important}
-.d4-fila .d4-n{background:var(--surface2) !important;color:var(--text) !important;box-shadow:0 3px 0 var(--line) !important;border-radius:14px !important}
+.d4-fila .d4-n{background:var(--surface2) !important;color:var(--text) !important;box-shadow:none;border-radius:14px !important}
 /* Las tarjetas del inicio empiezan arriba: sin centrado vertical, el título queda a la misma altura */
 #homeGrid .section-btn{display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}
 @media (min-width:821px){#homeGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
