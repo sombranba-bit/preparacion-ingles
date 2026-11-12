@@ -108,8 +108,11 @@ export function renderTienda() {
   $$("#tienda .pv-marco[data-p]").forEach(e => { if (!e.dataset.fx) { e.dataset.fx = "1"; fxParticulas(e, e.dataset.p, "_rafP"); } });
 }
 let pend = null;
-$("cNo") && ($("cNo").onclick = () => confirmarCompra(false));
-$("cSi") && ($("cSi").onclick = () => confirmarCompra(true));
+// El diálogo está en el HTML después de este script: los botones existen al terminar de leer la página
+document.addEventListener("DOMContentLoaded", () => {
+  $("cNo").onclick = () => confirmarCompra(false);
+  $("cSi").onclick = () => confirmarCompra(true);
+});
 function pedir(id) {
   const it = CAT.find(c => c.id === id), p = tiendaPrecio(it);
   pend = { it, p };
