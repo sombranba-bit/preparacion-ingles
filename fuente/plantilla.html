@@ -393,16 +393,17 @@
     <div class="oferta-cab" style="margin-top:14px"><span id="ofTxt">Ofertas de hoy</span><span id="ofFin"></span></div>
     <h3 class="seccion">Ofertas de hoy</h3>
     <div class="filas" id="ofertas"></div>
-    <h3 class="seccion">Personajes</h3>
-    <div class="filas" id="t-avatar"></div>
-    <h3 class="seccion">Fondos</h3>
-    <div class="filas" id="t-color"></div>
-    <h3 class="seccion">Efectos</h3>
-    <div class="filas" id="t-efecto"></div>
-    <h3 class="seccion">Marcos</h3>
-    <div class="filas" id="t-marco"></div>
-    <h3 class="seccion">Banners</h3>
-    <div class="filas" id="t-banner"></div>
+<div class="tabs" id="t-cats" role="group" aria-label="Categorías de la tienda" style="margin-top:18px"><button type="button" class="tab" aria-pressed="true" data-cat="">Todo</button><button type="button" class="tab" aria-pressed="false" data-cat="avatar">Personajes</button><button type="button" class="tab" aria-pressed="false" data-cat="color">Fondos</button><button type="button" class="tab" aria-pressed="false" data-cat="efecto">Efectos</button><button type="button" class="tab" aria-pressed="false" data-cat="marco">Marcos</button><button type="button" class="tab" aria-pressed="false" data-cat="banner">Banners</button></div>
+    <div class="tcat" data-cat="avatar"><h3 class="seccion">Personajes</h3>
+    <div class="filas" id="t-avatar"></div></div>
+    <div class="tcat" data-cat="color"><h3 class="seccion">Fondos</h3>
+    <div class="filas" id="t-color"></div></div>
+    <div class="tcat" data-cat="efecto"><h3 class="seccion">Efectos</h3>
+    <div class="filas" id="t-efecto"></div></div>
+    <div class="tcat" data-cat="marco"><h3 class="seccion">Marcos</h3>
+    <div class="filas" id="t-marco"></div></div>
+    <div class="tcat" data-cat="banner"><h3 class="seccion">Banners</h3>
+    <div class="filas" id="t-banner"></div></div>
     <p class="etiq" style="margin-top:18px;font-size:13px">Los precios cambian cada día. Las ofertas aparecen con su señal y se ven hasta medianoche. Lo que compras es solo aspecto: todas las lecciones son gratis.</p>
   </section>
 
@@ -523,7 +524,7 @@
 <div class="dexam" id="dexam"></div>
 
 <aside id="dprog" class="dprog" aria-label="Tu progreso"></aside>
-<footer>Ejercicios originales para práctica. Tu progreso se guarda en este navegador. <a href="#" data-inicio style="color:inherit;font-weight:700">Ver inicio</a> · <a href="privacidad.html" style="color:inherit;font-weight:700">Privacidad y condiciones</a></footer>
+<footer class="pie-app">Ejercicios originales para práctica. Tu progreso se guarda en este navegador. <a href="#" data-inicio style="color:inherit;font-weight:700">Ver inicio</a> · <a href="privacidad.html" style="color:inherit;font-weight:700">Privacidad y condiciones</a></footer>
 
 <!--@js:main-->
 <div class="profiles hidden" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfTitle">

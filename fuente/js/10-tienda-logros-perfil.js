@@ -98,6 +98,10 @@ export function renderTienda() {
   $("t-efecto").innerHTML = CAT.filter(c => c.k === "efecto").map(fila).join("");
   $("t-marco").innerHTML = CAT.filter(c => c.k === "marco").map(fila).join("");
   if ($("t-banner")) $("t-banner").innerHTML = CAT.filter(c => c.k === "banner").map(fila).join("");
+  $$("#t-cats [data-cat]").forEach(b => b.onclick = () => {
+    $$("#t-cats [data-cat]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    $$(".tcat").forEach(s => s.hidden = !!b.dataset.cat && s.dataset.cat !== b.dataset.cat);
+  });
   $$("#p-tienda [data-comprar]").forEach(b => b.onclick = () => pedir(b.dataset.comprar));
   $$("#p-tienda [data-equip]").forEach(b => b.onclick = () => equipar(b.dataset.equip));
   $$("#p-tienda [data-toggle]").forEach(b => b.onclick = () => alternar(b.dataset.toggle));
@@ -204,7 +208,7 @@ export function renderPerfilPanel() {
   box.innerHTML = `${bnHtml(av.banner)}<span class="perfil-av-wrap">${avatarSvg(av, 120)}</span>
     <h1 class="perfil-nombre">${escHtml(nombre)}</h1>
     <p class="etiq" id="nivelPerfil"></p>
-    <button class="chip" type="button" data-ir-tienda style="min-height:40px">${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
+    <button class="chip" type="button" data-ir-tienda>${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();
   box.querySelector(".perfil-av-wrap .av").onclick = () => profileOpenList();
   $("nivelPerfil").textContent = "Examen " + currentLevel + " · objetivo oficial";

@@ -378,3 +378,5 @@ body:has(#exercise:not(.hidden)) footer{grid-column:1}
 
 /* Nombres largos: se parten en vez de desbordar la pantalla */
 .d4-saludo,.perfil-nombre,#perfilCab h1{overflow-wrap:anywhere;min-width:0}
+
+@media (pointer:coarse){.btn-mini,.perfil .chip,#perfilCuenta .chip{min-height:44px}}

@@ -249,7 +249,7 @@ button,a,[role="button"],.lvl,.tab,.chip{touch-action:manipulation}
 button,[role="button"],.lvl,.tab,.chip,.tabs button,.option{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .btn:active,.lvl:active,.section-btn:active,.exam:active,.option:active,.tabs button:active,.chips button:active{transform:scale(.97)}
 /* Objetivos táctiles de al menos 44px en pantallas táctiles (solo táctil: el escritorio no cambia) */
-@media (pointer:coarse){button,.btn,.lvl,.tab,.chip,.tabs button,#themeBar button,.lp-btn,.lp-link,.lp-theme{min-height:44px}footer a{display:inline-block;min-height:44px;padding:12px 6px}}
+@media (pointer:coarse){.pie-app a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}button,.btn,.lvl,.tab,.chip,.tabs button,#themeBar button,.lp-btn,.lp-link,.lp-theme{min-height:44px}footer a{display:inline-block;min-height:44px;padding:12px 6px}}
 body{transition:background-color .5s var(--ease)}
 header,.card,.section-btn,.btn,.lvl,.chips button,.tabs button,.rank-card,.rank-row,.options button,.src-row{transition:transform .25s var(--ease),box-shadow .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease),opacity .25s var(--ease)}
 @media (hover:hover) and (pointer:fine){.card:hover,.section-btn:hover{transform:translateY(-3px);box-shadow:0 14px 34px -12px rgba(0,0,0,.45)}}
@@ -698,3 +698,5 @@ header::-webkit-scrollbar-thumb{background:var(--line);border-radius:var(--r-pil
 #moreSheet #moreClose{margin-top:6px;min-height:50px}
 @keyframes more-up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){#moreSheet .more-panel{animation:none}}
+
+#t-cats{display:flex;flex-wrap:wrap;gap:8px}#t-cats .tab{width:auto;flex:none}

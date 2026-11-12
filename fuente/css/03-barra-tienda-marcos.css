@@ -30,6 +30,7 @@ main{padding-bottom:110px}
 .t-precio s{color:var(--muted);font-weight:600;font-size:var(--fs-sm)}
 .t-item .cartel{position:absolute;top:-9px;right:-6px;background:var(--bad);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:8px;transform:rotate(4deg)}
 .btn-mini{border:none;border-radius:var(--r-md);padding:8px 12px;font:inherit;font-weight:700;background:var(--accent);color:var(--on-accent,#fff);cursor:pointer;min-height:36px}
+@media (pointer:coarse){.btn-mini{min-height:44px}}
 .btn-mini.tuyo{background:var(--surface2);color:var(--muted);cursor:default}
 .btn-mini:active{transform:scale(.97)}
 
