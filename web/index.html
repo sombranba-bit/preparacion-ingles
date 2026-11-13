@@ -1163,6 +1163,10 @@ header{display:none}
 .toast{position:absolute;top:calc(12px + env(safe-area-inset-top));left:16px;right:16px;padding:12px 14px;border-radius:14px;background:var(--text);color:#fff;font-weight:700;opacity:0;transform:translateY(-10px);transition:opacity .3s cubic-bezier(.23,1,.32,1),transform .3s cubic-bezier(.23,1,.32,1);pointer-events:none;z-index:9;text-align:center}
 .toast.on{opacity:1;transform:none}
 .bloqueado{opacity:.55}
+/* El nombre y el precio se quedan con contraste; solo se atenúa el dibujo */
+.avatares button{color:var(--text)}
+.avatares button.bloqueado{opacity:1}
+.avatares button.bloqueado .ico-av{opacity:.55}
 .avatares button .lock{font-size:12px;color:var(--muted);font-weight:800}
 .marco-oro{box-shadow:0 0 0 4px #ffb22e,0 7px 0 var(--text)!important}
 @keyframes cae{to{transform:translate(var(--x),var(--y)) rotate(300deg);opacity:0}}
