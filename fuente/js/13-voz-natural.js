@@ -240,7 +240,7 @@ function vozPintarAjustes() {
   const el = document.getElementById("vozAjustes");
   if (!el) return;
   const e = vozLeer();
-  const txt = e.estado === "descargada" ? "Voz natural descargada y guardada en este equipo."
+  const txt = e.estado === "descargada" ? "Voz natural descargada en este equipo. Si el móvil no la puede cargar, suena la voz del dispositivo."
     : e.estado === "saltada" ? "Ahora se usa la voz de este dispositivo. Puedes descargar la voz natural cuando quieras."
     : "Todavía no has descargado la voz natural.";
   el.innerHTML = '<h3 class="voz-aj-h">Voz natural</h3><p class="voz-aj-p">' + txt + '</p>'
@@ -275,17 +275,24 @@ function vozHablar(text, item, respaldo, velocidad) {
   el.play().catch(() => {});
   vozEl = el;
   vozGenerando = true;
+  // En algunos móviles la generación no termina nunca: se reinicia el motor y se avisa, en vez de quedarse colgado
+  const vigila = setTimeout(() => {
+    if (turno !== vozTurno || !vozGenerando) return;
+    vozParar(); vozTts = null; vozCargando = null; vozFinUi();
+    $("audioStatus").textContent = "La voz natural tardó demasiado. Pulsa Escuchar otra vez para usar la del dispositivo.";
+  }, 20000);
   $("audioStatus").textContent = "Preparando la voz natural…";
   $("audioBar").classList.add("playing");
   setPlayLabel(PAUSA_LBL);
   vozTts.generate(text, { voice: voz, speed: velocidad }).then(async a => {
+    clearTimeout(vigila);
     if (turno !== vozTurno) return;   // se pidió otra cosa mientras tanto
     vozGenerando = false;
     el.src = URL.createObjectURL(await a.toBlob());
     el.onended = () => { if (vozEl === el) { vozEl = null; vozFinUi(); } };
     $("audioStatus").textContent = "Reproduciendo con voz natural…";
     await el.play();
-  }).catch(e => { if (e && e.name === "AbortError") return; vozGenerando = false; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
+  }).catch(e => { clearTimeout(vigila); if (e && e.name === "AbortError") return; vozGenerando = false; vozEl = null; if (turno === vozTurno) respaldo(); });   // AbortError: el usuario pausó antes de que sonara
   return true;
 }
 let vozGenerando = false;   // la voz se está generando: el botón cancela, no pausa

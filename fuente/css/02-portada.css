@@ -5,7 +5,7 @@
   --lok:var(--ok);--oksoft:color-mix(in srgb,var(--ok) 16%,transparent);
   --shadow:0 1px 2px rgba(0,0,0,.08),0 10px 28px rgba(0,0,0,.10);
   color:var(--ink);background:var(--bg);font:var(--fs-base)/1.55 var(--font)}
-#landing.lp-off{display:none}
+#landing.lp-off{display:none !important}   /* gana a la regla :has() de la tarjeta de acceso */
 body.lp-open>:not(#landing){display:none !important}
 body.lp-open{display:block !important;grid-template-columns:none !important;grid-template-rows:none !important}
 #landing a{color:inherit}
