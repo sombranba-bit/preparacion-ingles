@@ -82,6 +82,19 @@ const RESPUESTAS_EXTRA = [
   ["C1", "Nobody had expected such a quick recovery.", ["No one had expected such a quick recovery"]],
   ["C2", "The council refused to acknowledge the error until the press exposed it.", ["The council did not acknowledge the error until the press exposed it"]],
   ["C2", "Her argument was so convincing that everyone agreed.", ["Her argument was so convincing everyone agreed"]],
+  ["A2", "It's a pity I can't come.", ["I wish I was able to come"]],
+  ["B2", "I regret not studying harder.", ["If only I had studied harder"]],
+  ["A1", "I am tired.", ["I'm feeling tired"]],
+  ["C1", "Rarely have I read such an impressive debut novel.", ["I have hardly ever read such an impressive debut novel"]],
+  ["A2", "She began learning English five years ago.", ["She has been learning English for 5 years"]],
+  ["C1", "Only when she read the letter did she understand what had happened.", ["It wasn't until she read the letter that she understood what had happened"]],
+  ["C1", "He regrets not studying harder at school.", ["If only he had studied harder at school"]],
+  ["A2", "He is too young to drive. (Usa «not old enough»)", ["He isn't old enough to drive"]],
+  ["B1", "It's a pity I didn't study harder. (Usa «wish»)", ["If only I had studied harder"]],
+  ["B2", "They didn't finish the project on time. (Usa «failed»)", ["They were unable to finish the project on time"]],
+  ["B2", "I regret not taking the job. (Usa «wish»)", ["If only I had taken the job"]],
+  ["C1", "I regret not speaking up at the meeting. (Usa «wish»)", ["If only I had spoken up at the meeting"]],
+  ["B2", "She regrets not studying harder at school.", ["If only she had studied harder at school"]],
 ];
 
 for (const [lv, q, extra] of RESPUESTAS_EXTRA) {
