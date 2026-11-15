@@ -215,7 +215,8 @@ export function renderPerfilPanel() {
     <button class="chip" type="button" data-ir-tienda>${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();
   box.querySelector(".perfil-av-wrap .av").onclick = () => profileOpenList();
-  if (window.ctaEstado && window.ctaEstado.user) { const salir = document.createElement("button"); salir.className = "chip"; salir.type = "button"; salir.textContent = "Cerrar sesión"; salir.onclick = () => salirCuenta(); box.appendChild(salir); }
+  const salirBox = $("perfilSalir");
+  if (salirBox) { salirBox.innerHTML = ""; if (window.ctaEstado && window.ctaEstado.user) { const salir = document.createElement("button"); salir.className = "chip"; salir.type = "button"; salir.textContent = "Cerrar sesión"; salir.onclick = () => salirCuenta(); salirBox.appendChild(salir); } }
   $("nivelPerfil").textContent = "Examen " + currentLevel + " · objetivo oficial";
   // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
   const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
