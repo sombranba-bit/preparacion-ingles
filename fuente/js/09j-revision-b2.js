@@ -13,6 +13,7 @@ const REVISION_B2 = [
   {"level": "B2", "q": "I ___ a lot of time on this project, so I'm glad it's finished.", "cambios": {"q": "I ___ a lot of time on this project last year."}},
   {"level": "B2", "q": "No matter how hard you try, you ___ never please everyone.", "cambios": {"options": ["will", "would", "are"]}},
   {"level": "B2", "q": "I'd prefer you ___ the decision without consulting me.", "cambios": {"options": ["not to make", "not make", "making"]}},
+  {"level": "B2", "q": "Completa los huecos: Trabajo remoto", "cambios": {"accepted": ["adapts", "while", "are trying"]}},
 ];
 
 for (const r of REVISION_B2) {
