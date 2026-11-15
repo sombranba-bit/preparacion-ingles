@@ -10,7 +10,16 @@ const REVISION_B1 = [
   {"level": "B1", "q": "Everyone agreed with the decision.", "cambios": {"quitar": ["agreed with"]}},
   {"level": "B1", "q": "When will the man find out?", "cambios": {"audio": "Man: I've applied for a job at the hospital. Woman: That's great! When will you find out? Man: I'll know next week."}},
   {"level": "B1", "q": "How did the team play in the second half?", "cambios": {"agregar": ["excellent", "very well", "well"]}},
+  {"level": "B1", "q": "Relaciona cada texto con su título", "cambios": {"q": "Relaciona cada consejo con su tema", "pairs": [["Compara precios en varias tiendas antes de comprar.", "Cómo ahorrar en la compra"], ["Practica cada día, aunque sea diez minutos.", "Por qué aprender un idioma"], ["Lleva una copia del pasaporte y guárdala aparte.", "Consejos para viajar"]], "accepted": ["Compara precios en varias tiendas antes de comprar. = Cómo ahorrar en la compra; Practica cada día, aunque sea diez minutos. = Por qué aprender un idioma; Lleva una copia del pasaporte y guárdala aparte. = Consejos para viajar"], "explain": "Empareja cada consejo con su tema."}},
 ];
+
+// Duplicado: el mismo ejercicio de cinturón aparecía dos veces.
+for (const lista of [ITEMS, EXTRA_ITEMS]) {
+  for (let k = lista.length - 1; k >= 0; k--) {
+    const x = lista[k];
+    if (x.level === "B1" && x.q === "You ___ wear a seatbelt; it is the law.") lista.splice(k, 1);
+  }
+}
 
 for (const r of REVISION_B1) {
   const { agregar, quitar, ...resto } = r.cambios;

@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-ftxzU71W01OkCd3FsmTOmEOc1qSQyodQf41hMY3RMSU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-XcmHF1qR4rr+Y5ymoyh1cm4Wgsbi3QC5t59ha/g0Fhk=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10858,7 +10858,16 @@ const REVISION_B1 = [
   {"level": "B1", "q": "Everyone agreed with the decision.", "cambios": {"quitar": ["agreed with"]}},
   {"level": "B1", "q": "When will the man find out?", "cambios": {"audio": "Man: I've applied for a job at the hospital. Woman: That's great! When will you find out? Man: I'll know next week."}},
   {"level": "B1", "q": "How did the team play in the second half?", "cambios": {"agregar": ["excellent", "very well", "well"]}},
+  {"level": "B1", "q": "Relaciona cada texto con su título", "cambios": {"q": "Relaciona cada consejo con su tema", "pairs": [["Compara precios en varias tiendas antes de comprar.", "Cómo ahorrar en la compra"], ["Practica cada día, aunque sea diez minutos.", "Por qué aprender un idioma"], ["Lleva una copia del pasaporte y guárdala aparte.", "Consejos para viajar"]], "accepted": ["Compara precios en varias tiendas antes de comprar. = Cómo ahorrar en la compra; Practica cada día, aunque sea diez minutos. = Por qué aprender un idioma; Lleva una copia del pasaporte y guárdala aparte. = Consejos para viajar"], "explain": "Empareja cada consejo con su tema."}},
 ];
+
+// Duplicado: el mismo ejercicio de cinturón aparecía dos veces.
+for (const lista of [ITEMS, EXTRA_ITEMS]) {
+  for (let k = lista.length - 1; k >= 0; k--) {
+    const x = lista[k];
+    if (x.level === "B1" && x.q === "You ___ wear a seatbelt; it is the law.") lista.splice(k, 1);
+  }
+}
 
 for (const r of REVISION_B1) {
   const { agregar, quitar, ...resto } = r.cambios;
@@ -10887,6 +10896,26 @@ const REVISION_B2 = [
 ];
 
 for (const r of REVISION_B2) {
+  const { agregar, quitar, ...resto } = r.cambios;
+  for (const lista of [ITEMS, EXTRA_ITEMS]) {
+    lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
+      Object.assign(it, resto);
+      (agregar || []).forEach(a => { if (!it.accepted.includes(a)) it.accepted.push(a); });
+      if (quitar) it.accepted = it.accepted.filter(a => !quitar.includes(a));
+    });
+  }
+}
+
+/* Revisión C1, lote 1 (gramática): opciones de distracción que también eran correctas. Clave: nivel + texto original. */
+const REVISION_C1 = [
+  {"level": "C1", "q": "He is ___ to lose his temper when things go wrong.", "cambios": {"options": ["prone", "eager", "keen"]}},
+  {"level": "C1", "q": "The new law will ___ into effect once it is published in the gazette.", "cambios": {"options": ["come", "become", "fall"]}},
+  {"level": "C1", "q": "I'd ___ not comment on the allegations until the investigation concludes.", "cambios": {"options": ["prefer to", "prefer", "wish"]}},
+  {"level": "C1", "q": "The team showed great ___ under pressure. (RESIST)", "cambios": {"quitar": ["resistance"]}},
+  {"level": "C1", "q": "Neither the manager nor the staff were informed of the change.", "cambios": {"q": "Neither the manager nor the staff was informed of the change.", "accepted": ["Neither the manager nor the staff were informed of the change."]}},
+];
+
+for (const r of REVISION_C1) {
   const { agregar, quitar, ...resto } = r.cambios;
   for (const lista of [ITEMS, EXTRA_ITEMS]) {
     lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
