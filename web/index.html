@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-EpZS/aCmpkH6c0HRhRJfooswGnstNl6MKXiWp9FmGPM=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-MHuS+UQFRSHgu+SnlUXfdstRSBG7bOoBabxzTp8H9PQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -3564,7 +3564,7 @@ function advReveal() {
   const it = queue[index], correctText = it.options ? it.options[it.answer] : it.accepted[0];
   answered = true;
   results[index] = { correct: false, revealed: true, q: it.q, given: "", correctText };
-  if (it.options) document.querySelectorAll(".option").forEach((b, i) => { b.disabled = true; if (i === it.answer) b.classList.add("correct"); });
+  if (it.options) document.querySelectorAll(".option").forEach(b => { b.disabled = true; if (Number(b.dataset.idx) === it.answer) b.classList.add("correct"); });
   else { $("answerInput").value = correctText; $("answerInput").disabled = true; }
   const fb = $("feedback");
   fb.className = "feedback";
@@ -3906,10 +3906,11 @@ function renderItem() {
     renderFormat(item, opts, inputWrap);
   } else if (item.options) {
     opts.classList.remove("hidden"); inputWrap.classList.add("hidden");
-    item.options.forEach((o, i) => {
+    // Las opciones se muestran en orden aleatorio; cada botón guarda su posición original (data-idx) para corregir
+    shuffle(item.options.map((_, i) => i)).forEach((i, pos) => {
       const b = document.createElement("button");
-      b.className = "option";
-      b.innerHTML = `<span class="letter">${String.fromCharCode(65+i)}</span><span>${escHtml(o)}</span>`;
+      b.className = "option"; b.dataset.idx = i;
+      b.innerHTML = `<span class="letter">${String.fromCharCode(65+pos)}</span><span>${escHtml(item.options[i])}</span>`;
       b.onclick = () => selectOption(i, b);
       opts.appendChild(b);
     });
@@ -3946,7 +3947,11 @@ setPracticarAccion(() => showTab("ejercicios"));   // la barra abre la lista con
 
 /* ---------- Formatos nuevos: ordenar, emparejar, completar huecos ---------- */
 let fmt = null;
-const nrm = s => s.toLowerCase().replace(/[.,!?;:]/g, "").replace(/\s+/g, " ").trim();
+// sin acentos ni apóstrofos; las contracciones se expanden: «I'm» = «I am», «haven't» = «have not»
+const nrm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/’/g, "'")
+  .replace(/\bwon't\b/g, "will not").replace(/\bcan't\b/g, "can not").replace(/n't\b/g, " not")
+  .replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will")
+  .replace(/[.,!?;:']/g, "").replace(/\s+/g, " ").trim();
 function shuffleArr(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 function fmt_order(item, opts) {
   fmt = { picked: [], pool: shuffleArr(item.words.map((w, i) => ({ w, i }))) };
@@ -4183,8 +4188,7 @@ function evaluate() {
   }
   const given = $("answerInput").value.trim();
   if (!given) return null;
-  const norm = s => s.toLowerCase().replace(/[.,!?;:]/g, "").replace(/\s+/g, " ").trim();
-  const ok = item.accepted.some(a => norm(a) === norm(given));
+  const ok = item.accepted.some(a => nrm(a) === nrm(given));
   return { correct: ok, msg: "Respuestas válidas: " + item.accepted.join(" / "), given };
 }
 
@@ -4282,7 +4286,8 @@ function check() {
 
   // modo práctica: mostrar feedback
   if (item.options) {
-    document.querySelectorAll(".option").forEach((b, i) => {
+    document.querySelectorAll(".option").forEach(b => {
+      const i = Number(b.dataset.idx);
       b.disabled = true;
       if (i === item.answer) b.classList.add("correct");
       if (i === selectedOption && !r.correct) b.classList.add("wrong");
@@ -7377,7 +7382,7 @@ showVoices();
   G(g, "She was ___ by the news that she couldn't speak.", ["so shocked", "such shocked", "shocked so"], 0, "«So» + adjetivo.");
   G(g, "I'm going to ___ up smoking next month.", ["give", "take", "put"], 0, "Phrasal verb «give up» = dejar.");
   T(g, "The bridge is ___ to be closed for repairs.", "Escribe la palabra que falta.", ["expected"], "«Be expected to» + infinitivo.");
-  G(g, "We had better hurry before it gets dark.", ["leave", "to leave", "leaving"], 0, "«Had better» + base.");
+  G(g, "We had better ___ before it gets dark.", ["hurry", "to hurry", "hurrying"], 0, "«Had better» + base.");
 
   R(r, "Many people believe that reading on screens is less effective than reading on paper. However, recent research suggests the difference is smaller than expected.", "What does recent research suggest?", ["Screens are much worse", "The difference is smaller than expected", "Paper is useless"], 1, "«The difference is smaller than expected».");
   R(r, "The company's new policy allows employees to work from home two days a week. Managers say productivity has not dropped since the change.", "What have managers noticed?", ["Productivity has dropped", "Productivity has not dropped", "Employees have left"], 1, "«Productivity has not dropped».");

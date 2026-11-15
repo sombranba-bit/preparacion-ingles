@@ -181,7 +181,7 @@ export function advReveal() {
   const it = queue[index], correctText = it.options ? it.options[it.answer] : it.accepted[0];
   answered = true;
   results[index] = { correct: false, revealed: true, q: it.q, given: "", correctText };
-  if (it.options) document.querySelectorAll(".option").forEach((b, i) => { b.disabled = true; if (i === it.answer) b.classList.add("correct"); });
+  if (it.options) document.querySelectorAll(".option").forEach(b => { b.disabled = true; if (Number(b.dataset.idx) === it.answer) b.classList.add("correct"); });
   else { $("answerInput").value = correctText; $("answerInput").disabled = true; }
   const fb = $("feedback");
   fb.className = "feedback";
@@ -523,10 +523,11 @@ export function renderItem() {
     renderFormat(item, opts, inputWrap);
   } else if (item.options) {
     opts.classList.remove("hidden"); inputWrap.classList.add("hidden");
-    item.options.forEach((o, i) => {
+    // Las opciones se muestran en orden aleatorio; cada botón guarda su posición original (data-idx) para corregir
+    shuffle(item.options.map((_, i) => i)).forEach((i, pos) => {
       const b = document.createElement("button");
-      b.className = "option";
-      b.innerHTML = `<span class="letter">${String.fromCharCode(65+i)}</span><span>${escHtml(o)}</span>`;
+      b.className = "option"; b.dataset.idx = i;
+      b.innerHTML = `<span class="letter">${String.fromCharCode(65+pos)}</span><span>${escHtml(item.options[i])}</span>`;
       b.onclick = () => selectOption(i, b);
       opts.appendChild(b);
     });

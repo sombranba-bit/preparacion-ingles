@@ -69,7 +69,11 @@ import { loadHist } from "./09-datos-ejercicios-4-acento-velocidad.js";
 
 /* ---------- Formatos nuevos: ordenar, emparejar, completar huecos ---------- */
 export let fmt = null;
-export const nrm = s => s.toLowerCase().replace(/[.,!?;:]/g, "").replace(/\s+/g, " ").trim();
+// sin acentos ni apóstrofos; las contracciones se expanden: «I'm» = «I am», «haven't» = «have not»
+export const nrm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/’/g, "'")
+  .replace(/\bwon't\b/g, "will not").replace(/\bcan't\b/g, "can not").replace(/n't\b/g, " not")
+  .replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will")
+  .replace(/[.,!?;:']/g, "").replace(/\s+/g, " ").trim();
 export function shuffleArr(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 function fmt_order(item, opts) {
   fmt = { picked: [], pool: shuffleArr(item.words.map((w, i) => ({ w, i }))) };
@@ -306,8 +310,7 @@ function evaluate() {
   }
   const given = $("answerInput").value.trim();
   if (!given) return null;
-  const norm = s => s.toLowerCase().replace(/[.,!?;:]/g, "").replace(/\s+/g, " ").trim();
-  const ok = item.accepted.some(a => norm(a) === norm(given));
+  const ok = item.accepted.some(a => nrm(a) === nrm(given));
   return { correct: ok, msg: "Respuestas válidas: " + item.accepted.join(" / "), given };
 }
 
@@ -405,7 +408,8 @@ export function check() {
 
   // modo práctica: mostrar feedback
   if (item.options) {
-    document.querySelectorAll(".option").forEach((b, i) => {
+    document.querySelectorAll(".option").forEach(b => {
+      const i = Number(b.dataset.idx);
       b.disabled = true;
       if (i === item.answer) b.classList.add("correct");
       if (i === selectedOption && !r.correct) b.classList.add("wrong");

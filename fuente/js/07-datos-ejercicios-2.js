@@ -1847,7 +1847,7 @@ import { EXTRA_ITEMS } from "./00-datos-ejercicios-b1.js";
   G(g, "She was ___ by the news that she couldn't speak.", ["so shocked", "such shocked", "shocked so"], 0, "«So» + adjetivo.");
   G(g, "I'm going to ___ up smoking next month.", ["give", "take", "put"], 0, "Phrasal verb «give up» = dejar.");
   T(g, "The bridge is ___ to be closed for repairs.", "Escribe la palabra que falta.", ["expected"], "«Be expected to» + infinitivo.");
-  G(g, "We had better hurry before it gets dark.", ["leave", "to leave", "leaving"], 0, "«Had better» + base.");
+  G(g, "We had better ___ before it gets dark.", ["hurry", "to hurry", "hurrying"], 0, "«Had better» + base.");
 
   R(r, "Many people believe that reading on screens is less effective than reading on paper. However, recent research suggests the difference is smaller than expected.", "What does recent research suggest?", ["Screens are much worse", "The difference is smaller than expected", "Paper is useless"], 1, "«The difference is smaller than expected».");
   R(r, "The company's new policy allows employees to work from home two days a week. Managers say productivity has not dropped since the change.", "What have managers noticed?", ["Productivity has dropped", "Productivity has not dropped", "Employees have left"], 1, "«Productivity has not dropped».");
