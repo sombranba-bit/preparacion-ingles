@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-MHuS+UQFRSHgu+SnlUXfdstRSBG7bOoBabxzTp8H9PQ=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-k9rsQ6GBuvfligp28Zx0CBqhLk6wWJOL0XxpEKffLIY=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10685,6 +10685,97 @@ else pintarAudiolibros();
 ];
   ITEMS.push(...out);
 })();
+
+/* Formas válidas extra para reescrituras (frase completa) que solo aceptaban una respuesta.
+   Se suman a accepted; no cambian la pregunta ni la explicación. Clave: [nivel, texto de la pregunta]. */
+const RESPUESTAS_EXTRA = [
+  ["A1", "This is my book.", ["This book is mine"]],
+  ["A2", "He started learning English three years ago.", ["He has been learning English for 3 years"]],
+  ["B1", "I'm sorry I didn't call you.", ["I wish I had phoned you"]],
+  ["B1", "Let's meet at six.", ["Why don't we meet at six"]],
+  ["B1", "The bus was late, so we missed the film.", ["Because the bus was late we missed the film", "Since the bus was late, we missed the film", "The late bus made us miss the film"]],
+  ["B1", "It's a pity I don't speak Chinese.", ["I wish I could speak Chinese"]],
+  ["B1", "They said I should apologise.", ["They told me I should apologise"]],
+  ["B1", "Let's go for a walk after lunch.", ["Shall we go for a walk after lunch"]],
+  ["B1", "I'm not as tall as my brother.", ["My brother is taller than I am", "I'm shorter than my brother"]],
+  ["B1", "It isn't necessary to bring a laptop.", ["You needn't bring a laptop", "There's no need to bring a laptop", "You do not need to bring a laptop"]],
+  ["A2", "I haven't been to the cinema for a month.", ["The last time I went to the cinema was one month ago"]],
+  ["A2", "Please don't smoke in the building.", ["You must not smoke in the building", "Smoking is not allowed in the building", "You are not allowed to smoke in the building"]],
+  ["A2", "She is the youngest in the family.", ["No one in the family is younger than her", "Nobody in the family is younger than she is"]],
+  ["A2", "Do you want to go swimming on Saturday?", ["Do you fancy going swimming on Saturday"]],
+  ["A2", "Let's go to the park after school.", ["Shall we go to the park after school"]],
+  ["C1", "I regret not telling her the truth earlier.", ["I wish I had told her the truth sooner"]],
+  ["C1", "The company is not likely to change its mind.", ["It is unlikely that the company will change its mind"]],
+  ["C2", "The committee did not approve the plan until last year.", ["The committee only approved the plan last year"]],
+  ["B2", "She managed to finish the report on time.", ["She finished the report on time"]],
+  ["B2", "You should have told me earlier.", ["I wish you had told me sooner"]],
+  ["B2", "People say that the director is very strict.", ["It is said that the director is very strict", "They say the director is very strict"]],
+  ["B2", "Our flight was delayed, so we missed the meeting.", ["We missed the meeting because our flight was delayed", "Since our flight was delayed, we missed the meeting"]],
+  ["C1", "It's unlikely that he will accept the offer.", ["He is not likely to accept the offer"]],
+  ["C1", "The company is likely to announce job cuts next month.", ["It is likely the company will announce job cuts next month"]],
+  ["C1", "Nobody has informed her about the problem.", ["No one has told her about the problem", "Nobody has told her about the problem"]],
+  ["C1", "Our team seldom loses a match at home.", ["Our team hardly ever loses a match at home"]],
+  ["C2", "It's unlikely that the plan will succeed.", ["The plan is not likely to succeed"]],
+  ["C2", "I doubt whether she will accept the invitation.", ["She is not likely to accept the invitation", "It is unlikely she will accept the invitation"]],
+  ["C2", "The company will probably increase its prices next year.", ["It is likely that the company will increase its prices next year"]],
+  ["C2", "Had I realised earlier, I would have acted differently.", ["If I had realized earlier, I would have acted differently"]],
+  ["C2", "They rarely if ever complain about the food.", ["They hardly ever complain about the food"]],
+  ["A1", "He can swim very well.", ["He swims very well", "He is a good swimmer", "He is very good at swimming"]],
+  ["A1", "We have a dog.", ["We've got a dog", "We have got a dog"]],
+  ["A1", "The day is cold. (Empieza con «Today»)", ["Today is cold"]],
+  ["A2", "The shop is closed on Sundays.", ["The shop is not open on Sundays"]],
+  ["A2", "Can you tell me the time?", ["Do you know the time", "Could you tell me the time"]],
+  ["B1", "It's a pity we didn't win the match.", ["We wish we had won the match"]],
+  ["B1", "They started the project two years ago.", ["They have been working on the project for 2 years"]],
+  ["B2", "Our team lost because the referee was unfair.", ["The team lost because of the unfair referee", "Because the referee was unfair, our team lost"]],
+  ["B2", "The exam was not as hard as I expected.", ["The exam was easier than I had expected"]],
+  ["B2", "She rarely misses a class.", ["She seldom misses a class"]],
+  ["C1", "I really didn't expect to win the prize.", ["I never expected to win the prize"]],
+  ["C1", "Very few people attended the lecture.", ["Few people came to the lecture"]],
+  ["C2", "The sudden storm forced us to cancel the trip.", ["Because of the sudden storm, we had to cancel the trip"]],
+  ["A1", "I usually have breakfast at eight. (Usa «sometimes»)", ["Sometimes I have breakfast at eight"]],
+  ["A2", "Shall we go to the park? (Usa «Let's»)", []],
+  ["A2", "Don't forget to lock the door. (Usa «Remember»)", []],
+  ["A2", "I'm sorry I didn't call you. (Usa «should»)", ["I ought to have called you"]],
+  ["A2", "I'd like to know where the station is. (Usa «Could you tell me»)", ["Do you know where the station is"]],
+  ["B1", "She is not as tall as her brother. (Usa «shorter»)", ["Her brother is taller than she is"]],
+  ["B1", "I'm sure he will pass the exam. (Usa «likely»)", ["He will probably pass the exam"]],
+  ["B1", "I'm not sure whether she will come. (Usa «might»)", ["She may come"]],
+  ["B1", "He said: 'I live in London.' (Estilo indirecto)", ["He said he lived in London"]],
+  ["B1", "The film was so good that I watched it twice. (Usa «such»)", ["The film was so good I watched it twice"]],
+  ["B1", "Sam doesn't have to work on Sundays. (Usa «needn't»)", ["Sam doesn't need to work on Sundays"]],
+  ["B1", "Don't forget to bring your passport. (Usa «Remember»)", ["Do not forget to bring your passport"]],
+  ["B2", "The meeting was cancelled because of the storm. (Usa «called off»)", ["Because of the storm, the meeting was called off"]],
+  ["B2", "The doctor told me to rest for a week. (Usa «advised»)", ["The doctor advised me to rest for one week"]],
+  ["B2", "Few people realise how dangerous the road is. (Usa «aware»)", ["Few people are aware how dangerous the road is"]],
+  ["B2", "The lecture was so long that most students left. (Usa «such»)", ["The lecture was so long most students left"]],
+  ["B2", "I'm certain he didn't see us. (Usa «couldn't»)", ["He cannot have seen us", "He can't have seen us"]],
+  ["C1", "She was too shy to ask for a raise. (Usa «reluctant»)", ["She was shy about asking for a raise"]],
+  ["C1", "The speech was not as persuasive as I had hoped. (Usa «fell short»)", ["The speech fell short of what I had hoped for"]],
+  ["C1", "He's so talented that he can do anything. (Usa «capable»)", ["He is so talented he can do anything"]],
+  ["C1", "They never imagined that the project would fail. (Usa «inconceivable»)", ["It was unimaginable that the project would fail"]],
+  ["C2", "The chairman has no doubt that the merger will succeed. (Usa «confident»)", ["The chairman is sure that the merger will succeed"]],
+  ["C2", "The novel's themes are not easy to grasp. (Usa «elusive»)", ["The novel's themes are hard to grasp", "The novel's themes are difficult to grasp"]],
+  ["C2", "The scandal is unlikely to damage his reputation. (Usa «hardly»)", ["The scandal is not likely to damage his reputation"]],
+  ["C1", "The new findings contradict the earlier research. (Usa «at odds»)", ["The new findings conflict with the earlier research"]],
+  ["C2", "The lecture was far too technical for most of the audience. (Usa «beyond»)", ["The lecture was too technical for most of the audience"]],
+  ["C2", "The director refused to comment on the rumours. (Usa «declined»)", ["The director would not comment on the rumours"]],
+  ["A2", "I started learning English two years ago.", ["I have been learning English for 2 years"]],
+  ["A2", "She is too young to drive.", ["She isn't old enough to drive"]],
+  ["B1", "It's a pity that I can't come to the party.", ["I wish I could make it to the party"]],
+  ["C1", "The team's performance was disappointing given the resources available.", ["Given the resources available, the team's performance was disappointing"]],
+  ["C1", "Nobody had expected such a quick recovery.", ["No one had expected such a quick recovery"]],
+  ["C2", "The council refused to acknowledge the error until the press exposed it.", ["The council did not acknowledge the error until the press exposed it"]],
+  ["C2", "Her argument was so convincing that everyone agreed.", ["Her argument was so convincing everyone agreed"]],
+];
+
+for (const [lv, q, extra] of RESPUESTAS_EXTRA) {
+  for (const lista of [ITEMS, EXTRA_ITEMS]) {
+    const it = lista.find(x => x.level === lv && x.q === q);
+    if (!it) continue;
+    extra.forEach(a => { if (!it.accepted.some(b => b.toLowerCase() === a.toLowerCase())) it.accepted.push(a); });
+  }
+}
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
 // Las monedas son las de la app (rewards); lo comprado queda en rewards().owned y el equipo en el perfil activo.
 
