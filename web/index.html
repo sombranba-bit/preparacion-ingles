@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-/2JBT83Hdvij8b6xcOJScfoBUKVbBNOzUUhjsdGy6WU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-5B8s2ViyPS7CORemv2txZLBKr4hf04PJeGiVe2ZjBhA=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10813,6 +10813,38 @@ for (const r of REVISION_A1) {
     lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
       Object.assign(it, resto);
       (agregar || []).forEach(a => { if (!it.accepted.includes(a)) it.accepted.push(a); });
+    });
+  }
+}
+
+/* Revisión A2, lote 1 (gramática): correcciones de preguntas. Clave: nivel + texto original. */
+const REVISION_A2 = [
+  {"level": "A2", "q": "He asked me ___ the way to the station.", "cambios": {"q": "He asked me ___ the station was.", "options": ["where", "what", "who"]}},
+  {"level": "A2", "q": "They ___ to the shop when it closed.", "cambios": {"options": ["were going", "has gone", "goes"]}},
+  {"level": "A2", "q": "You ___ wear a coat today. It's warm outside.", "cambios": {"options": ["don't need to", "mustn't", "didn't need to"]}},
+  {"level": "A2", "q": "You ___ go to bed so late on school nights.", "cambios": {"options": ["shouldn't", "didn't need to", "couldn't"]}},
+  {"level": "A2", "q": "You ___ bring a pen. We have plenty.", "cambios": {"options": ["don't need to", "couldn't", "didn't need to"]}},
+  {"level": "A2", "q": "We must ___ the bus. It leaves in five minutes.", "cambios": {"agregar": ["take"]}},
+  {"level": "A2", "q": "Could you ___ me the salt, please?", "cambios": {"agregar": ["give"]}},
+  {"level": "A2", "q": "Let's meet ___ the cinema.", "cambios": {"agregar": ["in", "outside"]}},
+  {"level": "A2", "q": "You must ___ your homework before you go out.", "cambios": {"agregar": ["do"]}},
+  {"level": "A2", "q": "Please ___ the door when you leave.", "cambios": {"agregar": ["shut"]}},
+  {"level": "A2", "q": "The hotel was ___ than we thought, so we stayed longer.", "cambios": {"agregar": ["better"]}},
+  {"level": "A2", "q": "You ___ smoke here. It's not allowed.", "cambios": {"agregar": ["can't"]}},
+  {"level": "A2", "q": "I had a sandwich, ___ I wasn't very hungry.", "cambios": {"agregar": ["though"]}},
+  {"level": "A2", "q": "You ___ be so noisy. The baby is sleeping.", "cambios": {"agregar": ["mustn't"]}},
+  {"level": "A2", "q": "Can you ___ this word for me? I don't understand it.", "cambios": {"agregar": ["translate"]}},
+  {"level": "A2", "q": "I usually ___ breakfast with my family.", "cambios": {"agregar": ["eat"]}},
+  {"level": "A2", "q": "Rewrite: 'He doesn't have much money.' → 'He doesn't have ___ money.'", "cambios": {"quitar": ["many"]}},
+];
+
+for (const r of REVISION_A2) {
+  const { agregar, quitar, ...resto } = r.cambios;
+  for (const lista of [ITEMS, EXTRA_ITEMS]) {
+    lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
+      Object.assign(it, resto);
+      (agregar || []).forEach(a => { if (!it.accepted.includes(a)) it.accepted.push(a); });
+      if (quitar) it.accepted = it.accepted.filter(a => !quitar.includes(a));
     });
   }
 }
