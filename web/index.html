@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-4H8EhBCiyDQzGHIZxBhYPiaMx/UaXYJjSTdbnPZuk4w=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-u+LSGI1RgaDYMPdAovSlk7S/4G32bQ2RSIAlz0S8l+E=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10787,6 +10787,20 @@ for (const [lv, q, extra] of RESPUESTAS_EXTRA) {
     const it = lista.find(x => x.level === lv && x.q === q);
     if (!it) continue;
     extra.forEach(a => { if (!it.accepted.some(b => b.toLowerCase() === a.toLowerCase())) it.accepted.push(a); });
+  }
+}
+
+/* Revisión A1, lote 1: correcciones de preguntas de lectura y escucha. Clave: nivel + texto original. */
+const REVISION_A1 = [
+  {"level": "A1", "q": "At what time is the shop closed?", "cambios": {"q": "On which day is the shop closed?"}},
+  {"level": "A1", "q": "Is the swimming pool open today?", "cambios": {"q": "Is the swimming pool open on Mondays?", "audio": "Man: Is the swimming pool open on Mondays? Woman: No, it's closed on Mondays."}},
+  {"level": "A1", "q": "Why should the boy take his jacket?", "cambios": {"options": ["It is windy", "It is hot", "It is raining"]}},
+  {"level": "A1", "q": "Where exactly is the post office?", "cambios": {"options": ["Next to the supermarket", "Next to the school", "Behind the hospital"]}},
+];
+
+for (const r of REVISION_A1) {
+  for (const lista of [ITEMS, EXTRA_ITEMS]) {
+    lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => Object.assign(it, r.cambios));
   }
 }
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
