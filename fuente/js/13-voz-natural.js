@@ -13,7 +13,7 @@ const VOZ_CACHE = "transformers-cache";
 const SILENCIO = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=";   // WAV mudo de 44 bytes para desbloquear el audio en el clic   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
 const VOZ_LIB = "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js";
 let vozTts = null, vozCargando = null, vozEl = null, vozTurno = 0;
-const vozAudios = new Map();   // frases generadas o en curso (máx. 2): la siguiente se prepara mientras suena la actual
+const vozAudios = new Map();   // frases generadas o en curso (máx. 3): la siguiente se prepara mientras suena la actual
 let vozPendiente = null;      // frase a preparar en cuanto termine de cargar el motor
 let vozOff = false;   // tras un fallo, la voz natural se desactiva hasta recargar: no reintentar en bucle
 let vozCtl = null;       // { partes, recibidos, total, velocidad, activa, ac }
@@ -268,7 +268,7 @@ function vozCargar() {
 function vozGenerar(text, voz, velocidad) {
   const k = voz + "|" + velocidad + "|" + text;
   if (!vozAudios.has(k)) {
-    if (vozAudios.size >= 2) vozAudios.delete(vozAudios.keys().next().value);
+    if (vozAudios.size >= 3) vozAudios.delete(vozAudios.keys().next().value);   // 3: la pregunta ya preparada no se borra antes de sonar
     vozAudios.set(k, vozTts.generate(text, { voice: voz, speed: velocidad }).then(a => a.toBlob()).catch(e => { vozAudios.delete(k); throw e; }));
   }
   return vozAudios.get(k);
