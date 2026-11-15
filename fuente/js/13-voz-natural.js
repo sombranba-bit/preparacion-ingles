@@ -13,6 +13,7 @@ const VOZ_CACHE = "transformers-cache";
 const SILENCIO = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=";   // WAV mudo de 44 bytes para desbloquear el audio en el clic   // la misma caché que usa la librería: encuentra el modelo sin volver a bajarlo
 const VOZ_LIB = "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js";
 let vozTts = null, vozCargando = null, vozEl = null, vozTurno = 0;
+let vozOff = false;   // tras un fallo, la voz natural se desactiva hasta recargar: no reintentar en bucle
 let vozCtl = null;       // { partes, recibidos, total, velocidad, activa, ac }
 let vozModo = "", vozAlCerrar = null;
 
@@ -257,11 +258,11 @@ function vozCargar() {
   vozCargando = (async () => {
     const m = await import(VOZ_LIB);
     vozTts = await m.KokoroTTS.from_pretrained(VOZ_ID, { dtype: "q8", device: "wasm" });
-  })().catch(() => { vozCargando = null; });
+  })().catch(() => { vozCargando = null; vozOff = true; });   // sin reintentos: cada intento ocupa memoria en el móvil
   return vozCargando;
 }
 function vozHablar(text, item, respaldo, velocidad) {
-  if (vozLeer().estado !== "descargada") return false;
+  if (vozOff || vozLeer().estado !== "descargada") return false;
   // Kokoro solo tiene voces británicas y estadounidenses: el resto de acentos los lee la voz del dispositivo
   const acento = item.accent || "en-GB";   // sin acento se muestra como británico (igual que en la pantalla)
   if (acento !== "en-US" && acento !== "en-GB") return false;
@@ -278,8 +279,9 @@ function vozHablar(text, item, respaldo, velocidad) {
   // En algunos móviles la generación no termina nunca: se reinicia el motor y se avisa, en vez de quedarse colgado
   const vigila = setTimeout(() => {
     if (turno !== vozTurno || !vozGenerando) return;
-    vozParar(); vozTts = null; vozCargando = null; vozFinUi();
-    $("audioStatus").textContent = "La voz natural tardó demasiado. Pulsa Escuchar otra vez para usar la del dispositivo.";
+    vozParar(); vozOff = true; vozFinUi();
+    $("audioStatus").textContent = "La voz natural no responde en este móvil: se usa la del dispositivo hasta recargar la página.";
+    respaldo();
   }, 20000);
   $("audioStatus").textContent = "Preparando la voz natural…";
   $("audioBar").classList.add("playing");
