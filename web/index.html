@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-5B8s2ViyPS7CORemv2txZLBKr4hf04PJeGiVe2ZjBhA=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-3zDeFg49QgI1V+jUBofI75WxUDqfbFYBqF1Z/dxTdr8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10839,6 +10839,28 @@ const REVISION_A2 = [
 ];
 
 for (const r of REVISION_A2) {
+  const { agregar, quitar, ...resto } = r.cambios;
+  for (const lista of [ITEMS, EXTRA_ITEMS]) {
+    lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
+      Object.assign(it, resto);
+      (agregar || []).forEach(a => { if (!it.accepted.includes(a)) it.accepted.push(a); });
+      if (quitar) it.accepted = it.accepted.filter(a => !quitar.includes(a));
+    });
+  }
+}
+
+/* Revisión B1, lote 1: lectura, gramática, reformulación y escucha. Clave: nivel + texto original. */
+const REVISION_B1 = [
+  {"level": "B1", "q": "Although ___ the same age, the twins are very different.", "cambios": {"options": ["they are", "are they", "being"]}},
+  {"level": "B1", "q": "You ___ have told me. I would have understood.", "cambios": {"options": ["could", "wouldn't", "mustn't"]}},
+  {"level": "B1", "q": "If I ___ you, I would apologise to her.", "cambios": {"options": ["were", "be", "am"]}},
+  {"level": "B1", "q": "I haven't visited London for two years.", "cambios": {"q": "Rewrite: 'The last time I visited London was two years ago.'"}},
+  {"level": "B1", "q": "Everyone agreed with the decision.", "cambios": {"quitar": ["agreed with"]}},
+  {"level": "B1", "q": "When will the man find out?", "cambios": {"audio": "Man: I've applied for a job at the hospital. Woman: That's great! When will you find out? Man: I'll know next week."}},
+  {"level": "B1", "q": "How did the team play in the second half?", "cambios": {"agregar": ["excellent", "very well", "well"]}},
+];
+
+for (const r of REVISION_B1) {
   const { agregar, quitar, ...resto } = r.cambios;
   for (const lista of [ITEMS, EXTRA_ITEMS]) {
     lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
