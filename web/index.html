@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-0FhaZC4CbxA2x0dDnHLmOOMlirTcbX97T+JVqfEUwkw=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-/2JBT83Hdvij8b6xcOJScfoBUKVbBNOzUUhjsdGy6WU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10798,11 +10798,22 @@ const REVISION_A1 = [
   {"level": "A1", "q": "Where exactly is the post office?", "cambios": {"options": ["Next to the supermarket", "Next to the school", "Behind the hospital"]}},
   {"level": "A1", "q": "The shop ___ on Sundays.", "cambios": {"options": ["is closed", "closing", "close"]}},
   {"level": "A1", "q": "Dinner ___ ready at eight.", "cambios": {"q": "Dinner ___ ready at eight tomorrow.", "options": ["will be", "was", "be"]}},
+  {"level": "A1", "q": "I ___ tea every morning.", "cambios": {"agregar": ["have"]}},
+  {"level": "A1", "q": "I don't ___ coffee.", "cambios": {"agregar": ["drink"]}},
+  {"level": "A1", "q": "___ the window, please.", "cambios": {"agregar": ["shut"]}},
+  {"level": "A1", "q": "Please ___ your hands before eating.", "cambios": {"agregar": ["clean"]}},
+  {"level": "A1", "q": "Can I ___ your phone, please?", "cambios": {"agregar": ["borrow"]}},
+  {"level": "A1", "q": "Liz ___ her coat in the wardrobe.", "cambios": {"agregar": ["puts"]}},
+  {"level": "A1", "q": "I ___ breakfast at eight every day.", "cambios": {"agregar": ["eat"]}},
 ];
 
 for (const r of REVISION_A1) {
+  const { agregar, ...resto } = r.cambios;
   for (const lista of [ITEMS, EXTRA_ITEMS]) {
-    lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => Object.assign(it, r.cambios));
+    lista.filter(x => x.level === r.level && x.q === r.q).forEach(it => {
+      Object.assign(it, resto);
+      (agregar || []).forEach(a => { if (!it.accepted.includes(a)) it.accepted.push(a); });
+    });
   }
 }
 // Tienda, Sellos y Perfil: catálogo, precios, personaje y efectos de la maqueta D4.
