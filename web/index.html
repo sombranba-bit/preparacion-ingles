@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-cr9uYrYufTzdqv2UfjE9Mxq9NjOQA1jIoVs8+cN/Tg4=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-U5j7iXH+RN1Yrlnk5AvpcvP14OxHpQWwTo4Le8wPmJ8=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10871,10 +10871,18 @@ for (const r of REVISION_B1) {
   }
 }
 
-/* Revisión B2, lote 1 (lectura): corrige la respuesta de dos afirmaciones verdadero/falso. Clave: nivel + texto original. */
+/* Revisión B2, lotes 1-2 (lectura y gramática): respuestas y opciones ambiguas. Clave: nivel + texto original. */
 const REVISION_B2 = [
   {"level": "B2", "q": "Según el texto: «The museum opens later on weekdays in summer.»", "cambios": {"answer": 2}},
   {"level": "B2", "q": "Según el texto: «Jack has already been awarded the scholarship.»", "cambios": {"answer": 1}},
+  {"level": "B2", "q": "The report ___ by the time the manager arrived.", "cambios": {"options": ["had been finished", "finishing", "finished"]}},
+  {"level": "B2", "q": "If I ___ you, I would apologise.", "cambios": {"options": ["were", "be", "am"]}},
+  {"level": "B2", "q": "The old bridge ___ by the time the new road opens.", "cambios": {"options": ["will have been demolished", "demolishing", "is demolished"]}},
+  {"level": "B2", "q": "The goods ___ by the time the customer complains.", "cambios": {"options": ["will have been delivered", "delivering", "have been delivered"]}},
+  {"level": "B2", "q": "The new road ___ by the time the next election is held.", "cambios": {"options": ["has built", "will have been built", "building"]}},
+  {"level": "B2", "q": "I ___ a lot of time on this project, so I'm glad it's finished.", "cambios": {"q": "I ___ a lot of time on this project last year."}},
+  {"level": "B2", "q": "No matter how hard you try, you ___ never please everyone.", "cambios": {"options": ["will", "would", "are"]}},
+  {"level": "B2", "q": "I'd prefer you ___ the decision without consulting me.", "cambios": {"options": ["not to make", "not make", "making"]}},
 ];
 
 for (const r of REVISION_B2) {
