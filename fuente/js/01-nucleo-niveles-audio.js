@@ -357,6 +357,10 @@ export function playUserAudio() {
 
 /* La voz natural (13-voz-natural.js) se engancha aquí sin importarse para no crear dependencias circulares */
 export const vozGancho = { hablar: null, parar: null, alternar: null, sitio: null, activa: null, precarga: null };
+/* Prepara la voz natural de la siguiente pregunta de Escucha (con la velocidad actual) */
+export function precargarSiguiente(item) {
+  if (item && item.audio && vozGancho.precargaFrase) vozGancho.precargaFrase(item.audio, item, (item.rate || 0.95) * SPEEDS[speedIdx]);
+}
 export function speak(text, item = {}) {
   if (userAudio[itemKey()]) { playUserAudio(); return; }
   if (vozGancho.hablar && vozGancho.hablar(text, item, () => speakSistema(text, item), (item.rate || 0.95) * SPEEDS[speedIdx])) return;   // voz natural si está descargada

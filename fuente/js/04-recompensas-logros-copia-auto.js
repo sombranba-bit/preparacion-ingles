@@ -22,6 +22,7 @@ import {
   show,
   shuffle,
   speak,
+  precargarSiguiente,
   stopAudio,
   togglePlay,
   vozGancho,
@@ -483,6 +484,7 @@ export function renderItem() {
 
   if (item.audio) {
     if (vozGancho.precarga) vozGancho.precarga();   // la voz natural se carga antes de pulsar Escuchar
+    precargarSiguiente(queue[index + 1]);
     $("audioBar").classList.remove("hidden");
     $("audioStatus").textContent = "";
     const ACC = { "en-GB": "británico", "en-US": "estadounidense", "en-AU": "australiano", "en-IN": "indio", "en-IE": "irlandés" };
