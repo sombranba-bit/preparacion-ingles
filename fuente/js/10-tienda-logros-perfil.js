@@ -215,6 +215,7 @@ export function renderPerfilPanel() {
     <button class="chip" type="button" data-ir-tienda>${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();
   box.querySelector(".perfil-av-wrap .av").onclick = () => profileOpenList();
+  if (window.ctaEstado && window.ctaEstado.user) { const salir = document.createElement("button"); salir.className = "chip"; salir.type = "button"; salir.textContent = "Cerrar sesión"; salir.onclick = () => salirCuenta(); box.appendChild(salir); }
   $("nivelPerfil").textContent = "Examen " + currentLevel + " · objetivo oficial";
   // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
   const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
@@ -238,7 +239,6 @@ export function renderPerfilPanel() {
   const sesion = window.ctaEstado && window.ctaEstado.user;
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
   const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); cuenta.appendChild(b); };
-  if (sesion) { const salir = document.createElement("button"); salir.className = "chip"; salir.type = "button"; salir.style.minHeight = "40px"; salir.textContent = "Cerrar sesión"; salir.onclick = () => salirCuenta(); cuenta.appendChild(salir); }
   if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");
   borrar("Borrar todos los datos", "borrar-datos");
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];

@@ -2,7 +2,7 @@
 <html lang="es" data-mode="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-cJVIBqChUMyL6cfW67H5qq0NXJgCIEfrzgQ82zhvdAU=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-xyCdCfnU7yb3MqXB0AlA1yv9mK2xS2/DXQj2kISxE1E=' 'sha256-SOGkzfDPRmWyb4TV6aLJ6vW3cqX2yO1DE3r8SM+/ln0=' 'sha256-nxWVAoVvf2i859CmnC03hsgJd+KTiOrf75y3RD1wtu0=' 'sha256-5cNmiCdvKXy8dNdVQ11V6uyEhtS7LzZmBph4CGznOXk=' 'sha256-2w++p7iSGCFdMv05wGefGfXeQSfhmwqs9/kX+A5W+bs=' https://cdn.jsdelivr.net/npm/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob: https://archive.org https://*.archive.org; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://www.googleapis.com https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app; frame-src https://preparacion-examenes-de-ingles.firebaseapp.com https://preparacion-examenes-de-ingles.web.app https://accounts.google.com https://apis.google.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -10888,6 +10888,7 @@ function renderPerfilPanel() {
     <button class="chip" type="button" data-ir-tienda>${COIN} <b class="mon">${MONEDAS()}</b> · Ir a la tienda</button>`;
   box.querySelector("[data-ir-tienda]").onclick = () => $("bnav") && [...$("bnav").querySelectorAll("button")].find(b => b.dataset.area === "tienda")?.click();
   box.querySelector(".perfil-av-wrap .av").onclick = () => profileOpenList();
+  if (window.ctaEstado && window.ctaEstado.user) { const salir = document.createElement("button"); salir.className = "chip"; salir.type = "button"; salir.textContent = "Cerrar sesión"; salir.onclick = () => salirCuenta(); box.appendChild(salir); }
   $("nivelPerfil").textContent = "Examen " + currentLevel + " · objetivo oficial";
   // Estadísticas del perfil (escritorio): se crean una vez, justo debajo de la tarjeta de identidad
   const sel = sellosDatos(), logrosOk = sel.filter(x => x.ok).length, dias = streakInfo().days;
@@ -10911,7 +10912,6 @@ function renderPerfilPanel() {
   const sesion = window.ctaEstado && window.ctaEstado.user;
   // Borrar datos desde Perfil (mismos eventos que la lista de perfiles)
   const borrar = (texto, evento) => { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.style.cssText = "min-height:40px;color:#b3261e"; b.textContent = texto; b.onclick = () => document.dispatchEvent(new Event(evento)); cuenta.appendChild(b); };
-  if (sesion) { const salir = document.createElement("button"); salir.className = "chip"; salir.type = "button"; salir.style.minHeight = "40px"; salir.textContent = "Cerrar sesión"; salir.onclick = () => salirCuenta(); cuenta.appendChild(salir); }
   if (sesion) borrar("Borrar mi cuenta", "cuenta-borrar");
   borrar("Borrar todos los datos", "borrar-datos");
   const idiomas = [["segExpl", "idioma-expl", "es"], ["segEj", "idioma-ej", "en"]];
